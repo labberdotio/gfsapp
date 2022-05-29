@@ -1,0 +1,227 @@
+
+html {
+}
+
+body, 
+#root {
+	margin: 0;
+    /* height: 100vh; */
+    min-height: 100vh;
+}
+
+/* */
+
+.MuiAlert-standardError, 
+.MuiAlert-root.MuiAlert-standardError, 
+.MuiPaper-root.MuiAlert-root.MuiAlert-standardError {
+    color: rgb(97, 26, 21) !important;
+    background-color: rgb(253, 236, 234) !important;
+}
+
+.MuiAlert-standardWarning, 
+.MuiAlert-root.MuiAlert-standardWarning, 
+.MuiPaper-root.MuiAlert-root.MuiAlert-standardWarning {
+    color: rgb(102, 60, 0) !important;
+    background-color: rgb(255, 244, 229) !important;
+}
+
+.MuiAlert-standardInfo, 
+.MuiAlert-root.MuiAlert-standardInfo, 
+.MuiPaper-root.MuiAlert-root.MuiAlert-standardInfo {
+    color: rgb(13, 60, 97) !important;
+    background-color: rgb(232, 244, 253) !important;
+}
+
+.MuiAlert-standardSuccess, 
+.MuiAlert-root.MuiAlert-standardSuccess, 
+.MuiPaper-root.MuiAlert-root.MuiAlert-standardSuccess {
+    color: rgb(30, 70, 32) !important;
+    background-color: rgb(237, 247, 237) !important;
+}
+
+/* */
+
+.MuiFab-primary {
+}
+
+.MuiPaper-root {
+}
+
+.MuiButton-root {
+}
+
+.MuiSvgIcon-root {
+}
+
+.MuiGrid-root {
+}
+
+.MuiPaper-root .MuiFormControl-root {
+}
+
+.MuiPaper-root .form-control {
+}
+
+.MuiPaper-root .MuiInputBase-root {
+}
+
+.MuiPaper-root .MuiInput-underline:before {
+}
+
+.MuiPaper-root .MuiInputLabel-root {
+}
+
+.MuiPaper-root .MuiSelect-root {
+}
+
+.MuiPaper-root .MuiSvgIcon-root {
+}
+
+.MuiAppBar-colorPrimary, 
+.MuiPaper-root.MuiAppBar-root {
+}
+
+/* */
+
+.MuiPaper-root.MuiDrawer-paper {
+}
+
+.MuiAppBar-root.MuiAppBar-colorPrimary {
+}
+
+.MuiDrawer-paper {
+    height: 100%;
+    background-color: transparent;
+}
+
+.MuiDrawer-root .MuiPaper-root {
+    height: 100%;
+    background-color: transparent;
+}
+
+#root > div > nav {
+    position: relative;
+    top: 64px;
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
+}
+
+#root > div > main {
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
+}
+
+#root > div > main .treeGrid {
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
+}
+
+#root > div > main .mainGrid,
+#root > div > main .composeGrid {
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
+}
+
+.MuiDrawer-root .MuiDrawer-paper {
+    width: 240px;
+}
+
+.MuiDrawer-modal .MuiDrawer-paper {
+    width: 240px;
+}
+
+.MuiDrawer-root .MuiList-root .MuiListItem-root.MuiListItem-gutters {
+    padding-left: 12px;
+}
+
+.MuiDrawer-root .MuiListItemIcon-root {
+}
+
+.MuiDrawer-root .Mui-selected .MuiListItemIcon-root {
+}
+
+/* */
+
+.MuiGrid-root .Editor-tab-60 {
+}
+
+.MuiGrid-root .Editor-tab-60.Mui-selected {
+}
+
+.MuiContainer-root.mainContainer {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.MuiContainer-root .fullGrid {
+    align-items: start;
+}
+
+.MuiContainer-root .tabsGrid {
+    height: 48px;
+}
+
+.MuiContainer-root .tabs {
+    height: 48px;
+}
+
+.MuiContainer-root .tabs .tab {
+    border: none;
+    outline: none;
+    max-width: 500px;
+}
+
+.MuiContainer-root .tabs .tab .MuiTab-wrapper {
+    font-size: 12px !important;
+}
+
+.MuiContainer-root .treeGrid {
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.8;
+}
+
+.MuiContainer-root .treeGrid .MuiTypography-body1 {
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    line-height: 1.8;
+}
+
+.MuiContainer-root .treeGrid .Mui-selected {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 0.8rem !important;
+}
+
+.MuiContainer-root .mainGrid {
+}
+
+/* */
+
+.MuiTableCell-root.MuiTableCell-head {
+}
+
+.MuiTableCell-root.MuiTableCell-body {
+}
+
+/* */
+
+.MuiPaper-root .list-group-item {
+}
+
+/* */
+
+.MuiTab-textColorPrimary {
+}
+
+.MuiTab-textColorPrimary.Mui-selected {
+}

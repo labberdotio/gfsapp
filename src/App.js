@@ -51,6 +51,13 @@ import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 import { loadEntitiesIntoState } from './actions/Entity'
 import { getEntitiesFromState } from './stores/Entity'
 
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import DashboardView from './components/Dashboard'
+
+import ExtensionIcon from '@material-ui/icons/Extension';
+import InstancesView from './components/Instances'
+import InstanceView from './components/Instance'
+
 const history = createBrowserHistory();
 
 const ThemeContext = React.createContext();
@@ -319,8 +326,33 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 
 	const container = undefined;
 
-	var topitems = [];
+	var topitems = [{
+		"text": "Dashboard", 
+		"path": "/", 
+		"icon": <DashboardIcon/>, 
+		"selected": true
+	}];
+
+	/*
+	 * I have this idea of showing per type specifics here
+	 */
 	var miditems = [];
+	if( types ) {
+		for( var typeid in types ) {
+			if( typeid ) {
+				var type = types[typeid];
+				if( type ) {
+					miditems.push({
+						"text": type["name"], 
+						"path": "/list/" + type["name"], 
+						"icon": <ExtensionIcon/>, 
+						"selected": false
+					});
+				}
+			}
+		}
+	}
+
 	var lowitems = [];
 
 	return (
@@ -481,6 +513,45 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 			</Hidden>
 			</nav>
 			<main className={classes.content}>
+				<div>
+				<Switch>
+				<Route 
+					exact 
+					path="/" 
+					render={
+						(props) => 
+							<>
+							<DashboardView 
+								{...props} 
+								wsClient={wsClient} />
+							</>
+					} />
+				<Route 
+					exact 
+					path="/list/:typename" 
+					render={
+						(props) => 
+							<>
+							<InstancesView 
+								{...props} 
+								type={getType(props, types)} 
+								wsClient={wsClient} />
+							</>
+					} />
+				<Route 
+					exact 
+					path="/detail/:typename/:instanceid" 
+					render={
+						(props) => 
+							<>
+							<InstanceView 
+								{...props} 
+								type={getType(props, types)} 
+								wsClient={wsClient} />
+							</>
+					} />
+				</Switch>
+				</div>
 			</main>
 		</Router>
 	);
