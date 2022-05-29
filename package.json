@@ -1,0 +1,59 @@
+{
+  "name": "gfsui-builder",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5000",
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@jsonforms/core": "^2.5.2",
+    "@jsonforms/examples": "^2.5.2",
+    "@jsonforms/material-renderers": "^2.5.2",
+    "@jsonforms/react": "^2.5.2",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@rjsf/core": "^3.2.1",
+    "@rjsf/material-ui": "^3.2.1",
+    "@types/node": "^16.4.1",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "graphql": "^15.6.0",
+    "graphql-editor": "^5.0.0",
+    "graphql-zeus": "^3.1.0",
+    "history": "^5.0.1",
+    "isomorphic-fetch": "^3.0.0",
+    "material-table": "^1.63.0",
+    "pathfinding": "^0.4.18",
+    "paths-js": "^0.4.11",
+    "query-string": "^7.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "^5.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
+    "typescript": "^4.3.5",
+    "worker-loader": "^3.0.8"
+  },
+  "scripts": {
+    "dev": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && react-scripts start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
