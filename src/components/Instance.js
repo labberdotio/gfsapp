@@ -104,8 +104,6 @@ class Instance extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
-		console.log(" >>> Instance View componentDidUpdate ");
-
 		const {
 			api, 
 			namespace, 
@@ -115,7 +113,7 @@ class Instance extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -127,8 +125,6 @@ class Instance extends Component {
 
 	componentDidMount() {
 
-		console.log(" >>> Instance View componentDidMount ");
-
 		const {
 			api, 
 			namespace, 
@@ -138,7 +134,7 @@ class Instance extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -163,7 +159,7 @@ class Instance extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -221,7 +217,7 @@ class Instance extends Component {
 
 	render() {
 
-		console.log(" >>> Instance View render ");
+		var _this = this;
 
 		const {
 			api, 
@@ -232,7 +228,7 @@ class Instance extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -328,6 +324,35 @@ class Instance extends Component {
 							paging: false // true
 						}}
 						editable={{
+							onRowAdd: (newData) =>
+								new Promise((resolve, reject) => {
+									setTimeout(() => {
+										// 
+										resolve();
+									}, 600);
+								}),
+							onRowUpdate: (newData, oldData) =>
+								new Promise((resolve, reject) => {
+									setTimeout(() => {
+										const {
+											api,
+											namespace,
+											vertexId,
+											vertex,
+											pathdata
+										} = this.props;
+										vertex[newData['name']] = newData['value'];
+										_this.props.updateVertex(api, vertexId, vertex);
+										resolve();
+									}, 600);
+								}),
+							onRowDelete: (oldData) =>
+								new Promise((resolve, reject) => {
+									setTimeout(() => {
+										// 
+										resolve();
+									}, 600);
+								}),
 						}}
 						style={{
 							width: "100%"
@@ -355,8 +380,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	console.log(" >>> Instance View mapStateToProps ");
-
 	const { match } = ownProps;
 
 	const typename = match["params"]["typename"];
@@ -371,7 +394,7 @@ function mapStateToProps(state, ownProps) {
 		loading: isloading, 
 		loaded: isloaded, 
 		failed: isfailed, 
-		timestamp: itimestamp, 
+		timestamp: istimestamp, 
 		entities: instances
 	} = getEntitiesFromState(state, api, typename);
 
@@ -384,7 +407,7 @@ function mapStateToProps(state, ownProps) {
 		isloading: isloading, 
 		isloaded: isloaded, 
 		isfailed: isfailed, 
-		itimestamp: itimestamp, 
+		istimestamp: istimestamp, 
 		instances: instances
 	}
 

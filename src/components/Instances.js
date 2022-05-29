@@ -19,11 +19,16 @@ import TreeItem from '@material-ui/lab/TreeItem';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import AddIcon from '@material-ui/icons/Add';
 
 import MaterialTable from 'material-table';
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 import { 
 	loadEntitiesIntoState, 
@@ -41,6 +46,12 @@ import {
 // const queryString = require('query-string');
 
 const styles = theme => ({
+
+	speedDial: {
+		position: 'fixed',
+		right: 10,
+		bottom: 10
+	},
 
 });
 
@@ -83,10 +94,17 @@ class Instances extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			
+			createInstanceDialogOpen: false
 		}
 
 		var _this = this;
+
+		this.createInstanceDialogElement = React.createRef();
+
+		this.onCloseCreateInstanceDialog = this.onCloseCreateInstanceDialog.bind(this);
+
+		this.createInstance = this.createInstance.bind(this);
+		this.deleteInstance = this.deleteInstance.bind(this);
 
 		this.wsClient = props.wsClient;
 		this.wsClient.onMessage(
@@ -97,14 +115,13 @@ class Instances extends Component {
 	}
 
 	state = {
+		createInstanceDialogOpen: false
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
 	// }
 
 	componentDidUpdate(prevProps, prevState) {
-
-		console.log(" >>> Instances View componentDidUpdate ");
 
 		const {
 			api, 
@@ -114,7 +131,7 @@ class Instances extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -126,8 +143,6 @@ class Instances extends Component {
 
 	componentDidMount() {
 
-		console.log(" >>> Instances View componentDidMount ");
-
 		const {
 			api, 
 			namespace, 
@@ -136,7 +151,7 @@ class Instances extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -144,6 +159,25 @@ class Instances extends Component {
 			this.props.loadInstances(api, typename);
 		}
 
+	}
+
+	/*
+	 * 
+	 */
+
+	createInstance(type, data) {
+		const {api} = this.props;
+		this.props.createInstance(api, type, data);
+		this.createInstanceDialogElement.current.closeDialog();
+	}
+
+	deleteInstance() {
+	}
+
+	onCloseCreateInstanceDialog() {
+		this.setState({
+			createInstanceDialogOpen: false
+		});
 	}
 
 	/*
@@ -160,7 +194,7 @@ class Instances extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -218,8 +252,6 @@ class Instances extends Component {
 
 	render() {
 
-		console.log(" >>> Instances View render ");
-
 		const {
 			api, 
 			namespace, 
@@ -228,7 +260,7 @@ class Instances extends Component {
 			isloading, 
 			isloaded, 
 			isfailed, 
-			itimestamp, 
+			istimestamp, 
 			instances
 		} = this.props;
 
@@ -282,6 +314,14 @@ class Instances extends Component {
 				}
 			}
 		}
+
+		var hidden = false;
+		var open = true;
+		var direction = "up";
+
+		var actions = [
+			{ icon: <AddIcon />, name: 'New' },
+		];
 
 		return (
 			<>
@@ -347,6 +387,25 @@ class Instances extends Component {
 						}}/>
 				</Grid>
 			</Grid>
+
+			<SpeedDial
+				ariaLabel="GraphActions"
+				className={classes.speedDial}
+				hidden={hidden}
+				icon={<SpeedDialIcon/>}
+				onClose={this.onCloseDial}
+				onOpen={this.onOpenDial}
+				open={open}
+				direction={direction}>
+				{actions.map(action => (
+					<SpeedDialAction
+						key={action.name}
+						icon={action.icon}
+						tooltipTitle={action.name}
+						onClick={this.onCloseDial}/>
+				))}
+			</SpeedDial>
+
 			</Container>
 			</>
 		);
@@ -368,8 +427,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	console.log(" >>> Instances View mapStateToProps ");
-
 	const { match } = ownProps;
 
 	const typename = match["params"]["typename"];
@@ -383,7 +440,7 @@ function mapStateToProps(state, ownProps) {
 		loading: isloading, 
 		loaded: isloaded, 
 		failed: isfailed, 
-		timestamp: itimestamp, 
+		timestamp: istimestamp, 
 		entities: instances
 	} = getEntitiesFromState(state, api, typename);
 
@@ -395,7 +452,7 @@ function mapStateToProps(state, ownProps) {
 		isloading: isloading, 
 		isloaded: isloaded, 
 		isfailed: isfailed, 
-		itimestamp: itimestamp, 
+		istimestamp: istimestamp, 
 		instances: instances
 	}
 

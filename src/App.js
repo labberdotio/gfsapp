@@ -54,6 +54,8 @@ import { getEntitiesFromState } from './stores/Entity'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DashboardView from './components/Dashboard'
 
+import CreateInstanceDialog from './components/Create'
+
 import ExtensionIcon from '@material-ui/icons/Extension';
 import InstancesView from './components/Instances'
 import InstanceView from './components/Instance'
@@ -533,6 +535,18 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 						(props) => 
 							<>
 							<InstancesView 
+								{...props} 
+								type={getType(props, types)} 
+								wsClient={wsClient} />
+							</>
+					} />
+				<Route 
+					exact 
+					path="/create/:typename" 
+					render={
+						(props) => 
+							<>
+							<CreateInstanceDialog 
 								{...props} 
 								type={getType(props, types)} 
 								wsClient={wsClient} />
