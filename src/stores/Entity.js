@@ -1,15 +1,41 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, John Grundback
 // All rights reserved.
 // 
+
+function loadEntityIntoState(endpoint, resource, entity_id, accept = 'application/json') {
+	return {
+		type: 'GET_ENTITY',
+		resource: resource,
+		endpoint: endpoint,
+		entity_id: entity_id,
+		accept: accept
+	}
+}
+
+function loadEntitiesIntoState(endpoint, resource, accept = 'application/json') {
+	return {
+		type: 'GET_ENTITIES',
+		resource: resource,
+		endpoint: endpoint,
+		accept: accept
+	}
+}
 
 function getEntityFromState(state, endpoint, resource, entity_id) {
 
 	const {
-		// entity
-		entities
-	} = state;
+		entity
+	} = state;	
+
+	/*
+	 *
+	 */
+	var key = endpoint.api.host + '-' + resource;
+	if( entity_id ) {
+		key = endpoint.api.host + '-' + resource + '-' + entity_id;
+	}
 
 	const {
 		loading,
@@ -17,21 +43,13 @@ function getEntityFromState(state, endpoint, resource, entity_id) {
 		failed,
 		invalid,
 		timestamp,
-		entities: _entities
-	// } = entity[endpoint.api.host + '-' + resource + '-' + entity_id] || {
-	} = entities[endpoint.api.host + '-' + resource] || {
+		entity: _entity
+	} = entity[key] || {
 		loading: false,
 		loaded: false,
 		failed: false,
 		invalid: false,
-		entities: []
-	}
-
-	var _entity = undefined;
-	if( _entities ) {
-		if(  _entities[entity_id] ) {
-			_entity = _entities[entity_id];
-		}
+		entity: null
 	}
 
 	return {
@@ -51,6 +69,11 @@ function getEntitiesFromState(state, endpoint, resource) {
 		entities
 	} = state;
 
+	/*
+	 *
+	 */
+	var key = endpoint.api.host + '-' + resource;
+
 	const {
 		loading,
 		loaded,
@@ -58,7 +81,7 @@ function getEntitiesFromState(state, endpoint, resource) {
 		invalid,
 		timestamp,
 		entities: _entities
-	} = entities[endpoint.api.host + '-' + resource] || {
+	} = entities[key] || {
 		loading: false,
 		loaded: false,
 		failed: false,
@@ -78,6 +101,8 @@ function getEntitiesFromState(state, endpoint, resource) {
 }
 
 export {
+	loadEntitiesIntoState,
+	loadEntityIntoState,
 	getEntitiesFromState,
 	getEntityFromState
 };
