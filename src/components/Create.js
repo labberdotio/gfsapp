@@ -154,7 +154,7 @@ class CreateInstanceDialog extends Component {
 				return <Form 
 					schema={schema} 
 					formData={data} 
-					onChange={e => _this.updateFormData(form, e.formData)} 
+					onChange={e => {}} 
 					onSubmit={e => {}} 
 					onError={e => {}} 
 					children={<br/>} />
@@ -222,6 +222,21 @@ function mapStateToProps(state, ownProps) {
 		timestamp: sstimestamp, 
 		entity: schema
 	} = getEntityFromState(state, api, "schema", typename);
+
+	console.log( " SCHEMA >> " );
+	console.log( ssloading );
+	console.log( ssloaded );
+	console.log( ssfailed );
+	console.log( sstimestamp );
+	console.log( schema );
+	console.log( " << SCHEMA " );
+
+	// var typeschema = undefined;
+	// if( typename && schema ) {
+	// 	if( schema["definitions"] && schema["definitions"][typename] ) {
+	// 		typeschema = schema["definitions"][typename];
+	// 	}
+	// }
 
 	return {
 		api, 

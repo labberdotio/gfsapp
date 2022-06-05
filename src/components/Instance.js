@@ -14,6 +14,9 @@ import { useHistory } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 
@@ -26,12 +29,12 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { 
-	loadEntitiesIntoState, 
-	invalidateEntitiesInState, 
-	refreshEntityInState 
+	loadEntityIntoState, 
+	loadEntitiesIntoState
 } from '../actions/Entity'
 
 import { 
+	getEntityFromState, 
 	getEntitiesFromState 
 } from '../stores/Entity'
 
@@ -114,11 +117,22 @@ class Instance extends Component {
 			isloaded, 
 			isfailed, 
 			istimestamp, 
-			instances
+			instances, 
+			ssloading, 
+			ssloaded, 
+			ssfailed, 
+			sstimestamp, 
+			schema
 		} = this.props;
 
 		if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
 			this.props.loadInstances(api, typename);
+		}
+
+		if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
+			if( typename ) {
+				this.props.loadSchema(api, typename);
+			}
 		}
 
 	}
@@ -135,11 +149,22 @@ class Instance extends Component {
 			isloaded, 
 			isfailed, 
 			istimestamp, 
-			instances
+			instances, 
+			ssloading, 
+			ssloaded, 
+			ssfailed, 
+			sstimestamp, 
+			schema
 		} = this.props;
 
 		if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
 			this.props.loadInstances(api, typename);
+		}
+
+		if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
+			if( typename ) {
+				this.props.loadSchema(api, typename);
+			}
 		}
 
 	}
@@ -160,7 +185,12 @@ class Instance extends Component {
 			isloaded, 
 			isfailed, 
 			istimestamp, 
-			instances
+			instances, 
+			ssloading, 
+			ssloaded, 
+			ssfailed, 
+			sstimestamp, 
+			schema
 		} = this.props;
 
 		var treestruc = {
@@ -229,7 +259,12 @@ class Instance extends Component {
 			isloaded, 
 			isfailed, 
 			istimestamp, 
-			instances
+			instances, 
+			ssloading, 
+			ssloaded, 
+			ssfailed, 
+			sstimestamp, 
+			schema
 		} = this.props;
 
 		const { classes } = this.props;
@@ -238,28 +273,24 @@ class Instance extends Component {
 
 		var backdropOpen = false;
 
-		var cols = [];
-		cols.push({
-			title: "key",
-			field: "key"
-		});
-		cols.push({
-			title: "value",
-			field: "value"
-		});
-
-		var rows = [];
+		var instance = undefined;
 		if( instanceid ) {
-			var instance = instances[instanceid];
-			if( instance ) {
-				for (const [key, value] of Object.entries(instance)) {
-					if( (key) && (value) ) {
-						// ??
-						if( key != "tableData" ) {
-							rows.push({
-								"key": key, 
-								"value": value
-							});
+			var cinstance = instances[instanceid];
+			if( cinstance ) {
+				instance = cinstance;
+			}
+		}
+
+		var properties = [];
+		var dependencies = [];
+
+		if( schema && schema["properties"] ) {
+			for( var propertyname in schema["properties"] ) {
+				var property = schema["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					if( property && property["type"] ) {
+						if( property["type"] == "string" ) {
+							properties.push(propertyname);
 						}
 					}
 				}
@@ -313,50 +344,51 @@ class Instance extends Component {
 					xs={9} 
 					spacing={0} 
 				>
-					<MaterialTable
-						title={typename}
-						columns={cols}
-						data={rows}
-						options={{
-							// pageSize: ...
-							pageSizeOptions: [],
-							toolbar: true,
-							paging: false // true
-						}}
-						editable={{
-							onRowAdd: (newData) =>
-								new Promise((resolve, reject) => {
-									setTimeout(() => {
-										// 
-										resolve();
-									}, 600);
-								}),
-							onRowUpdate: (newData, oldData) =>
-								new Promise((resolve, reject) => {
-									setTimeout(() => {
-										const {
-											api,
-											namespace,
-											vertexId,
-											vertex,
-											pathdata
-										} = this.props;
-										vertex[newData['name']] = newData['value'];
-										_this.props.updateVertex(api, vertexId, vertex);
-										resolve();
-									}, 600);
-								}),
-							onRowDelete: (oldData) =>
-								new Promise((resolve, reject) => {
-									setTimeout(() => {
-										// 
-										resolve();
-									}, 600);
-								}),
-						}}
-						style={{
-							width: "100%"
-						}}/>
+
+					<Paper>
+
+					{/* {instanceid && instance &&
+						<p><h1>{instanceid}</h1></p>
+					} */}
+
+					{instance && instance["name"] &&
+						<h1>{instance["name"]}</h1>
+					}
+
+					{instance && instance["label"] &&
+						<h2>{instance["label"]}</h2>
+					}
+
+					{instance && instance["id"] &&
+						<p><label>ID: </label>{instance["id"]}</p>
+					}
+
+					{instance && instance["uuid"] &&
+						<p><label>UUID: </label>{instance["uuid"]}</p>
+					}
+
+					{instance && instance["created"] &&
+						<p><label>Created: </label>{instance["created"]}</p>
+					}
+
+					{instance && instance["modified"] &&
+						<p><label>Modified: </label>{instance["modified"]}</p>
+					}
+
+					{/* { instance && Object.keys(instance).map((item, i) => (
+						<h3>{item}: {instance[item]}</h3>
+					))} */}
+
+					{/* { schema && schema["properties"] && Object.keys(schema["properties"]).map((item, i) => (
+						<h3>{item}</h3>
+					))} */}
+
+					{ properties && properties.map((item, i) => (
+						<p><label>{item}: </label>{instance[item]}</p>
+					))}
+
+					</Paper>
+
 				</Grid>
 			</Grid>
 			</Container>
@@ -373,7 +405,9 @@ class Instance extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename))
+		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
+
+		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema")) // , typename))
 
 	}
 }
@@ -385,6 +419,9 @@ function mapStateToProps(state, ownProps) {
 	const typename = match["params"]["typename"];
 	const instanceid = match["params"]["instanceid"];
 	const type = ownProps["type"];
+
+	console.log( " >> " + typename );
+	console.log( " >> " + instanceid );
 
 	const {
 		api, 
@@ -398,6 +435,22 @@ function mapStateToProps(state, ownProps) {
 		entities: instances
 	} = getEntitiesFromState(state, api, typename);
 
+	const {
+		loading: ssloading, 
+		loaded: ssloaded, 
+		failed: ssfailed, 
+		timestamp: sstimestamp, 
+		entity: schema
+	} = getEntityFromState(state, api, "schema"); // , typename);
+
+	console.log( " SCHEMA >> " );
+	console.log( ssloading );
+	console.log( ssloaded );
+	console.log( ssfailed );
+	console.log( sstimestamp );
+	console.log( schema );
+	console.log( " << SCHEMA " );
+
 	return {
 		api, 
 		namespace: api.namespace, 
@@ -408,7 +461,12 @@ function mapStateToProps(state, ownProps) {
 		isloaded: isloaded, 
 		isfailed: isfailed, 
 		istimestamp: istimestamp, 
-		instances: instances
+		instances: instances,
+		ssloading: ssloading, 
+		ssloaded: ssloaded, 
+		ssfailed: ssfailed, 
+		sstimestamp: sstimestamp, 
+		schema: schema
 	}
 
 }
