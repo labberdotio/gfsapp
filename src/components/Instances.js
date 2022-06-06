@@ -14,31 +14,31 @@ import { useHistory } from "react-router-dom";
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+// import TreeView from '@material-ui/lab/TreeView';
+// import TreeItem from '@material-ui/lab/TreeItem';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import AddIcon from '@material-ui/icons/Add';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+// import AddIcon from '@material-ui/icons/Add';
 
 import MaterialTable from 'material-table';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import Backdrop from '@material-ui/core/Backdrop';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+// import SpeedDial from '@material-ui/lab/SpeedDial';
+// import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+// import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
-import { 
-	loadEntitiesIntoState, 
-	invalidateEntitiesInState, 
-	refreshEntityInState 
-} from '../actions/Entity'
+// import { 
+// 	loadEntitiesIntoState, 
+// 	invalidateEntitiesInState, 
+// 	refreshEntityInState 
+// } from '../actions/Entity'
 
-import { 
-	getEntitiesFromState 
-} from '../stores/Entity'
+// import { 
+// 	getEntitiesFromState 
+// } from '../stores/Entity'
 
 // const history = createBrowserHistory();
 // const history = useHistory();
@@ -47,64 +47,17 @@ import {
 
 const styles = theme => ({
 
-	speedDial: {
-		position: 'fixed',
-		right: 10,
-		bottom: 10
-	},
-
 });
-
-function TreeViewItems(props) {
-	const history = useHistory();
-	var items = props.items;
-	var onSelectFn = props.onSelect;
-	return (
-		<>
-		{Object.keys(items).map((key, index) => ( 
-			<TreeItem 
-				key={ key }
-				nodeId={ "" + items[key]["id"] }
-				label={ "" + items[key]["label"] }
-				onClick={event => {
-					event.stopPropagation();
-					event.preventDefault();
-					if( items[key]["instance"] ) {
-						onSelectFn(items[key]["instance"]);
-					}
-					if( items[key]["link"] ) {
-						history.push(items[key]["link"]);
-					}
-				}}>
-				{items[key]["tree"] && 
-				Object.keys(items[key]["tree"]).length > 0 &&
-					<TreeViewItems 
-						onSelect={onSelectFn} 
-						items={items[key]["tree"]}
-					/>
-				}
-			</TreeItem>
-		))}
-		</>
-	)
-}
 
 class Instances extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			createInstanceDialogOpen: false
+			
 		}
 
 		var _this = this;
-
-		this.createInstanceDialogElement = React.createRef();
-
-		this.onCloseCreateInstanceDialog = this.onCloseCreateInstanceDialog.bind(this);
-
-		this.createInstance = this.createInstance.bind(this);
-		this.deleteInstance = this.deleteInstance.bind(this);
 
 		this.wsClient = props.wsClient;
 		this.wsClient.onMessage(
@@ -115,7 +68,7 @@ class Instances extends Component {
 	}
 
 	state = {
-		createInstanceDialogOpen: false
+		
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -128,16 +81,16 @@ class Instances extends Component {
 			namespace, 
 			typename, 
 			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
+			// isloading, 
+			// isloaded, 
+			// isfailed, 
+			// istimestamp, 
 			instances
 		} = this.props;
 
-		if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-			this.props.loadInstances(api, typename);
-		}
+		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
+		// 	this.props.loadInstances(api, typename);
+		// }
 
 	}
 
@@ -148,107 +101,22 @@ class Instances extends Component {
 			namespace, 
 			typename, 
 			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
+			// isloading, 
+			// isloaded, 
+			// isfailed, 
+			// istimestamp, 
 			instances
 		} = this.props;
 
-		if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-			this.props.loadInstances(api, typename);
-		}
+		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
+		// 	this.props.loadInstances(api, typename);
+		// }
 
-	}
-
-	/*
-	 * 
-	 */
-
-	createInstance(type, data) {
-		const {api} = this.props;
-		this.props.createInstance(api, type, data);
-		this.createInstanceDialogElement.current.closeDialog();
-	}
-
-	deleteInstance() {
-	}
-
-	onCloseCreateInstanceDialog() {
-		this.setState({
-			createInstanceDialogOpen: false
-		});
 	}
 
 	/*
 	 *
 	 */
-
-	getTreeData() {
-
-		const {
-			api, 
-			namespace, 
-			typename, 
-			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
-			instances
-		} = this.props;
-
-		var treestruc = {
-		};
-
-		treestruc[typename] = {
-			id: typename, 
-			name: typename, 
-			label: typename, 
-			tree: {
-			}
-		}
-
-		if( instances ) {
-			for( var instanceid in instances ) {
-				var instance = instances[instanceid];
-				if( instance ) {
-
-					// if( !(instance["label"] in treestruc) ) {
-					// 	treestruc[instance["label"]] = {
-					// 		id: instance["label"], 
-					// 		name: instance["label"], 
-					// 		label: instance["label"], 
-					// 		tree: {
-					// 		}
-					// 	};
-					// }
-
-					// treestruc[instance["label"]]["tree"][instance["name"]] = {
-					treestruc[instance["label"]]["tree"][instance["id"]] = {
-						id: instance["id"], 
-						name: instance["name"], 
-						label: instance["name"], // + "." + instance["label"], 
-						link: this.makeInstanceLink(instance), 
-						instance: this.makeInstance(instance), 
-						tree: {
-						}
-					};
-
-				}
-			}
-		}
-
-		return treestruc;
-	}
-
-	makeInstanceLink(instance) {
-		return "/detail/" + instance["label"] + "/" + instance["id"];
-	}
-
-	makeInstance(instance) {
-		return instance;
-	}
 
 	render() {
 
@@ -257,18 +125,16 @@ class Instances extends Component {
 			namespace, 
 			typename, 
 			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
+			// isloading, 
+			// isloaded, 
+			// isfailed, 
+			// istimestamp, 
 			instances
 		} = this.props;
 
 		const { classes } = this.props;
 
-		var treestruc = this.getTreeData(instances);
-
-		var backdropOpen = false;
+		// var backdropOpen = false;
 
 		var cols = [];
 		cols.push({
@@ -315,14 +181,6 @@ class Instances extends Component {
 			}
 		}
 
-		var hidden = false;
-		var open = true;
-		var direction = "up";
-
-		var actions = [
-			{ icon: <AddIcon />, name: 'New' },
-		];
-
 		return (
 			<>
 			<Container 
@@ -330,9 +188,9 @@ class Instances extends Component {
 				// className="listContainer" 
 				// maxWidth="false"
 				>
-			<Backdrop open={backdropOpen}>
+			{/* <Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
-			</Backdrop>
+			</Backdrop> */}
 			<Grid 
 				className={classes.fullGrid} 
 				// className="fullGrid" 
@@ -340,36 +198,6 @@ class Instances extends Component {
 				xs={12} 
 				spacing={0} 
 			>
-				<Grid 
-					className={classes.treeGrid} 
-					// className="treeGrid" 
-					item 
-					xs={3} 
-					spacing={0} 
-				>
-					<TreeView
-						className={classes.tree} 
-						// className="tree" 
-						defaultCollapseIcon={<ExpandMoreIcon />}
-						defaultExpandIcon={<ChevronRightIcon />}
-						defaultExpanded={[typename]}
-					>
-						<TreeViewItems 
-							onSelect={item => {
-								// 
-							}}
-							items={treestruc}
-						/>
-					</TreeView>
-				</Grid>
-				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
-					container 
-					item 
-					xs={9} 
-					spacing={0} 
-				>
 					<MaterialTable
 						title={typename}
 						columns={cols}
@@ -385,27 +213,7 @@ class Instances extends Component {
 						style={{
 							width: "100%"
 						}}/>
-				</Grid>
 			</Grid>
-
-			<SpeedDial
-				ariaLabel="GraphActions"
-				className={classes.speedDial}
-				hidden={hidden}
-				icon={<SpeedDialIcon/>}
-				onClose={this.onCloseDial}
-				onOpen={this.onOpenDial}
-				open={open}
-				direction={direction}>
-				{actions.map(action => (
-					<SpeedDialAction
-						key={action.name}
-						icon={action.icon}
-						tooltipTitle={action.name}
-						onClick={this.onCloseDial}/>
-				))}
-			</SpeedDial>
-
 			</Container>
 			</>
 		);
@@ -420,7 +228,7 @@ class Instances extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename))
+		// loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename))
 
 	}
 }
@@ -429,30 +237,34 @@ function mapStateToProps(state, ownProps) {
 
 	const { match } = ownProps;
 
-	const typename = match["params"]["typename"];
+	// const typename = match["params"]["typename"];
+	const typename = ownProps["typename"];
 	const type = ownProps["type"];
+	const schema = ownProps["schema"];
+	const instances = ownProps["instances"];
 
 	const {
 		api, 
 	} = state;
 
-	const {
-		loading: isloading, 
-		loaded: isloaded, 
-		failed: isfailed, 
-		timestamp: istimestamp, 
-		entities: instances
-	} = getEntitiesFromState(state, api, typename);
+	// const {
+	// 	loading: isloading, 
+	// 	loaded: isloaded, 
+	// 	failed: isfailed, 
+	// 	timestamp: istimestamp, 
+	// 	entities: instances
+	// } = getEntitiesFromState(state, api, typename);
 
 	return {
 		api, 
 		namespace: api.namespace, 
 		typename: typename, 
 		type: type, 
-		isloading: isloading, 
-		isloaded: isloaded, 
-		isfailed: isfailed, 
-		istimestamp: istimestamp, 
+		schema: schema, 
+		// isloading: isloading, 
+		// isloaded: isloaded, 
+		// isfailed: isfailed, 
+		// istimestamp: istimestamp, 
 		instances: instances
 	}
 

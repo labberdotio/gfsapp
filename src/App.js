@@ -57,8 +57,11 @@ import DashboardView from './components/Dashboard'
 import CreateInstanceDialog from './components/Create'
 
 import ExtensionIcon from '@material-ui/icons/Extension';
-import InstancesView from './components/Instances'
-import InstanceView from './components/Instance'
+// import InstancesView from './components/Instances'
+// import InstanceView from './components/Instance'
+
+import RootInstancesView from './components/RootInstances'
+import RootInstanceView from './components/RootInstance'
 
 const history = createBrowserHistory();
 
@@ -534,7 +537,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 					render={
 						(props) => 
 							<>
-							<InstancesView 
+							<RootInstancesView 
 								{...props} 
 								type={getType(props, types)} 
 								wsClient={wsClient} />
@@ -558,7 +561,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 					render={
 						(props) => 
 							<>
-							<InstanceView 
+							<RootInstanceView 
 								{...props} 
 								type={getType(props, types)} 
 								wsClient={wsClient} />

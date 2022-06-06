@@ -17,26 +17,30 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+// import TreeView from '@material-ui/lab/TreeView';
+// import TreeItem from '@material-ui/lab/TreeItem';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import MaterialTable from 'material-table';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import Backdrop from '@material-ui/core/Backdrop';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { 
-	loadEntityIntoState, 
-	loadEntitiesIntoState
-} from '../actions/Entity'
+import InstancesView from './Instances'
+// import InstanceView from './Instance'
+// import DependentsView from './Dependents'
 
-import { 
-	getEntityFromState, 
-	getEntitiesFromState 
-} from '../stores/Entity'
+// import { 
+// 	loadEntityIntoState, 
+// 	loadEntitiesIntoState
+// } from '../actions/Entity'
+
+// import { 
+// 	getEntityFromState, 
+// 	getEntitiesFromState 
+// } from '../stores/Entity'
 
 // const history = createBrowserHistory();
 // const history = useHistory();
@@ -45,48 +49,17 @@ import {
 
 const styles = theme => ({
 
-});
+	mainPaper: {
+		width: '100%'
+	},
 
-function TreeViewItems(props) {
-	const history = useHistory();
-	var items = props.items;
-	var onSelectFn = props.onSelect;
-	return (
-		<>
-		{Object.keys(items).map((key, index) => ( 
-			<TreeItem 
-				key={ key }
-				nodeId={ "" + items[key]["id"] }
-				label={ "" + items[key]["label"] }
-				onClick={event => {
-					event.stopPropagation();
-					event.preventDefault();
-					if( items[key]["instance"] ) {
-						onSelectFn(items[key]["instance"]);
-					}
-					if( items[key]["link"] ) {
-						history.push(items[key]["link"]);
-					}
-				}}>
-				{items[key]["tree"] && 
-				Object.keys(items[key]["tree"]).length > 0 &&
-					<TreeViewItems 
-						onSelect={onSelectFn} 
-						items={items[key]["tree"]}
-					/>
-				}
-			</TreeItem>
-		))}
-		</>
-	)
-}
+});
 
 class Instance extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			
 		}
 
 		var _this = this;
@@ -111,29 +84,30 @@ class Instance extends Component {
 			api, 
 			namespace, 
 			typename, 
-			instanceid, 
 			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
-			instances, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			sstimestamp, 
+			instanceid, 
+			instance, 
+			// isloading, 
+			// isloaded, 
+			// isfailed, 
+			// istimestamp, 
+			// instances, 
+			// ssloading, 
+			// ssloaded, 
+			// ssfailed, 
+			// sstimestamp, 
 			schema
 		} = this.props;
 
-		if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-			this.props.loadInstances(api, typename);
-		}
+		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
+		// 	this.props.loadInstances(api, typename);
+		// }
 
-		if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
-			if( typename ) {
-				this.props.loadSchema(api, typename);
-			}
-		}
+		// if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
+		// 	if( typename ) {
+		// 		this.props.loadSchema(api, typename);
+		// 	}
+		// }
 
 	}
 
@@ -143,107 +117,36 @@ class Instance extends Component {
 			api, 
 			namespace, 
 			typename, 
-			instanceid, 
 			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
-			instances, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			sstimestamp, 
+			instanceid, 
+			instance, 
+			// isloading, 
+			// isloaded, 
+			// isfailed, 
+			// istimestamp, 
+			// instances, 
+			// ssloading, 
+			// ssloaded, 
+			// ssfailed, 
+			// sstimestamp, 
 			schema
 		} = this.props;
 
-		if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-			this.props.loadInstances(api, typename);
-		}
+		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
+		// 	this.props.loadInstances(api, typename);
+		// }
 
-		if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
-			if( typename ) {
-				this.props.loadSchema(api, typename);
-			}
-		}
+		// if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
+		// 	if( typename ) {
+		// 		this.props.loadSchema(api, typename);
+		// 	}
+		// }
 
 	}
 
 	/*
 	 *
 	 */
-
-	getTreeData() {
-
-		const {
-			api, 
-			namespace, 
-			typename, 
-			instanceid, 
-			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
-			instances, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			sstimestamp, 
-			schema
-		} = this.props;
-
-		var treestruc = {
-		};
-
-		treestruc[typename] = {
-			id: typename, 
-			name: typename, 
-			label: typename, 
-			tree: {
-			}
-		}
-
-		if( instances ) {
-			for( var cinstanceid in instances ) {
-				var instance = instances[cinstanceid];
-				if( instance ) {
-
-					// if( !(instance["label"] in treestruc) ) {
-					// 	treestruc[instance["label"]] = {
-					// 		id: instance["label"], 
-					// 		name: instance["label"], 
-					// 		label: instance["label"], 
-					// 		tree: {
-					// 		}
-					// 	};
-					// }
-
-					// treestruc[instance["label"]]["tree"][instance["name"]] = {
-					treestruc[instance["label"]]["tree"][instance["id"]] = {
-						id: instance["id"], 
-						name: instance["name"], 
-						label: instance["name"], // + "." + instance["label"], 
-						link: this.makeInstanceLink(instance), 
-						instance: this.makeInstance(instance), 
-						tree: {
-						}
-					};
-
-				}
-			}
-		}
-
-		return treestruc;
-	}
-
-	makeInstanceLink(instance) {
-		return "/detail/" + instance["label"] + "/" + instance["id"];
-	}
-
-	makeInstance(instance) {
-		return instance;
-	}
 
 	render() {
 
@@ -253,33 +156,32 @@ class Instance extends Component {
 			api, 
 			namespace, 
 			typename, 
-			instanceid, 
 			type, 
-			isloading, 
-			isloaded, 
-			isfailed, 
-			istimestamp, 
-			instances, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			sstimestamp, 
+			instanceid, 
+			instance, 
+			// isloading, 
+			// isloaded, 
+			// isfailed, 
+			// istimestamp, 
+			// instances, 
+			// ssloading, 
+			// ssloaded, 
+			// ssfailed, 
+			// sstimestamp, 
 			schema
 		} = this.props;
 
 		const { classes } = this.props;
 
-		var treestruc = this.getTreeData(instances);
+		// var backdropOpen = false;
 
-		var backdropOpen = false;
-
-		var instance = undefined;
-		if( instanceid ) {
-			var cinstance = instances[instanceid];
-			if( cinstance ) {
-				instance = cinstance;
-			}
-		}
+		// var instance = undefined;
+		// if( instanceid ) {
+		// 	var cinstance = instances[instanceid];
+		// 	if( cinstance ) {
+		// 		instance = cinstance;
+		// 	}
+		// }
 
 		var properties = [];
 		var dependencies = [];
@@ -291,6 +193,12 @@ class Instance extends Component {
 					if( property && property["type"] ) {
 						if( property["type"] == "string" ) {
 							properties.push(propertyname);
+						} else if( (property["type"] == "array") && 
+								   (property["items"]) ) {
+							dependencies.push({
+								"name": propertyname,
+								"type": property["items"]["$ref"].replace("#/definitions/", "")
+							});
 						}
 					}
 				}
@@ -304,9 +212,9 @@ class Instance extends Component {
 				// className="listContainer" 
 				// maxWidth="false"
 				>
-			<Backdrop open={backdropOpen}>
+			{/* <Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
-			</Backdrop>
+			</Backdrop> */}
 			<Grid 
 				className={classes.fullGrid} 
 				// className="fullGrid" 
@@ -314,38 +222,10 @@ class Instance extends Component {
 				xs={12} 
 				spacing={0} 
 			>
-				<Grid 
-					className={classes.treeGrid} 
-					// className="treeGrid" 
-					item 
-					xs={3} 
-					spacing={0} 
-				>
-					<TreeView
-						className={classes.tree} 
-						// className="tree" 
-						defaultCollapseIcon={<ExpandMoreIcon />}
-						defaultExpandIcon={<ChevronRightIcon />}
-						defaultExpanded={[typename]}
-					>
-						<TreeViewItems 
-							onSelect={item => {
-								// 
-							}}
-							items={treestruc}
-						/>
-					</TreeView>
-				</Grid>
-				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
-					container 
-					item 
-					xs={9} 
-					spacing={0} 
-				>
 
-					<Paper>
+					<Paper
+						className={classes.mainPaper} 
+					>
 
 					{/* {instanceid && instance &&
 						<p><h1>{instanceid}</h1></p>
@@ -384,12 +264,21 @@ class Instance extends Component {
 					))} */}
 
 					{ properties && properties.map((item, i) => (
-						<p><label>{item}: </label>{instance[item]}</p>
+						<p><label>{item}: </label>{ instance && instance[item] }</p>
+					))}
+
+					{ dependencies && dependencies.map((item, i) => (
+						<>
+						<p><label>{item.name} [{item.type}]: </label></p>
+						<InstancesView 
+							typename={item.type} 
+							type={item.type} 
+							wsClient={this.wsClient} />
+						</>
 					))}
 
 					</Paper>
 
-				</Grid>
 			</Grid>
 			</Container>
 			</>
@@ -405,9 +294,9 @@ class Instance extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
+		// loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
 
-		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema")) // , typename))
+		// loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename))
 
 	}
 }
@@ -416,56 +305,58 @@ function mapStateToProps(state, ownProps) {
 
 	const { match } = ownProps;
 
-	const typename = match["params"]["typename"];
-	const instanceid = match["params"]["instanceid"];
+	// const typename = match["params"]["typename"];
+	// const instanceid = match["params"]["instanceid"];
+	const typename = ownProps["typename"];
 	const type = ownProps["type"];
-
-	console.log( " >> " + typename );
-	console.log( " >> " + instanceid );
+	const schema = ownProps["schema"];
+	const instanceid = ownProps["instanceid"];
+	const instance = ownProps["instance"];
 
 	const {
 		api, 
 	} = state;
 
-	const {
+	/* const {
 		loading: isloading, 
 		loaded: isloaded, 
 		failed: isfailed, 
 		timestamp: istimestamp, 
 		entities: instances
-	} = getEntitiesFromState(state, api, typename);
+	} = getEntitiesFromState(state, api, typename); */
 
-	const {
+	/* const {
 		loading: ssloading, 
 		loaded: ssloaded, 
 		failed: ssfailed, 
 		timestamp: sstimestamp, 
 		entity: schema
-	} = getEntityFromState(state, api, "schema"); // , typename);
+	} = getEntityFromState(state, api, "schema", typename); */
 
-	console.log( " SCHEMA >> " );
-	console.log( ssloading );
-	console.log( ssloaded );
-	console.log( ssfailed );
-	console.log( sstimestamp );
-	console.log( schema );
-	console.log( " << SCHEMA " );
+	// console.log( " SCHEMA >> " );
+	// console.log( ssloading );
+	// console.log( ssloaded );
+	// console.log( ssfailed );
+	// console.log( sstimestamp );
+	// console.log( schema );
+	// console.log( " << SCHEMA " );
 
 	return {
 		api, 
 		namespace: api.namespace, 
 		typename: typename, 
-		instanceid: instanceid, 
 		type: type, 
-		isloading: isloading, 
-		isloaded: isloaded, 
-		isfailed: isfailed, 
-		istimestamp: istimestamp, 
-		instances: instances,
-		ssloading: ssloading, 
-		ssloaded: ssloaded, 
-		ssfailed: ssfailed, 
-		sstimestamp: sstimestamp, 
+		instanceid: instanceid, 
+		instance: instance, 
+		// isloading: isloading, 
+		// isloaded: isloaded, 
+		// isfailed: isfailed, 
+		// istimestamp: istimestamp, 
+		// instances: instances,
+		// ssloading: ssloading, 
+		// ssloaded: ssloaded, 
+		// ssfailed: ssfailed, 
+		// sstimestamp: sstimestamp, 
 		schema: schema
 	}
 

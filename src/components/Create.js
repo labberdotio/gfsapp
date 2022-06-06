@@ -67,17 +67,19 @@ class CreateInstanceDialog extends Component {
 			namespace, 
 			typename, 
 			type, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			stimestamp, 
+			// , 
+			// , 
+			// , 
+			// , 
 			schema
 		} = this.props;
 
-		if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
-			if( typename ) {
-				this.props.loadSchema(api, typename);
-			}
+		if( (!this.props.schema["loading"]) && 
+			(!this.props.schema["loaded"]) && 
+			(!this.props.schema["failed"]) ) {
+			// if( typename ) {
+			this.props.loadSchema(api, typename);
+			// }
 		}
 
 	}
@@ -89,17 +91,19 @@ class CreateInstanceDialog extends Component {
 			namespace, 
 			typename, 
 			type, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			stimestamp, 
+			// , 
+			// , 
+			// , 
+			// , 
 			schema
 		} = this.props;
 
-		if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
-			if( typename ) {
-				this.props.loadSchema(api, typename);
-			}
+		if( (!this.props.schema["loading"]) && 
+			(!this.props.schema["loaded"]) && 
+			(!this.props.schema["failed"]) ) {
+			// if( typename ) {
+			this.props.loadSchema(api, typename);
+			// }
 		}
 
 	}
@@ -136,10 +140,10 @@ class CreateInstanceDialog extends Component {
 			namespace, 
 			typename, 
 			type, 
-			ssloading, 
-			ssloaded, 
-			ssfailed, 
-			stimestamp, 
+			// , 
+			// , 
+			// , 
+			// , 
 			schema
 		} = this.props;
 
@@ -150,9 +154,9 @@ class CreateInstanceDialog extends Component {
 		var formnames = [];
 
 		const renderForm = function() {
-			if(schema) {
+			if( schema && schema["entity"] ) {
 				return <Form 
-					schema={schema} 
+					schema={schema["entity"]} 
 					formData={data} 
 					onChange={e => {}} 
 					onSubmit={e => {}} 
@@ -215,38 +219,32 @@ function mapStateToProps(state, ownProps) {
 		api
 	} = state;
 
-	const {
-		loading: ssloading, 
-		loaded: ssloaded, 
-		failed: ssfailed, 
-		timestamp: sstimestamp, 
-		entity: schema
-	} = getEntityFromState(state, api, "schema", typename);
+	// const {
+	// 	loading: , 
+	// 	loaded: , 
+	// 	failed: , 
+	// 	timestamp: , 
+	// 	entity: schema
+	// } = getEntityFromState(state, api, "schema", typename);
+	const schema = getEntityFromState(state, api, "schema", typename);
 
-	console.log( " SCHEMA >> " );
-	console.log( ssloading );
-	console.log( ssloaded );
-	console.log( ssfailed );
-	console.log( sstimestamp );
-	console.log( schema );
-	console.log( " << SCHEMA " );
-
-	// var typeschema = undefined;
-	// if( typename && schema ) {
-	// 	if( schema["definitions"] && schema["definitions"][typename] ) {
-	// 		typeschema = schema["definitions"][typename];
-	// 	}
-	// }
+	// console.log( " SCHEMA >> " );
+	// console.log(  );
+	// console.log(  );
+	// console.log(  );
+	// console.log(  );
+	// console.log( schema );
+	// console.log( " << SCHEMA " );
 
 	return {
 		api, 
 		namespace: api.namespace, 
 		typename: typename, 
 		type: type, 
-		ssloading: ssloading, 
-		ssloaded: ssloaded, 
-		ssfailed: ssfailed, 
-		sstimestamp: sstimestamp, 
+		// : , 
+		// : , 
+		// : , 
+		// : , 
 		schema: schema
 	}
 
