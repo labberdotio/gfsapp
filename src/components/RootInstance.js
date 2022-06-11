@@ -126,6 +126,7 @@ class RootInstance extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -145,6 +146,33 @@ class RootInstance extends Component {
 			// if( typename ) {
 			this.props.loadSchema(api, typename);
 			// }
+		}
+
+		/*
+		 * Load dependencies
+		 */
+		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+			for( var propertyname in schema["entity"]["properties"] ) {
+				var property = schema["entity"]["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					if( property && property["type"] ) {
+						if( property["type"] == "string" ) {
+							// 
+						} else if( (property["type"] == "array") && 
+								   (property["items"]) ) {
+							// property["items"]["$ref"].replace("#/definitions/", "")
+							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
+						}
+					}
+				}
+			}
 		}
 
 	}
@@ -162,6 +190,7 @@ class RootInstance extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -181,6 +210,33 @@ class RootInstance extends Component {
 			// if( typename ) {
 			this.props.loadSchema(api, typename);
 			// }
+		}
+
+		/*
+		 * Load dependencies
+		 */
+		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+			for( var propertyname in schema["entity"]["properties"] ) {
+				var property = schema["entity"]["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					if( property && property["type"] ) {
+						if( property["type"] == "string" ) {
+							// 
+						} else if( (property["type"] == "array") && 
+								   (property["items"]) ) {
+							// property["items"]["$ref"].replace("#/definitions/", "")
+							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
+						}
+					}
+				}
+			}
 		}
 
 	}
@@ -202,6 +258,7 @@ class RootInstance extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -276,6 +333,7 @@ class RootInstance extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -296,6 +354,28 @@ class RootInstance extends Component {
 				instance = cinstance;
 			}
 		}
+
+		// var properties = [];
+		// var dependencies = [];
+
+		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+		// 	for( var propertyname in schema["entity"]["properties"] ) {
+		// 		var property = schema["entity"]["properties"][propertyname];
+		// 		if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+		// 			if( property && property["type"] ) {
+		// 				if( property["type"] == "string" ) {
+		// 					properties.push(propertyname);
+		// 				} else if( (property["type"] == "array") && 
+		// 						   (property["items"]) ) {
+		// 					dependencies.push({
+		// 						"name": propertyname,
+		// 						"type": property["items"]["$ref"].replace("#/definitions/", "")
+		// 					});
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		return (
 			<>
@@ -350,6 +430,7 @@ class RootInstance extends Component {
 						schema={schema["entity"]} 
 						instanceid={instanceid} 
 						instance={instance} 
+						ainstances={ainstances} 
 						wsClient={this.wsClient} />
 				</Grid>
 			</Grid>
@@ -412,6 +493,30 @@ function mapStateToProps(state, ownProps) {
 	// console.log( schema );
 	// console.log( " << SCHEMA " );
 
+	/*
+	 * Load dependencies
+	 */
+	var ainstances = {};
+	ainstances[typename] = instances;
+	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+		for( var propertyname in schema["entity"]["properties"] ) {
+			var property = schema["entity"]["properties"][propertyname];
+			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( property && property["type"] ) {
+					if( property["type"] == "string" ) {
+						// 
+					} else if( (property["type"] == "array") && 
+							   (property["items"]) ) {
+						// property["items"]["$ref"].replace("#/definitions/", "")
+						const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+						const dinstances = getEntitiesFromState(state, api, dtypename);
+						ainstances[dtypename] = dinstances;
+					}
+				}
+			}
+		}
+	}
+
 	return {
 		api, 
 		namespace: api.namespace, 
@@ -422,7 +527,8 @@ function mapStateToProps(state, ownProps) {
 		// : , 
 		// : , 
 		// : , 
-		instances: instances,
+		instances: instances, 
+		ainstances: ainstances, 
 		// : , 
 		// : , 
 		// : , 

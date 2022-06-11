@@ -87,6 +87,7 @@ class Instance extends Component {
 			type, 
 			instanceid, 
 			instance, 
+			ainstances, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -120,6 +121,7 @@ class Instance extends Component {
 			type, 
 			instanceid, 
 			instance, 
+			ainstances, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -148,6 +150,31 @@ class Instance extends Component {
 	 *
 	 */
 
+	getDependencyEntities(name, type, instances, ainstances) {
+
+		var cinstances = [];
+
+		if( name && type ) {
+			if( instances && ainstances ) {
+				if( ainstances[type] ) {
+					for( var idx in instances ) {
+						var instance = instances[idx];
+						if( instance && instance["id"] ) {
+							var cinstance = ainstances[type]["entities"][instance["id"]];
+							cinstances.push(cinstance);
+						}
+					}
+				}
+			}
+		}
+
+		return cinstances;
+	}
+
+	/*
+	 *
+	 */
+
 	render() {
 
 		var _this = this;
@@ -159,6 +186,7 @@ class Instance extends Component {
 			type, 
 			instanceid, 
 			instance, 
+			ainstances, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -271,6 +299,7 @@ class Instance extends Component {
 						<>
 						<p><label>{item.name} [{item.type}]: </label></p>
 						<InstancesView 
+							instances={ instance && item && this.getDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={item.type} 
 							type={item.type} 
 							wsClient={this.wsClient} />
@@ -312,6 +341,7 @@ function mapStateToProps(state, ownProps) {
 	const schema = ownProps["schema"];
 	const instanceid = ownProps["instanceid"];
 	const instance = ownProps["instance"];
+	const ainstances = ownProps["ainstances"];
 
 	const {
 		api, 
@@ -348,6 +378,7 @@ function mapStateToProps(state, ownProps) {
 		type: type, 
 		instanceid: instanceid, 
 		instance: instance, 
+		ainstances: ainstances, 
 		// isloading: isloading, 
 		// isloaded: isloaded, 
 		// isfailed: isfailed, 

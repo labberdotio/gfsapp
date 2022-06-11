@@ -85,7 +85,8 @@ class Instances extends Component {
 			// isloaded, 
 			// isfailed, 
 			// istimestamp, 
-			instances
+			instances, 
+			ainstances
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
@@ -105,7 +106,8 @@ class Instances extends Component {
 			// isloaded, 
 			// isfailed, 
 			// istimestamp, 
-			instances
+			instances, 
+			ainstances
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
@@ -129,7 +131,8 @@ class Instances extends Component {
 			// isloaded, 
 			// isfailed, 
 			// istimestamp, 
-			instances
+			instances, 
+			ainstances
 		} = this.props;
 
 		const { classes } = this.props;
@@ -242,6 +245,7 @@ function mapStateToProps(state, ownProps) {
 	const type = ownProps["type"];
 	const schema = ownProps["schema"];
 	const instances = ownProps["instances"];
+	const ainstances = ownProps["ainstances"];
 
 	const {
 		api, 
@@ -265,7 +269,8 @@ function mapStateToProps(state, ownProps) {
 		// isloaded: isloaded, 
 		// isfailed: isfailed, 
 		// istimestamp: istimestamp, 
-		instances: instances
+		instances: instances, 
+		ainstances: ainstances
 	}
 
 }
