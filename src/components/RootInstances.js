@@ -141,6 +141,7 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -176,6 +177,7 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -234,6 +236,7 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -307,6 +310,7 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			instances, 
+			ainstances, 
 			// , 
 			// , 
 			// , 
@@ -425,6 +429,7 @@ class RootInstances extends Component {
 						type={type} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
+						ainstances={ainstances} 
 						wsClient={this.wsClient} />
 				</Grid>
 			</Grid>
@@ -505,6 +510,12 @@ function mapStateToProps(state, ownProps) {
 	// console.log( schema );
 	// console.log( " << SCHEMA " );
 
+	/*
+	 * 
+	 */
+	var ainstances = {};
+	ainstances[typename] = instances;
+
 	return {
 		api, 
 		namespace: api.namespace, 
@@ -515,6 +526,7 @@ function mapStateToProps(state, ownProps) {
 		// : , 
 		// : , 
 		instances: instances, 
+		ainstances: ainstances, 
 		// : , 
 		// : , 
 		// : , 
