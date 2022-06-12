@@ -425,6 +425,8 @@ class RootInstance extends Component {
 					spacing={0} 
 				>
 					<InstanceView 
+						title={ instance && instance["name"] } 
+						description={typename} 
 						typename={typename} 
 						type={type} 
 						schema={schema["entity"]} 

@@ -29,8 +29,8 @@ import MaterialTable from 'material-table';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 import InstancesView from './Instances'
-// import InstanceView from './Instance'
-// import DependentsView from './Dependents'
+import ListView from './List'
+import DetailView from './Detail'
 
 // import { 
 // 	loadEntityIntoState, 
@@ -81,8 +81,10 @@ class Instance extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		const {
-			api, 
-			namespace, 
+			// api, 
+			// namespace, 
+			title, 
+            description, 
 			typename, 
 			type, 
 			instanceid, 
@@ -115,8 +117,10 @@ class Instance extends Component {
 	componentDidMount() {
 
 		const {
-			api, 
-			namespace, 
+			// api, 
+			// namespace, 
+			title, 
+            description, 
 			typename, 
 			type, 
 			instanceid, 
@@ -150,6 +154,131 @@ class Instance extends Component {
 	 *
 	 */
 
+	getProperties(typename, type, schema, instance) {
+
+		var properties = [];
+		// var dependencies = [];
+
+		var propertyname = "id";
+		if( instance && instance[propertyname] ) {
+			properties.push({
+				"name": propertyname, 
+				"value": instance[propertyname]
+			});
+		}
+
+		propertyname = "uuid";
+		if( instance && instance[propertyname] ) {
+			properties.push({
+				"name": propertyname, 
+				"value": instance[propertyname]
+			});
+		}
+
+		propertyname = "name";
+		if( instance && instance[propertyname] ) {
+			properties.push({
+				"name": propertyname, 
+				"value": instance[propertyname]
+			});
+		}
+
+		propertyname = "created";
+		if( instance && instance[propertyname] ) {
+			properties.push({
+				"name": propertyname, 
+				"value": instance[propertyname]
+			});
+		}
+
+		propertyname = "modified";
+		if( instance && instance[propertyname] ) {
+			properties.push({
+				"name": propertyname, 
+				"value": instance[propertyname]
+			});
+		}
+
+		if( schema && schema["properties"] ) {
+			for( var propertyname in schema["properties"] ) {
+				var property = schema["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					// if( property && property["type"] ) {
+					if( property ) {
+						// if( property["type"] == "string" ) {
+						// 	properties.push(propertyname);
+						// } else 
+						if( property["$ref"] ) {
+						// 	dependencies.push({
+						// 		"name": propertyname, 
+						// 		"type": property["$ref"].replace("#/definitions/", ""), 
+						// 		"cardinality": "single"
+						// 	});
+						} else if( (property["type"]) && 
+								   (property["type"] == "array") && 
+								   (property["items"]) ) {
+						// 	dependencies.push({
+						// 		"name": propertyname, 
+						// 		"type": property["items"]["$ref"].replace("#/definitions/", ""), 
+						// 		"cardinality": "multiple"
+						// 	});
+						} else if( property["type"] ) {
+							if( instance && instance[propertyname] ) {
+								properties.push({
+									"name": propertyname, 
+									"type": property["type"], 
+									"value": instance[propertyname]
+								});
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return properties;
+	}
+
+	getDependencies(typename, type, schema, instance) {
+
+		// var properties = [];
+		var dependencies = [];
+
+		if( schema && schema["properties"] ) {
+			for( var propertyname in schema["properties"] ) {
+				var property = schema["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					// if( property && property["type"] ) {
+					if( property ) {
+						// if( property["type"] == "string" ) {
+						// 	properties.push(propertyname);
+						// } else 
+						if( property["$ref"] ) {
+							dependencies.push({
+								"name": propertyname, 
+								"type": property["$ref"].replace("#/definitions/", ""), 
+								"cardinality": "single"
+							});
+						} else if( (property["type"]) && 
+								   (property["type"] == "array") && 
+								   (property["items"]) ) {
+							dependencies.push({
+								"name": propertyname, 
+								"type": property["items"]["$ref"].replace("#/definitions/", ""), 
+								"cardinality": "multiple"
+							});
+						} 
+						// else if( property["type"] ) {
+						// 	properties.push(propertyname);
+						// }
+					}
+				}
+			}
+		}
+
+		return dependencies;
+	}
+
 	getDependencyEntities(name, type, instances, ainstances) {
 
 		var cinstances = [];
@@ -180,8 +309,10 @@ class Instance extends Component {
 		var _this = this;
 
 		const {
-			api, 
-			namespace, 
+			// api, 
+			// namespace, 
+			title, 
+            description, 
 			typename, 
 			type, 
 			instanceid, 
@@ -203,35 +334,19 @@ class Instance extends Component {
 
 		// var backdropOpen = false;
 
-		// var instance = undefined;
-		// if( instanceid ) {
-		// 	var cinstance = instances[instanceid];
-		// 	if( cinstance ) {
-		// 		instance = cinstance;
-		// 	}
-		// }
+		var properties = this.getProperties( 
+			typename, 
+			type, 
+			schema, 
+			instance
+		);
 
-		var properties = [];
-		var dependencies = [];
-
-		if( schema && schema["properties"] ) {
-			for( var propertyname in schema["properties"] ) {
-				var property = schema["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-					if( property && property["type"] ) {
-						if( property["type"] == "string" ) {
-							properties.push(propertyname);
-						} else if( (property["type"] == "array") && 
-								   (property["items"]) ) {
-							dependencies.push({
-								"name": propertyname,
-								"type": property["items"]["$ref"].replace("#/definitions/", "")
-							});
-						}
-					}
-				}
-			}
-		}
+		var dependencies = this.getDependencies( 
+			typename, 
+			type, 
+			schema, 
+			instance
+		);
 
 		return (
 			<>
@@ -250,64 +365,24 @@ class Instance extends Component {
 				xs={12} 
 				spacing={0} 
 			>
-
-					<Paper
-						className={classes.mainPaper} 
-					>
-
-					{/* {instanceid && instance &&
-						<p><h1>{instanceid}</h1></p>
-					} */}
-
-					{instance && instance["name"] &&
-						<h1>{instance["name"]}</h1>
-					}
-
-					{instance && instance["label"] &&
-						<h2>{instance["label"]}</h2>
-					}
-
-					{instance && instance["id"] &&
-						<p><label>ID: </label>{instance["id"]}</p>
-					}
-
-					{instance && instance["uuid"] &&
-						<p><label>UUID: </label>{instance["uuid"]}</p>
-					}
-
-					{instance && instance["created"] &&
-						<p><label>Created: </label>{instance["created"]}</p>
-					}
-
-					{instance && instance["modified"] &&
-						<p><label>Modified: </label>{instance["modified"]}</p>
-					}
-
-					{/* { instance && Object.keys(instance).map((item, i) => (
-						<h3>{item}: {instance[item]}</h3>
-					))} */}
-
-					{/* { schema && schema["properties"] && Object.keys(schema["properties"]).map((item, i) => (
-						<h3>{item}</h3>
-					))} */}
-
-					{ properties && properties.map((item, i) => (
-						<p><label>{item}: </label>{ instance && instance[item] }</p>
-					))}
-
-					{ dependencies && dependencies.map((item, i) => (
-						<>
-						<p><label>{item.name} [{item.type}]: </label></p>
-						<InstancesView 
-							instances={ instance && item && this.getDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
-							typename={item.type} 
-							type={item.type} 
-							wsClient={this.wsClient} />
-						</>
-					))}
-
-					</Paper>
-
+				<DetailView 
+					title={title} 
+					description={description} 
+					properties={this.getProperties( 
+						typename, 
+						type, 
+						schema, 
+						instance
+					)} />
+				{ dependencies && dependencies.map((item, i) => (
+					<InstancesView 
+						title={ item && item.name } 
+						description={ item && item.type } 
+						instances={ instance && item && this.getDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+						typename={ item && item.type } 
+						type={ item && item.type } 
+						wsClient={this.wsClient} />
+				))}
 			</Grid>
 			</Container>
 			</>
@@ -334,6 +409,9 @@ function mapStateToProps(state, ownProps) {
 
 	const { match } = ownProps;
 
+	const title = ownProps["title"];
+    const description = ownProps["description"];
+
 	// const typename = match["params"]["typename"];
 	// const instanceid = match["params"]["instanceid"];
 	const typename = ownProps["typename"];
@@ -344,7 +422,7 @@ function mapStateToProps(state, ownProps) {
 	const ainstances = ownProps["ainstances"];
 
 	const {
-		api, 
+		// api, 
 	} = state;
 
 	/* const {
@@ -372,8 +450,10 @@ function mapStateToProps(state, ownProps) {
 	// console.log( " << SCHEMA " );
 
 	return {
-		api, 
-		namespace: api.namespace, 
+		// api, 
+		// namespace: api.namespace, 
+		title: title, 
+        description: description, 
 		typename: typename, 
 		type: type, 
 		instanceid: instanceid, 

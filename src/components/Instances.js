@@ -21,7 +21,7 @@ import Grid from '@material-ui/core/Grid';
 // import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 // import AddIcon from '@material-ui/icons/Add';
 
-import MaterialTable from 'material-table';
+// import MaterialTable from 'material-table';
 
 // import Backdrop from '@material-ui/core/Backdrop';
 // import CircularProgress from '@material-ui/core/CircularProgress';
@@ -29,6 +29,9 @@ import MaterialTable from 'material-table';
 // import SpeedDial from '@material-ui/lab/SpeedDial';
 // import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 // import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+
+// import InstancesView from './Instances'
+import ListView from './List'
 
 // import { 
 // 	loadEntitiesIntoState, 
@@ -77,10 +80,13 @@ class Instances extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		const {
-			api, 
-			namespace, 
+			// api, 
+			// namespace, 
+			title, 
+            description, 
 			typename, 
 			type, 
+			schema, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -98,10 +104,13 @@ class Instances extends Component {
 	componentDidMount() {
 
 		const {
-			api, 
-			namespace, 
+			// api, 
+			// namespace, 
+			title, 
+            description, 
 			typename, 
 			type, 
+			schema, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -117,16 +126,113 @@ class Instances extends Component {
 	}
 
 	/*
+	 * 
+	 */
+
+	getListCols(typename, type, schema, instances, ainstances) {
+
+		var cols = [];
+		cols.push({
+			title: "id",
+			field: "id"
+		});
+		cols.push({
+			title: "uuid",
+			field: "uuid"
+		});
+		cols.push({
+			title: "name",
+			field: "name"
+		});
+		// cols.push({
+		// 	title: "created",
+		// 	field: "created"
+		// });
+		// cols.push({
+		// 	title: "modified",
+		// 	field: "modified"
+		// });
+
+		if( type ) {
+			if( type["properties"] ) {
+				for( var property in type["properties"] ) {
+					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+						cols.push({
+							title: property,
+							field: property
+						});
+					}
+				}
+			}
+		}
+
+		return cols;
+	}
+
+	getListRows(typename, type, schema, instances, ainstances) {
+
+		var cols = [];
+		cols.push({
+			title: "id",
+			field: "id"
+		});
+		cols.push({
+			title: "uuid",
+			field: "uuid"
+		});
+		cols.push({
+			title: "name",
+			field: "name"
+		});
+		// cols.push({
+		// 	title: "created",
+		// 	field: "created"
+		// });
+		// cols.push({
+		// 	title: "modified",
+		// 	field: "modified"
+		// });
+
+		if( type ) {
+			if( type["properties"] ) {
+				for( var property in type["properties"] ) {
+					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+						cols.push({
+							title: property,
+							field: property
+						});
+					}
+				}
+			}
+		}
+
+		var rows = [];
+		if( instances ) {
+			for( var instanceid in instances ) {
+				var instance = instances[instanceid];
+				if( instance ) {
+					rows.push(instance);
+				}
+			}
+		}
+
+		return rows;
+	}
+
+	/*
 	 *
 	 */
 
 	render() {
 
 		const {
-			api, 
-			namespace, 
+			// api, 
+			// namespace, 
+			title, 
+            description, 
 			typename, 
 			type, 
+			schema, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -201,21 +307,23 @@ class Instances extends Component {
 				xs={12} 
 				spacing={0} 
 			>
-					<MaterialTable
-						title={typename}
-						columns={cols}
-						data={rows}
-						options={{
-							// pageSize: ...
-							pageSizeOptions: [],
-							toolbar: true,
-							paging: false // true
-						}}
-						editable={{
-						}}
-						style={{
-							width: "100%"
-						}}/>
+				<ListView 
+					title={title} 
+					description={description} 
+					cols={this.getListCols( 
+						typename, 
+						type, 
+						schema, 
+						instances, 
+						ainstances
+					)}
+					rows={this.getListRows( 
+						typename, 
+						type, 
+						schema, 
+						instances, 
+						ainstances
+					)} />
 			</Grid>
 			</Container>
 			</>
@@ -240,6 +348,9 @@ function mapStateToProps(state, ownProps) {
 
 	const { match } = ownProps;
 
+	const title = ownProps["title"];
+    const description = ownProps["description"];
+
 	// const typename = match["params"]["typename"];
 	const typename = ownProps["typename"];
 	const type = ownProps["type"];
@@ -248,7 +359,7 @@ function mapStateToProps(state, ownProps) {
 	const ainstances = ownProps["ainstances"];
 
 	const {
-		api, 
+		// api, 
 	} = state;
 
 	// const {
@@ -260,8 +371,10 @@ function mapStateToProps(state, ownProps) {
 	// } = getEntitiesFromState(state, api, typename);
 
 	return {
-		api, 
-		namespace: api.namespace, 
+		// api, 
+		// namespace: api.namespace, 
+		title: title, 
+        description: description, 
 		typename: typename, 
 		type: type, 
 		schema: schema, 

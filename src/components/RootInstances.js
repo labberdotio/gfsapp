@@ -21,8 +21,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import AddIcon from '@material-ui/icons/Add';
 
-import MaterialTable from 'material-table';
-
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -31,8 +29,7 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 import InstancesView from './Instances'
-// import InstanceView from './Instance'
-// import DependentsView from './Dependents'
+// import ListView from './List'
 
 import { 
 	loadEntityIntoState, 
@@ -218,6 +215,96 @@ class RootInstances extends Component {
 		this.setState({
 			createInstanceDialogOpen: false
 		});
+	}
+
+	getListCols(typename, type, schema, instances, ainstances) {
+
+		var cols = [];
+		cols.push({
+			title: "id",
+			field: "id"
+		});
+		cols.push({
+			title: "uuid",
+			field: "uuid"
+		});
+		cols.push({
+			title: "name",
+			field: "name"
+		});
+		// cols.push({
+		// 	title: "created",
+		// 	field: "created"
+		// });
+		// cols.push({
+		// 	title: "modified",
+		// 	field: "modified"
+		// });
+
+		if( type ) {
+			if( type["properties"] ) {
+				for( var property in type["properties"] ) {
+					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+						cols.push({
+							title: property,
+							field: property
+						});
+					}
+				}
+			}
+		}
+
+		return cols;
+	}
+
+	getListRows(typename, type, schema, instances, ainstances) {
+
+		var cols = [];
+		cols.push({
+			title: "id",
+			field: "id"
+		});
+		cols.push({
+			title: "uuid",
+			field: "uuid"
+		});
+		cols.push({
+			title: "name",
+			field: "name"
+		});
+		// cols.push({
+		// 	title: "created",
+		// 	field: "created"
+		// });
+		// cols.push({
+		// 	title: "modified",
+		// 	field: "modified"
+		// });
+
+		if( type ) {
+			if( type["properties"] ) {
+				for( var property in type["properties"] ) {
+					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+						cols.push({
+							title: property,
+							field: property
+						});
+					}
+				}
+			}
+		}
+
+		var rows = [];
+		if( instances ) {
+			for( var instanceid in instances ) {
+				var instance = instances[instanceid];
+				if( instance ) {
+					rows.push(instance);
+				}
+			}
+		}
+
+		return rows;
 	}
 
 	/*
@@ -425,6 +512,8 @@ class RootInstances extends Component {
 					spacing={0} 
 				>
 					<InstancesView 
+						title={typename} 
+						description={typename} 
 						typename={typename} 
 						type={type} 
 						schema={schema["entity"]} 
