@@ -21,7 +21,7 @@ import { Provider } from 'react-redux';
 
 import WSClient from './clients/WSClient'
 import { api, apis } from './reducers/Api';
-import { entities } from './reducers/Entity';
+import { entity, entities } from './reducers/Entity';
 
 import EntityService from './services/Entity';
 
@@ -73,7 +73,7 @@ const loggerMiddleware = createLogger()
 const rootReducer = combineReducers({
 	api,
 	apis,
-	// entity,
+	entity,
 	entities
 });
 
