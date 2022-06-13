@@ -62,6 +62,11 @@ import {
 
 const styles = theme => ({
 
+	mainContainer: {
+		padding: 0, 
+		margin: 0, 
+	},
+
 	mainPaper: {
 		width: '100%', 
 		marginTop: '20px', 
@@ -493,8 +498,8 @@ class RootInstances extends Component {
 		return (
 			<>
 			<Container 
-				className={classes.listContainer} 
-				// className="listContainer" 
+				className={classes.mainContainer} 
+				// className="mainContainer" 
 				// maxWidth="false"
 				>
 			<Backdrop open={backdropOpen}>
