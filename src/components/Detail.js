@@ -17,6 +17,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
 const styles = theme => ({
 
 	mainPaper: {
@@ -125,9 +130,20 @@ class Detail extends Component {
 					<h3>{item}</h3>
 				))} */}
 
-				{ properties && properties.map((item, i) => (
+				{/* { properties && properties.map((item, i) => (
 					<p><label>{item.name}: </label>{ item.value }</p>
-				))}
+				))} */}
+
+				<List component="nav" className={classes.root} aria-label="Properties">
+					{ properties && properties.map((item, i) => (
+					<ListItem button>
+						<ListItemText 
+							inset 
+							primary={item.name} 
+							secondary={item.value} />
+					</ListItem>
+					))}
+				</List>
 
 			</Paper>
 			</Container>
