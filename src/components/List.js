@@ -82,6 +82,12 @@ class List extends Component {
 
 		const { classes } = this.props;
 
+		// cols.push({
+		// 	field: 'link',
+		// 	title: 'Link',
+		// 	render: rowData => <img src={rowData.url} style={{width: 50, borderRadius: '50%'}}/>
+		// })
+
 		return (
 			<>
 			<Container

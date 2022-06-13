@@ -143,6 +143,11 @@ class Instances extends Component {
 			field: "id"
 		});
 		cols.push({
+			title: "link",
+			field: "link",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		});
+		cols.push({
 			title: "uuid",
 			field: "uuid"
 		});
@@ -181,6 +186,11 @@ class Instances extends Component {
 		cols.push({
 			title: "id",
 			field: "id"
+		});
+		cols.push({
+			title: "link",
+			field: "link",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		cols.push({
 			title: "uuid",
@@ -228,6 +238,10 @@ class Instances extends Component {
 	/*
 	 *
 	 */
+
+	makeInstanceLink(label, id) {
+		return "/detail/" + label + "/" + id;
+	}
 
 	render() {
 

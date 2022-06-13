@@ -168,6 +168,13 @@ class Instance extends Component {
 				"name": propertyname, 
 				"value": instance[propertyname]
 			});
+			var propertyname = "link";
+			// if( instance && instance[propertyname] ) {
+				properties.push({
+					"name": propertyname, 
+					"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				});
+			// }
 		}
 
 		propertyname = "uuid";
@@ -338,6 +345,10 @@ class Instance extends Component {
 	/*
 	 *
 	 */
+
+	makeInstanceLink(label, id) {
+		return "/detail/" + label + "/" + id;
+	}
 
 	render() {
 
