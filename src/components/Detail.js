@@ -136,9 +136,8 @@ class Detail extends Component {
 
 				<List component="nav" className={classes.root} aria-label="Properties">
 					{ properties && properties.map((item, i) => (
-					<ListItem button>
-						<ListItemText 
-							inset 
+					<ListItem>
+						<ListItemText  
 							primary={item.name} 
 							secondary={item.value} />
 					</ListItem>
