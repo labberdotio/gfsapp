@@ -28,6 +28,7 @@ import MaterialTable from 'material-table';
 // import Backdrop from '@material-ui/core/Backdrop';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
+import InstanceView from './Instance'
 import InstancesView from './Instances'
 import ListView from './List'
 import DetailView from './Detail'
@@ -209,27 +210,23 @@ class Instance extends Component {
 						// 	properties.push(propertyname);
 						// } else 
 						if( property["$ref"] ) {
-						// 	dependencies.push({
-						// 		"name": propertyname, 
-						// 		"type": property["$ref"].replace("#/definitions/", ""), 
-						// 		"cardinality": "single"
-						// 	});
+						// 	...
 						} else if( (property["type"]) && 
 								   (property["type"] == "array") && 
 								   (property["items"]) ) {
-						// 	dependencies.push({
-						// 		"name": propertyname, 
-						// 		"type": property["items"]["$ref"].replace("#/definitions/", ""), 
-						// 		"cardinality": "multiple"
-						// 	});
+						// 	...
 						} else if( property["type"] ) {
+							var prop = {
+								"name": propertyname, 
+								"type": property["type"], 
+								"value": undefined
+							};
 							if( instance && instance[propertyname] ) {
-								properties.push({
-									"name": propertyname, 
-									"type": property["type"], 
-									"value": instance[propertyname]
-								});
+								prop["value"] = instance[propertyname];
+							} else {
+								prop["value"] = undefined;
 							}
+							properties.push(prop);
 						}
 					}
 				}
@@ -254,19 +251,33 @@ class Instance extends Component {
 						// 	properties.push(propertyname);
 						// } else 
 						if( property["$ref"] ) {
-							dependencies.push({
+							var dep = {
 								"name": propertyname, 
 								"type": property["$ref"].replace("#/definitions/", ""), 
-								"cardinality": "single"
-							});
+								"cardinality": "single", 
+								"value": undefined
+							};
+							if( instance && instance[propertyname] ) {
+								dep["value"] = instance[propertyname];
+							} else {
+								dep["value"] = undefined;
+							}
+							dependencies.push(dep);
 						} else if( (property["type"]) && 
 								   (property["type"] == "array") && 
 								   (property["items"]) ) {
-							dependencies.push({
+							var dep = {
 								"name": propertyname, 
 								"type": property["items"]["$ref"].replace("#/definitions/", ""), 
-								"cardinality": "multiple"
-							});
+								"cardinality": "multiple", 
+								"value": undefined
+							};
+							if( instance && instance[propertyname] ) {
+								dep["value"] = instance[propertyname];
+							} else {
+								dep["value"] = undefined;
+							}
+							dependencies.push(dep);
 						} 
 						// else if( property["type"] ) {
 						// 	properties.push(propertyname);
@@ -279,15 +290,37 @@ class Instance extends Component {
 		return dependencies;
 	}
 
-	getDependencyEntities(name, type, instances, ainstances) {
+	getSingleDependencyEntities(name, type, value, ainstances) {
+
+		var cinstance = undefined;
+
+		if( name && type ) {
+			if( value && ainstances ) {
+				if( ainstances[type] ) {
+					// for( var idx in value ) {
+					var instance = value; // [idx];
+					if( instance && instance["id"] ) {
+						// var 
+						cinstance = ainstances[type]["entities"][instance["id"]];
+						// cinstances.push(cinstance);
+					}
+					// }
+				}
+			}
+		}
+
+		return cinstance;
+	}
+
+	getMultipleDependencyEntities(name, type, value, ainstances) {
 
 		var cinstances = [];
 
 		if( name && type ) {
-			if( instances && ainstances ) {
+			if( value && ainstances ) {
 				if( ainstances[type] ) {
-					for( var idx in instances ) {
-						var instance = instances[idx];
+					for( var idx in value ) {
+						var instance = value[idx];
 						if( instance && instance["id"] ) {
 							var cinstance = ainstances[type]["entities"][instance["id"]];
 							cinstances.push(cinstance);
@@ -374,15 +407,43 @@ class Instance extends Component {
 						schema, 
 						instance
 					)} />
-				{ dependencies && dependencies.map((item, i) => (
+				{/* { dependencies && dependencies.filter(function(item){if(item.cardinality == "multiple"){return true;}else{return false;}}).map((item, i) => (
 					<InstancesView 
 						title={ item && item.name } 
-						description={ item && item.type } 
-						instances={ instance && item && this.getDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+						instances={ instance && item && this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
 						type={ item && item.type } 
 						wsClient={this.wsClient} />
-				))}
+				))} */}
+				{/* { dependencies && dependencies.filter(function(item){ if(item.cardinality == "single"){return true;}else{return false;}}).map((item, i) => (
+					<InstanceView 
+						title={ item && item.name } 
+						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+						instance={ instance && item && this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+						typename={ item && item.type } 
+						type={ item && item.type } 
+						wsClient={this.wsClient} />
+				))} */}
+				{ dependencies && dependencies.map(function(item) {
+					if(item.cardinality == "multiple") {
+						return <InstancesView 
+							title={ item && item.name } 
+							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+							instances={ instance && item && _this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+							typename={ item && item.type } 
+							type={ item && item.type } 
+							wsClient={_this.wsClient} />
+					} else {
+						return <InstanceView 
+							title={ item && item.name } 
+							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+							instance={ instance && item && _this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+							typename={ item && item.type } 
+							type={ item && item.type } 
+							wsClient={_this.wsClient} />
+					}
+				})}
 			</Grid>
 			</Container>
 			</>
