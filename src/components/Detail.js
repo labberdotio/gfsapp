@@ -11,10 +11,18 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
+
+	mainContainer: {
+		padding: 0, 
+		margin: 0, 
+	},
 
 	mainPaper: {
 		width: '100%', 
@@ -76,9 +84,12 @@ class Detail extends Component {
 
 		return (
 			<>
-			<Paper
-				className={classes.mainPaper} 
+			<Container
+				className={classes.mainContainer} 
 			>
+			{/* <Paper
+				className={classes.mainPaper} 
+			> */}
 
 				<h1>{title}</h1>
 				<h2>{description}</h2>
@@ -123,7 +134,8 @@ class Detail extends Component {
 					<p><label>{item.name}: </label>{ item.value }</p>
 				))}
 
-			</Paper>
+			{/* </Paper> */}
+			</Container>
 			</>
 		);
 	}

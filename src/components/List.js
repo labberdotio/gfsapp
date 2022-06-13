@@ -11,6 +11,9 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
@@ -81,12 +84,15 @@ class List extends Component {
 
 		return (
 			<>
-			<Paper
-				className={classes.mainPaper} 
+			<Container
+				className={classes.mainContainer} 
 			>
+			{/* <Paper
+				className={classes.mainPaper} 
+			> */}
 			<h1>{title}</h1>
-			<h2>{description}</h2>
-			</Paper>
+			{/* <h2>{description}</h2> */}
+			{/* </Paper> */}
 			<MaterialTable
 				title={title}
 				columns={cols}
@@ -102,6 +108,7 @@ class List extends Component {
 				style={{
 					width: "100%"
 				}}/>
+			</Container>
 			</>
 		);
 	}
