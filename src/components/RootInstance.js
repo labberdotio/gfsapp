@@ -155,9 +155,20 @@ class RootInstance extends Component {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
 				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-					if( property && property["type"] ) {
+					// if( property && property["type"] ) {
+					if( property ) {
 						if( property["type"] == "string" ) {
 							// 
+						} else if( property["$ref"] ) {
+							// property["$ref"].replace("#/definitions/", "")
+							const dtypename = property["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
 						} else if( (property["type"] == "array") && 
 								   (property["items"]) ) {
 							// property["items"]["$ref"].replace("#/definitions/", "")
@@ -219,9 +230,20 @@ class RootInstance extends Component {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
 				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-					if( property && property["type"] ) {
+					// if( property && property["type"] ) {
+					if( property ) {
 						if( property["type"] == "string" ) {
 							// 
+						} else if( property["$ref"] ) {
+							// property["$ref"].replace("#/definitions/", "")
+							const dtypename = property["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
 						} else if( (property["type"] == "array") && 
 								   (property["items"]) ) {
 							// property["items"]["$ref"].replace("#/definitions/", "")
@@ -504,9 +526,15 @@ function mapStateToProps(state, ownProps) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
 			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-				if( property && property["type"] ) {
+				// if( property && property["type"] ) {
+				if( property ) {
 					if( property["type"] == "string" ) {
 						// 
+					} else if( property["$ref"] ) {
+						// property["$ref"].replace("#/definitions/", "")
+						const dtypename = property["$ref"].replace("#/definitions/", "");
+						const dinstances = getEntitiesFromState(state, api, dtypename);
+						ainstances[dtypename] = dinstances;
 					} else if( (property["type"] == "array") && 
 							   (property["items"]) ) {
 						// property["items"]["$ref"].replace("#/definitions/", "")
