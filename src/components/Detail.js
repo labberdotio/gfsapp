@@ -92,7 +92,7 @@ class Detail extends Component {
 			>
 
 				<h1>{title}</h1>
-				<h2>{description}</h2>
+				<h5>{description}</h5>
 
 				{/* {instanceid && instance &&
 					<p><h1>{instanceid}</h1></p>
