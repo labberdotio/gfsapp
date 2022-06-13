@@ -1,7 +1,7 @@
 window._env_ = {
   REACT_APP_GFS_FS_NAME: "gfs1",
-  REACT_APP_GFS_API_HOST: "gfsapi",
+  REACT_APP_GFS_API_HOST: "daim",
   REACT_APP_GFS_API_PORT: "5000",
-  REACT_APP_GFS_WS_HOST: "gfsapi",
+  REACT_APP_GFS_WS_HOST: "daim",
   REACT_APP_GFS_WS_PORT: "5002",
 }
