@@ -19,7 +19,9 @@ import MaterialTable from 'material-table';
 const styles = theme => ({
 
 	mainPaper: {
-		width: '100%'
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
 	},
 
 });

@@ -11,8 +11,8 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+// import Container from '@material-ui/core/Container';
+// import Grid from '@material-ui/core/Grid';
 
 // import TreeView from '@material-ui/lab/TreeView';
 // import TreeItem from '@material-ui/lab/TreeItem';
@@ -49,6 +49,12 @@ import ListView from './List'
 // const queryString = require('query-string');
 
 const styles = theme => ({
+
+	mainPaper: {
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
+	},
 
 });
 
@@ -292,21 +298,21 @@ class Instances extends Component {
 
 		return (
 			<>
-			<Container 
+			{/* <Container 
 				className={classes.listContainer} 
 				// className="listContainer" 
 				// maxWidth="false"
-				>
+				> */}
 			{/* <Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop> */}
-			<Grid 
+			{/* <Grid 
 				className={classes.fullGrid} 
 				// className="fullGrid" 
 				container 
 				xs={12} 
 				spacing={0} 
-			>
+			> */}
 				<ListView 
 					title={title} 
 					description={description} 
@@ -324,8 +330,8 @@ class Instances extends Component {
 						instances, 
 						ainstances
 					)} />
-			</Grid>
-			</Container>
+			{/* </Grid> */}
+			{/* </Container> */}
 			</>
 		);
 	}

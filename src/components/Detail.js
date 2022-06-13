@@ -17,7 +17,9 @@ import Paper from '@material-ui/core/Paper';
 const styles = theme => ({
 
 	mainPaper: {
-		width: '100%'
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
 	},
 
 });
