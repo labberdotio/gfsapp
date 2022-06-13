@@ -19,11 +19,6 @@ import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
 
-	mainContainer: {
-		padding: 0, 
-		margin: 0, 
-	},
-
 	mainPaper: {
 		width: '100%', 
 		marginTop: '20px', 
@@ -87,9 +82,9 @@ class Detail extends Component {
 			<Container
 				className={classes.mainContainer} 
 			>
-			{/* <Paper
+			<Paper
 				className={classes.mainPaper} 
-			> */}
+			>
 
 				<h1>{title}</h1>
 				<h2>{description}</h2>
@@ -134,7 +129,7 @@ class Detail extends Component {
 					<p><label>{item.name}: </label>{ item.value }</p>
 				))}
 
-			{/* </Paper> */}
+			</Paper>
 			</Container>
 			</>
 		);

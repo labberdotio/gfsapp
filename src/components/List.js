@@ -87,12 +87,11 @@ class List extends Component {
 			<Container
 				className={classes.mainContainer} 
 			>
-			{/* <Paper
+			<Paper
 				className={classes.mainPaper} 
-			> */}
+			>
 			<h1>{title}</h1>
 			{/* <h2>{description}</h2> */}
-			{/* </Paper> */}
 			<MaterialTable
 				title={title}
 				columns={cols}
@@ -108,6 +107,7 @@ class List extends Component {
 				style={{
 					width: "100%"
 				}}/>
+			</Paper>
 			</Container>
 			</>
 		);
