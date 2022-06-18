@@ -23,11 +23,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Form from "@rjsf/core";
 
 import { 
-	loadEntityIntoState
+	loadEntityIntoState, 
+	loadEntitiesIntoState
 } from '../actions/Entity'
 
 import { 
-	getEntityFromState 
+	getEntityFromState, 
+	getEntitiesFromState 
 } from '../stores/Entity'
 
 const styles = createStyles({
@@ -71,7 +73,8 @@ class CreateInstanceDialog extends Component {
 			// , 
 			// , 
 			// , 
-			schema
+			schema, 
+			ainstances
 		} = this.props;
 
 		if( (!this.props.schema["loading"]) && 
@@ -80,6 +83,44 @@ class CreateInstanceDialog extends Component {
 			// if( typename ) {
 			this.props.loadSchema(api, typename);
 			// }
+		}
+
+		/*
+		 * Load dependencies
+		 */
+		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+			for( var propertyname in schema["entity"]["properties"] ) {
+				var property = schema["entity"]["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					// if( property && property["type"] ) {
+					if( property ) {
+						if( property["type"] == "string" ) {
+							// 
+						} else if( property["$ref"] ) {
+							// property["$ref"].replace("#/definitions/", "")
+							const dtypename = property["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
+						} else if( (property["type"] == "array") && 
+								   (property["items"]) ) {
+							// property["items"]["$ref"].replace("#/definitions/", "")
+							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
+						}
+					}
+				}
+			}
 		}
 
 	}
@@ -95,7 +136,8 @@ class CreateInstanceDialog extends Component {
 			// , 
 			// , 
 			// , 
-			schema
+			schema, 
+			ainstances
 		} = this.props;
 
 		if( (!this.props.schema["loading"]) && 
@@ -104,6 +146,44 @@ class CreateInstanceDialog extends Component {
 			// if( typename ) {
 			this.props.loadSchema(api, typename);
 			// }
+		}
+
+		/*
+		 * Load dependencies
+		 */
+		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+			for( var propertyname in schema["entity"]["properties"] ) {
+				var property = schema["entity"]["properties"][propertyname];
+				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+					// if( property && property["type"] ) {
+					if( property ) {
+						if( property["type"] == "string" ) {
+							// 
+						} else if( property["$ref"] ) {
+							// property["$ref"].replace("#/definitions/", "")
+							const dtypename = property["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
+						} else if( (property["type"] == "array") && 
+								   (property["items"]) ) {
+							// property["items"]["$ref"].replace("#/definitions/", "")
+							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+							if( (!this.props.ainstances[dtypename]["loading"]) && 
+								(!this.props.ainstances[dtypename]["loaded"]) && 
+								(!this.props.ainstances[dtypename]["failed"]) ) {
+								// if( dtypename ) {
+								this.props.loadInstances(api, dtypename);
+								// }
+							}
+						}
+					}
+				}
+			}
 		}
 
 	}
@@ -144,7 +224,8 @@ class CreateInstanceDialog extends Component {
 			// , 
 			// , 
 			// , 
-			schema
+			schema, 
+			ainstances
 		} = this.props;
 
 		var open = true; // this.state.open;
@@ -214,7 +295,9 @@ class CreateInstanceDialog extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename))
+		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename)), 
+
+		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
 
 	}
 }
@@ -248,6 +331,36 @@ function mapStateToProps(state, ownProps) {
 	// console.log( schema );
 	// console.log( " << SCHEMA " );
 
+	/*
+	 * Load dependencies
+	 */
+	var ainstances = {};
+	// ainstances[typename] = instances;
+	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+		for( var propertyname in schema["entity"]["properties"] ) {
+			var property = schema["entity"]["properties"][propertyname];
+			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				// if( property && property["type"] ) {
+				if( property ) {
+					if( property["type"] == "string" ) {
+						// 
+					} else if( property["$ref"] ) {
+						// property["$ref"].replace("#/definitions/", "")
+						const dtypename = property["$ref"].replace("#/definitions/", "");
+						const dinstances = getEntitiesFromState(state, api, dtypename);
+						ainstances[dtypename] = dinstances;
+					} else if( (property["type"] == "array") && 
+							   (property["items"]) ) {
+						// property["items"]["$ref"].replace("#/definitions/", "")
+						const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+						const dinstances = getEntitiesFromState(state, api, dtypename);
+						ainstances[dtypename] = dinstances;
+					}
+				}
+			}
+		}
+	}
+
 	return {
 		api, 
 		namespace: api.namespace, 
@@ -257,7 +370,8 @@ function mapStateToProps(state, ownProps) {
 		// : , 
 		// : , 
 		// : , 
-		schema: schema
+		schema: schema, 
+		ainstances: ainstances
 	}
 
 };
