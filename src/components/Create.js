@@ -16,9 +16,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import InputLabel from '@material-ui/core/InputLabel';
+// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+// import Select from '@material-ui/core/Select';
 
 import Form from "@rjsf/core";
 
@@ -165,9 +165,21 @@ class CreateInstanceDialog extends Component {
 			}
 		}
 
+		/*
+		 * You can set a dialog maximum width by using the maxWidth enumerable in combination with the fullWidth 
+		 * boolean. When the fullWidth property is true, the dialog will adapt based on the maxWidth value.
+		 */
+		var fullWidth = 'md';
+		var maxWidth = 'md';
+
 		return (
 			<>
-			<Dialog open={open} onClose={this.onCloseDialog} aria-labelledby="form-dialog-title">
+			<Dialog 
+				fullWidth={fullWidth}
+				maxWidth={maxWidth}
+				open={open} 
+				onClose={this.onCloseDialog} 
+				aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">
 					Create new.
 				</DialogTitle>
@@ -175,14 +187,14 @@ class CreateInstanceDialog extends Component {
 					<DialogContentText>
 						Create new.
 					</DialogContentText>
-					<InputLabel id="label">Type</InputLabel>
-					<Select 
+					{/* <InputLabel id="label">Type</InputLabel> */}
+					{/* <Select 
 						labelId="label" 
 						id="type" 
 						value={form} 
 						onChange={(event) => _this.selectForm(event.target.value)} >
 						{formnames.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
-					</Select>
+					</Select> */}
 					{renderForm()}
 				</DialogContent>
 				<DialogActions>
