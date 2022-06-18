@@ -11,14 +11,28 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
+// import { Router, Switch, Route, Link } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch
+} from "react-router-dom";
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+// import TreeView from '@material-ui/lab/TreeView';
+// import TreeItem from '@material-ui/lab/TreeItem';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
 import AddIcon from '@material-ui/icons/Add';
 
 import Backdrop from '@material-ui/core/Backdrop';
@@ -60,39 +74,39 @@ const styles = theme => ({
 
 });
 
-function TreeViewItems(props) {
-	const history = useHistory();
-	var items = props.items;
-	var onSelectFn = props.onSelect;
-	return (
-		<>
-		{Object.keys(items).map((key, index) => ( 
-			<TreeItem 
-				key={ key }
-				nodeId={ "" + items[key]["id"] }
-				label={ "" + items[key]["label"] }
-				onClick={event => {
-					event.stopPropagation();
-					event.preventDefault();
-					if( items[key]["instance"] ) {
-						onSelectFn(items[key]["instance"]);
-					}
-					if( items[key]["link"] ) {
-						history.push(items[key]["link"]);
-					}
-				}}>
-				{items[key]["tree"] && 
-				Object.keys(items[key]["tree"]).length > 0 &&
-					<TreeViewItems 
-						onSelect={onSelectFn} 
-						items={items[key]["tree"]}
-					/>
-				}
-			</TreeItem>
-		))}
-		</>
-	)
-}
+// function TreeViewItems(props) {
+// 	const history = useHistory();
+// 	var items = props.items;
+// 	var onSelectFn = props.onSelect;
+// 	return (
+// 		<>
+// 		{Object.keys(items).map((key, index) => ( 
+// 			<TreeItem 
+// 				key={ key }
+// 				nodeId={ "" + items[key]["id"] }
+// 				label={ "" + items[key]["label"] }
+// 				onClick={event => {
+// 					event.stopPropagation();
+// 					event.preventDefault();
+// 					if( items[key]["instance"] ) {
+// 						onSelectFn(items[key]["instance"]);
+// 					}
+// 					if( items[key]["link"] ) {
+// 						history.push(items[key]["link"]);
+// 					}
+// 				}}>
+// 				{items[key]["tree"] && 
+// 				Object.keys(items[key]["tree"]).length > 0 &&
+// 					<TreeViewItems 
+// 						onSelect={onSelectFn} 
+// 						items={items[key]["tree"]}
+// 					/>
+// 				}
+// 			</TreeItem>
+// 		))}
+// 		</>
+// 	)
+// }
 
 class RootInstances extends Component {
 
@@ -308,72 +322,72 @@ class RootInstances extends Component {
 	}
 
 	/*
-	 *
+	 * 
 	 */
 
-	getTreeData() {
-
-		const {
-			api, 
-			namespace, 
-			typename, 
-			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			instances, 
-			ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema
-		} = this.props;
-
-		var treestruc = {
-		};
-
-		treestruc[typename] = {
-			id: typename, 
-			name: typename, 
-			label: typename, 
-			tree: {
-			}
-		}
-
-		if( instances && instances["entities"] ) {
-			for( var cinstanceid in instances["entities"] ) {
-				var instance = instances["entities"][cinstanceid];
-				if( instance ) {
-
-					// if( !(instance["label"] in treestruc) ) {
-					// 	treestruc[instance["label"]] = {
-					// 		id: instance["label"], 
-					// 		name: instance["label"], 
-					// 		label: instance["label"], 
-					// 		tree: {
-					// 		}
-					// 	};
-					// }
-
-					// treestruc[instance["label"]]["tree"][instance["name"]] = {
-					treestruc[instance["label"]]["tree"][instance["id"]] = {
-						id: instance["id"], 
-						name: instance["name"], 
-						label: instance["name"], // + "." + instance["label"], 
-						link: this.makeInstanceLink(instance), 
-						instance: this.makeInstance(instance), 
-						tree: {
-						}
-					};
-
-				}
-			}
-		}
-
-		return treestruc;
-	}
+	// getTreeData() {
+	// 
+	// 	const {
+	// 		api, 
+	// 		namespace, 
+	// 		typename, 
+	// 		type, 
+	// 		// , 
+	// 		// , 
+	// 		// , 
+	// 		// , 
+	// 		instances, 
+	// 		ainstances, 
+	// 		// , 
+	// 		// , 
+	// 		// , 
+	// 		// , 
+	// 		schema
+	// 	} = this.props;
+	// 
+	// 	var treestruc = {
+	// 	};
+	// 
+	// 	treestruc[typename] = {
+	// 		id: typename, 
+	// 		name: typename, 
+	// 		label: typename, 
+	// 		tree: {
+	// 		}
+	// 	}
+	// 
+	// 	if( instances && instances["entities"] ) {
+	// 		for( var cinstanceid in instances["entities"] ) {
+	// 			var instance = instances["entities"][cinstanceid];
+	// 			if( instance ) {
+	// 
+	// 				// if( !(instance["label"] in treestruc) ) {
+	// 				// 	treestruc[instance["label"]] = {
+	// 				// 		id: instance["label"], 
+	// 				// 		name: instance["label"], 
+	// 				// 		label: instance["label"], 
+	// 				// 		tree: {
+	// 				// 		}
+	// 				// 	};
+	// 				// }
+	// 
+	// 				// treestruc[instance["label"]]["tree"][instance["name"]] = {
+	// 				treestruc[instance["label"]]["tree"][instance["id"]] = {
+	// 					id: instance["id"], 
+	// 					name: instance["name"], 
+	// 					label: instance["name"], // + "." + instance["label"], 
+	// 					link: this.makeInstanceLink(instance), 
+	// 					instance: this.makeInstance(instance), 
+	// 					tree: {
+	// 					}
+	// 				};
+	// 
+	// 			}
+	// 		}
+	// 	}
+	// 
+	// 	return treestruc;
+	// }
 
 	makeInstanceLink(instance) {
 		return "/detail/" + instance["label"] + "/" + instance["id"];
@@ -407,7 +421,7 @@ class RootInstances extends Component {
 
 		const { classes } = this.props;
 
-		var treestruc = this.getTreeData(instances["entities"]);
+		// var treestruc = this.getTreeData(instances["entities"]);
 
 		var backdropOpen = false;
 
@@ -488,7 +502,7 @@ class RootInstances extends Component {
 					xs={3} 
 					spacing={0} 
 				>
-					<TreeView
+					{/* <TreeView
 						className={classes.tree} 
 						// className="tree" 
 						defaultCollapseIcon={<ExpandMoreIcon />}
@@ -501,7 +515,21 @@ class RootInstances extends Component {
 							}}
 							items={treestruc}
 						/>
-					</TreeView>
+					</TreeView> */}
+					<List component="nav" className={classes.root} aria-label="Entities">
+						{ instances && instances["entities"] && Object.entries(instances["entities"]).map(([entityid, entity]) => (
+						<ListItem 
+							button 
+							selected={false} 
+							component={Link} 
+							to={this.makeInstanceLink(entity)} 
+							// onClick={onItemClick(title)}
+							>
+							{/* <ListItemIcon>{item.icon}</ListItemIcon> */}
+							<ListItemText>{entity["name"]}</ListItemText>
+						</ListItem>
+						))}
+					</List>
 				</Grid>
 				<Grid 
 					className={classes.mainGrid} 
