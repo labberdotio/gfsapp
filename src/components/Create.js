@@ -234,10 +234,108 @@ class CreateInstanceDialog extends Component {
 		var form = {};
 		var formnames = [];
 
+		var nschema = schema["entity"]; // schema;
+
+		var uiSchema = {
+			id: {"ui:widget": "hidden"}, 
+			uuid: {"ui:widget": "hidden"}, 
+			created: {"ui:widget": "hidden"}, 
+			modified: {"ui:widget": "hidden"}
+		};
+
+		// var loaded = true;
+		if( nschema && nschema["definitions"] ) {
+			for( var defname in nschema["definitions"] ) {
+				if( defname && ainstances[defname] ) {
+					var instances = ainstances[defname]["entities"];
+					if( instances ) {
+						var instanceids = [];
+						var instancenames = [];
+						for( var instanceid in instances ) {
+							var instance = instances[instanceid];
+							if( instance && instance["id"] && instance["name"] ) {
+								instanceids.push(instance["id"]);
+								instancenames.push(instance["name"]);
+							}
+						}
+						nschema["definitions"][defname]["properties"]["id"] = {
+							"type": "string",
+							"enum": instanceids,
+							"enumNames": instancenames
+						}
+					}
+				}
+			}
+		}
+
+		/*
+		 * Why do I need this?? Because if I don't fill out all enums above with loaded instances
+		 * at the same time then the select dropdown does not get updated after loading is complete.
+		 */ 
+		var loaded = true;
+		if( nschema && nschema["properties"] ) {
+			for( var propname in nschema["properties"] ) {
+				var prop = nschema["properties"][propname];
+				if( (prop["type"] == "array") && (prop["items"]) ) {
+					var ref = prop["items"]["$ref"];
+					var refname = ref.replace("#/definitions/", "");
+					if( !ainstances[refname] ) {
+						/*
+						 * Why do I need this?? Because if I don't fill out all enums above with loaded instances
+						 * at the same time then the select dropdown does not get updated after loading is complete.
+						 */ 
+						loaded = false;
+					} else if( (ainstances[refname]) && (!ainstances[refname]["loaded"]) ) {
+						/*
+						 * Why do I need this?? Because if I don't fill out all enums above with loaded instances
+						 * at the same time then the select dropdown does not get updated after loading is complete.
+						 */ 
+						loaded = false;
+					}
+					uiSchema[propname] = {
+						items: {
+							id: {"ui:widget": "select"}, 
+							uuid: {"ui:widget": "hidden"}, 
+							created: {"ui:widget": "hidden"}, 
+							modified: {"ui:widget": "hidden"},
+						}
+					}
+				} else if( prop["$ref"] ) {
+					var ref = prop["$ref"];
+					var refname = ref.replace("#/definitions/", "");
+					if( !ainstances[refname] ) {
+						loaded = false;
+					} else if( (ainstances[refname]) && (!ainstances[refname]["loaded"]) ) {
+						loaded = false;
+					}
+					uiSchema[propname] = {
+						id: {"ui:widget": "select"}, 
+						uuid: {"ui:widget": "hidden"}, 
+						created: {"ui:widget": "hidden"}, 
+						modified: {"ui:widget": "hidden"},
+					}
+				}
+			}
+		}
+
+		if( !loaded ) {
+			nschema = {};
+			uiSchema = {};
+		} else if( !nschema ) {
+			nschema = {};
+			uiSchema = {};
+		} else if( !uiSchema ) {
+			nschema = {};
+			uiSchema = {};
+		} else {
+			// 
+		}
+
 		const renderForm = function() {
-			if( schema && schema["entity"] ) {
+			if( nschema ) {
 				return <Form 
-					schema={schema["entity"]} 
+					schema={nschema} 
+					uiSchema={uiSchema}
 					formData={data} 
 					onChange={e => {}} 
 					onSubmit={e => {}} 
