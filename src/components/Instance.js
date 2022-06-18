@@ -11,11 +11,11 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+// import Container from '@material-ui/core/Container';
+// import Grid from '@material-ui/core/Grid';
 
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+// import Typography from '@material-ui/core/Typography';
+// import Paper from '@material-ui/core/Paper';
 
 // import TreeView from '@material-ui/lab/TreeView';
 // import TreeItem from '@material-ui/lab/TreeItem';
@@ -23,14 +23,14 @@ import Paper from '@material-ui/core/Paper';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import MaterialTable from 'material-table';
+// import MaterialTable from 'material-table';
 
 // import Backdrop from '@material-ui/core/Backdrop';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
 import InstanceView from './Instance'
 import InstancesView from './Instances'
-import ListView from './List'
+// import ListView from './List'
 import DetailView from './Detail'
 
 // import { 
@@ -51,7 +51,9 @@ import DetailView from './Detail'
 const styles = theme => ({
 
 	mainPaper: {
-		width: '100%'
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
 	},
 
 });
@@ -166,6 +168,13 @@ class Instance extends Component {
 				"name": propertyname, 
 				"value": instance[propertyname]
 			});
+			var propertyname = "link";
+			// if( instance && instance[propertyname] ) {
+				properties.push({
+					"name": propertyname, 
+					"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				});
+			// }
 		}
 
 		propertyname = "uuid";
@@ -337,6 +346,10 @@ class Instance extends Component {
 	 *
 	 */
 
+	makeInstanceLink(label, id) {
+		return "/detail/" + label + "/" + id;
+	}
+
 	render() {
 
 		var _this = this;
@@ -383,21 +396,21 @@ class Instance extends Component {
 
 		return (
 			<>
-			<Container 
+			{/* <Container 
 				className={classes.listContainer} 
 				// className="listContainer" 
 				// maxWidth="false"
-				>
+				> */}
 			{/* <Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop> */}
-			<Grid 
+			{/* <Grid 
 				className={classes.fullGrid} 
 				// className="fullGrid" 
 				container 
 				xs={12} 
 				spacing={0} 
-			>
+			> */}
 				<DetailView 
 					title={title} 
 					description={description} 
@@ -444,8 +457,8 @@ class Instance extends Component {
 							wsClient={_this.wsClient} />
 					}
 				})}
-			</Grid>
-			</Container>
+			{/* </Grid> */}
+			{/* </Container> */}
 			</>
 		);
 	}

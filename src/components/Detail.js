@@ -11,13 +11,23 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
 
 	mainPaper: {
-		width: '100%'
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
 	},
 
 });
@@ -74,12 +84,15 @@ class Detail extends Component {
 
 		return (
 			<>
+			<Container
+				className={classes.mainContainer} 
+			>
 			<Paper
 				className={classes.mainPaper} 
 			>
 
 				<h1>{title}</h1>
-				<h2>{description}</h2>
+				<h5>{description}</h5>
 
 				{/* {instanceid && instance &&
 					<p><h1>{instanceid}</h1></p>
@@ -117,11 +130,22 @@ class Detail extends Component {
 					<h3>{item}</h3>
 				))} */}
 
-				{ properties && properties.map((item, i) => (
+				{/* { properties && properties.map((item, i) => (
 					<p><label>{item.name}: </label>{ item.value }</p>
-				))}
+				))} */}
+
+				<List component="nav" className={classes.root} aria-label="Properties">
+					{ properties && properties.map((item, i) => (
+					<ListItem>
+						<ListItemText  
+							primary={item.name} 
+							secondary={item.value} />
+					</ListItem>
+					))}
+				</List>
 
 			</Paper>
+			</Container>
 			</>
 		);
 	}

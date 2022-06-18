@@ -11,6 +11,9 @@ import { withStyles } from '@material-ui/styles';
 // import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
@@ -19,7 +22,9 @@ import MaterialTable from 'material-table';
 const styles = theme => ({
 
 	mainPaper: {
-		width: '100%'
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
 	},
 
 });
@@ -77,16 +82,24 @@ class List extends Component {
 
 		const { classes } = this.props;
 
+		// cols.push({
+		// 	field: 'link',
+		// 	title: 'Link',
+		// 	render: rowData => <img src={rowData.url} style={{width: 50, borderRadius: '50%'}}/>
+		// })
+
 		return (
 			<>
+			<Container
+				className={classes.mainContainer} 
+			>
 			<Paper
 				className={classes.mainPaper} 
 			>
 			<h1>{title}</h1>
-			<h2>{description}</h2>
-			</Paper>
+			{/* <h2>{description}</h2> */}
 			<MaterialTable
-				title={title}
+				title={description}
 				columns={cols}
 				data={rows}
 				options={{
@@ -100,6 +113,8 @@ class List extends Component {
 				style={{
 					width: "100%"
 				}}/>
+			</Paper>
+			</Container>
 			</>
 		);
 	}

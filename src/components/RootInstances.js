@@ -62,8 +62,15 @@ import {
 
 const styles = theme => ({
 
+	mainContainer: {
+		padding: 0, 
+		margin: 0, 
+	},
+
 	mainPaper: {
-		width: '100%'
+		width: '100%', 
+		marginTop: '20px', 
+		marginBottom: '0px', 
 	},
 
 	speedDial: {
@@ -239,6 +246,11 @@ class RootInstances extends Component {
 			field: "id"
 		});
 		cols.push({
+			title: "link",
+			field: "link",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		});
+		cols.push({
 			title: "uuid",
 			field: "uuid"
 		});
@@ -277,6 +289,11 @@ class RootInstances extends Component {
 		cols.push({
 			title: "id",
 			field: "id"
+		});
+		cols.push({
+			title: "link",
+			field: "link",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		cols.push({
 			title: "uuid",
@@ -481,8 +498,8 @@ class RootInstances extends Component {
 		return (
 			<>
 			<Container 
-				className={classes.listContainer} 
-				// className="listContainer" 
+				className={classes.mainContainer} 
+				// className="mainContainer" 
 				// maxWidth="false"
 				>
 			<Backdrop open={backdropOpen}>
