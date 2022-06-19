@@ -6,6 +6,7 @@
 
 // import ApiGenerator from '../clients/ApiGenerator';
 import ApiGenerator from '../clients/APIClient';
+import GQLClient from '../clients/GQLClient';
 
 
 
@@ -23,7 +24,9 @@ function EntityService({ getState }) {
 				api.getEntity(action.type, action.entity_id);
 				break
 			case 'CREATE_ENTITY':
-				var api = new ApiGenerator(action, next);
+				// var api = new ApiGenerator(action, next);
+				// api.createEntity(action.type, action.entity);
+				var api = new GQLClient(action, next);
 				api.createEntity(action.type, action.entity);
 				break
 			case 'UPDATE_ENTITY':

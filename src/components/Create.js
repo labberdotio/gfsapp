@@ -40,16 +40,21 @@ class CreateInstanceDialog extends Component {
 	constructor(props) {
 		super(props);
 		this.state = this.calcState({
-			open: props.open,
-			
+			open: true, // props.open,
+			data: {}
 		});
+
+		this.onChange = this.onChange.bind(this);
+		this.onCreate = this.onCreate.bind(this);
+
 		this.openDialog = this.openDialog.bind(this);
 		this.onCloseDialog = this.onCloseDialog.bind(this);
-		this.onCreate = this.onCreate.bind(this);
+
 	}
 
 	state = {
-		open: false
+		open: true, 
+		data: {}
 	};
 
 	calcState(state) {
@@ -188,8 +193,37 @@ class CreateInstanceDialog extends Component {
 
 	}
 
+	onChange(e) {
+		const data = e.formData;
+		this.setState(this.calcState({
+			data: data
+		}));
+	}
+
 	onCreate() {
-		
+
+		const {
+			api, 
+			namespace, 
+			typename, 
+			type, 
+			// , 
+			// , 
+			// , 
+			// , 
+			schema, 
+			ainstances
+		} = this.props;
+
+		if( schema && schema["entity"] ) {
+			this.props.createInstance(
+				api, 
+				typename, 
+				schema["entity"], 
+				this.state.data
+			);
+		}
+
 	}
 
 	openDialog() {
@@ -211,6 +245,21 @@ class CreateInstanceDialog extends Component {
 		}
 	}
 
+	renderForm(nschema, uiSchema, data) {
+		var _this = this;
+		if( nschema ) {
+			return <Form 
+				schema={nschema} 
+				uiSchema={uiSchema}
+				formData={data} 
+				// onChange={e => {}} 
+				onChange={_this.onChange} 
+				onSubmit={e => {}} 
+				onError={e => {}} 
+				children={<br/>} />
+		}
+	}
+
 	render() {
 
 		var _this = this;
@@ -228,11 +277,11 @@ class CreateInstanceDialog extends Component {
 			ainstances
 		} = this.props;
 
-		var open = true; // this.state.open;
+		var open = this.state.open;
+		var data = this.state.data;
 
-		var data = {};
-		var form = {};
-		var formnames = [];
+		// var form = {};
+		// var formnames = [];
 
 		var nschema = schema["entity"]; // schema;
 
@@ -254,8 +303,10 @@ class CreateInstanceDialog extends Component {
 						for( var instanceid in instances ) {
 							var instance = instances[instanceid];
 							if( instance && instance["id"] && instance["name"] ) {
-								instanceids.push(instance["id"]);
-								instancenames.push(instance["name"]);
+								// ids must be strings here for the 
+								// GraphQL API to accept them as inputs.
+								instanceids.push( String( instance["id"] ) );
+								instancenames.push( String( instance["name"] ) );
 							}
 						}
 						nschema["definitions"][defname]["properties"]["id"] = {
@@ -331,18 +382,20 @@ class CreateInstanceDialog extends Component {
 			// 
 		}
 
-		const renderForm = function() {
-			if( nschema ) {
-				return <Form 
-					schema={nschema} 
-					uiSchema={uiSchema}
-					formData={data} 
-					onChange={e => {}} 
-					onSubmit={e => {}} 
-					onError={e => {}} 
-					children={<br/>} />
-			}
-		}
+		// const renderForm = function() {
+		// 	var _this = this;
+		// 	if( nschema ) {
+		// 		return <Form 
+		// 			schema={nschema} 
+		// 			uiSchema={uiSchema}
+		// 			formData={data} 
+		// 			// onChange={e => {}} 
+		// 			onChange={_this.onChange} 
+		// 			onSubmit={e => {}} 
+		// 			onError={e => {}} 
+		// 			children={<br/>} />
+		// 	}
+		// }
 
 		/*
 		 * You can set a dialog maximum width by using the maxWidth enumerable in combination with the fullWidth 
@@ -360,11 +413,11 @@ class CreateInstanceDialog extends Component {
 				onClose={this.onCloseDialog} 
 				aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">
-					Create new.
+					Create new {typename}.
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Create new.
+						Create new {typename}.
 					</DialogContentText>
 					{/* <InputLabel id="label">Type</InputLabel> */}
 					{/* <Select 
@@ -374,7 +427,7 @@ class CreateInstanceDialog extends Component {
 						onChange={(event) => _this.selectForm(event.target.value)} >
 						{formnames.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
 					</Select> */}
-					{renderForm()}
+					{this.renderForm(nschema, uiSchema, data)}
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={this.onCloseDialog} color="primary">
@@ -396,6 +449,14 @@ function mapDispatchToProps(dispatch) {
 		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename)), 
 
 		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
+
+		createInstance: (api, typename, schema, data) => dispatch({
+			type: 'CREATE_ENTITY',
+			resource: typename,
+			endpoint: api,
+			schema: schema,
+			entity: data
+		}),
 
 	}
 }
