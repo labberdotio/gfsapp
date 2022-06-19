@@ -11,6 +11,9 @@ import { createClient } from 'urql';
 // import { gql } from 'urql';
 import { gql, useQuery } from 'urql';
 
+// !!
+import { jsonToGraphQLQuery } from 'json-to-graphql-query';
+
 
 
 class GQLClient {
@@ -134,30 +137,34 @@ class GQLClient {
 			url: this.url, 
 		});
 
-		const mutation = gql`
-			mutation create` + typename + ` {
-				create` + typename + `(
-					
-				) {
-					instance {
-						id,
-						name
-					},
-					ok,
-					error
-				}
-			}
-		`;
+		const mutation = {
+			
+		};
+		mutation["mutation"] = {};
+		mutation["mutation"]["create" + typename] = {};
+		mutation["mutation"]["create" + typename] = {
+			instance: {
+				id: true, 
+				name: true
+			}, 
+			ok: true,
+			error: true
+		}
+		mutation["mutation"]["create" + typename]["__args"] = entity;
 
 		client.mutation(
-			mutation, 
+			jsonToGraphQLQuery(
+				mutation, {
+					pretty: true
+				}
+			), 
 			{
 				// 
 			}
 		)
 		.toPromise()
 		.then(result => {
-			// 
+			console.log(result);
 		});
 
 	}
