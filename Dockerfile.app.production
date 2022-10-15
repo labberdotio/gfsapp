@@ -1,0 +1,59 @@
+
+# 
+# https://mherman.org/blog/dockerizing-a-react-app/
+# 
+# > docker build -f Dockerfile.builder.production -t gremlinfs-uibuilder:latest .
+# > docker network create -d bridge gremlinfs
+# > docker run -it --rm -e GFS_FS_NAME=gfs1 -e GFS_API_HOST=server -e GFS_API_PORT=5000 --net=gremlinfs -p 80:80 gremlinfs-uibuilder:latest
+# > docker run -it --rm -e REACT_APP_GFS_FS_NAME=gfs1 -e REACT_APP_GFS_API_HOST=serverrr -e REACT_APP_GFS_API_PORT=5000 --net=gremlinfs -p 3000:80 gremlinfs-ui:latest
+# > -> http://localhost:80
+# 
+
+# build environment
+# FROM node:13.12.0-alpine as build
+FROM node:14.18.2-alpine as build
+
+ENV REACT_APP_GFS_FS_NAME="gfs1"
+ENV REACT_APP_GFS_API_HOST="server"
+ENV REACT_APP_GFS_API_PORT="5000"
+ENV REACT_APP_GFS_API_USERNAME=""
+ENV REACT_APP_GFS_API_PASSWORD=""
+ENV REACT_APP_GFS_WS_HOST="server"
+ENV REACT_APP_GFS_WS_PORT="5002"
+ENV REACT_APP_GFS_WS_USERNAME=""
+ENV REACT_APP_GFS_WS_PASSWORD=""
+
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY ./package.json ./
+COPY ./package-lock.json ./
+RUN npm ci --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+
+# add app
+COPY ./ ./
+
+# build
+RUN npm run build
+
+# production environment
+FROM nginx:stable-alpine
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+
+# Initialize environment variables into filesystem
+WORKDIR /usr/share/nginx/html
+COPY ./env.sh .
+COPY ./.env .
+
+# Add bash
+RUN apk add --no-cache bash
+
+# Run script which initializes env vars to fs
+RUN chmod +x env.sh
+# RUN ./env.sh
+
+# Start Nginx server
+# CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
