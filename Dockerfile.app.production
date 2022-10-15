@@ -11,7 +11,8 @@
 
 # build environment
 # FROM node:13.12.0-alpine as build
-FROM node:14.18.2-alpine as build
+# FROM node:14.18.2-alpine as build
+FROM node:16.14.2-alpine as build
 
 ENV REACT_APP_GFS_FS_NAME="gfs1"
 ENV REACT_APP_GFS_API_HOST="server"
