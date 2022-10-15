@@ -54,6 +54,11 @@ import { getEntitiesFromState } from './stores/Entity'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DashboardView from './components/Dashboard'
 
+// import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
+
+// import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+// import DescriptionIcon from '@material-ui/icons/Description';
+
 import CreateInstanceDialog from './components/Create'
 
 import ExtensionIcon from '@material-ui/icons/Extension';
@@ -336,7 +341,25 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 		"path": "/", 
 		"icon": <DashboardIcon/>, 
 		"selected": true
-	}];
+	}
+	// , 
+	// {
+	// 	"text": "Queries", 
+	// 	"path": "/list/queries", 
+	// 	"icon": <QueryBuilderIcon/>, 
+	// 	"selected": false
+	// }, {
+	// 	"text": "Templates", 
+	// 	"path": "/list/templates", 
+	// 	"icon": <InsertDriveFileIcon/>, 
+	// 	"selected": false
+	// }, {
+	// 	"text": "Views", 
+	// 	"path": "/list/views", 
+	// 	"icon": <DescriptionIcon/>, 
+	// 	"selected": false
+	// }
+	];
 
 	/*
 	 * I have this idea of showing per type specifics here
