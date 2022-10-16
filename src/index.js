@@ -53,8 +53,8 @@ if( window._env_ ) {
 }
 
 const name = apiHostname;
-const description = 'GFS UI Builder';
-const title = 'GFS UI Builder';
+const description = 'GFS App';
+const title = 'GFS App';
 
 // console.log(' >> INIT STATE: apiHostname: ' + apiHostname);
 // console.log(' >> INIT STATE: apiPort: ' + apiPort);
