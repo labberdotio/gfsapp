@@ -15,41 +15,36 @@ import InputBase from '@material-ui/core/InputBase';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+import {
+	Link
+} from "react-router-dom";
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import ExtensionIcon from '@material-ui/icons/Extension';
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { 
-	loadNamespacesIntoState, 
-	invalidateNamespacesInState, 
-	refreshNamespaceInState 
+	selectNamespace, 
+	loadNamespacesIntoState 
 } from '../actions/Namespace'
+
+import { 
+	invalidateEntitiesInState
+} from '../actions/Entity'
 
 import { 
 	getNamespacesFromState 
 } from '../stores/Namespace'
 
-
-
-
 const styles = theme => ({
 
-	
-
 });
-
-
-
-
-
-
-
-
 
 class Namespaces extends Component {
 
@@ -59,9 +54,10 @@ class Namespaces extends Component {
 			
 		}
 
-		
-
 		var _this = this;
+
+		this.onSelectNamespace = this.onSelectNamespace.bind(this);
+		this.selectNamespace = this.selectNamespace.bind(this);
 
 	}
 
@@ -72,24 +68,28 @@ class Namespaces extends Component {
 	// }
 
 	componentDidUpdate(prevProps, prevState) {
-		const {api} = this.props;
+
+		const {
+			api, 
+			namespace
+		} = this.props;
 
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
 			this.props.loadNamespaces(api);
 		}
-
-		
 
 	}
 
 	componentDidMount() {
-		const {api} = this.props;
+
+		const {
+			api, 
+			namespace
+		} = this.props;
 
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
 			this.props.loadNamespaces(api);
 		}
-
-		
 
 	}
 
@@ -107,32 +107,32 @@ class Namespaces extends Component {
 
 	getTreeData(vertexes, edges) {
 
-		
-
 		var treestruc = {
 			
 		};
 
-		
-
 		return treestruc;
 	}
-
-	
 
 	updateSearch(event) {
 		
 	}
 
-	onSelectItem(id) {
-		
+	onSelectNamespace(namespace) {
+		// store.dispatch(selectNamespace(namespace));
+		this.props.selectNamespace(namespace);
+		this.props.invalidateEntities(namespace);
 	}
 
-	selectItem(id) {
-		
+	selectNamespace(namespace) {
+		// store.dispatch(selectNamespace(namespace));
+		this.props.selectNamespace(namespace);
+		this.props.invalidateEntities(namespace);
 	}
 
 	render() {
+
+		var _this = this;
 
 		const {
 			// api, 
@@ -140,10 +140,7 @@ class Namespaces extends Component {
 			nsloading, 
 			nsloaded, 
 			nsfailed, 
-			
-
 			namespaces, 
-
 			search
 		} = this.props;
 
@@ -160,12 +157,6 @@ class Namespaces extends Component {
 			// 
 		}
 
-		
-
-		
-
-		
-
 		var backdropOpen = false;
 		if( nsloading ) {
 			backdropOpen = true;
@@ -173,13 +164,6 @@ class Namespaces extends Component {
 
 		// const debouncedUpdateSearch = debounce((event) => this.updateSearch(event), 1000);
 		const debouncedUpdateSearch = debounce((event) => this.updateSearch(event), 250);
-
-		console.log(namespace)
-		console.log(nsloading)
-		console.log(nsloaded)
-		console.log(nsfailed)
-		console.log(" >>> NAM<ESPACES ")
-		console.log(namespaces)
 
 		return (
 			<>
@@ -200,14 +184,25 @@ class Namespaces extends Component {
 				spacing={0} 
 			>
 
-			NAMESPACES
-
 			{namespaces &&
-			<ul>
-				{namespaces.map(function(d, idx) {
-					return (<li key={idx}>{d}</li>)
-				})}
-			</ul>
+				<>
+				<List>
+					{namespaces.map(function(namespace, idx) {
+						return (
+							<ListItem 
+								button 
+								selected={false} 
+								component={Link} 
+								to={"/"} 
+								onClick={() => _this.selectNamespace(namespace)}
+								>
+								<ListItemIcon><ExtensionIcon/></ListItemIcon>
+								<ListItemText>{namespace}</ListItemText>
+							</ListItem>
+						)
+					})}
+				</List>
+				</>
 			}
 
 			</Grid>
@@ -225,9 +220,11 @@ Namespaces.propNamespaces = {
 function mapDispatchToProps(dispatch) {
 	return {
 
+		selectNamespace: (namespace) => dispatch(selectNamespace(namespace)),
+
 		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
-		invalidateNamespaces: (api) => dispatch(invalidateNamespacesInState(api)),
-		
+
+		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
 
 	}
 }
@@ -247,15 +244,9 @@ function mapStateToProps(state) {
 		loading: nsloading, 
 		loaded: nsloaded, 
 		failed: nsfailed, 
-		timestamp: ntimestamp, 
-		namespaces: nnamespaces
+		timestamp: nstimestamp, 
+		namespaces: nsnamespaces
 	} = getNamespacesFromState(state, api);
-
-	console.log(nsloading);
-	console.log(nsloaded);
-	console.log(nsfailed);
-	console.log(ntimestamp);
-	console.log(nnamespaces);
 
 	return {
 		api, 
@@ -263,7 +254,8 @@ function mapStateToProps(state) {
 		nsloading: nsloading, 
 		nsloaded: nsloaded, 
 		nsfailed: nsfailed, 
-		namespaces: nnamespaces	
+		nstimestamp: nstimestamp, 	
+		namespaces: nsnamespaces	
 	}
 
 }

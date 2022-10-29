@@ -21,6 +21,13 @@ class ApiGenerator {
 		var hostname = endpoint.api.host;
 		var port = endpoint.api.port;
 
+		var namespace = undefined;
+		// var namespace = endpoint.namespace;
+		if( action.namespace && action.namespace.current ) {
+			// namespace = action.namespace;
+			namespace = action.namespace.current;
+		}
+
 		// console.log(' >> ApiGenerator: hostname: ' + hostname + ', port: ' + port);
 		// console.log(' >> ApiGenerator: resource: ' + resource);
 		// console.log(' >> ApiGenerator: namespace: ' + namespace);
@@ -50,12 +57,167 @@ class ApiGenerator {
 
 	}
 
+	// namespaceURL(namespace) {
+	namespaceURL(namespace = null) {
+		if( namespace ) {
+			return this.url + '/' + "namespace" + '/' + namespace;
+		}
+		return this.url + '/' + "namespace";
+	}
+
 	// resourceURL(namespace, resource) {
 	resourceURL(resource, namespace, path = null) {
+		if( !resource ) {
+			return undefined;
+		}
+		if( !namespace ) {
+			return undefined;
+		}
 		if( path ) {
 			return this.url + '/' + namespace + '/' + resource + '/' + path;
 		}
 		return this.url + '/' + namespace + '/' + resource;
+	}
+
+	/*
+	 *
+	 */
+
+	getNamespaces() {
+		this.next({
+			type: `DO_GET_NAMESPACES`,
+			endpoint: this.endpoint,
+			accept: this.accept
+		});
+		var apiClient = new APIClient(
+			this.endpoint.api.host, 
+			this.endpoint.api.port 
+		);
+		// try {
+		fetch(apiClient.namespaceURL(), {
+			method: 'GET',
+			headers: {
+				'Accept': this.accept
+			}
+		}).then((res) => {
+			// Unfortunately, fetch doesn't send (404 error) into the cache itself
+			// You have to send it, as I have done below
+			if( res.ok ) {
+				if( this.accept === "text/plain" ) {
+					return res.text();
+				} else if( this.accept === "application/yaml" ) {
+					return res.text();
+				} else {
+					return res.json();
+				}
+			} else {
+				this.next({
+					type: `FAIL_GET_NAMESPACES`,
+					endpoint: this.endpoint,
+					accept: this.accept,
+					timestamp: Date.now()
+				});
+			}
+		}).then((data) => {
+			this.next({
+				type: `ON_GET_NAMESPACES`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				namespaces: data,
+				timestamp: Date.now()
+			});
+		}, 
+		// Note: it's important to handle errors here 
+		// instead of a catch() block so that we don't swallow
+		// exceptions from actual bugs in components
+		err => {
+			this.next({
+				type: `FAIL_GET_NAMESPACES`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				timestamp: Date.now()
+			});
+		});
+		// } catch {
+		// 	this.next({
+		// 		type: `FAIL_GET_NAMESPACES`,
+		// 		endpoint: this.endpoint,
+		// 		accept: this.accept,
+		// 		timestamp: Date.now()
+		// 	});
+		// }
+	}
+
+	getNamespace(namespace) {
+		this.next({
+			type: `DO_GET_NAMESPACE`,
+			endpoint: this.endpoint,
+			accept: this.accept,
+			namespace: namespace
+		});
+		var apiClient = new APIClient(
+			this.endpoint.api.host, 
+			this.endpoint.api.port 
+		);
+		// try {
+		fetch(apiClient.namespaceURL(namespace), {
+			method: 'GET',
+			headers: {
+				'Accept': this.accept
+			}
+		})
+		.then((res) => {
+			// Unfortunately, fetch doesn't send (404 error) into the cache itself
+			// You have to send it, as I have done below
+			if( res.ok ) {
+				if( this.accept === "text/plain" ) {
+					return res.text();
+				} else if( this.accept === "application/yaml" ) {
+					return res.text();
+				} else {
+					return res.json();
+				}
+			} else {
+				this.next({
+					type: `FAIL_GET_NAMESPACE`,
+					endpoint: this.endpoint,
+					accept: this.accept,
+					namespace: namespace,
+					timestamp: Date.now()
+				});
+			}
+		})
+		.then((data) => {
+			this.next({
+				type: `ON_GET_NAMESPACE`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				namespace: namespace,
+				namespace: data,
+				timestamp: Date.now()
+			});
+		}, 
+		// Note: it's important to handle errors here 
+		// instead of a catch() block so that we don't swallow
+		// exceptions from actual bugs in components
+		err => {
+			this.next({
+				type: `FAIL_GET_NAMESPACE`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				namespace: namespace,
+				timestamp: Date.now()
+			});
+		});
+		// } catch {
+		// 	this.next({
+		// 		type: `FAIL_GET_NAMESPACE`,
+		// 		endpoint: this.endpoint,
+		// 		accept: this.accept,
+		// 		namespace: namespace,
+		// 		timestamp: Date.now()
+		// 	});
+		// }
 	}
 
 	/*

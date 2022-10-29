@@ -245,7 +245,8 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	const apiHostnamePort = String(apiHostname) + ":" + String(apiPort);
 	const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
 
-	const namespace = useSelector(state => state.api.namespace);
+	// const namespace = useSelector(state => state.api.namespace);
+	const namespace = useSelector(state => state.namespace["current"]);
 
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
