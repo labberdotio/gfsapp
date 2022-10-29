@@ -96,7 +96,7 @@ class Instances extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, typename);
+		// 	this.props.loadInstances(api, namespace, typename);
 		// }
 
 	}
@@ -353,7 +353,7 @@ class Instances extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		// loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename))
+		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename))
 
 	}
 }
@@ -382,11 +382,11 @@ function mapStateToProps(state, ownProps) {
 	// 	failed: isfailed, 
 	// 	timestamp: istimestamp, 
 	// 	entities: instances
-	// } = getEntitiesFromState(state, api, typename);
+	// } = getEntitiesFromState(state, api, namespace, typename);
 
 	return {
 		// api, 
-		// namespace: api.namespace, 
+		// namespace: namespace, 
 		title: title, 
         description: description, 
 		typename: typename, 

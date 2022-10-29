@@ -153,14 +153,14 @@ class RootInstance extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, typename);
+			this.props.loadInstances(api, namespace, typename);
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, typename);
+			this.props.loadSchema(api, namespace, typename);
 			// }
 		}
 
@@ -182,7 +182,7 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, dtypename);
+								this.props.loadInstances(api, namespace, dtypename);
 								// }
 							}
 						} else if( (property["type"] == "array") && 
@@ -193,7 +193,7 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, dtypename);
+								this.props.loadInstances(api, namespace, dtypename);
 								// }
 							}
 						}
@@ -228,14 +228,14 @@ class RootInstance extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, typename);
+			this.props.loadInstances(api, namespace, typename);
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, typename);
+			this.props.loadSchema(api, namespace, typename);
 			// }
 		}
 
@@ -257,7 +257,7 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, dtypename);
+								this.props.loadInstances(api, namespace, dtypename);
 								// }
 							}
 						} else if( (property["type"] == "array") && 
@@ -268,7 +268,7 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, dtypename);
+								this.props.loadInstances(api, namespace, dtypename);
 								// }
 							}
 						}
@@ -501,9 +501,9 @@ class RootInstance extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
+		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
-		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename))
+		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
 	}
 }
@@ -518,6 +518,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		namespace
 	} = state;
 
 	// const {
@@ -526,8 +527,8 @@ function mapStateToProps(state, ownProps) {
 	// 	failed: , 
 	// 	timestamp: , 
 	// 	entities: instances
-	// } = getEntitiesFromState(state, api, typename);
-	const instances = getEntitiesFromState(state, api, typename);
+	// } = getEntitiesFromState(state, api, namespace, typename);
+	const instances = getEntitiesFromState(state, api, namespace, typename);
 
 	// const {
 	// 	loading: , 
@@ -535,8 +536,8 @@ function mapStateToProps(state, ownProps) {
 	// 	failed: , 
 	// 	timestamp: , 
 	// 	entity: schema
-	// } = getEntityFromState(state, api, "schema", typename);
-	const schema = getEntityFromState(state, api, "schema", typename);
+	// } = getEntityFromState(state, api, namespace, "schema", typename);
+	const schema = getEntityFromState(state, api, namespace, "schema", typename);
 
 	// console.log( " SCHEMA >> " );
 	// console.log(  );
@@ -562,13 +563,13 @@ function mapStateToProps(state, ownProps) {
 					} else if( property["$ref"] ) {
 						// property["$ref"].replace("#/definitions/", "")
 						const dtypename = property["$ref"].replace("#/definitions/", "");
-						const dinstances = getEntitiesFromState(state, api, dtypename);
+						const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
 						ainstances[dtypename] = dinstances;
 					} else if( (property["type"] == "array") && 
 							   (property["items"]) ) {
 						// property["items"]["$ref"].replace("#/definitions/", "")
 						const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-						const dinstances = getEntitiesFromState(state, api, dtypename);
+						const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
 						ainstances[dtypename] = dinstances;
 					}
 				}
@@ -578,7 +579,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		api, 
-		namespace: api.namespace, 
+		namespace: namespace, 
 		typename: typename, 
 		instanceid: instanceid, 
 		type: type, 

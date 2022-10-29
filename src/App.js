@@ -741,10 +741,14 @@ class App extends Component {
 	// }
 
 	componentDidUpdate(prevProps, prevState) {
-		const {api} = this.props;
+
+		const {
+			api, 
+			namespace
+		} = this.props;
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			this.props.loadTypes(api);
+			this.props.loadTypes(api, namespace);
 		}
 
 		if( this.props.tsfailed ) {
@@ -758,10 +762,14 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		const {api} = this.props;
+
+		const {
+			api, 
+			namespace
+		} = this.props;
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			this.props.loadTypes(api);
+			this.props.loadTypes(api, namespace);
 		}
 
 		if( this.props.tsfailed ) {
@@ -815,8 +823,8 @@ class App extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		// loadTypes: (api) => dispatch(loadEntitiesIntoState(api, 'type')),
-		loadTypes: (api) => dispatch(loadEntitiesIntoState(api, 'type')),
+		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
 
 	}
 }
@@ -825,6 +833,7 @@ function mapStateToProps(state) {
 
 	const {
 		api, 
+		namespace, 
 		entities
 	} = state;
 
@@ -834,11 +843,11 @@ function mapStateToProps(state) {
 		failed: tsfailed, 
 		timestamp: ttimestamp, 
 		entities: types
-	} = getEntitiesFromState(state, api, 'type');
+	} = getEntitiesFromState(state, api, namespace, 'type');
 
 	return {
 		api, 
-		namespace: api.namespace, 
+		namespace: namespace, 
 		tsloading: tsloading, 
 		tsloaded: tsloaded, 
 		tsfailed: tsfailed, 

@@ -232,13 +232,10 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 
 	const {
-		api, 
+		api,
+		namespace,
 		namespaces
 	} = state;
-
-	console.log(" !!! NAMESPACES !!! ");
-	console.log(api);
-	console.log(namespaces);
 
 	const {
 		loading: nsloading, 
@@ -250,7 +247,7 @@ function mapStateToProps(state) {
 
 	return {
 		api, 
-		namespace: api.namespace, 
+		namespace: namespace, 
 		nsloading: nsloading, 
 		nsloaded: nsloaded, 
 		nsfailed: nsfailed, 

@@ -100,12 +100,12 @@ class Instance extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, typename);
+		// 	this.props.loadInstances(api, namespace, typename);
 		// }
 
 		// if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
 		// 	if( typename ) {
-		// 		this.props.loadSchema(api, typename);
+		// 		this.props.loadSchema(api, namespace, typename);
 		// 	}
 		// }
 
@@ -462,9 +462,9 @@ class Instance extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		// loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
+		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
-		// loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename))
+		// loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
 	}
 }
@@ -495,7 +495,7 @@ function mapStateToProps(state, ownProps) {
 		failed: isfailed, 
 		timestamp: istimestamp, 
 		entities: instances
-	} = getEntitiesFromState(state, api, typename); */
+	} = getEntitiesFromState(state, api, namespace, typename); */
 
 	/* const {
 		loading: ssloading, 
@@ -503,7 +503,7 @@ function mapStateToProps(state, ownProps) {
 		failed: ssfailed, 
 		timestamp: sstimestamp, 
 		entity: schema
-	} = getEntityFromState(state, api, "schema", typename); */
+	} = getEntityFromState(state, api, namespace, "schema", typename); */
 
 	// console.log( " SCHEMA >> " );
 	// console.log( ssloading );
@@ -515,7 +515,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		// api, 
-		// namespace: api.namespace, 
+		// namespace: namespace, 
 		title: title, 
         description: description, 
 		typename: typename, 

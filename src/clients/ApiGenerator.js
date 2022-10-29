@@ -17,7 +17,6 @@ class ApiGenerator {
 		var resource = action.resource;
 		var endpoint = action.endpoint;
 
-		var namespace = endpoint.namespace;
 		var hostname = endpoint.api.host;
 		var port = endpoint.api.port;
 
@@ -36,7 +35,11 @@ class ApiGenerator {
 		this.endpoint = endpoint;
 		this.next = next;
 
-		this.namespace = namespace;
+		this.namespace = undefined;
+		if( namespace ) {
+			this.namespace = namespace;
+		}
+
 		this.hostname = hostname;
 		this.port = port;
 
@@ -236,7 +239,7 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		fetch(apiClient.resourceURL(this.resource, this.endpoint.namespace), {
+		fetch(apiClient.resourceURL(this.resource, this.namespace), {
 			method: 'GET',
 			headers: {
 				'Accept': this.accept
@@ -307,7 +310,7 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		fetch(apiClient.resourceURL(this.resource, this.endpoint.namespace, entity_id), {
+		fetch(apiClient.resourceURL(this.resource, this.namespace, entity_id), {
 			method: 'GET',
 			headers: {
 				'Accept': this.accept
@@ -395,7 +398,7 @@ class ApiGenerator {
 		} else {
 			data = JSON.stringify(entity);
 		}
-		fetch(this.resourceURL(this.resource, this.endpoint.namespace), {
+		fetch(this.resourceURL(this.resource, this.namespace), {
 			method: 'POST',
 			body: data, // JSON.stringify(entity),
 			headers: {
@@ -466,7 +469,7 @@ class ApiGenerator {
 		} else {
 			data = JSON.stringify(entity);
 		}
-		fetch(this.resourceURL(this.resource, this.endpoint.namespace, entity_id), {
+		fetch(this.resourceURL(this.resource, this.namespace, entity_id), {
 			method: 'PUT',
 			body: data, // JSON.stringify(entity),
 			headers: {
@@ -529,7 +532,7 @@ class ApiGenerator {
 			this.endpoint.api.host, 
 			this.endpoint.api.port 
 		);
-		fetch(this.resourceURL(this.resource, this.endpoint.namespace, entity_id), {
+		fetch(this.resourceURL(this.resource, this.namespace, entity_id), {
 			method: 'DELETE',
 			headers: {
 				'Accept': this.accept
@@ -576,3 +579,4 @@ class ApiGenerator {
 }
 
 export default ApiGenerator;
+
