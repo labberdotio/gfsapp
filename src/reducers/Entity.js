@@ -257,29 +257,31 @@ function __entities(
 function entities(state = {}, action) {
 	switch (action.type) {
 
-		// case GET_ENTITY:
-		// case DO_GET_ENTITY:
-		// case ON_GET_ENTITY:
-		// case FAIL_GET_ENTITY:
-		// // case INVALIDATE_ENTITIES:
-		// case INVALIDATE_ENTITY:
-		// // case REFRESH_ENTITIES:
-		// case REFRESH_ENTITY:
-		// 	return Object.assign({}, state, {
-		// 		// [action.endpoint.name + "-" + action.resource + "-" + action.entity_id]: __entity(state[action.endpoint.name], action)
-		// 		[action.endpoint.name + "-" + action.resource]: __entity(
-		// 			state[action.endpoint.name], 
-		// 			action,
-		// 			state[action.endpoint.name + "-" + action.resource]
-		// 		)
-		// 	});
+		case GET_ENTITY:
+		case DO_GET_ENTITY:
+		case ON_GET_ENTITY:
+		case FAIL_GET_ENTITY:
+		// case REFRESH_ENTITIES:
+		case REFRESH_ENTITY:
+			return Object.assign({}, state, {
+				// [action.endpoint.name + "-" + action.resource + "-" + action.entity_id]: __entity(state[action.endpoint.name], action)
+				[action.endpoint.name + "-" + action.resource]: __entity(
+					state[action.endpoint.name], 
+					action,
+					state[action.endpoint.name + "-" + action.resource]
+				)
+			});
+
+		// case INVALIDATE_ENTITIES:
+		case INVALIDATE_ENTITY:
+			// return Object.assign({}, state, {
+			// });
+			return {};
 
 		case GET_ENTITIES:
 		case DO_GET_ENTITIES:
 		case ON_GET_ENTITIES:
 		case FAIL_GET_ENTITIES:
-		case INVALIDATE_ENTITIES:
-		// case INVALIDATE_ENTITY:
 		case REFRESH_ENTITIES:
 		// case REFRESH_ENTITY:
 			return Object.assign({}, state, {
@@ -289,6 +291,12 @@ function entities(state = {}, action) {
 					state[action.endpoint.name + "-" + action.resource]
 				)
 			});
+
+		case INVALIDATE_ENTITIES:
+		// case INVALIDATE_ENTITY:
+			// return Object.assign({}, state, {
+			// });
+			return {};
 
 		default:
 			return state;
