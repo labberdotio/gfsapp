@@ -44,12 +44,36 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import CodeIcon from '@material-ui/icons/Code';
 import CloseIcon from '@material-ui/icons/Close';
 
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
 // import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 
-import { loadEntitiesIntoState } from './actions/Entity'
-import { getEntitiesFromState } from './stores/Entity'
+// import { loadEntitiesIntoState } from './actions/Entity'
+// import { getEntitiesFromState } from './stores/Entity'
+
+import {
+	selectNamespace, 
+	loadNamespacesIntoState
+} from './actions/Namespace'
+
+import {
+	loadEntitiesIntoState, 
+	invalidateEntitiesInState
+} from './actions/Entity'
+
+import {
+	getNamespacesFromState
+} from './stores/Namespace'
+
+import {
+	getEntitiesFromState
+} from './stores/Entity'
 
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import DashboardView from './components/Dashboard'
@@ -201,6 +225,41 @@ const styles = theme => ({
 		top: '64px'
 	},
 
+	formControl: {
+		color: 'inherit',
+		minWidth: '20ch',
+	},
+
+	formControlLabel: {
+		color: 'inherit',
+	},
+
+	formSelect: {
+		color: 'inherit',
+		minWidth: '20ch',
+	},
+
+	formControl: {
+		// '.MuiFormLabel-root': {
+		// 	color: 'inherit',
+		// },
+		'& .MuiFormLabel-root': {
+			color: 'inherit',
+		},
+		// '.MuiFilledInput-root': {
+		// 	backgroundColor: 'transparent',
+		// },
+		'& .MuiFilledInput-root': {
+			backgroundColor: 'transparent',
+		},
+		// '.MuiSvgIcon-root': {
+		// 	color: 'inherit',
+		// },
+		'& .MuiSvgIcon-root': {
+			color: 'inherit',
+		},
+	},
+
 });
 
 // theme.js - Our core theme
@@ -232,7 +291,7 @@ function getType(props, types) {
 	return undefined;
 }
 
-const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle }) {
+const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, onNamespaceSelect }) {
 
 	const apiHostname = useSelector(state => state.api.api.host);
 	const apiPort = useSelector(state => state.api.api.port);
@@ -246,10 +305,26 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
 
 	// const namespace = useSelector(state => state.api.namespace);
-	const namespace = useSelector(state => state.namespace["current"]);
+	const snamespace = useSelector(state => state.namespace);
+	const snamespaces = useSelector(state => state.namespaces);
+
+	var namespace = undefined;
+	var namespaces = undefined;
+
+	if( snamespace && snamespace["current"] ) {
+		namespace = snamespace["current"];
+	}
+
+	if( snamespaces && snamespaces[apiHostname] && snamespaces[apiHostname]["namespaces"] ) {
+		namespaces = snamespaces[apiHostname]["namespaces"];
+	}	
 
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
+	}
+
+	const selectNamespace = (namespace) => {
+		onNamespaceSelect(namespace);
 	}
 
 	return (
@@ -299,7 +374,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 						/>
 					</div>
 
-					<div className={classes.search}>
+					{/* <div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<CodeIcon/>
 						</div>
@@ -312,6 +387,42 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 							}}
 							inputProps={{ 'aria-label': 'search' }}
 						/>
+					</div> */}
+
+					<div className={classes.search}>
+						{namespaces &&
+							<>
+							{/* <div className={classes.searchIcon}>
+								<CodeIcon/>
+							</div> */}
+							<FormControl variant="filled" className={classes.formControl}>
+								<InputLabel htmlFor="filled-namespace-native-simple" className={classes.formControlLabel}>
+									Namespace
+								</InputLabel>
+								<Select
+									native
+									value={namespace}
+									// onClick={() => selectNamespace(namespace)}
+									onChange={(event) => selectNamespace(event.target.value)}
+									inputProps={{
+										
+									}} 
+									InputLabelProps={{
+										className: classes.floatingLabelFocusStyle,
+									}} 
+									className={classes.formSelect} >
+									<option aria-label="None" value=""/>
+									<>
+									{namespaces.map(function(namespace, idx) {
+										return (
+											<option value={namespace}>{namespace}</option>	
+										)
+									})}
+									</>
+								</Select>
+							</FormControl>
+							</>
+						}
 					</div>
 
 				</Toolbar>
@@ -322,7 +433,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 });
 
 // const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle }) {
-const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types }) {
+const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types, onNamespaceSelect }) {
 
 	const name = useSelector(state => state.api.name);
 	const title = useSelector(state => state.api.title);
@@ -335,6 +446,10 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
+	}
+
+	const selectNamespace = (namespace) => {
+		onNamespaceSelect(namespace);
 	}
 
 	const container = undefined;
@@ -613,7 +728,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 });
 
 // function AppNavigation({ classes, variant }) {
-function AppNavigation({ classes, variant, types }) {
+function AppNavigation({ classes, variant, types, onNamespaceSelect }) {
 
 	const [drawer, setDrawer] = useState(false);
 
@@ -625,17 +740,22 @@ function AppNavigation({ classes, variant, types }) {
 		setDrawer(!drawer);
 	};
 
+	// const selectNamespace = (namespace) => {
+	// };
+
 	return (
 		<div className={classes.root}>
 			<AppToolbar 
 				title={title} 
 				onMenuClick={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
+				onNamespaceSelect={onNamespaceSelect} 
 				types={types} />
 			<AppDrawer 
 				open={drawer} 
 				onClose={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
+				onNamespaceSelect={onNamespaceSelect} 
 				// onItemClick={onItemClick} 
 				variant={variant} 
 				types={types} />
@@ -731,6 +851,9 @@ class App extends Component {
 		this.navigationRef = React.createRef();
 		this.notificationRef = React.createRef();
 
+		this.onSelectNamespace = this.onSelectNamespace.bind(this);
+		this.selectNamespace = this.selectNamespace.bind(this);
+
 	}
 
 	state = {
@@ -746,6 +869,10 @@ class App extends Component {
 			api, 
 			namespace
 		} = this.props;
+
+		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
+			this.props.loadNamespaces(api);
+		}
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
 			this.props.loadTypes(api, namespace);
@@ -768,6 +895,10 @@ class App extends Component {
 			namespace
 		} = this.props;
 
+		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
+			this.props.loadNamespaces(api);
+		}
+
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
 			this.props.loadTypes(api, namespace);
 		}
@@ -782,7 +913,21 @@ class App extends Component {
 
 	}
 
+	onSelectNamespace(namespace) {
+		// store.dispatch(selectNamespace(namespace));
+		this.props.selectNamespace(namespace);
+		this.props.invalidateEntities(namespace);
+	}
+
+	selectNamespace(namespace) {
+		// store.dispatch(selectNamespace(namespace));
+		this.props.selectNamespace(namespace);
+		this.props.invalidateEntities(namespace);
+	}
+
 	render() {
+
+		var _this = this;
 
 		// const { classes } = this.props;
 		const {
@@ -796,9 +941,11 @@ class App extends Component {
 			<CssBaseline />
 			<Navigation 
 				ref={this.navigationRef} 
+				onNamespaceSelect={_this.selectNamespace} 
 				types={types} />
 			<Notification 
 				ref={this.notificationRef} 
+				onNamespaceSelect={_this.selectNamespace} 
 				types={types} />
 			</React.Fragment>
 			</ThemeProvider>
@@ -823,8 +970,14 @@ class App extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
+		selectNamespace: (namespace) => dispatch(selectNamespace(namespace)),
+
+		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
+
 		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
 		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+
+		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
 
 	}
 }
@@ -834,8 +987,17 @@ function mapStateToProps(state) {
 	const {
 		api, 
 		namespace, 
+		namespaces, 
 		entities
 	} = state;
+
+	const {
+		loading: nsloading, 
+		loaded: nsloaded, 
+		failed: nsfailed, 
+		timestamp: nstimestamp, 
+		namespaces: nsnamespaces
+	} = getNamespacesFromState(state, api);
 
 	const {
 		loading: tsloading, 
@@ -848,6 +1010,11 @@ function mapStateToProps(state) {
 	return {
 		api, 
 		namespace: namespace, 
+		nsloading: nsloading, 
+		nsloaded: nsloaded, 
+		nsfailed: nsfailed, 
+		nstimestamp: nstimestamp, 	
+		namespaces: nsnamespaces, 
 		tsloading: tsloading, 
 		tsloaded: tsloaded, 
 		tsfailed: tsfailed, 
