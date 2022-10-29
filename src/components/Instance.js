@@ -67,12 +67,6 @@ class Instance extends Component {
 
 		var _this = this;
 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				
-			}
-		);
 	}
 
 	state = {
@@ -106,12 +100,12 @@ class Instance extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, typename);
+		// 	this.props.loadInstances(api, namespace, typename);
 		// }
 
 		// if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
 		// 	if( typename ) {
-		// 		this.props.loadSchema(api, typename);
+		// 		this.props.loadSchema(api, namespace, typename);
 		// 	}
 		// }
 
@@ -426,8 +420,7 @@ class Instance extends Component {
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 						instances={ instance && item && this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
-						type={ item && item.type } 
-						wsClient={this.wsClient} />
+						type={ item && item.type } />
 				))} */}
 				{/* { dependencies && dependencies.filter(function(item){ if(item.cardinality == "single"){return true;}else{return false;}}).map((item, i) => (
 					<InstanceView 
@@ -435,8 +428,7 @@ class Instance extends Component {
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 						instance={ instance && item && this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
-						type={ item && item.type } 
-						wsClient={this.wsClient} />
+						type={ item && item.type } />
 				))} */}
 				{ dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
@@ -445,16 +437,14 @@ class Instance extends Component {
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							instances={ instance && item && _this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
-							type={ item && item.type } 
-							wsClient={_this.wsClient} />
+							type={ item && item.type } />
 					} else {
 						return <InstanceView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							instance={ instance && item && _this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
-							type={ item && item.type } 
-							wsClient={_this.wsClient} />
+							type={ item && item.type } />
 					}
 				})}
 			{/* </Grid> */}
@@ -472,9 +462,9 @@ class Instance extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		// loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)), 
+		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
-		// loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename))
+		// loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
 	}
 }
@@ -505,7 +495,7 @@ function mapStateToProps(state, ownProps) {
 		failed: isfailed, 
 		timestamp: istimestamp, 
 		entities: instances
-	} = getEntitiesFromState(state, api, typename); */
+	} = getEntitiesFromState(state, api, namespace, typename); */
 
 	/* const {
 		loading: ssloading, 
@@ -513,7 +503,7 @@ function mapStateToProps(state, ownProps) {
 		failed: ssfailed, 
 		timestamp: sstimestamp, 
 		entity: schema
-	} = getEntityFromState(state, api, "schema", typename); */
+	} = getEntityFromState(state, api, namespace, "schema", typename); */
 
 	// console.log( " SCHEMA >> " );
 	// console.log( ssloading );
@@ -525,7 +515,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		// api, 
-		// namespace: api.namespace, 
+		// namespace: namespace, 
 		title: title, 
         description: description, 
 		typename: typename, 

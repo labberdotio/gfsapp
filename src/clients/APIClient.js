@@ -22,8 +22,22 @@ class APIClient {
 
 	}
 
+	// namespaceURL(namespace) {
+	namespaceURL(namespace = null) {
+		if( namespace ) {
+			return this.url + '/' + "namespace" + '/' + namespace;
+		}
+		return this.url + '/' + "namespace";
+	}
+
 	// resourceURL(namespace, resource) {
 	resourceURL(resource, namespace, path = null) {
+		if( !resource ) {
+			return undefined;
+		}
+		if( !namespace ) {
+			return undefined;
+		}
 		if( path ) {
 			return this.url + '/' + namespace + '/' + resource + '/' + path;
 		}

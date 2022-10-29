@@ -132,12 +132,6 @@ class RootInstances extends Component {
 		this.createInstance = this.createInstance.bind(this);
 		this.deleteInstance = this.deleteInstance.bind(this);
 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				
-			}
-		);
 	}
 
 	state = {
@@ -170,14 +164,14 @@ class RootInstances extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, typename);
+			this.props.loadInstances(api, namespace, typename);
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, typename);
+			this.props.loadSchema(api, namespace, typename);
 			// }
 		}
 
@@ -206,14 +200,14 @@ class RootInstances extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, typename);
+			this.props.loadInstances(api, namespace, typename);
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, typename);
+			this.props.loadSchema(api, namespace, typename);
 			// }
 		}
 
@@ -563,8 +557,7 @@ class RootInstances extends Component {
 						type={type} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
-						ainstances={ainstances} 
-						wsClient={this.wsClient} />
+						ainstances={ainstances} />
 				</Grid>
 			</Grid>
 
@@ -600,9 +593,9 @@ class RootInstances extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstances: (api, typename) => dispatch(loadEntitiesIntoState(api, typename)),
+		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)),
 
-		loadSchema: (api, typename) => dispatch(loadEntityIntoState(api, "schema", typename))
+		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
 	}
 }
@@ -616,6 +609,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		namespace
 	} = state;
 
 	// const {
@@ -624,8 +618,8 @@ function mapStateToProps(state, ownProps) {
 	// 	failed: , 
 	// 	timestamp: , 
 	// 	entities: instances
-	// } = getEntitiesFromState(state, api, typename);
-	const instances = getEntitiesFromState(state, api, typename);
+	// } = getEntitiesFromState(state, api, namespace, typename);
+	const instances = getEntitiesFromState(state, api, namespace, typename);
 
 	// const {
 	// 	loading: , 
@@ -633,8 +627,8 @@ function mapStateToProps(state, ownProps) {
 	// 	failed: , 
 	// 	timestamp: , 
 	// 	entity: schema
-	// } = getEntityFromState(state, api, "schema", typename);
-	const schema = getEntityFromState(state, api, "schema", typename);
+	// } = getEntityFromState(state, api, namespace, "schema", typename);
+	const schema = getEntityFromState(state, api, namespace, "schema", typename);
 
 	// console.log( " SCHEMA >> " );
 	// console.log(  );
@@ -652,7 +646,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		api, 
-		namespace: api.namespace, 
+		namespace: namespace, 
 		typename: typename, 
 		type: type, 
 		// : , 

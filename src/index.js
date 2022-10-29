@@ -21,10 +21,14 @@ import { Provider } from 'react-redux';
 
 import WSClient from './clients/WSClient'
 import { api, apis } from './reducers/Api';
+import { namespace, namespaces } from './reducers/Namespace';
+// import { namespaces } from './reducers/Namespace';
 import { entity, entities } from './reducers/Entity';
 
+import NamespaceService from './services/Namespace';
 import EntityService from './services/Entity';
 
+import { addNamespace, selectNamespace } from './actions/Namespace';
 import { addApi, selectApi } from './actions/Api'
 
 import App from './App.js';
@@ -35,26 +39,26 @@ require('./index.css');
 /*
  * Defaults
  */
-var namespace = process.env.REACT_APP_GFS_FS_NAME || 'gfs1';
-var apiHostname = process.env.REACT_APP_GFS_API_HOST || 'gfsapi';
-var apiPort = process.env.REACT_APP_GFS_API_PORT || 5000;
-var wsHostname = process.env.REACT_APP_GFS_WS_HOST || 'gfsapi';
-var wsPort = process.env.REACT_APP_GFS_WS_PORT || 5002;
+var dnamespace = process.env.REACT_APP_GFS_FS_NAME || 'gfs1';
+var dapiHostname = process.env.REACT_APP_GFS_API_HOST || 'gfsapi';
+var dapiPort = process.env.REACT_APP_GFS_API_PORT || 5000;
+var dwsHostname = process.env.REACT_APP_GFS_WS_HOST || 'gfsapi';
+var dwsPort = process.env.REACT_APP_GFS_WS_PORT || 5002;
 
 /*
  * Overrides
  */
 if( window._env_ ) {
-	namespace = window._env_.REACT_APP_GFS_FS_NAME;
-	apiHostname = window._env_.REACT_APP_GFS_API_HOST;
-	apiPort = window._env_.REACT_APP_GFS_API_PORT;
-	wsHostname = window._env_.REACT_APP_GFS_WS_HOST;
-	wsPort = window._env_.REACT_APP_GFS_WS_PORT;
+	dnamespace = window._env_.REACT_APP_GFS_FS_NAME;
+	dapiHostname = window._env_.REACT_APP_GFS_API_HOST;
+	dapiPort = window._env_.REACT_APP_GFS_API_PORT;
+	dwsHostname = window._env_.REACT_APP_GFS_WS_HOST;
+	dwsPort = window._env_.REACT_APP_GFS_WS_PORT;
 }
 
-const name = apiHostname;
-const description = 'GFS UI Builder';
-const title = 'GFS UI Builder';
+const name = dapiHostname;
+const description = 'GFS App';
+const title = 'GFS App';
 
 // console.log(' >> INIT STATE: apiHostname: ' + apiHostname);
 // console.log(' >> INIT STATE: apiPort: ' + apiPort);
@@ -65,7 +69,11 @@ const initialState = {
 	api: {
 	},
 	apis: {
-	}
+	},
+	namespace: {
+	},
+	namespaces: [
+	],
 };
 
 const loggerMiddleware = createLogger()
@@ -73,6 +81,8 @@ const loggerMiddleware = createLogger()
 const rootReducer = combineReducers({
 	api,
 	apis,
+	namespace,
+	namespaces,
 	entity,
 	entities
 });
@@ -81,44 +91,40 @@ const store = createStore(
 	rootReducer,
 	initialState,
 	applyMiddleware(
+		NamespaceService, 
 		EntityService, 
 		thunkMiddleware, 
 		loggerMiddleware
 	)
 )
 
+var defaultNamespace = dnamespace; 
+
 var defaultEndpoint = {
 	name: name,
 	title: title,
 	description: description,
-	namespace: namespace,
+	// namespace: namespace,
 	api: {
-		host: apiHostname,
-		port: apiPort
+		host: dapiHostname,
+		port: dapiPort
 	},
 	ws: {
-		host: wsHostname,
-		port: wsPort
+		host: dwsHostname,
+		port: dwsPort
 	}
 }
+
+// store.dispatch(addNamespace(defaultNamespace));
+store.dispatch(selectNamespace(defaultNamespace));
 
 store.dispatch(addApi(defaultEndpoint));
 store.dispatch(selectApi(defaultEndpoint));
 
-const wsClient = new WSClient(
-	wsHostname, // props.api.ws.host, 
-	wsPort, // props.api.ws.port, 
-	namespace, // props.api.namespace, 
-	// function(data) {
-	// 	//
-	// }
-);
-
 const rootElement = document.getElementById("root");
 ReactDOM.render(
 	<Provider store={store}>
-	<App 
-		wsClient={wsClient} />
+	<App />
 	</Provider>, 
 	rootElement
 );

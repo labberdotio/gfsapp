@@ -68,6 +68,8 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import RootInstancesView from './components/RootInstances'
 import RootInstanceView from './components/RootInstance'
 
+import Namespaces from './components/Namespaces'
+
 const history = createBrowserHistory();
 
 const ThemeContext = React.createContext();
@@ -230,7 +232,7 @@ function getType(props, types) {
 	return undefined;
 }
 
-const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, wsClient }) {
+const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle }) {
 
 	const apiHostname = useSelector(state => state.api.api.host);
 	const apiPort = useSelector(state => state.api.api.port);
@@ -243,7 +245,8 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	const apiHostnamePort = String(apiHostname) + ":" + String(apiPort);
 	const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
 
-	const namespace = useSelector(state => state.api.namespace);
+	// const namespace = useSelector(state => state.api.namespace);
+	const namespace = useSelector(state => state.namespace["current"]);
 
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
@@ -319,7 +322,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 });
 
 // const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle }) {
-const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types, wsClient }) {
+const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types }) {
 
 	const name = useSelector(state => state.api.name);
 	const title = useSelector(state => state.api.title);
@@ -337,8 +340,13 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	const container = undefined;
 
 	var topitems = [{
-		"text": "Dashboard", 
+		"text": "Namespaces", 
 		"path": "/", 
+		"icon": <ExtensionIcon/>, 
+		"selected": true
+	}, {
+		"text": "Dashboard", 
+		"path": "/dashboard", 
 		"icon": <DashboardIcon/>, 
 		"selected": true
 	}
@@ -549,9 +557,18 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 					render={
 						(props) => 
 							<>
+							<Namespaces 
+								{...props} />
+							</>
+					} />
+				<Route 
+					exact 
+					path="/dashboard" 
+					render={
+						(props) => 
+							<>
 							<DashboardView 
-								{...props} 
-								wsClient={wsClient} />
+								{...props} />
 							</>
 					} />
 				<Route 
@@ -562,8 +579,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<>
 							<RootInstancesView 
 								{...props} 
-								type={getType(props, types)} 
-								wsClient={wsClient} />
+								type={getType(props, types)} />
 							</>
 					} />
 				<Route 
@@ -574,8 +590,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<>
 							<CreateInstanceDialog 
 								{...props} 
-								type={getType(props, types)} 
-								wsClient={wsClient} />
+								type={getType(props, types)} />
 							</>
 					} />
 				<Route 
@@ -586,8 +601,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<>
 							<RootInstanceView 
 								{...props} 
-								type={getType(props, types)} 
-								wsClient={wsClient} />
+								type={getType(props, types)} />
 							</>
 					} />
 				</Switch>
@@ -599,7 +613,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 });
 
 // function AppNavigation({ classes, variant }) {
-function AppNavigation({ classes, variant, types, wsClient }) {
+function AppNavigation({ classes, variant, types }) {
 
 	const [drawer, setDrawer] = useState(false);
 
@@ -617,16 +631,14 @@ function AppNavigation({ classes, variant, types, wsClient }) {
 				title={title} 
 				onMenuClick={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 			<AppDrawer 
 				open={drawer} 
 				onClose={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
 				// onItemClick={onItemClick} 
 				variant={variant} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 		</div>
 	);
 
@@ -642,35 +654,6 @@ class AppNotification extends Component {
 		}
 
 		var _this = this;
-
-		// console.log(' >> AppNotification: props: ');
-		// console.log(props);
-
-		// this.wsClient = new WSClient(
-		// 	props.api.ws.host, 
-		// 	props.api.ws.port, 
-		// 	props.api.namespace, 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				// console.log(' >> AppNotification: inbound message: ');
-				// console.log(data);
-				if( (data.data) && (!data.chain) ) {
-					_this.showInSnackbar(
-						data.data
-					);
-				} else if( (data.chain) && (data.chain.length == 0) ) {
-					_this.showInSnackbar(
-						// String(data.namespace) + " " + String(data.event) + " " + String(data.id) + " " + String(data.label)
-						String(data.event) + " " + String(data.label) + " " + String(data.id)
-					);
-				} else if( !data.chain ) {
-					_this.showInSnackbar(
-						data
-					);
-				}
-			}
-		);
 
 		this.onCloseSnackbar = this.onCloseSnackbar.bind(this);
 
@@ -758,10 +741,14 @@ class App extends Component {
 	// }
 
 	componentDidUpdate(prevProps, prevState) {
-		const {api} = this.props;
+
+		const {
+			api, 
+			namespace
+		} = this.props;
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			this.props.loadTypes(api);
+			this.props.loadTypes(api, namespace);
 		}
 
 		if( this.props.tsfailed ) {
@@ -775,10 +762,14 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		const {api} = this.props;
+
+		const {
+			api, 
+			namespace
+		} = this.props;
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			this.props.loadTypes(api);
+			this.props.loadTypes(api, namespace);
 		}
 
 		if( this.props.tsfailed ) {
@@ -795,8 +786,7 @@ class App extends Component {
 
 		// const { classes } = this.props;
 		const {
-			types,  
-			wsClient 
+			types
 		} = this.props;
 
 		return (
@@ -806,12 +796,10 @@ class App extends Component {
 			<CssBaseline />
 			<Navigation 
 				ref={this.navigationRef} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 			<Notification 
 				ref={this.notificationRef} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 			</React.Fragment>
 			</ThemeProvider>
 			</>
@@ -835,8 +823,8 @@ class App extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		// loadTypes: (api) => dispatch(loadEntitiesIntoState(api, 'type')),
-		loadTypes: (api) => dispatch(loadEntitiesIntoState(api, 'type')),
+		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
 
 	}
 }
@@ -845,6 +833,7 @@ function mapStateToProps(state) {
 
 	const {
 		api, 
+		namespace, 
 		entities
 	} = state;
 
@@ -854,11 +843,11 @@ function mapStateToProps(state) {
 		failed: tsfailed, 
 		timestamp: ttimestamp, 
 		entities: types
-	} = getEntitiesFromState(state, api, 'type');
+	} = getEntitiesFromState(state, api, namespace, 'type');
 
 	return {
 		api, 
-		namespace: api.namespace, 
+		namespace: namespace, 
 		tsloading: tsloading, 
 		tsloaded: tsloaded, 
 		tsfailed: tsfailed, 
