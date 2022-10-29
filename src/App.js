@@ -68,6 +68,8 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import RootInstancesView from './components/RootInstances'
 import RootInstanceView from './components/RootInstance'
 
+import Namespaces from './components/Namespaces'
+
 const history = createBrowserHistory();
 
 const ThemeContext = React.createContext();
@@ -337,8 +339,13 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	const container = undefined;
 
 	var topitems = [{
-		"text": "Dashboard", 
+		"text": "Namespaces", 
 		"path": "/", 
+		"icon": <ExtensionIcon/>, 
+		"selected": true
+	}, {
+		"text": "Dashboard", 
+		"path": "/dashboard", 
 		"icon": <DashboardIcon/>, 
 		"selected": true
 	}
@@ -546,6 +553,17 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 				<Route 
 					exact 
 					path="/" 
+					render={
+						(props) => 
+							<>
+							<Namespaces 
+								{...props} 
+								wsClient={wsClient} />
+							</>
+					} />
+				<Route 
+					exact 
+					path="/dashboard" 
 					render={
 						(props) => 
 							<>

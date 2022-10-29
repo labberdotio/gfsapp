@@ -21,8 +21,11 @@ import { Provider } from 'react-redux';
 
 import WSClient from './clients/WSClient'
 import { api, apis } from './reducers/Api';
+// import { namespace, namespaces } from './reducers/Namespace';
+import { namespaces } from './reducers/Namespace';
 import { entity, entities } from './reducers/Entity';
 
+import NamespaceService from './services/Namespace';
 import EntityService from './services/Entity';
 
 import { addApi, selectApi } from './actions/Api'
@@ -65,7 +68,11 @@ const initialState = {
 	api: {
 	},
 	apis: {
-	}
+	},
+	// namespace: {
+	// },
+	namespaces: [
+	],
 };
 
 const loggerMiddleware = createLogger()
@@ -73,6 +80,8 @@ const loggerMiddleware = createLogger()
 const rootReducer = combineReducers({
 	api,
 	apis,
+	// namespace,
+	namespaces,
 	entity,
 	entities
 });
@@ -81,6 +90,7 @@ const store = createStore(
 	rootReducer,
 	initialState,
 	applyMiddleware(
+		NamespaceService, 
 		EntityService, 
 		thunkMiddleware, 
 		loggerMiddleware
