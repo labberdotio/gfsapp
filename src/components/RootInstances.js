@@ -132,12 +132,6 @@ class RootInstances extends Component {
 		this.createInstance = this.createInstance.bind(this);
 		this.deleteInstance = this.deleteInstance.bind(this);
 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				
-			}
-		);
 	}
 
 	state = {
@@ -563,8 +557,7 @@ class RootInstances extends Component {
 						type={type} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
-						ainstances={ainstances} 
-						wsClient={this.wsClient} />
+						ainstances={ainstances} />
 				</Grid>
 			</Grid>
 

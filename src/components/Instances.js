@@ -68,12 +68,6 @@ class Instances extends Component {
 
 		var _this = this;
 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				
-			}
-		);
 	}
 
 	state = {

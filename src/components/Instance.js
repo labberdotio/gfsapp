@@ -67,12 +67,6 @@ class Instance extends Component {
 
 		var _this = this;
 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				
-			}
-		);
 	}
 
 	state = {
@@ -426,8 +420,7 @@ class Instance extends Component {
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 						instances={ instance && item && this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
-						type={ item && item.type } 
-						wsClient={this.wsClient} />
+						type={ item && item.type } />
 				))} */}
 				{/* { dependencies && dependencies.filter(function(item){ if(item.cardinality == "single"){return true;}else{return false;}}).map((item, i) => (
 					<InstanceView 
@@ -435,8 +428,7 @@ class Instance extends Component {
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 						instance={ instance && item && this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
-						type={ item && item.type } 
-						wsClient={this.wsClient} />
+						type={ item && item.type } />
 				))} */}
 				{ dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
@@ -445,16 +437,14 @@ class Instance extends Component {
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							instances={ instance && item && _this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
-							type={ item && item.type } 
-							wsClient={_this.wsClient} />
+							type={ item && item.type } />
 					} else {
 						return <InstanceView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							instance={ instance && item && _this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
-							type={ item && item.type } 
-							wsClient={_this.wsClient} />
+							type={ item && item.type } />
 					}
 				})}
 			{/* </Grid> */}

@@ -232,7 +232,7 @@ function getType(props, types) {
 	return undefined;
 }
 
-const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, wsClient }) {
+const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle }) {
 
 	const apiHostname = useSelector(state => state.api.api.host);
 	const apiPort = useSelector(state => state.api.api.port);
@@ -321,7 +321,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 });
 
 // const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle }) {
-const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types, wsClient }) {
+const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types }) {
 
 	const name = useSelector(state => state.api.name);
 	const title = useSelector(state => state.api.title);
@@ -557,8 +557,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 						(props) => 
 							<>
 							<Namespaces 
-								{...props} 
-								wsClient={wsClient} />
+								{...props} />
 							</>
 					} />
 				<Route 
@@ -568,8 +567,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 						(props) => 
 							<>
 							<DashboardView 
-								{...props} 
-								wsClient={wsClient} />
+								{...props} />
 							</>
 					} />
 				<Route 
@@ -580,8 +578,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<>
 							<RootInstancesView 
 								{...props} 
-								type={getType(props, types)} 
-								wsClient={wsClient} />
+								type={getType(props, types)} />
 							</>
 					} />
 				<Route 
@@ -592,8 +589,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<>
 							<CreateInstanceDialog 
 								{...props} 
-								type={getType(props, types)} 
-								wsClient={wsClient} />
+								type={getType(props, types)} />
 							</>
 					} />
 				<Route 
@@ -604,8 +600,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<>
 							<RootInstanceView 
 								{...props} 
-								type={getType(props, types)} 
-								wsClient={wsClient} />
+								type={getType(props, types)} />
 							</>
 					} />
 				</Switch>
@@ -617,7 +612,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 });
 
 // function AppNavigation({ classes, variant }) {
-function AppNavigation({ classes, variant, types, wsClient }) {
+function AppNavigation({ classes, variant, types }) {
 
 	const [drawer, setDrawer] = useState(false);
 
@@ -635,16 +630,14 @@ function AppNavigation({ classes, variant, types, wsClient }) {
 				title={title} 
 				onMenuClick={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 			<AppDrawer 
 				open={drawer} 
 				onClose={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
 				// onItemClick={onItemClick} 
 				variant={variant} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 		</div>
 	);
 
@@ -660,35 +653,6 @@ class AppNotification extends Component {
 		}
 
 		var _this = this;
-
-		// console.log(' >> AppNotification: props: ');
-		// console.log(props);
-
-		// this.wsClient = new WSClient(
-		// 	props.api.ws.host, 
-		// 	props.api.ws.port, 
-		// 	props.api.namespace, 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				// console.log(' >> AppNotification: inbound message: ');
-				// console.log(data);
-				if( (data.data) && (!data.chain) ) {
-					_this.showInSnackbar(
-						data.data
-					);
-				} else if( (data.chain) && (data.chain.length == 0) ) {
-					_this.showInSnackbar(
-						// String(data.namespace) + " " + String(data.event) + " " + String(data.id) + " " + String(data.label)
-						String(data.event) + " " + String(data.label) + " " + String(data.id)
-					);
-				} else if( !data.chain ) {
-					_this.showInSnackbar(
-						data
-					);
-				}
-			}
-		);
 
 		this.onCloseSnackbar = this.onCloseSnackbar.bind(this);
 
@@ -813,8 +777,7 @@ class App extends Component {
 
 		// const { classes } = this.props;
 		const {
-			types,  
-			wsClient 
+			types
 		} = this.props;
 
 		return (
@@ -824,12 +787,10 @@ class App extends Component {
 			<CssBaseline />
 			<Navigation 
 				ref={this.navigationRef} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 			<Notification 
 				ref={this.notificationRef} 
-				types={types} 
-				wsClient={wsClient} />
+				types={types} />
 			</React.Fragment>
 			</ThemeProvider>
 			</>

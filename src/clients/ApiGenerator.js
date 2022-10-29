@@ -46,22 +46,6 @@ class ApiGenerator {
 
 		// console.log(' >> ApiGenerator: URL: ' + this.url);
 
-//		var wshostname = endpoint.ws.host;
-//		var wsport = endpoint.ws.port;
-//		this.wsurl = 'http://' + wshostname + ':' + wsport;
-//
-//		console.log(' >> ApiGenerator: WS URL: ' + this.wsurl);
-//
-//		this.wsClient = new WSClient(
-//			this.endpoint.ws.host, 
-//			this.endpoint.ws.port, 
-//			this.namespace, 
-//			function(data) {
-//				// console.log(' >> ApiGenerator: inbound message: ');
-//				// console.log(data);
-//			}
-//		);
-
 		this.next = this.next.bind(this);
 
 	}

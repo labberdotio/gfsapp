@@ -121,12 +121,6 @@ class RootInstance extends Component {
 
 		var _this = this;
 
-		this.wsClient = props.wsClient;
-		this.wsClient.onMessage(
-			function(data) {
-				
-			}
-		);
 	}
 
 	state = {
@@ -490,8 +484,7 @@ class RootInstance extends Component {
 						schema={schema["entity"]} 
 						instanceid={instanceid} 
 						instance={instance} 
-						ainstances={ainstances} 
-						wsClient={this.wsClient} />
+						ainstances={ainstances} />
 				</Grid>
 			</Grid>
 			</Container>

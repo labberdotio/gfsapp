@@ -115,20 +115,10 @@ var defaultEndpoint = {
 store.dispatch(addApi(defaultEndpoint));
 store.dispatch(selectApi(defaultEndpoint));
 
-const wsClient = new WSClient(
-	wsHostname, // props.api.ws.host, 
-	wsPort, // props.api.ws.port, 
-	namespace, // props.api.namespace, 
-	// function(data) {
-	// 	//
-	// }
-);
-
 const rootElement = document.getElementById("root");
 ReactDOM.render(
 	<Provider store={store}>
-	<App 
-		wsClient={wsClient} />
+	<App />
 	</Provider>, 
 	rootElement
 );
