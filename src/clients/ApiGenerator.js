@@ -97,7 +97,17 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		fetch(apiClient.namespaceURL(), {
+		const url = apiClient.namespaceURL();
+		if( !url ) {
+			this.next({
+				type: `FAIL_GET_NAMESPACES`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				timestamp: Date.now()
+			});
+			return false;
+		}
+		fetch(url, {
 			method: 'GET',
 			headers: {
 				'Accept': this.accept
@@ -163,7 +173,18 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		fetch(apiClient.namespaceURL(namespace), {
+		const url = apiClient.namespaceURL(namespace);
+		if( !url ) {
+			this.next({
+				type: `FAIL_GET_NAMESPACE`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				namespace: namespace,
+				timestamp: Date.now()
+			});
+			return false;
+		}
+		fetch(url, {
 			method: 'GET',
 			headers: {
 				'Accept': this.accept
@@ -239,7 +260,18 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		fetch(apiClient.resourceURL(this.resource, this.namespace), {
+		const url = apiClient.resourceURL(this.resource, this.namespace);
+		if( !url ) {
+			this.next({
+				type: `FAIL_${name}`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				resource: this.resource,
+				timestamp: Date.now()
+			});
+			return false;
+		}
+		fetch(url, {
 			method: 'GET',
 			headers: {
 				'Accept': this.accept
@@ -310,7 +342,19 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		fetch(apiClient.resourceURL(this.resource, this.namespace, entity_id), {
+		const url = apiClient.resourceURL(this.resource, this.namespace, entity_id);
+		if( !url ) {
+			this.next({
+				type: `FAIL_${name}`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				resource: this.resource,
+				entity_id: entity_id,
+				timestamp: Date.now()
+			});
+			return false;
+		}
+		fetch(url, {
 			method: 'GET',
 			headers: {
 				'Accept': this.accept
@@ -390,6 +434,17 @@ class ApiGenerator {
 			this.endpoint.api.host, 
 			this.endpoint.api.port 
 		);
+		const url = this.resourceURL(this.resource, this.namespace);
+		if( !url ) {
+			this.next({
+				type: `FAIL_${name}`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				resource: this.resource,
+				timestamp: Date.now()
+			});
+			return false;
+		}
 		var data = undefined;
 		if( this.accept === "text/plain" ) {
 			data = entity;
@@ -398,7 +453,7 @@ class ApiGenerator {
 		} else {
 			data = JSON.stringify(entity);
 		}
-		fetch(this.resourceURL(this.resource, this.namespace), {
+		fetch(url, {
 			method: 'POST',
 			body: data, // JSON.stringify(entity),
 			headers: {
@@ -461,6 +516,18 @@ class ApiGenerator {
 			this.endpoint.api.host, 
 			this.endpoint.api.port 
 		);
+		const url = this.resourceURL(this.resource, this.namespace, entity_id);
+		if( !url ) {
+			this.next({
+				type: `FAIL_${name}`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				resource: this.resource,
+				entity_id: entity_id,
+				timestamp: Date.now()
+			});
+			return false;
+		}
 		var data = undefined;
 		if( this.accept === "text/plain" ) {
 			data = entity;
@@ -469,7 +536,7 @@ class ApiGenerator {
 		} else {
 			data = JSON.stringify(entity);
 		}
-		fetch(this.resourceURL(this.resource, this.namespace, entity_id), {
+		fetch(url, {
 			method: 'PUT',
 			body: data, // JSON.stringify(entity),
 			headers: {
@@ -528,11 +595,23 @@ class ApiGenerator {
 			resource: this.resource,
 			entity_id: entity_id
 		});
+		const url = this.resourceURL(this.resource, this.namespace, entity_id);
+		if( !url ) {
+			this.next({
+				type: `FAIL_${name}`,
+				endpoint: this.endpoint,
+				accept: this.accept,
+				resource: this.resource,
+				entity_id: entity_id,
+				timestamp: Date.now()
+			});
+			return false;
+		}
 		var apiClient = new APIClient(
 			this.endpoint.api.host, 
 			this.endpoint.api.port 
 		);
-		fetch(this.resourceURL(this.resource, this.namespace, entity_id), {
+		fetch(url, {
 			method: 'DELETE',
 			headers: {
 				'Accept': this.accept
