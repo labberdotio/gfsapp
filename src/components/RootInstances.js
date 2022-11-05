@@ -524,13 +524,13 @@ class RootInstances extends Component {
 				xs={12} 
 				spacing={0} 
 			>
-				<Grid 
+				{/* <Grid 
 					className={classes.treeGrid} 
 					// className="treeGrid" 
 					item 
 					xs={3} 
 					spacing={0} 
-				>
+				> */}
 					{/* <TreeView
 						className={classes.tree} 
 						// className="tree" 
@@ -545,7 +545,7 @@ class RootInstances extends Component {
 							items={treestruc}
 						/>
 					</TreeView> */}
-					<List component="nav" className={classes.root} aria-label="Entities">
+					{/* <List component="nav" className={classes.root} aria-label="Entities">
 						{ instances && instances["entities"] && Object.entries(instances["entities"]).map(([entityid, entity]) => (
 						<ListItem 
 							button 
@@ -554,18 +554,18 @@ class RootInstances extends Component {
 							to={this.makeInstanceLink(entity)} 
 							// onClick={onItemClick(title)}
 							>
-							{/* <ListItemIcon>{item.icon}</ListItemIcon> */}
+							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{entity["name"]}</ListItemText>
 						</ListItem>
 						))}
-					</List>
-				</Grid>
+					</List> */}
+				{/* </Grid> */}
 				<Grid 
 					className={classes.mainGrid} 
 					// className="mainGrid" 
 					container 
 					item 
-					xs={9} 
+					xs={12} 
 					spacing={0} 
 				>
 					<InstancesView 
