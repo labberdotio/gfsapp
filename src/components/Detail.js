@@ -91,8 +91,8 @@ class Detail extends Component {
 				className={classes.mainPaper} 
 			> */}
 
-				<h1>{title}</h1>
-				<h5>{description}</h5>
+				{/* <h1>{title}</h1>
+				<h5>{description}</h5> */}
 
 				{/* {instanceid && instance &&
 					<p><h1>{instanceid}</h1></p>

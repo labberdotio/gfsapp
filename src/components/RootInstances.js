@@ -416,6 +416,10 @@ class RootInstances extends Component {
 		return "/detail/" + instance["label"] + "/" + instance["id"];
 	}
 
+	makeRelInstanceLink(label, id, relname) {
+		return "/detail/" + label + "/" + id + "/" + relname;
+	}
+
 	makeInstance(instance) {
 		return instance;
 	}
