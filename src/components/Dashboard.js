@@ -13,12 +13,16 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 
+import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import MuiLink from '@material-ui/core/Link';
+
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import Paper from '@material-ui/core/Paper';
@@ -124,6 +128,10 @@ const styles = theme => ({
 
 });
 
+function handleClick(event) {
+	// event.preventDefault();
+}
+
 class Dashboard extends Component {
 
 	constructor(props) {
@@ -154,6 +162,9 @@ class Dashboard extends Component {
 		return (
 			<>
 			<Container maxWidth="lg">
+			<Breadcrumbs aria-label="breadcrumb">
+				<Typography color="textPrimary">Systems Dashboard</Typography>
+			</Breadcrumbs>
 			<h1 className="mt-5 mb-4">Systems Dashboard</h1>
 			<Grid container spacing={3}>
 
