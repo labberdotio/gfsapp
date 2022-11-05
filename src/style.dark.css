@@ -1,5 +1,6 @@
 
 html {
+    background-color: rgb(30, 30, 30) !important;
 }
 
 body, 
@@ -7,6 +8,16 @@ body,
 	margin: 0;
     /* height: 100vh; */
     min-height: 100vh;
+    color: rgb(204, 204, 204) !important;
+	background-color: rgb(30, 30, 30) !important;
+}
+
+a {
+    color: rgb(126, 68, 168);
+}
+
+a:hover {
+    color: rgb(126, 68, 168) !important;
 }
 
 /* */
@@ -42,58 +53,85 @@ body,
 /* */
 
 .MuiFab-primary {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(126, 68, 168) !important;
 }
 
 .MuiPaper-root {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(37, 37, 38) !important;
 }
 
 .MuiTable-root,
 .MuiTableHead-root th {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(37, 37, 38) !important;
 }
 
 .MuiButton-root {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(126, 68, 168) !important;
 }
 
 .MuiSvgIcon-root {
+    color: rgb(204, 204, 204) !important;
 }
 
 .MuiGrid-root {
+    color: rgb(204, 204, 204) !important;
+    /* background-color: rgb(30, 30, 30) !important; */
 }
 
 .MuiPaper-root .MuiFormControl-root {
+    color: rgb(160, 160, 160) !important;
+    background-color: rgb(37, 37, 38) !important;
 }
 
 .MuiPaper-root .form-control {
+    color: rgb(160, 160, 160) !important;
+    background-color: rgb(60, 60, 60) !important;
 }
 
 .MuiPaper-root .MuiInputBase-root {
+    color: rgb(204, 204, 204) !important;
+    /* background-color: rgb(30, 30, 30) !important; */
 }
 
 .MuiPaper-root .MuiInput-underline:before {
+    border-bottom: solid rgb(204, 204, 204)
 }
 
 .MuiPaper-root .MuiInputLabel-root {
+    color: rgb(204, 204, 204) !important;
 }
 
 .MuiPaper-root .MuiSelect-root {
+    color: rgb(133, 133, 133) !important;
 }
 
 .MuiPaper-root .MuiSvgIcon-root {
+    color: rgb(133, 133, 133) !important;
 }
 
 .MuiPaper-root .Mui-selected .MuiSvgIcon-root {
+    color: rgb(255, 255, 255) !important;
 }
 
 .MuiAppBar-colorPrimary, 
 .MuiPaper-root.MuiAppBar-root {
+    background-color: rgb(50, 50, 51) !important;
 }
 
 /* */
 
 .MuiPaper-root.MuiDrawer-paper {
+    color: rgb(125, 125, 125) !important;
+    background-color: rgb(51, 51, 51) !important;
 }
 
 .MuiPaper-root.MuiDrawer-paper .Mui-selected {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(51, 51, 51) !important;
 }
 
 .MuiAppBar-root.MuiAppBar-colorPrimary {
@@ -112,6 +150,7 @@ body,
 #root > div > nav {
     position: relative;
     top: 64px;
+    background-color: rgb(51, 51, 51) !important;
     min-height: calc( 100vh - 62px );
     height: calc( 100vh - 62px );
     overflow-y: scroll;
@@ -149,9 +188,11 @@ body,
 }
 
 .MuiDrawer-root .MuiListItemIcon-root {
+    color: rgb(204, 204, 204) !important;
 }
 
 .MuiDrawer-root .Mui-selected .MuiListItemIcon-root {
+    color: rgb(204, 204, 204) !important;
 }
 
 /* */
@@ -164,14 +205,19 @@ body,
 
 .MuiGrid-root.Explorer-treeGrid-56, 
 .MuiGrid-root.MuiGrid-item {
+    color: rgb(204, 204, 204) !important;
+    /* background-color: rgb(37, 37, 38) !important; */
 }
 
 .MuiGrid-root.MuiGrid-item.Explorer-treeGrid-56, 
 .MuiGrid-root.MuiGrid-item.Explorer-treeGrid-108 {
+    background-color: rgb(37, 37, 38) !important;
 }
 
 .MuiGrid-root.MuiGrid-container, 
 .MuiGrid-root.Explorer-mainGrid-71 {
+    color: rgb(97, 97, 97) !important;
+    background-color: rgb(30, 30, 30) !important;
 }
 
 .MuiContainer-root.graphContainer, 
@@ -205,11 +251,14 @@ body,
 }
 
 .MuiContainer-root .treeGrid {
+    background-color: rgb(37, 37, 38) !important;
     padding-left: 16px;
     padding-right: 16px;
     font-size: 12px !important;
     font-weight: 600 !important;
     line-height: 1.8;
+    /* height: calc( 100vh - 62px ); */
+    /* overflow-y: scroll; */
 }
 
 .MuiContainer-root .treeGrid .MuiTypography-body1 {
@@ -219,6 +268,9 @@ body,
 }
 
 .MuiContainer-root .treeGrid .Mui-selected {
+    color: rgb(255, 255, 255) !important;
+    /* background-color: rgb(228, 230, 241) !important; */
+    background-color: rgb(126, 68, 168) !important;
     width: calc(100% + 32px);
     margin-left: -16px;
     margin-right: -16px;
@@ -228,30 +280,42 @@ body,
 }
 
 .MuiContainer-root .treeGrid .Mui-selected .MuiSvgIcon-root {
+    color: rgb(255, 255, 255) !important;
 }
 
 .MuiContainer-root .mainGrid {
+    background-color: rgb(30, 30, 30) !important;
+    /* height: calc( 100vh - 62px ); */
+    /* overflow-y: scroll; */
 }
 
 /* */
 
 .MuiTableCell-root.MuiTableCell-head {
+    color: rgb(204, 204, 204) !important;
 }
 
 .MuiTableCell-root.MuiTableCell-body {
+    color: rgb(204, 204, 204) !important;
 }
 
 /* */
 
 .MuiPaper-root .list-group-item {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(37, 37, 38) !important;
 }
 
 /* */
 
 .MuiTab-textColorPrimary {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(45, 45, 45) !important;
 }
 
 .MuiTab-textColorPrimary.Mui-selected {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(30, 30, 30) !important;
 }
 
 /* */
