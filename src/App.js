@@ -86,6 +86,8 @@ import {
 import CreateInstanceDialog from './components/Create'
 
 import ExtensionIcon from '@material-ui/icons/Extension';
+import AppsIcon from '@material-ui/icons/Apps';
+
 // import InstancesView from './components/Instances'
 // import InstanceView from './components/Instance'
 
@@ -448,6 +450,13 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	// const wsHostname = useSelector(state => state.api.ws.host);
 	// const wsPort = useSelector(state => state.api.ws.port);
 
+	const namespace = useSelector(state => state.namespace);
+
+	var currentns = "Namespaces";
+	if( namespace && namespace["current"] ) {
+		currentns = namespace["current"];
+	}
+
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
 	}
@@ -459,9 +468,9 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	const container = undefined;
 
 	var topitems = [{
-		"text": "Namespaces", 
+		"text": currentns, // "Namespaces", 
 		"path": "/", 
-		"icon": <ExtensionIcon/>, 
+		"icon": <AppsIcon/>, 
 		"selected": true
 	}
 	// , 
