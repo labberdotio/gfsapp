@@ -28,6 +28,10 @@ import { useHistory } from "react-router-dom";
 // import Backdrop from '@material-ui/core/Backdrop';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import MuiLink from '@material-ui/core/Link';
+
 import InstanceView from './Instance'
 import InstancesView from './Instances'
 // import ListView from './List'
@@ -346,6 +350,10 @@ class Instance extends Component {
 		return "/detail/" + label + "/" + id;
 	}
 
+	makeRelInstanceLink(label, id, relname) {
+		return "/detail/" + label + "/" + id + "/" + relname;
+	}	
+
 	render() {
 
 		var _this = this;
@@ -432,21 +440,31 @@ class Instance extends Component {
 						typename={ item && item.type } 
 						type={ item && item.type } />
 				))} */}
-				{ dependencies && dependencies.map(function(item) {
+				{ instance && dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
-						return <InstancesView 
+						return <>
+							<MuiLink color="inherit" href={_this.makeRelInstanceLink(instance.label, instance.id, item.name)}>
+								<h1>{item.name}</h1> 
+							</MuiLink>
+							<InstancesView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							instances={ instance && item && _this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
+							</>
 					} else {
-						return <InstanceView 
+						return <> 
+							<MuiLink color="inherit" href={_this.makeRelInstanceLink(instance.label, instance.id, item.name)}>
+								<h1>{item.name}</h1> 
+							</MuiLink>
+							<InstanceView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							instance={ instance && item && _this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
+							</>
 					}
 				})}
 			{/* </Grid> */}

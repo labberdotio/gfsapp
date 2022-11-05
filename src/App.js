@@ -92,6 +92,10 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import RootInstancesView from './components/RootInstances'
 import RootInstanceView from './components/RootInstance'
 
+// import SubInstancesView from './components/SubInstances'
+// import SubInstanceView from './components/SubInstance'
+import RelInstanceView from './components/RelInstance'
+
 import Namespaces from './components/Namespaces'
 
 const history = createBrowserHistory();
@@ -717,6 +721,17 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 						(props) => 
 							<>
 							<RootInstanceView 
+								{...props} 
+								type={getType(props, types)} />
+							</>
+					} />
+				<Route 
+					exact 
+					path="/detail/:typename/:instanceid/:relname" 
+					render={
+						(props) => 
+							<>
+							<RelInstanceView 
 								{...props} 
 								type={getType(props, types)} />
 							</>

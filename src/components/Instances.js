@@ -241,6 +241,10 @@ class Instances extends Component {
 		return "/detail/" + label + "/" + id;
 	}
 
+	makeRelInstanceLink(label, id, relname) {
+		return "/detail/" + label + "/" + id + "/" + relname;
+	}
+
 	render() {
 
 		const {

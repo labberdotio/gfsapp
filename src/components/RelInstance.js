@@ -47,9 +47,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// import InstancesView from './Instances'
+import InstancesView from './Instances'
 import InstanceView from './Instance'
-// import DependentsView from './Dependents'
 
 import { 
 	loadEntityIntoState, 
@@ -119,7 +118,7 @@ function handleClick(event) {
 	// event.preventDefault();
 }
 
-class RootInstance extends Component {
+class RelInstance extends Component {
 
 	constructor(props) {
 		super(props);
@@ -144,24 +143,21 @@ class RootInstance extends Component {
 			namespace, 
 			typename, 
 			instanceid, 
+			relname, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			instances, 
-			ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema
+			schema, 
+			reltype, 
+			relschema, 
+			instance, 
+			relinstances, 
+			relinstance, 
+			// ainstances, 	
 		} = this.props;
 
-		if( (!this.props.instances["loading"]) && 
-			(!this.props.instances["loaded"]) && 
-			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, namespace, typename);
+		if( (!this.props.instance["loading"]) && 
+			(!this.props.instance["loaded"]) && 
+			(!this.props.instance["failed"]) ) {
+			this.props.loadInstance(api, namespace, typename, instanceid);
 		}
 
 		if( (!this.props.schema["loading"]) && 
@@ -172,43 +168,7 @@ class RootInstance extends Component {
 			// }
 		}
 
-		/*
-		 * Load dependencies
-		 */
-		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-			for( var propertyname in schema["entity"]["properties"] ) {
-				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-					// if( property && property["type"] ) {
-					if( property ) {
-						if( property["type"] == "string" ) {
-							// 
-						} else if( property["$ref"] ) {
-							// property["$ref"].replace("#/definitions/", "")
-							const dtypename = property["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
-								// }
-							}
-						} else if( (property["type"] == "array") && 
-								   (property["items"]) ) {
-							// property["items"]["$ref"].replace("#/definitions/", "")
-							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
-								// }
-							}
-						}
-					}
-				}
-			}
-		}
+		
 
 	}
 
@@ -219,24 +179,21 @@ class RootInstance extends Component {
 			namespace, 
 			typename, 
 			instanceid, 
+			relname, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			instances, 
-			ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema
+			schema, 
+			reltype, 
+			relschema, 
+			instance, 
+			relinstances, 
+			relinstance, 
+			// ainstances, 	
 		} = this.props;
 
-		if( (!this.props.instances["loading"]) && 
-			(!this.props.instances["loaded"]) && 
-			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, namespace, typename);
+		if( (!this.props.instance["loading"]) && 
+			(!this.props.instance["loaded"]) && 
+			(!this.props.instance["failed"]) ) {
+			this.props.loadInstance(api, namespace, typename, instanceid);
 		}
 
 		if( (!this.props.schema["loading"]) && 
@@ -247,43 +204,7 @@ class RootInstance extends Component {
 			// }
 		}
 
-		/*
-		 * Load dependencies
-		 */
-		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-			for( var propertyname in schema["entity"]["properties"] ) {
-				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-					// if( property && property["type"] ) {
-					if( property ) {
-						if( property["type"] == "string" ) {
-							// 
-						} else if( property["$ref"] ) {
-							// property["$ref"].replace("#/definitions/", "")
-							const dtypename = property["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
-								// }
-							}
-						} else if( (property["type"] == "array") && 
-								   (property["items"]) ) {
-							// property["items"]["$ref"].replace("#/definitions/", "")
-							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
-								// }
-							}
-						}
-					}
-				}
-			}
-		}
+		
 
 	}
 
@@ -292,68 +213,6 @@ class RootInstance extends Component {
 	 */
 
 	// getTreeData() {
-	// 
-	// 	const {
-	// 		api, 
-	// 		namespace, 
-	// 		typename, 
-	// 		instanceid, 
-	// 		type, 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		instances, 
-	// 		ainstances, 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		schema
-	// 	} = this.props;
-	// 
-	// 	var treestruc = {
-	// 	};
-	// 
-	// 	treestruc[typename] = {
-	// 		id: typename, 
-	// 		name: typename, 
-	// 		label: typename, 
-	// 		tree: {
-	// 		}
-	// 	}
-	// 
-	// 	if( instances && instances["entities"] ) {
-	// 		for( var cinstanceid in instances["entities"] ) {
-	// 			var instance = instances["entities"][cinstanceid];
-	// 			if( instance ) {
-	// 
-	// 				// if( !(instance["label"] in treestruc) ) {
-	// 				// 	treestruc[instance["label"]] = {
-	// 				// 		id: instance["label"], 
-	// 				// 		name: instance["label"], 
-	// 				// 		label: instance["label"], 
-	// 				// 		tree: {
-	// 				// 		}
-	// 				// 	};
-	// 				// }
-	// 
-	// 				// treestruc[instance["label"]]["tree"][instance["name"]] = {
-	// 				treestruc[instance["label"]]["tree"][instance["id"]] = {
-	// 					id: instance["id"], 
-	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["label"], 
-	// 					link: this.makeInstanceLink(instance), 
-	// 					instance: this.makeInstance(instance), 
-	// 					tree: {
-	// 					}
-	// 				};
-	// 
-	// 			}
-	// 		}
-	// 	}
-	// 
-	// 	return treestruc;
 	// }
 
 	makeInstanceLink(instance) {
@@ -377,18 +236,15 @@ class RootInstance extends Component {
 			namespace, 
 			typename, 
 			instanceid, 
+			relname, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			instances, 
-			ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema
+			schema, 
+			reltype, 
+			relschema, 
+			instance, 
+			relinstances, 
+			relinstance, 
+			// ainstances, 	
 		} = this.props;
 
 		const { classes } = this.props;
@@ -397,35 +253,7 @@ class RootInstance extends Component {
 
 		var backdropOpen = false;
 
-		var instance = undefined;
-		if( instanceid ) {
-			var cinstance = instances["entities"][instanceid];
-			if( cinstance ) {
-				instance = cinstance;
-			}
-		}
 
-		// var properties = [];
-		// var dependencies = [];
-
-		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-		// 	for( var propertyname in schema["entity"]["properties"] ) {
-		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
-		// 			if( property && property["type"] ) {
-		// 				if( property["type"] == "string" ) {
-		// 					properties.push(propertyname);
-		// 				} else if( (property["type"] == "array") && 
-		// 						   (property["items"]) ) {
-		// 					dependencies.push({
-		// 						"name": propertyname,
-		// 						"type": property["items"]["$ref"].replace("#/definitions/", "")
-		// 					});
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 		return (
 			<>
@@ -444,7 +272,10 @@ class RootInstance extends Component {
 				<MuiLink color="inherit" href={"/list/" + typename} onClick={handleClick}>
 					{typename}
 				</MuiLink>
-				<Typography color="textPrimary">{ instance && instance["name"] }</Typography>
+				<MuiLink color="inherit" href={"/detail/" + typename + "/" + instanceid} onClick={handleClick}>
+					{ instance && instance["entity"] && instance["entity"]["name"] }
+				</MuiLink>
+				<Typography color="textPrimary">{ relname }</Typography>
 			</Breadcrumbs>
 			<Grid 
 				className={classes.fullGrid} 
@@ -497,15 +328,27 @@ class RootInstance extends Component {
 					xs={12} 
 					spacing={0} 
 				>
-					<InstanceView 
-						title={ instance && instance["name"] } 
-						description={typename} 
-						typename={typename} 
-						type={type} 
-						schema={schema["entity"]} 
-						instanceid={instanceid} 
+					{ relname && reltype && relschema && relinstance && 
+						<InstanceView 
+						title={ relname } 
+						description={reltype} 
+						typename={reltype} 
+						type={relschema} 
+						schema={relschema} 
+						instanceid={instance.id} 
 						instance={instance} 
-						ainstances={ainstances} />
+						ainstances={[]} />
+					}
+					{ relname && reltype && relschema && relinstances && 
+					<InstancesView 
+						title={relname} 
+						description={reltype} 
+						typename={reltype} 
+						type={relschema} 
+						schema={relschema} 
+						instances={relinstances} 
+						ainstances={[]} />
+					}
 				</Grid>
 			</Grid>
 			</Container>
@@ -515,12 +358,14 @@ class RootInstance extends Component {
 
 }
 
-// RootInstance.propTypes = {
+// RelInstance.propTypes = {
 // 	dispatch: PropTypes.func.isRequired
 // }
 
 function mapDispatchToProps(dispatch) {
 	return {
+
+		loadInstance: (api, namespace, typename, instanceid) => dispatch(loadEntityIntoState(api, namespace, typename, instanceid)), 
 
 		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
@@ -535,6 +380,7 @@ function mapStateToProps(state, ownProps) {
 
 	const typename = match["params"]["typename"];
 	const instanceid = match["params"]["instanceid"];
+	const relname = match["params"]["relname"];
 	const type = ownProps["type"];
 
 	const {
@@ -542,24 +388,14 @@ function mapStateToProps(state, ownProps) {
 		namespace
 	} = state;
 
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entities: instances
-	// } = getEntitiesFromState(state, api, namespace, typename);
+	const instance = getEntityFromState(state, api, namespace, typename, instanceid);
+	// console.log( " INSTANCE >> " );
+	// console.log( instance );
+	// console.log( " << INSTANCE " );
+
 	const instances = getEntitiesFromState(state, api, namespace, typename);
 
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entity: schema
-	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
-
 	// console.log( " SCHEMA >> " );
 	// console.log(  );
 	// console.log(  );
@@ -568,11 +404,17 @@ function mapStateToProps(state, ownProps) {
 	// console.log( schema );
 	// console.log( " << SCHEMA " );
 
+	var reltype = undefined;
+	var relschema = undefined;
+
+	var relinstances = undefined;
+	var relinstance = undefined;
+
 	/*
 	 * Load dependencies
 	 */
-	var ainstances = {};
-	ainstances[typename] = instances;
+	// var ainstances = {};
+	// ainstances[typename] = instances;
 	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
@@ -582,16 +424,26 @@ function mapStateToProps(state, ownProps) {
 					if( property["type"] == "string" ) {
 						// 
 					} else if( property["$ref"] ) {
-						// property["$ref"].replace("#/definitions/", "")
-						const dtypename = property["$ref"].replace("#/definitions/", "");
-						const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-						ainstances[dtypename] = dinstances;
+						if( property["title"] == relname ) {
+							// property["$ref"].replace("#/definitions/", "")
+							// const dtypename = property["$ref"].replace("#/definitions/", "");
+							reltype = property["$ref"].replace("#/definitions/", "");
+							relschema = schema["entity"]["definitions"][reltype];
+							// const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
+							// ainstances[dtypename] = dinstances;
+							relinstance = instance["entity"][relname];
+						}
 					} else if( (property["type"] == "array") && 
 							   (property["items"]) ) {
-						// property["items"]["$ref"].replace("#/definitions/", "")
-						const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-						const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-						ainstances[dtypename] = dinstances;
+						if( property["title"] == relname ) {
+							// property["items"]["$ref"].replace("#/definitions/", "")
+							// const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
+							reltype = property["items"]["$ref"].replace("#/definitions/", "");
+							relschema = schema["entity"]["definitions"][reltype];
+							// const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
+							// ainstances[dtypename] = dinstances;
+							relinstances = instance["entity"][relname];
+						}
 					}
 				}
 			}
@@ -603,21 +455,18 @@ function mapStateToProps(state, ownProps) {
 		namespace: namespace, 
 		typename: typename, 
 		instanceid: instanceid, 
+		relname: relname, 
 		type: type, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
-		instances: instances, 
-		ainstances: ainstances, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
-		schema: schema
+		schema: schema, 
+		reltype: reltype, 
+		relschema: relschema, 
+		instance: instance, 
+		relinstances: relinstances, 
+		relinstance: relinstance, 
+		// ainstances: ainstances, 
 	}
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(RootInstance);
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstance));
+// export default connect(mapStateToProps, mapDispatchToProps)(RelInstance);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RelInstance));
