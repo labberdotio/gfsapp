@@ -134,20 +134,22 @@ class Instances extends Component {
 		var cols = [];
 		cols.push({
 			title: "id",
-			field: "id"
+			field: "id",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
-		cols.push({
-			title: "link",
-			field: "link",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "link",
+		// 	field: "link",
+		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// });
 		cols.push({
 			title: "uuid",
 			field: "uuid"
 		});
 		cols.push({
 			title: "name",
-			field: "name"
+			field: "name",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		// cols.push({
 		// 	title: "created",
@@ -179,20 +181,22 @@ class Instances extends Component {
 		var cols = [];
 		cols.push({
 			title: "id",
-			field: "id"
+			field: "id",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
-		cols.push({
-			title: "link",
-			field: "link",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "link",
+		// 	field: "link",
+		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// });
 		cols.push({
 			title: "uuid",
 			field: "uuid"
 		});
 		cols.push({
 			title: "name",
-			field: "name"
+			field: "name",
+			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		// cols.push({
 		// 	title: "created",
