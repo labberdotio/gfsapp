@@ -20,6 +20,10 @@ import {
 	useRouteMatch
 } from "react-router-dom";
 
+import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import MuiLink from '@material-ui/core/Link';
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
@@ -114,6 +118,10 @@ const styles = theme => ({
 // 		</>
 // 	)
 // }
+
+function handleClick(event) {
+	// event.preventDefault();
+}
 
 class RootInstances extends Component {
 
@@ -499,6 +507,12 @@ class RootInstances extends Component {
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>
+			<Breadcrumbs aria-label="breadcrumb">
+				<MuiLink color="inherit" href="/" onClick={handleClick}>
+					{namespace.current}
+				</MuiLink>
+				<Typography color="textPrimary">{typename}</Typography>
+			</Breadcrumbs>
 			<Grid 
 				className={classes.fullGrid} 
 				// className="fullGrid" 

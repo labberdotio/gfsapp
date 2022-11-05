@@ -19,6 +19,10 @@ import {
 	Link
 } from "react-router-dom";
 
+import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import MuiLink from '@material-ui/core/Link';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -45,6 +49,10 @@ import {
 const styles = theme => ({
 
 });
+
+function handleClick(event) {
+	// event.preventDefault();
+}
 
 class Namespaces extends Component {
 
@@ -175,6 +183,10 @@ class Namespaces extends Component {
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>
+
+			<Breadcrumbs aria-label="breadcrumb">
+				<Typography color="textPrimary">Namespaces</Typography>
+			</Breadcrumbs>
 
 			<Grid 
 				className={classes.fullGrid} 
