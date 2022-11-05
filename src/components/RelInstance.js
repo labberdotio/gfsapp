@@ -149,6 +149,7 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
+			reltypeinstances, 
 			relinstances, 
 			relinstance, 
 			// ainstances, 	
@@ -168,7 +169,13 @@ class RelInstance extends Component {
 			// }
 		}
 
-		
+		if( reltype ) {
+			if( (!this.props.reltypeinstances["loading"]) && 
+				(!this.props.reltypeinstances["loaded"]) && 
+				(!this.props.reltypeinstances["failed"]) ) {
+				this.props.loadInstances(api, namespace, reltype);
+			}
+		}
 
 	}
 
@@ -185,6 +192,7 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
+			reltypeinstances, 
 			relinstances, 
 			relinstance, 
 			// ainstances, 	
@@ -204,7 +212,13 @@ class RelInstance extends Component {
 			// }
 		}
 
-		
+		if( reltype ) {
+			if( (!this.props.reltypeinstances["loading"]) && 
+				(!this.props.reltypeinstances["loaded"]) && 
+				(!this.props.reltypeinstances["failed"]) ) {
+				this.props.loadInstances(api, namespace, reltype);
+			}
+		}
 
 	}
 
@@ -393,8 +407,6 @@ function mapStateToProps(state, ownProps) {
 	// console.log( instance );
 	// console.log( " << INSTANCE " );
 
-	const instances = getEntitiesFromState(state, api, namespace, typename);
-
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
 	// console.log( " SCHEMA >> " );
 	// console.log(  );
@@ -425,24 +437,45 @@ function mapStateToProps(state, ownProps) {
 						// 
 					} else if( property["$ref"] ) {
 						if( property["title"] == relname ) {
-							// property["$ref"].replace("#/definitions/", "")
-							// const dtypename = property["$ref"].replace("#/definitions/", "");
 							reltype = property["$ref"].replace("#/definitions/", "");
 							relschema = schema["entity"]["definitions"][reltype];
-							// const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-							// ainstances[dtypename] = dinstances;
-							relinstance = instance["entity"][relname];
+							if( instance && instance["entity"] ) {
+								relinstance = instance["entity"][relname];
+							}
 						}
 					} else if( (property["type"] == "array") && 
 							   (property["items"]) ) {
 						if( property["title"] == relname ) {
-							// property["items"]["$ref"].replace("#/definitions/", "")
-							// const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
 							reltype = property["items"]["$ref"].replace("#/definitions/", "");
 							relschema = schema["entity"]["definitions"][reltype];
-							// const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-							// ainstances[dtypename] = dinstances;
-							relinstances = instance["entity"][relname];
+							if( instance && instance["entity"] ) {
+								relinstances = instance["entity"][relname];
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	var newrelinstances = undefined;
+	var newrelinstance = undefined;
+
+	var reltypeinstances = undefined;
+	if( reltype ) {
+		reltypeinstances = getEntitiesFromState(state, api, namespace, reltype);
+		if( reltypeinstances && reltypeinstances["entities"] ) {
+			if( relinstance && relinstance["id"] ) {
+				if( reltypeinstances["entities"][relinstance["id"]] ) {
+					newrelinstance = reltypeinstances["entities"][relinstance["id"]];
+				}
+			} else if( relinstances ) {
+				newrelinstances = [];
+				for( var crelinstanceidx in relinstances ) {
+					var crelinstance = relinstances[crelinstanceidx];
+					if( crelinstance && crelinstance["id"] ) {
+						if( reltypeinstances["entities"][crelinstance["id"]] ) {
+							newrelinstances.push( reltypeinstances["entities"][crelinstance["id"]] );
 						}
 					}
 				}
@@ -461,8 +494,9 @@ function mapStateToProps(state, ownProps) {
 		reltype: reltype, 
 		relschema: relschema, 
 		instance: instance, 
-		relinstances: relinstances, 
-		relinstance: relinstance, 
+		reltypeinstances: reltypeinstances, 
+		relinstances: newrelinstances, // relinstances, 
+		relinstance: newrelinstance, // relinstance, 
 		// ainstances: ainstances, 
 	}
 

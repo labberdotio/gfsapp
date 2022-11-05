@@ -162,12 +162,21 @@ class Instances extends Component {
 
 		if( type ) {
 			if( type["properties"] ) {
-				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
-						cols.push({
-							title: property,
-							field: property
-						});
+				for( var propertyname in type["properties"] ) {
+					var property = type["properties"][propertyname];
+					console.log(property);
+					if( property["$ref"] ) {
+						// 
+					} else if( (property["type"] == "array") && 
+							   (property["items"]) ) {
+						// 
+					} else {
+						if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+							cols.push({
+								title: propertyname,
+								field: propertyname
+							});
+						}
 					}
 				}
 			}
@@ -178,47 +187,47 @@ class Instances extends Component {
 
 	getListRows(typename, type, schema, instances, ainstances) {
 
-		var cols = [];
-		cols.push({
-			title: "id",
-			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
-		});
+		// var cols = [];
 		// cols.push({
-		// 	title: "link",
-		// 	field: "link",
+		// 	title: "id",
+		// 	field: "id",
+		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+		// });
+		// // cols.push({
+		// // 	title: "link",
+		// // 	field: "link",
+		// // 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// // });
+		// cols.push({
+		// 	title: "uuid",
+		// 	field: "uuid"
+		// });
+		// cols.push({
+		// 	title: "name",
+		// 	field: "name",
 		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
-		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
-		// });
-		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
-		// });
-
-		if( type ) {
-			if( type["properties"] ) {
-				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
-						cols.push({
-							title: property,
-							field: property
-						});
-					}
-				}
-			}
-		}
+		// // cols.push({
+		// // 	title: "created",
+		// // 	field: "created"
+		// // });
+		// // cols.push({
+		// // 	title: "modified",
+		// // 	field: "modified"
+		// // });
+		// 
+		// if( type ) {
+		// 	if( type["properties"] ) {
+		// 		for( var property in type["properties"] ) {
+		// 			if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+		// 				cols.push({
+		// 					title: property,
+		// 					field: property
+		// 				});
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		var rows = [];
 		if( instances ) {
