@@ -75,8 +75,8 @@ import {
 	getEntitiesFromState
 } from './stores/Entity'
 
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import DashboardView from './components/Dashboard'
+// import DashboardIcon from '@material-ui/icons/Dashboard';
+// import DashboardView from './components/Dashboard'
 
 // import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 
@@ -459,12 +459,14 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 		"path": "/", 
 		"icon": <ExtensionIcon/>, 
 		"selected": true
-	}, {
-		"text": "Dashboard", 
-		"path": "/dashboard", 
-		"icon": <DashboardIcon/>, 
-		"selected": true
 	}
+	// , 
+	// {
+	// 	"text": "Dashboard", 
+	// 	"path": "/dashboard", 
+	// 	"icon": <DashboardIcon/>, 
+	// 	"selected": true
+	// }
 	// , 
 	// {
 	// 	"text": "Queries", 
@@ -676,7 +678,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 								{...props} />
 							</>
 					} />
-				<Route 
+				{/* <Route 
 					exact 
 					path="/dashboard" 
 					render={
@@ -685,7 +687,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							<DashboardView 
 								{...props} />
 							</>
-					} />
+					} /> */}
 				<Route 
 					exact 
 					path="/list/:typename" 
