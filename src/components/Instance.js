@@ -160,15 +160,16 @@ class Instance extends Component {
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
-				"value": instance[propertyname]
+				// "value": instance[propertyname],
+				"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
 			});
-			var propertyname = "link";
-			// if( instance && instance[propertyname] ) {
-				properties.push({
-					"name": propertyname, 
-					"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
-				});
-			// }
+			// var propertyname = "link";
+			// // if( instance && instance[propertyname] ) {
+			// 	properties.push({
+			// 		"name": propertyname, 
+			// 		"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+			// 	});
+			// // }
 		}
 
 		propertyname = "uuid";
@@ -183,7 +184,8 @@ class Instance extends Component {
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
-				"value": instance[propertyname]
+				// "value": instance[propertyname],
+				"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
 			});
 		}
 
