@@ -87,9 +87,9 @@ class Detail extends Component {
 			<Container
 				className={classes.mainContainer} 
 			>
-			<Paper
+			{/* <Paper
 				className={classes.mainPaper} 
-			>
+			> */}
 
 				<h1>{title}</h1>
 				<h5>{description}</h5>
@@ -144,7 +144,7 @@ class Detail extends Component {
 					))}
 				</List>
 
-			</Paper>
+			{/* </Paper> */}
 			</Container>
 			</>
 		);
