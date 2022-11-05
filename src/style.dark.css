@@ -12,6 +12,10 @@ body,
 	background-color: rgb(30, 30, 30) !important;
 }
 
+a {
+    color: rgb(126, 68, 168);
+}
+
 a:hover {
     color: rgb(126, 68, 168) !important;
 }
@@ -54,6 +58,12 @@ a:hover {
 }
 
 .MuiPaper-root {
+    color: rgb(204, 204, 204) !important;
+    background-color: rgb(37, 37, 38) !important;
+}
+
+.MuiTable-root,
+.MuiTableHead-root th {
     color: rgb(204, 204, 204) !important;
     background-color: rgb(37, 37, 38) !important;
 }
@@ -103,6 +113,10 @@ a:hover {
     color: rgb(133, 133, 133) !important;
 }
 
+.MuiPaper-root .Mui-selected .MuiSvgIcon-root {
+    color: rgb(255, 255, 255) !important;
+}
+
 .MuiAppBar-colorPrimary, 
 .MuiPaper-root.MuiAppBar-root {
     background-color: rgb(50, 50, 51) !important;
@@ -112,6 +126,11 @@ a:hover {
 
 .MuiPaper-root.MuiDrawer-paper {
     color: rgb(125, 125, 125) !important;
+    background-color: rgb(51, 51, 51) !important;
+}
+
+.MuiPaper-root.MuiDrawer-paper .Mui-selected {
+    color: rgb(255, 255, 255) !important;
     background-color: rgb(51, 51, 51) !important;
 }
 
