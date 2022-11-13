@@ -8,7 +8,7 @@ import React, { useState, Fragment, Component } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 
 import clsx from 'clsx';
 
@@ -49,6 +49,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import MuiLink from '@material-ui/core/Link';
 
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
 // import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
@@ -58,7 +59,6 @@ import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 // import { getEntitiesFromState } from './stores/Entity'
 
 import {
-	selectNamespace, 
 	loadNamespacesIntoState
 } from './actions/Namespace'
 
@@ -100,7 +100,7 @@ import RelInstanceView from './components/RelInstance'
 
 import Namespaces from './components/Namespaces'
 
-const history = createBrowserHistory();
+// const history = createBrowserHistory();
 
 const ThemeContext = React.createContext();
 
@@ -297,7 +297,7 @@ function getType(props, types) {
 	return undefined;
 }
 
-const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, onNamespaceSelect }) {
+const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, namespace }) {
 
 	const apiHostname = useSelector(state => state.api.api.host);
 	const apiPort = useSelector(state => state.api.api.port);
@@ -310,16 +310,9 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	const apiHostnamePort = String(apiHostname) + ":" + String(apiPort);
 	const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
 
-	// const namespace = useSelector(state => state.api.namespace);
-	const snamespace = useSelector(state => state.namespace);
 	const snamespaces = useSelector(state => state.namespaces);
 
-	var namespace = undefined;
 	var namespaces = undefined;
-
-	if( snamespace && snamespace["current"] ) {
-		namespace = snamespace["current"];
-	}
 
 	if( snamespaces && snamespaces[apiHostname] && snamespaces[apiHostname]["namespaces"] ) {
 		namespaces = snamespaces[apiHostname]["namespaces"];
@@ -330,7 +323,8 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	}
 
 	const selectNamespace = (namespace) => {
-		onNamespaceSelect(namespace);
+		// history.push("/namespaces/" + namespace);
+		window.location.href = "/namespaces/" + namespace;
 	}
 
 	return (
@@ -346,10 +340,11 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 						className={classes.menuButton} >
 						<MenuIcon />
 					</IconButton>
+					<MuiLink color="inherit" href="/namespaces">
 					<Typography variant="h6" noWrap>
-						{title}
+						{title}			
 					</Typography>
-
+					</MuiLink>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<ComputerIcon/>
@@ -439,7 +434,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 });
 
 // const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle }) {
-const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types, onNamespaceSelect }) {
+const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, namespace, types }) {
 
 	const name = useSelector(state => state.api.name);
 	const title = useSelector(state => state.api.title);
@@ -450,26 +445,22 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	// const wsHostname = useSelector(state => state.api.ws.host);
 	// const wsPort = useSelector(state => state.api.ws.port);
 
-	const namespace = useSelector(state => state.namespace);
+	// const namespace = useSelector(state => state.namespace);
 
 	var currentns = "Namespaces";
-	if( namespace && namespace["current"] ) {
-		currentns = namespace["current"];
+	if( namespace ) {
+		currentns = namespace;
 	}
 
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
 	}
 
-	const selectNamespace = (namespace) => {
-		onNamespaceSelect(namespace);
-	}
-
 	const container = undefined;
 
 	var topitems = [{
 		"text": currentns, // "Namespaces", 
-		"path": "/", 
+		"path": "/namespaces", 
 		"icon": <AppsIcon/>, 
 		"selected": true
 	}
@@ -483,17 +474,17 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	// , 
 	// {
 	// 	"text": "Queries", 
-	// 	"path": "/list/queries", 
+	// 	"path": "/namespaces/" + currentns + "/queries", 
 	// 	"icon": <QueryBuilderIcon/>, 
 	// 	"selected": false
 	// }, {
 	// 	"text": "Templates", 
-	// 	"path": "/list/templates", 
+	// 	"path": "/namespaces/" + currentns + "/templates", 
 	// 	"icon": <InsertDriveFileIcon/>, 
 	// 	"selected": false
 	// }, {
 	// 	"text": "Views", 
-	// 	"path": "/list/views", 
+	// 	"path": "/namespaces/"+ currentns + "/views", 
 	// 	"icon": <DescriptionIcon/>, 
 	// 	"selected": false
 	// }
@@ -510,7 +501,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 				if( type ) {
 					miditems.push({
 						"text": type["name"], 
-						"path": "/list/" + type["name"], 
+						"path": "/namespaces/" + currentns + "/" + type["name"], 
 						"icon": <ExtensionIcon/>, 
 						"selected": false
 					});
@@ -522,8 +513,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	var lowitems = [];
 
 	return (
-		<Router history={history}>
-			<nav className={classes.drawer}>
+			<>
 			<Hidden smUp implementation="css">
 				<Drawer
 					container={container}
@@ -677,84 +667,13 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 					</List>
 				</Drawer>
 			</Hidden>
-			</nav>
-			<main className={classes.content}>
-				<div>
-				<Switch>
-				<Route 
-					exact 
-					path="/" 
-					render={
-						(props) => 
-							<>
-							<Namespaces 
-								{...props} />
-							</>
-					} />
-				{/* <Route 
-					exact 
-					path="/dashboard" 
-					render={
-						(props) => 
-							<>
-							<DashboardView 
-								{...props} />
-							</>
-					} /> */}
-				<Route 
-					exact 
-					path="/list/:typename" 
-					render={
-						(props) => 
-							<>
-							<RootInstancesView 
-								{...props} 
-								type={getType(props, types)} />
-							</>
-					} />
-				<Route 
-					exact 
-					path="/create/:typename" 
-					render={
-						(props) => 
-							<>
-							<CreateInstanceDialog 
-								{...props} 
-								type={getType(props, types)} />
-							</>
-					} />
-				<Route 
-					exact 
-					path="/detail/:typename/:instanceid" 
-					render={
-						(props) => 
-							<>
-							<RootInstanceView 
-								{...props} 
-								type={getType(props, types)} />
-							</>
-					} />
-				<Route 
-					exact 
-					path="/detail/:typename/:instanceid/:relname" 
-					render={
-						(props) => 
-							<>
-							<RelInstanceView 
-								{...props} 
-								type={getType(props, types)} />
-							</>
-					} />
-				</Switch>
-				</div>
-			</main>
-		</Router>
+			</>
 	);
 
 });
 
 // function AppNavigation({ classes, variant }) {
-function AppNavigation({ classes, variant, types, onNamespaceSelect }) {
+function AppNavigation({ classes, variant, namespace, types, children }) {
 
 	const [drawer, setDrawer] = useState(false);
 
@@ -766,25 +685,29 @@ function AppNavigation({ classes, variant, types, onNamespaceSelect }) {
 		setDrawer(!drawer);
 	};
 
-	// const selectNamespace = (namespace) => {
-	// };
-
 	return (
 		<div className={classes.root}>
 			<AppToolbar 
 				title={title} 
 				onMenuClick={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
-				onNamespaceSelect={onNamespaceSelect} 
+				namespace={namespace} 
 				types={types} />
+			<nav className={classes.drawer}>
 			<AppDrawer 
 				open={drawer} 
 				onClose={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
-				onNamespaceSelect={onNamespaceSelect} 
 				// onItemClick={onItemClick} 
 				variant={variant} 
+				namespace={namespace} 
 				types={types} />
+			</nav>
+			<main className={classes.content}>
+				<div>
+					{children}
+				</div>
+			</main>
 		</div>
 	);
 
@@ -877,9 +800,6 @@ class App extends Component {
 		this.navigationRef = React.createRef();
 		this.notificationRef = React.createRef();
 
-		this.onSelectNamespace = this.onSelectNamespace.bind(this);
-		this.selectNamespace = this.selectNamespace.bind(this);
-
 	}
 
 	state = {
@@ -897,11 +817,15 @@ class App extends Component {
 		} = this.props;
 
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
-			this.props.loadNamespaces(api);
+			if( api ) {
+				this.props.loadNamespaces(api);
+			}
 		}
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			this.props.loadTypes(api, namespace);
+			if( api && namespace ) {
+				this.props.loadTypes(api, namespace);
+			}
 		}
 
 		if( this.props.tsfailed ) {
@@ -922,11 +846,15 @@ class App extends Component {
 		} = this.props;
 
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
-			this.props.loadNamespaces(api);
+			if( api ) {
+				this.props.loadNamespaces(api);
+			}
 		}
 
 		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			this.props.loadTypes(api, namespace);
+			if( api && namespace ) {
+				this.props.loadTypes(api, namespace);
+			}
 		}
 
 		if( this.props.tsfailed ) {
@@ -939,24 +867,14 @@ class App extends Component {
 
 	}
 
-	onSelectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
-	}
-
-	selectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
-	}
-
 	render() {
 
 		var _this = this;
 
 		// const { classes } = this.props;
 		const {
+			api, 
+			namespace, 
 			types
 		} = this.props;
 
@@ -967,11 +885,13 @@ class App extends Component {
 			<CssBaseline />
 			<Navigation 
 				ref={this.navigationRef} 
-				onNamespaceSelect={_this.selectNamespace} 
-				types={types} />
+				namespace={namespace} 
+				types={types}>
+				{this.props.children}
+			</Navigation>
 			<Notification 
 				ref={this.notificationRef} 
-				onNamespaceSelect={_this.selectNamespace} 
+				namespace={namespace} 
 				types={types} />
 			</React.Fragment>
 			</ThemeProvider>
@@ -996,8 +916,6 @@ class App extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		selectNamespace: (namespace) => dispatch(selectNamespace(namespace)),
-
 		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
 
 		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
@@ -1008,13 +926,13 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+
+	const { namespace } = ownProps;
 
 	const {
 		api, 
-		namespace, 
-		namespaces, 
-		entities
+		// namespace,
 	} = state;
 
 	const {

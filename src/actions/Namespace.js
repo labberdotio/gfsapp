@@ -7,8 +7,8 @@
 // import APIClient from '../clients/APIClient';
 
 // const ADD_NAMESPACE = 'ADD_NAMESPACE';
-const SELECT_NAMESPACE = 'SELECT_NAMESPACE';
-const CURRENT_NAMESPACE = 'CURRENT_NAMESPACE';
+// const SELECT_NAMESPACE = 'SELECT_NAMESPACE';
+// const CURRENT_NAMESPACE = 'CURRENT_NAMESPACE';
 // const INVALIDATE_NAMESPACE = 'INVALIDATE_NAMESPACE';
 
 const GET_NAMESPACES = 'GET_NAMESPACES';
@@ -55,21 +55,21 @@ const FAIL_DELETE_NAMESPACE = 'FAIL_DELETE_NAMESPACE';
 // 	};
 // }
 
-function selectNamespace(namespace) {
-	// console.log(" >> INVOKING ACTION: SELECT_NAMESPACE ");
-	// console.log(namespace);
-	return {
-		type: SELECT_NAMESPACE,
-		namespace
-	};
-}
+// function selectNamespace(namespace) {
+// 	// console.log(" >> INVOKING ACTION: SELECT_NAMESPACE ");
+// 	// console.log(namespace);
+// 	return {
+// 		type: SELECT_NAMESPACE,
+// 		namespace
+// 	};
+// }
 
-function currentNamespace() {
-	// console.log(" >> INVOKING ACTION: CURRENT_NAMESPACE ");
-	return {
-		type: CURRENT_NAMESPACE
-	};
-}
+// function currentNamespace() {
+// 	// console.log(" >> INVOKING ACTION: CURRENT_NAMESPACE ");
+// 	return {
+// 		type: CURRENT_NAMESPACE
+// 	};
+// }
 
 // function invalidateNamespace(namespace) {
 // 	// console.log(" >> INVOKING ACTION: INVALIDATE_NAMESPACE ");
@@ -198,8 +198,8 @@ function getNamespacesIfNeeded(endpoint) {
 export {
 
 	// ADD_NAMESPACE,
-	SELECT_NAMESPACE,
-	CURRENT_NAMESPACE,
+	// SELECT_NAMESPACE,
+	// CURRENT_NAMESPACE,
 
 	GET_NAMESPACES,
 	DO_GET_NAMESPACES,
@@ -233,8 +233,8 @@ export {
 	// REFRESH_NAMESPACE,
 
 	// addNamespace, 
-	selectNamespace, 
-	currentNamespace, 
+	// selectNamespace, 
+	// currentNamespace, 
 	// invalidateNamespace,
 
 	loadNamespacesIntoState,

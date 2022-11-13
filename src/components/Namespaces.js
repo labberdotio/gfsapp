@@ -34,7 +34,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { 
-	selectNamespace, 
 	loadNamespacesIntoState 
 } from '../actions/Namespace'
 
@@ -64,9 +63,6 @@ class Namespaces extends Component {
 
 		var _this = this;
 
-		this.onSelectNamespace = this.onSelectNamespace.bind(this);
-		this.selectNamespace = this.selectNamespace.bind(this);
-
 	}
 
 	state = {
@@ -83,7 +79,9 @@ class Namespaces extends Component {
 		} = this.props;
 
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
-			this.props.loadNamespaces(api);
+			if( api ) {
+				this.props.loadNamespaces(api);
+			}
 		}
 
 	}
@@ -96,7 +94,9 @@ class Namespaces extends Component {
 		} = this.props;
 
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
-			this.props.loadNamespaces(api);
+			if( api ) {
+				this.props.loadNamespaces(api);
+			}
 		}
 
 	}
@@ -124,18 +124,6 @@ class Namespaces extends Component {
 
 	updateSearch(event) {
 		
-	}
-
-	onSelectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
-	}
-
-	selectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
 	}
 
 	render() {
@@ -205,8 +193,8 @@ class Namespaces extends Component {
 								button 
 								selected={false} 
 								component={Link} 
-								to={"/"} 
-								onClick={() => _this.selectNamespace(namespace)}
+								to={"/namespaces/" + namespace} 
+								// onClick={() => _this.selectNamespace(namespace)}
 								>
 								<ListItemIcon><ExtensionIcon/></ListItemIcon>
 								<ListItemText>{namespace}</ListItemText>
@@ -232,8 +220,6 @@ Namespaces.propNamespaces = {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		selectNamespace: (namespace) => dispatch(selectNamespace(namespace)),
-
 		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
 
 		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
@@ -241,11 +227,15 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+
+	const {
+		namespace
+	} = ownProps;
 
 	const {
 		api,
-		namespace,
+		// namespace,
 		namespaces
 	} = state;
 

@@ -9,6 +9,7 @@ function loadEntityIntoState(endpoint, namespace, resource, entity_id, accept = 
 		type: 'GET_ENTITY',
 		resource: resource,
 		endpoint: endpoint,
+		namespace: namespace,
 		entity_id: entity_id,
 		accept: accept
 	}
@@ -19,6 +20,7 @@ function loadEntitiesIntoState(endpoint, namespace, resource, accept = 'applicat
 		type: 'GET_ENTITIES',
 		resource: resource,
 		endpoint: endpoint,
+		namespace: namespace,
 		accept: accept
 	}
 }
@@ -32,9 +34,9 @@ function getEntityFromState(state, endpoint, namespace, resource, entity_id) {
 	/*
 	 *
 	 */
-	var key = endpoint.api.host + '-' + resource;
+	var key = endpoint.api.host + '-' + namespace + '-' + resource;
 	if( entity_id ) {
-		key = endpoint.api.host + '-' + resource + '-' + entity_id;
+		key = endpoint.api.host + '-' + namespace + '-' + resource + '-' + entity_id;
 	}
 
 	const {
@@ -72,7 +74,7 @@ function getEntitiesFromState(state, endpoint, namespace, resource) {
 	/*
 	 *
 	 */
-	var key = endpoint.api.host + '-' + resource;
+	var key = endpoint.api.host + '-' + namespace + '-' + resource;
 
 	const {
 		loading,

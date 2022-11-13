@@ -4,6 +4,24 @@
 // All rights reserved.
 // 
 
+// import {
+// 	// ADD_NAMESPACE,
+// 	SELECT_NAMESPACE,
+// 	CURRENT_NAMESPACE,
+// 	GET_NAMESPACES,
+// 	DO_GET_NAMESPACES,
+// 	ON_GET_NAMESPACES,
+// 	FAIL_GET_NAMESPACES,
+// 	// GET_NAMESPACE,
+// 	// DO_GET_NAMESPACE,
+// 	// ON_GET_NAMESPACE,
+// 	// FAIL_GET_NAMESPACE,
+// 	// INVALIDATE_NAMESPACES,
+// 	// INVALIDATE_NAMESPACE,
+// 	// REFRESH_NAMESPACES,
+// 	// REFRESH_NAMESPACE
+// } from '../actions/Namespace'
+
 import {
 	GET_ENTITIES,
 	DO_GET_ENTITIES,
@@ -100,13 +118,16 @@ function entity(state = {}, action) {
 		case INVALIDATE_ENTITY:
 		// case REFRESH_ENTITIES:
 		case REFRESH_ENTITY:
+			var key1 = action.endpoint.name + "-" + action.namespace;
+			var key2 = action.endpoint.name + "-" + action.namespace + "-" + action.resource;
+			var key3 = action.endpoint.name + "-" + action.namespace + "-" + action.resource + "-" + action.entity_id;
 			if( action.entity_id ) {
 				return Object.assign({}, state, {
-					[action.endpoint.name + "-" + action.resource + "-" + action.entity_id]: __entity(state[action.endpoint.name], action)
+					[key3]: __entity(state[key1], action)
 				});
 			} else {
 				return Object.assign({}, state, {
-					[action.endpoint.name + "-" + action.resource]: __entity(state[action.endpoint.name], action)
+					[key2]: __entity(state[key1], action)
 				});
 			}
 		default:
@@ -263,12 +284,15 @@ function entities(state = {}, action) {
 		case FAIL_GET_ENTITY:
 		// case REFRESH_ENTITIES:
 		case REFRESH_ENTITY:
+			var key1 = action.endpoint.name + "-" + action.namespace ;
+			var key2 = action.endpoint.name + "-" + action.namespace  + "-" + action.resource;
+			var key3 = action.endpoint.name + "-" + action.namespace  + "-" + action.resource + "-" + action.entity_id;
 			return Object.assign({}, state, {
-				// [action.endpoint.name + "-" + action.resource + "-" + action.entity_id]: __entity(state[action.endpoint.name], action)
-				[action.endpoint.name + "-" + action.resource]: __entity(
-					state[action.endpoint.name], 
+				// [key3]: __entity(state[key1], action)
+				[key2]: __entity(
+					state[key1], 
 					action,
-					state[action.endpoint.name + "-" + action.resource]
+					state[key2]
 				)
 			});
 
@@ -284,11 +308,13 @@ function entities(state = {}, action) {
 		case FAIL_GET_ENTITIES:
 		case REFRESH_ENTITIES:
 		// case REFRESH_ENTITY:
+			var key1 = action.endpoint.name + "-" + action.namespace;
+			var key2 = action.endpoint.name + "-" + action.namespace + "-" + action.resource;
 			return Object.assign({}, state, {
-				[action.endpoint.name + "-" + action.resource]: __entities(
-					state[action.endpoint.name], 
+				[key2]: __entities(
+					state[key1], 
 					action,
-					state[action.endpoint.name + "-" + action.resource]
+					state[key2]
 				)
 			});
 
@@ -297,6 +323,14 @@ function entities(state = {}, action) {
 			// return Object.assign({}, state, {
 			// });
 			return {};
+
+		// case SELECT_NAMESPACE:
+		// 	if( state && state.current ) {
+		// 		if( state.current == action.namespace ) {
+		// 			return state;
+		// 		} 
+		// 	}
+		// 	return {};
 
 		default:
 			return state;

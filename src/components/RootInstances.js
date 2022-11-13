@@ -172,14 +172,18 @@ class RootInstances extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadInstances(api, namespace, typename);
+			}
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -240,18 +244,18 @@ class RootInstances extends Component {
 		});
 	}
 
-	getListCols(typename, type, schema, instances, ainstances) {
+	getListCols(namespace, typename, type, schema, instances, ainstances) {
 
 		var cols = [];
 		cols.push({
 			title: "id",
 			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		cols.push({
 			title: "uuid",
@@ -260,7 +264,7 @@ class RootInstances extends Component {
 		cols.push({
 			title: "name",
 			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		// cols.push({
 		// 	title: "created",
@@ -287,18 +291,18 @@ class RootInstances extends Component {
 		return cols;
 	}
 
-	getListRows(typename, type, schema, instances, ainstances) {
+	getListRows(namespace, typename, type, schema, instances, ainstances) {
 
 		var cols = [];
 		cols.push({
 			title: "id",
 			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		cols.push({
 			title: "uuid",
@@ -307,7 +311,7 @@ class RootInstances extends Component {
 		cols.push({
 			title: "name",
 			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		// cols.push({
 		// 	title: "created",
@@ -399,7 +403,7 @@ class RootInstances extends Component {
 	// 					id: instance["id"], 
 	// 					name: instance["name"], 
 	// 					label: instance["name"], // + "." + instance["label"], 
-	// 					link: this.makeInstanceLink(instance), 
+	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
 	// 					}
@@ -412,12 +416,12 @@ class RootInstances extends Component {
 	// 	return treestruc;
 	// }
 
-	makeInstanceLink(instance) {
-		return "/detail/" + instance["label"] + "/" + instance["id"];
+	makeInstanceLink(namespace, type, id) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(label, id, relname) {
-		return "/detail/" + label + "/" + id + "/" + relname;
+	makeRelInstanceLink(namespace, type, id, relname) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
 	makeInstance(instance) {
@@ -517,7 +521,7 @@ class RootInstances extends Component {
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
 				<MuiLink color="inherit" href="/" onClick={handleClick}>
-					{namespace.current}
+					{namespace}
 				</MuiLink>
 				<Typography color="textPrimary">{typename}</Typography>
 			</Breadcrumbs>
@@ -555,7 +559,7 @@ class RootInstances extends Component {
 							button 
 							selected={false} 
 							component={Link} 
-							to={this.makeInstanceLink(entity)} 
+							to={this.makeInstanceLink(namespace, entity)} 
 							// onClick={onItemClick(title)}
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
@@ -575,6 +579,7 @@ class RootInstances extends Component {
 					<InstancesView 
 						title={typename} 
 						description={typename} 
+						namespace={namespace} 
 						typename={typename} 
 						type={type} 
 						schema={schema["entity"]} 
@@ -624,14 +629,15 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { match } = ownProps;
-
-	const typename = match["params"]["typename"];
-	const type = ownProps["type"];
+	const {
+		namespace, 
+		typename, 
+		instanceid
+	} = ownProps;
 
 	const {
 		api, 
-		namespace
+		// namespace
 	} = state;
 
 	// const {
@@ -670,7 +676,7 @@ function mapStateToProps(state, ownProps) {
 		api, 
 		namespace: namespace, 
 		typename: typename, 
-		type: type, 
+		// type: type, 
 		// : , 
 		// : , 
 		// : , 

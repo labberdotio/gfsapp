@@ -20,12 +20,7 @@ class ApiGenerator {
 		var hostname = endpoint.api.host;
 		var port = endpoint.api.port;
 
-		var namespace = undefined;
-		// var namespace = endpoint.namespace;
-		if( action.namespace && action.namespace.current ) {
-			// namespace = action.namespace;
-			namespace = action.namespace.current;
-		}
+		var namespace = action.namespace;
 
 		// console.log(' >> ApiGenerator: hostname: ' + hostname + ', port: ' + port);
 		// console.log(' >> ApiGenerator: resource: ' + resource);
@@ -90,6 +85,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_GET_NAMESPACES`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept
 		});
 		var apiClient = new APIClient(
@@ -102,6 +98,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_GET_NAMESPACES`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				timestamp: Date.now()
 			});
@@ -127,6 +124,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_GET_NAMESPACES`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					timestamp: Date.now()
 				});
@@ -135,6 +133,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_GET_NAMESPACES`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				namespaces: data,
 				timestamp: Date.now()
@@ -147,6 +146,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_GET_NAMESPACES`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				timestamp: Date.now()
 			});
@@ -155,6 +155,7 @@ class ApiGenerator {
 		// 	this.next({
 		// 		type: `FAIL_GET_NAMESPACES`,
 		// 		endpoint: this.endpoint,
+		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		timestamp: Date.now()
 		// 	});
@@ -165,6 +166,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_GET_NAMESPACE`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept,
 			namespace: namespace
 		});
@@ -178,6 +180,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_GET_NAMESPACE`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				namespace: namespace,
 				timestamp: Date.now()
@@ -205,6 +208,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_GET_NAMESPACE`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					namespace: namespace,
 					timestamp: Date.now()
@@ -215,6 +219,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_GET_NAMESPACE`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				namespace: namespace,
 				namespace: data,
@@ -228,6 +233,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_GET_NAMESPACE`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				namespace: namespace,
 				timestamp: Date.now()
@@ -237,6 +243,7 @@ class ApiGenerator {
 		// 	this.next({
 		// 		type: `FAIL_GET_NAMESPACE`,
 		// 		endpoint: this.endpoint,
+		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		namespace: namespace,
 		// 		timestamp: Date.now()
@@ -252,6 +259,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource
 		});
@@ -265,6 +273,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				timestamp: Date.now()
@@ -291,6 +300,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
 					timestamp: Date.now()
@@ -300,6 +310,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entities: data,
@@ -313,6 +324,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				timestamp: Date.now()
@@ -322,6 +334,7 @@ class ApiGenerator {
 		// 	this.next({
 		// 		type: `FAIL_${name}`,
 		// 		endpoint: this.endpoint,
+		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		resource: this.resource,
 		// 		timestamp: Date.now()
@@ -333,6 +346,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
 			entity_id: entity_id
@@ -347,6 +361,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -375,6 +390,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
 					entity_id: entity_id,
@@ -386,6 +402,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -400,6 +417,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -410,6 +428,7 @@ class ApiGenerator {
 		// 	this.next({
 		// 		type: `FAIL_${name}`,
 		// 		endpoint: this.endpoint,
+		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		resource: this.resource,
 		// 		entity_id: entity_id,
@@ -426,6 +445,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
 			entity: entity
@@ -439,6 +459,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				timestamp: Date.now()
@@ -475,6 +496,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
 					timestamp: Date.now()
@@ -485,6 +507,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity: data,
@@ -493,6 +516,7 @@ class ApiGenerator {
 			this.next({
 				type: 'INVALIDATE_ENTITIES',
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource
 			});
@@ -507,6 +531,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
 			entity_id: entity_id,
@@ -521,6 +546,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -558,6 +584,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
 					entity_id: entity_id,
@@ -569,6 +596,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -578,6 +606,7 @@ class ApiGenerator {
 			this.next({
 				type: 'INVALIDATE_ENTITIES',
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				resource: this.resource
 			});
 		});
@@ -591,6 +620,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
 			entity_id: entity_id
@@ -600,6 +630,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -631,6 +662,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
 					entity_id: entity_id,
@@ -642,6 +674,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
 				entity_id: entity_id,
@@ -650,6 +683,7 @@ class ApiGenerator {
 			this.next({
 				type: 'INVALIDATE_ENTITIES',
 				endpoint: this.endpoint,
+				namespace: this.namespace,
 				resource: this.resource
 			});
 		});

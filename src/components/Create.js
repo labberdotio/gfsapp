@@ -81,7 +81,9 @@ class CreateInstanceDialog extends Component {
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -103,7 +105,9 @@ class CreateInstanceDialog extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace && dtypename ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						} else if( (property["type"] == "array") && 
@@ -114,7 +118,9 @@ class CreateInstanceDialog extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace && dtypename ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						}
@@ -144,7 +150,9 @@ class CreateInstanceDialog extends Component {
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -166,7 +174,9 @@ class CreateInstanceDialog extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						} else if( (property["type"] == "array") && 
@@ -177,7 +187,9 @@ class CreateInstanceDialog extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						}
@@ -403,14 +415,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { match } = ownProps;
-
-	const typename = match["params"]["typename"];
-	const type = ownProps["type"];
+	const {
+		namespace, 
+		typename
+	} = ownProps;
 
 	const {
 		api, 
-		namespace
+		// namespace
 	} = state;
 
 	// const {
@@ -464,7 +476,7 @@ function mapStateToProps(state, ownProps) {
 		api, 
 		namespace: namespace, 
 		typename: typename, 
-		type: type, 
+		// type: type, 
 		// : , 
 		// : , 
 		// : , 
