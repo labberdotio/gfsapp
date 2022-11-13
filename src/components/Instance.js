@@ -104,11 +104,13 @@ class Instance extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, namespace, typename);
+		// 	if( api && namespace ) {
+		// 		this.props.loadInstances(api, namespace, typename);
+		// 	}
 		// }
 
 		// if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
-		// 	if( typename ) {
+		// 	if( api && namespace && typename ) {
 		// 		this.props.loadSchema(api, namespace, typename);
 		// 	}
 		// }
@@ -140,12 +142,14 @@ class Instance extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, typename);
+		// 	if( api && namespace ) {
+		// 		this.props.loadInstances(api, namespace, typename);
+		// 	}
 		// }
 
 		// if( (!this.props.ssloading) && (!this.props.ssloaded) && (!this.props.ssfailed) ) {
-		// 	if( typename ) {
-		// 		this.props.loadSchema(api, typename);
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadSchema(api, namespace, typename);
 		// 	}
 		// }
 
@@ -155,7 +159,7 @@ class Instance extends Component {
 	 *
 	 */
 
-	getProperties(typename, type, schema, instance) {
+	getProperties(namespace, typename, type, schema, instance) {
 
 		var properties = [];
 		// var dependencies = [];
@@ -165,13 +169,13 @@ class Instance extends Component {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
+				"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
 			});
 			// var propertyname = "link";
 			// // if( instance && instance[propertyname] ) {
 			// 	properties.push({
 			// 		"name": propertyname, 
-			// 		"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+			// 		"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
 			// 	});
 			// // }
 		}
@@ -189,7 +193,7 @@ class Instance extends Component {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				"value": <a href={this.makeInstanceLink(instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
 			});
 		}
 
@@ -245,7 +249,7 @@ class Instance extends Component {
 		return properties;
 	}
 
-	getDependencies(typename, type, schema, instance) {
+	getDependencies(namespace, typename, type, schema, instance) {
 
 		// var properties = [];
 		var dependencies = [];
@@ -299,7 +303,7 @@ class Instance extends Component {
 		return dependencies;
 	}
 
-	getSingleDependencyEntities(name, type, value, ainstances) {
+	getSingleDependencyEntities(namespace, name, type, value, ainstances) {
 
 		var cinstance = undefined;
 
@@ -321,7 +325,7 @@ class Instance extends Component {
 		return cinstance;
 	}
 
-	getMultipleDependencyEntities(name, type, value, ainstances) {
+	getMultipleDependencyEntities(namespace, name, type, value, ainstances) {
 
 		var cinstances = [];
 
@@ -346,21 +350,21 @@ class Instance extends Component {
 	 *
 	 */
 
-	makeInstanceLink(label, id) {
-		return "/detail/" + label + "/" + id;
+	makeInstanceLink(namespace, type, id) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(label, id, relname) {
-		return "/detail/" + label + "/" + id + "/" + relname;
-	}	
+	makeRelInstanceLink(namespace, type, id, relname) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
+	}
 
 	render() {
 
 		var _this = this;
 
 		const {
-			// api, 
-			// namespace, 
+			api, 
+			namespace, 
 			title, 
             description, 
 			typename, 
@@ -384,14 +388,16 @@ class Instance extends Component {
 
 		// var backdropOpen = false;
 
-		var properties = this.getProperties( 
+		var properties = this.getProperties(
+			namespace, 
 			typename, 
 			type, 
 			schema, 
 			instance
 		);
 
-		var dependencies = this.getDependencies( 
+		var dependencies = this.getDependencies(
+			namespace, 
 			typename, 
 			type, 
 			schema, 
@@ -418,7 +424,8 @@ class Instance extends Component {
 				<DetailView 
 					title={title} 
 					description={description} 
-					properties={this.getProperties( 
+					properties={this.getProperties(
+						namespace, 
 						typename, 
 						type, 
 						schema, 
@@ -428,7 +435,7 @@ class Instance extends Component {
 					<InstancesView 
 						title={ item && item.name } 
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-						instances={ instance && item && this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+						instances={ instance && item && this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
 						type={ item && item.type } />
 				))} */}
@@ -436,32 +443,34 @@ class Instance extends Component {
 					<InstanceView 
 						title={ item && item.name } 
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-						instance={ instance && item && this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+						instance={ instance && item && this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 						typename={ item && item.type } 
 						type={ item && item.type } />
 				))} */}
 				{ instance && dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
 						return <>
-							<MuiLink color="inherit" href={_this.makeRelInstanceLink(instance.label, instance.id, item.name)}>
+							<MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
 								<h1>{item.name}</h1> 
 							</MuiLink>
 							<InstancesView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-							instances={ instance && item && _this.getMultipleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+							namespace={namespace} 
+							instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
 					} else {
 						return <> 
-							<MuiLink color="inherit" href={_this.makeRelInstanceLink(instance.label, instance.id, item.name)}>
+							<MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
 								<h1>{item.name}</h1> 
 							</MuiLink>
 							<InstanceView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-							instance={ instance && item && _this.getSingleDependencyEntities( item.name, item.type, instance[item.name], ainstances ) }
+							namespace={namespace} 
+							instance={ instance && item && _this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
@@ -491,19 +500,30 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { match } = ownProps;
+	// const { match } = ownProps;
 
-	const title = ownProps["title"];
-    const description = ownProps["description"];
+	// const title = ownProps["title"];
+    // const description = ownProps["description"];
 
-	// const typename = match["params"]["typename"];
-	// const instanceid = match["params"]["instanceid"];
-	const typename = ownProps["typename"];
-	const type = ownProps["type"];
-	const schema = ownProps["schema"];
-	const instanceid = ownProps["instanceid"];
-	const instance = ownProps["instance"];
-	const ainstances = ownProps["ainstances"];
+	// // const typename = match["params"]["typename"];
+	// // const instanceid = match["params"]["instanceid"];
+	// const typename = ownProps["typename"];
+	// const type = ownProps["type"];
+	// const schema = ownProps["schema"];
+	// const instanceid = ownProps["instanceid"];
+	// const instance = ownProps["instance"];
+	// const ainstances = ownProps["ainstances"];
+
+	const {
+		title, 
+		description, 
+		typename, 
+		type, 
+		schema, 
+		instanceid, 
+		instance, 
+		ainstances
+	} = ownProps;	
 
 	const {
 		// api, 

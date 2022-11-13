@@ -158,14 +158,18 @@ class RelInstance extends Component {
 		if( (!this.props.instance["loading"]) && 
 			(!this.props.instance["loaded"]) && 
 			(!this.props.instance["failed"]) ) {
-			this.props.loadInstance(api, namespace, typename, instanceid);
+			if( api && namespace && typename ) {
+				this.props.loadInstance(api, namespace, typename, instanceid);
+			}
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -173,7 +177,9 @@ class RelInstance extends Component {
 			if( (!this.props.reltypeinstances["loading"]) && 
 				(!this.props.reltypeinstances["loaded"]) && 
 				(!this.props.reltypeinstances["failed"]) ) {
-				this.props.loadInstances(api, namespace, reltype);
+				if( api && namespace && reltype ) {
+					this.props.loadInstances(api, namespace, reltype);
+				}
 			}
 		}
 
@@ -201,14 +207,18 @@ class RelInstance extends Component {
 		if( (!this.props.instance["loading"]) && 
 			(!this.props.instance["loaded"]) && 
 			(!this.props.instance["failed"]) ) {
-			this.props.loadInstance(api, namespace, typename, instanceid);
+			if( api && namespace && typename ) {
+				this.props.loadInstance(api, namespace, typename, instanceid);
+			}
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -216,7 +226,9 @@ class RelInstance extends Component {
 			if( (!this.props.reltypeinstances["loading"]) && 
 				(!this.props.reltypeinstances["loaded"]) && 
 				(!this.props.reltypeinstances["failed"]) ) {
-				this.props.loadInstances(api, namespace, reltype);
+				if( api && namespace && reltype ) {
+					this.props.loadInstances(api, namespace, reltype);
+				}
 			}
 		}
 
@@ -229,12 +241,12 @@ class RelInstance extends Component {
 	// getTreeData() {
 	// }
 
-	makeInstanceLink(instance) {
-		return "/detail/" + instance["label"] + "/" + instance["id"];
+	makeInstanceLink(namespace, type, id) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(label, id, relname) {
-		return "/detail/" + label + "/" + id + "/" + relname;
+	makeRelInstanceLink(namespace, type, id, relname) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
 	makeInstance(instance) {
@@ -267,8 +279,6 @@ class RelInstance extends Component {
 
 		var backdropOpen = false;
 
-
-
 		return (
 			<>
 			<Container 
@@ -281,12 +291,12 @@ class RelInstance extends Component {
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
 				<MuiLink color="inherit" href="/" onClick={handleClick}>
-					{namespace.current}
+					{namespace}
 				</MuiLink>
-				<MuiLink color="inherit" href={"/list/" + typename} onClick={handleClick}>
+				<MuiLink color="inherit" href={"/namespaces/" + namespace + "/" + typename} onClick={handleClick}>
 					{typename}
 				</MuiLink>
-				<MuiLink color="inherit" href={"/detail/" + typename + "/" + instanceid} onClick={handleClick}>
+				<MuiLink color="inherit" href={"/namespaces/" + namespace + "/" + typename + "/" + instanceid} onClick={handleClick}>
 					{ instance && instance["entity"] && instance["entity"]["name"] }
 				</MuiLink>
 				<Typography color="textPrimary">{ relname }</Typography>
@@ -325,7 +335,7 @@ class RelInstance extends Component {
 							button 
 							selected={false} 
 							component={Link} 
-							to={this.makeInstanceLink(entity)} 
+							to={this.makeInstanceLink(namespace, entity)} 
 							// onClick={onItemClick(title)}
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
@@ -346,6 +356,7 @@ class RelInstance extends Component {
 						<InstanceView 
 						title={ relname } 
 						description={reltype} 
+						namespace={namespace} 
 						typename={reltype} 
 						type={relschema} 
 						schema={relschema} 
@@ -357,6 +368,7 @@ class RelInstance extends Component {
 					<InstancesView 
 						title={relname} 
 						description={reltype} 
+						namespace={namespace} 
 						typename={reltype} 
 						type={relschema} 
 						schema={relschema} 
@@ -390,16 +402,16 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { match } = ownProps;
-
-	const typename = match["params"]["typename"];
-	const instanceid = match["params"]["instanceid"];
-	const relname = match["params"]["relname"];
-	const type = ownProps["type"];
+	const {
+		namespace, 
+		typename, 
+		instanceid, 
+		relname
+	} = ownProps;
 
 	const {
 		api, 
-		namespace
+		// namespace
 	} = state;
 
 	const instance = getEntityFromState(state, api, namespace, typename, instanceid);
@@ -489,7 +501,7 @@ function mapStateToProps(state, ownProps) {
 		typename: typename, 
 		instanceid: instanceid, 
 		relname: relname, 
-		type: type, 
+		// type: type, 
 		schema: schema, 
 		reltype: reltype, 
 		relschema: relschema, 

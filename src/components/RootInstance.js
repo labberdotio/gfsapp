@@ -161,14 +161,18 @@ class RootInstance extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadInstances(api, namespace, typename);
+			}
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -190,7 +194,9 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace && dtypename ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						} else if( (property["type"] == "array") && 
@@ -201,7 +207,9 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace && dtypename ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						}
@@ -236,14 +244,18 @@ class RootInstance extends Component {
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadInstances(api, namespace, typename);
+			}
 		}
 
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			this.props.loadSchema(api, namespace, typename);
+			if( api && namespace && typename ) {
+				this.props.loadSchema(api, namespace, typename);
+			}
 			// }
 		}
 
@@ -265,7 +277,9 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace && dtypename ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						} else if( (property["type"] == "array") && 
@@ -276,7 +290,9 @@ class RootInstance extends Component {
 								(!this.props.ainstances[dtypename]["loaded"]) && 
 								(!this.props.ainstances[dtypename]["failed"]) ) {
 								// if( dtypename ) {
-								this.props.loadInstances(api, namespace, dtypename);
+								if( api && namespace && dtypename ) {
+									this.props.loadInstances(api, namespace, dtypename);
+								}
 								// }
 							}
 						}
@@ -343,7 +359,7 @@ class RootInstance extends Component {
 	// 					id: instance["id"], 
 	// 					name: instance["name"], 
 	// 					label: instance["name"], // + "." + instance["label"], 
-	// 					link: this.makeInstanceLink(instance), 
+	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
 	// 					}
@@ -356,12 +372,12 @@ class RootInstance extends Component {
 	// 	return treestruc;
 	// }
 
-	makeInstanceLink(instance) {
-		return "/detail/" + instance["label"] + "/" + instance["id"];
+	makeInstanceLink(namespace, type, id) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(label, id, relname) {
-		return "/detail/" + label + "/" + id + "/" + relname;
+	makeRelInstanceLink(namespace, type, id, relname) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
 	makeInstance(instance) {
@@ -439,7 +455,7 @@ class RootInstance extends Component {
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
 				<MuiLink color="inherit" href="/" onClick={handleClick}>
-					{namespace.current}
+					{namespace}
 				</MuiLink>
 				<MuiLink color="inherit" href={"/list/" + typename} onClick={handleClick}>
 					{typename}
@@ -480,7 +496,7 @@ class RootInstance extends Component {
 							button 
 							selected={false} 
 							component={Link} 
-							to={this.makeInstanceLink(entity)} 
+							to={this.makeInstanceLink(namespace, entity)} 
 							// onClick={onItemClick(title)}
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
@@ -500,6 +516,7 @@ class RootInstance extends Component {
 					<InstanceView 
 						title={ instance && instance["name"] } 
 						description={typename} 
+						namespace={namespace} 
 						typename={typename} 
 						type={type} 
 						schema={schema["entity"]} 
@@ -531,15 +548,15 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { match } = ownProps;
-
-	const typename = match["params"]["typename"];
-	const instanceid = match["params"]["instanceid"];
-	const type = ownProps["type"];
+	const {
+		namespace, 
+		typename, 
+		instanceid
+	} = ownProps;
 
 	const {
 		api, 
-		namespace
+		// namespace
 	} = state;
 
 	// const {
@@ -603,7 +620,7 @@ function mapStateToProps(state, ownProps) {
 		namespace: namespace, 
 		typename: typename, 
 		instanceid: instanceid, 
-		type: type, 
+		// type: type, 
 		// : , 
 		// : , 
 		// : , 

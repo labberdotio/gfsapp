@@ -7,6 +7,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+// import { Router, Switch, Route, Link } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch
+} from "react-router-dom";
+
+import { createBrowserHistory } from 'history';
+
 // import { createStore, applyMiddleware } from 'redux'
 // import { combineReducers } from 'redux'
 // import thunkMiddleware from 'redux-thunk'
@@ -33,11 +44,25 @@ import { addApi, selectApi } from './actions/Api'
 
 import App from './App.js';
 
+// import InstancesView from './components/Instances'
+// import InstanceView from './components/Instance'
+
+import RootInstancesView from './components/RootInstances'
+import RootInstanceView from './components/RootInstance'
+
+// import SubInstancesView from './components/SubInstances'
+// import SubInstanceView from './components/SubInstance'
+import RelInstanceView from './components/RelInstance'
+
+import Namespaces from './components/Namespaces'
+
 require('./style.css');
 // require('./style.light.css');
 // require('./style.dark.css');
 
 require('./index.css');
+
+const history = createBrowserHistory();
 
 /*
  * Defaults
@@ -124,10 +149,154 @@ var defaultEndpoint = {
 store.dispatch(addApi(defaultEndpoint));
 store.dispatch(selectApi(defaultEndpoint));
 
+// function getType(props, types) {
+// 	var typename = props["match"]["params"]["typename"];
+// 	if( types ) {
+// 		for( var typeid in types ) {
+// 			if( typeid ) {
+// 				var type = types[typeid];
+// 				if( (type) && (type["name"] == typename) ) {
+// 					return type;
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return undefined;
+// }
+
 const rootElement = document.getElementById("root");
 ReactDOM.render(
 	<Provider store={store}>
-	<App />
+	<Router history={history}>
+		<Switch>
+			<Route 
+				exact 
+				path="/" 
+				render={
+					(props) => 
+						<>
+						<App >
+						<Namespaces 
+							 />
+						</App>
+						</>
+				} />
+			<Route 
+				exact 
+				path="/namespaces" 
+				render={
+					(props) => 
+						<>
+						<App >
+						<Namespaces 
+							 />
+						</App>
+						</>
+				} />
+			<Route 
+				exact 
+				path="/namespaces/:namespace" 
+				render={
+					(props) => 
+						<>
+						<App 
+							namespace={props.match.params.namespace} 
+						>
+						<Namespaces 
+							namespace={props.match.params.namespace} 
+						/>
+						</App>
+						</>
+				} />
+			{/* <Route 
+				exact 
+				path="/dashboard" 
+				render={
+					(props) => 
+						<>
+						<App 
+						>
+						<DashboardView 
+						/>
+						</App>
+						</>
+				} /> */}
+			<Route 
+				exact 
+				path="/namespaces/:namespace/:typename" 
+				render={
+					(props) => 
+						<>
+						<App 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+						>
+						<RootInstancesView 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+						/>
+						</App>
+						</>
+				} />
+			{/* <Route 
+				exact 
+				path="/namespaces/:namespace/create/:typename" 
+				render={
+					(props) => 
+						<>
+						<App 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+						>
+						<CreateInstanceDialog 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+						/>
+						</App>
+						</>
+				} /> */}
+			<Route 
+				exact 
+				path="/namespaces/:namespace/:typename/:instanceid" 
+				render={
+					(props) => 
+						<>
+						<App 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+							instanceid={props.match.params.instanceid} 
+						>
+						<RootInstanceView 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+							instanceid={props.match.params.instanceid} 
+						/>
+						</App>
+						</>
+				} />
+			<Route 
+				exact 
+				path="/namespaces/:namespace/:typename/:instanceid/:relname" 
+				render={
+					(props) => 
+						<>
+						<App 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+							instanceid={props.match.params.instanceid} 
+							relname={props.match.params.relname} 
+						>
+						<RelInstanceView 
+							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
+							instanceid={props.match.params.instanceid} 
+							relname={props.match.params.relname} 
+						/>
+						</App>
+						</>
+				} />
+		</Switch>
+	</Router>
 	</Provider>, 
 	rootElement
 );

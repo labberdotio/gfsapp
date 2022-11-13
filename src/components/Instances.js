@@ -96,7 +96,9 @@ class Instances extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, namespace, typename);
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadInstances(api, namespace, typename);
+		// 	}
 		// }
 
 	}
@@ -120,7 +122,9 @@ class Instances extends Component {
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	this.props.loadInstances(api, typename);
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadInstances(api, namespace, typename);
+		// 	}
 		// }
 
 	}
@@ -129,18 +133,18 @@ class Instances extends Component {
 	 * 
 	 */
 
-	getListCols(typename, type, schema, instances, ainstances) {
+	getListCols(namespace, typename, type, schema, instances, ainstances) {
 
 		var cols = [];
 		cols.push({
 			title: "id",
 			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		cols.push({
 			title: "uuid",
@@ -149,7 +153,7 @@ class Instances extends Component {
 		cols.push({
 			title: "name",
 			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		// cols.push({
 		// 	title: "created",
@@ -185,18 +189,18 @@ class Instances extends Component {
 		return cols;
 	}
 
-	getListRows(typename, type, schema, instances, ainstances) {
+	getListRows(namespace, typename, type, schema, instances, ainstances) {
 
 		// var cols = [];
 		// cols.push({
 		// 	title: "id",
 		// 	field: "id",
-		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		// });
 		// // cols.push({
 		// // 	title: "link",
 		// // 	field: "link",
-		// // 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// // });
 		// cols.push({
 		// 	title: "uuid",
@@ -205,7 +209,7 @@ class Instances extends Component {
 		// cols.push({
 		// 	title: "name",
 		// 	field: "name",
-		// 	render: rowData => <a href={this.makeInstanceLink(rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		// // cols.push({
 		// // 	title: "created",
@@ -246,19 +250,19 @@ class Instances extends Component {
 	 *
 	 */
 
-	makeInstanceLink(label, id) {
-		return "/detail/" + label + "/" + id;
+	makeInstanceLink(namespace, type, id) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(label, id, relname) {
-		return "/detail/" + label + "/" + id + "/" + relname;
+	makeRelInstanceLink(namespace, type, id, relname) {
+		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
 	render() {
 
 		const {
-			// api, 
-			// namespace, 
+			api, 
+			namespace, 
 			title, 
             description, 
 			typename, 
@@ -341,14 +345,16 @@ class Instances extends Component {
 				<ListView 
 					title={title} 
 					description={description} 
-					cols={this.getListCols( 
+					cols={this.getListCols(
+						namespace, 
 						typename, 
 						type, 
 						schema, 
 						instances, 
 						ainstances
 					)}
-					rows={this.getListRows( 
+					rows={this.getListRows(
+						namespace, 
 						typename, 
 						type, 
 						schema, 
@@ -377,17 +383,27 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { match } = ownProps;
+	// const { match } = ownProps;
 
-	const title = ownProps["title"];
-    const description = ownProps["description"];
+	// const title = ownProps["title"];
+    // const description = ownProps["description"];
 
-	// const typename = match["params"]["typename"];
-	const typename = ownProps["typename"];
-	const type = ownProps["type"];
-	const schema = ownProps["schema"];
-	const instances = ownProps["instances"];
-	const ainstances = ownProps["ainstances"];
+	// // const typename = match["params"]["typename"];
+	// const typename = ownProps["typename"];
+	// const type = ownProps["type"];
+	// const schema = ownProps["schema"];
+	// const instances = ownProps["instances"];
+	// const ainstances = ownProps["ainstances"];
+
+	const {
+		title, 
+		description, 
+		typename, 
+		type, 
+		schema, 
+		instances, 
+		ainstances
+	} = ownProps;	
 
 	const {
 		// api, 
