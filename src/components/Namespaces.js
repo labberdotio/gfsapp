@@ -34,7 +34,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { 
-	selectNamespace, 
 	loadNamespacesIntoState 
 } from '../actions/Namespace'
 
@@ -127,15 +126,9 @@ class Namespaces extends Component {
 	}
 
 	onSelectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
 	}
 
 	selectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
 	}
 
 	render() {
@@ -231,8 +224,6 @@ Namespaces.propNamespaces = {
 
 function mapDispatchToProps(dispatch) {
 	return {
-
-		selectNamespace: (namespace) => dispatch(selectNamespace(namespace)),
 
 		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
 

@@ -6,8 +6,8 @@
 
 import {
 	// ADD_NAMESPACE,
-	SELECT_NAMESPACE,
-	CURRENT_NAMESPACE,
+	// SELECT_NAMESPACE,
+	// CURRENT_NAMESPACE,
 	GET_NAMESPACES,
 	DO_GET_NAMESPACES,
 	ON_GET_NAMESPACES,
@@ -45,16 +45,21 @@ import {
 function namespace(state = {}, action) {
 	switch (action.type) {
 
-		// case ADD_NAMESPACE:
-		case SELECT_NAMESPACE:
-			var previous = state.current
-			return Object.assign({}, state, {
-				previous: previous, 	
-				current: action.namespace
-			});
-		case CURRENT_NAMESPACE:
-			return action.name;
-		// case INVALIDATE_NAMESPACE:
+		// // case ADD_NAMESPACE:
+		// case SELECT_NAMESPACE:
+		// 	if( state && state.current ) {
+		// 		if( state.current == action.namespace ) {
+		// 			return state;
+		// 		} 
+		// 	}
+		// 	var previous = state.current
+		// 	return Object.assign({}, state, {
+		// 		previous: previous, 	
+		// 		current: action.namespace
+		// 	});
+		// case CURRENT_NAMESPACE:
+		// 	return action.name;
+		// // case INVALIDATE_NAMESPACE:
 		default:
 			return state;
 

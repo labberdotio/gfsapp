@@ -58,7 +58,6 @@ import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 // import { getEntitiesFromState } from './stores/Entity'
 
 import {
-	selectNamespace, 
 	loadNamespacesIntoState
 } from './actions/Namespace'
 
@@ -940,15 +939,9 @@ class App extends Component {
 	}
 
 	onSelectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
 	}
 
 	selectNamespace(namespace) {
-		// store.dispatch(selectNamespace(namespace));
-		this.props.selectNamespace(namespace);
-		this.props.invalidateEntities(namespace);
 	}
 
 	render() {
@@ -995,8 +988,6 @@ class App extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return {
-
-		selectNamespace: (namespace) => dispatch(selectNamespace(namespace)),
 
 		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
 

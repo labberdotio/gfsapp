@@ -28,7 +28,7 @@ import { entity, entities } from './reducers/Entity';
 import NamespaceService from './services/Namespace';
 import EntityService from './services/Entity';
 
-import { addNamespace, selectNamespace } from './actions/Namespace';
+// import { addNamespace, selectNamespace } from './actions/Namespace';
 import { addApi, selectApi } from './actions/Api'
 
 import App from './App.js';
@@ -42,7 +42,7 @@ require('./index.css');
 /*
  * Defaults
  */
-var dnamespace = process.env.REACT_APP_GFS_FS_NAME || 'gfs1';
+// var dnamespace = process.env.REACT_APP_GFS_FS_NAME || 'gfs1';
 var dapiHostname = process.env.REACT_APP_GFS_API_HOST || 'gfsapi';
 var dapiPort = process.env.REACT_APP_GFS_API_PORT || 5000;
 var dwsHostname = process.env.REACT_APP_GFS_WS_HOST || 'gfsapi';
@@ -52,7 +52,7 @@ var dwsPort = process.env.REACT_APP_GFS_WS_PORT || 5002;
  * Overrides
  */
 if( window._env_ ) {
-	dnamespace = window._env_.REACT_APP_GFS_FS_NAME;
+	// dnamespace = window._env_.REACT_APP_GFS_FS_NAME;
 	dapiHostname = window._env_.REACT_APP_GFS_API_HOST;
 	dapiPort = window._env_.REACT_APP_GFS_API_PORT;
 	dwsHostname = window._env_.REACT_APP_GFS_WS_HOST;
@@ -101,7 +101,7 @@ const store = createStore(
 	)
 )
 
-var defaultNamespace = dnamespace; 
+// var defaultNamespace = dnamespace; 
 
 var defaultEndpoint = {
 	name: name,
@@ -119,7 +119,7 @@ var defaultEndpoint = {
 }
 
 // store.dispatch(addNamespace(defaultNamespace));
-store.dispatch(selectNamespace(defaultNamespace));
+// store.dispatch(selectNamespace(defaultNamespace));
 
 store.dispatch(addApi(defaultEndpoint));
 store.dispatch(selectApi(defaultEndpoint));
