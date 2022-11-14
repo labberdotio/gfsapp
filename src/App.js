@@ -282,21 +282,6 @@ class ThemeProvider extends React.Component {
 	}
 }
 
-function getType(props, types) {
-	var typename = props["match"]["params"]["typename"];
-	if( types ) {
-		for( var typeid in types ) {
-			if( typeid ) {
-				var type = types[typeid];
-				if( (type) && (type["name"] == typename) ) {
-					return type;
-				}
-			}
-		}
-	}
-	return undefined;
-}
-
 const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, namespace }) {
 
 	const apiHostname = useSelector(state => state.api.api.host);
