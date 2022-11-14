@@ -49,10 +49,6 @@ const styles = theme => ({
 
 });
 
-function handleClick(event) {
-	// event.preventDefault();
-}
-
 class Namespaces extends Component {
 
 	constructor(props) {
