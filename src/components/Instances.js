@@ -174,7 +174,6 @@ class Instances extends Component {
 			if( type["properties"] ) {
 				for( var propertyname in type["properties"] ) {
 					var property = type["properties"][propertyname];
-					console.log(property);
 					if( property["$ref"] ) {
 						// 
 					} else if( (property["type"] == "array") && 

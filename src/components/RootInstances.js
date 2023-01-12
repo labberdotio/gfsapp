@@ -181,6 +181,16 @@ class RootInstances extends Component {
 			}
 		}
 
+		if( (!this.props.type["loading"]) && 
+			(!this.props.type["loaded"]) && 
+			(!this.props.type["failed"]) ) {
+			// if( typename ) {
+			if( api && namespace && typename ) {
+				this.props.loadType(api, namespace, typename);
+			}
+			// }
+		}
+
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
@@ -219,6 +229,16 @@ class RootInstances extends Component {
 			this.props.loadInstances(api, namespace, typename);
 		}
 
+		if( (!this.props.type["loading"]) && 
+			(!this.props.type["loaded"]) && 
+			(!this.props.type["failed"]) ) {
+			// if( typename ) {
+			if( api && namespace && typename ) {
+				this.props.loadType(api, namespace, typename);
+			}
+			// }
+		}
+
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
@@ -252,8 +272,8 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "name",
-			field: "name",
+			title: "_name",
+			field: "_name",
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		cols.push({
@@ -267,22 +287,22 @@ class RootInstances extends Component {
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["_id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -299,8 +319,8 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "name",
-			field: "name",
+			title: "_name",
+			field: "_name",
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		});
 		cols.push({
@@ -314,22 +334,22 @@ class RootInstances extends Component {
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["_id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -402,11 +422,11 @@ class RootInstances extends Component {
 	// 				// 	};
 	// 				// }
 	// 
-	// 				// treestruc[instance["_label"]]["tree"][instance["name"]] = {
+	// 				// treestruc[instance["_label"]]["tree"][instance["_name"]] = {
 	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
 	// 					id: instance["_id"], 
-	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["_label"], 
+	// 					name: instance["_name"], 
+	// 					label: instance["_name"], // + "." + instance["_label"], 
 	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
@@ -466,26 +486,26 @@ class RootInstances extends Component {
 		// 	field: "_id"
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "name",
-		// 	field: "name"
+		// 	title: "_name",
+		// 	field: "_name"
 		// });
 		// // cols.push({
-		// // 	title: "created",
-		// // 	field: "created"
+		// // 	title: "_created",
+		// // 	field: "_created"
 		// // });
 		// // cols.push({
-		// // 	title: "modified",
-		// // 	field: "modified"
+		// // 	title: "_modified",
+		// // 	field: "_modified"
 		// // });
 
 		// if( type ) {
 		// 	if( type["properties"] ) {
 		// 		for( var property in type["properties"] ) {
-		// 			if( !["_id", "uuid", "name", "created", "modified"].includes(property) ) {
+		// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 		// 				cols.push({
 		// 					title: property,
 		// 					field: property
@@ -570,7 +590,7 @@ class RootInstances extends Component {
 							// onClick={onItemClick(title)}
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{entity["name"]}</ListItemText>
+							<ListItemText>{entity["_name"]}</ListItemText>
 						</ListItem>
 						))}
 					</List> */}
@@ -588,7 +608,7 @@ class RootInstances extends Component {
 						description={typename} 
 						namespace={namespace} 
 						typename={typename} 
-						type={type} 
+						type={type["entity"]} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
 						ainstances={ainstances} />
@@ -629,6 +649,8 @@ function mapDispatchToProps(dispatch) {
 
 		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)),
 
+		loadType: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "type", typename)),
+
 		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
 	}
@@ -655,6 +677,17 @@ function mapStateToProps(state, ownProps) {
 	// 	entities: instances
 	// } = getEntitiesFromState(state, api, namespace, typename);
 	const instances = getEntitiesFromState(state, api, namespace, typename);
+	console.log(instances);
+
+	// const {
+	// 	loading: , 
+	// 	loaded: , 
+	// 	failed: , 
+	// 	timestamp: , 
+	// 	entity: schema
+	// } = getEntityFromState(state, api, namespace, "schema", typename);
+	const type = getEntityFromState(state, api, namespace, "type", typename);
+	console.log(type);
 
 	// const {
 	// 	loading: , 
@@ -664,6 +697,7 @@ function mapStateToProps(state, ownProps) {
 	// 	entity: schema
 	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
+	console.log(schema);
 
 	// console.log( " SCHEMA >> " );
 	// console.log(  );
@@ -683,7 +717,7 @@ function mapStateToProps(state, ownProps) {
 		api, 
 		namespace: namespace, 
 		typename: typename, 
-		// type: type, 
+		type: type, 
 		// : , 
 		// : , 
 		// : , 
