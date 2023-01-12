@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -23,6 +23,10 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+// import {
+// 	Link,
+// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -89,8 +93,8 @@ const styles = theme => ({
 // 		{Object.keys(items).map((key, index) => ( 
 // 			<TreeItem 
 // 				key={ key }
-// 				nodeId={ "" + items[key]["id"] }
-// 				label={ "" + items[key]["label"] }
+// 				nodeId={ "" + items[key]["_id"] }
+// 				label={ "" + items[key]["_label"] }
 // 				onClick={event => {
 // 					event.stopPropagation();
 // 					event.preventDefault();
@@ -290,20 +294,23 @@ class RelInstance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-				<MuiLink color="inherit" href="/" onClick={handleClick}>
+			<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
 					{namespace}
-				</MuiLink>
-				<MuiLink color="inherit" href={"/namespaces/" + namespace + "/" + typename} onClick={handleClick}>
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
 					{typename}
-				</MuiLink>
-				<MuiLink color="inherit" href={"/namespaces/" + namespace + "/" + typename + "/" + instanceid} onClick={handleClick}>
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
 					{ instance && instance["entity"] && instance["entity"]["name"] }
-				</MuiLink>
+				</Link>
 				<Typography color="textPrimary">{ relname }</Typography>
 			</Breadcrumbs>
 			<Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -345,8 +352,8 @@ class RelInstance extends Component {
 					</List> */}
 				{/* </Grid> */}
 				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
+					// className={classes.leftGrid} 
+					className="leftGrid" 
 					container 
 					item 
 					xs={12} 
@@ -442,7 +449,7 @@ function mapStateToProps(state, ownProps) {
 	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
-			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 				// if( property && property["type"] ) {
 				if( property ) {
 					if( property["type"] == "string" ) {
@@ -477,17 +484,17 @@ function mapStateToProps(state, ownProps) {
 	if( reltype ) {
 		reltypeinstances = getEntitiesFromState(state, api, namespace, reltype);
 		if( reltypeinstances && reltypeinstances["entities"] ) {
-			if( relinstance && relinstance["id"] ) {
-				if( reltypeinstances["entities"][relinstance["id"]] ) {
-					newrelinstance = reltypeinstances["entities"][relinstance["id"]];
+			if( relinstance && relinstance["_id"] ) {
+				if( reltypeinstances["entities"][relinstance["_id"]] ) {
+					newrelinstance = reltypeinstances["entities"][relinstance["_id"]];
 				}
 			} else if( relinstances ) {
 				newrelinstances = [];
 				for( var crelinstanceidx in relinstances ) {
 					var crelinstance = relinstances[crelinstanceidx];
-					if( crelinstance && crelinstance["id"] ) {
-						if( reltypeinstances["entities"][crelinstance["id"]] ) {
-							newrelinstances.push( reltypeinstances["entities"][crelinstance["id"]] );
+					if( crelinstance && crelinstance["_id"] ) {
+						if( reltypeinstances["entities"][crelinstance["_id"]] ) {
+							newrelinstances.push( reltypeinstances["entities"][crelinstance["_id"]] );
 						}
 					}
 				}

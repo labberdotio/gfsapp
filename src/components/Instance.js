@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -31,6 +31,10 @@ import { useHistory } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+import {
+	Link,
+} from "react-router-dom";
 
 import InstanceView from './Instance'
 import InstancesView from './Instances'
@@ -164,12 +168,13 @@ class Instance extends Component {
 		var properties = [];
 		// var dependencies = [];
 
-		var propertyname = "id";
+		var propertyname = "_id";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
+				// "value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
+				"value": <Link to={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</Link>
 			});
 			// var propertyname = "link";
 			// // if( instance && instance[propertyname] ) {
@@ -180,7 +185,7 @@ class Instance extends Component {
 			// // }
 		}
 
-		propertyname = "uuid";
+		propertyname = "_uuid";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
@@ -188,16 +193,17 @@ class Instance extends Component {
 			});
 		}
 
-		propertyname = "name";
+		propertyname = "_name";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				// "value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				"value": <Link to={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</Link>
 			});
 		}
 
-		propertyname = "created";
+		propertyname = "_created";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
@@ -205,7 +211,7 @@ class Instance extends Component {
 			});
 		}
 
-		propertyname = "modified";
+		propertyname = "_modified";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
@@ -216,7 +222,7 @@ class Instance extends Component {
 		if( schema && schema["properties"] ) {
 			for( var propertyname in schema["properties"] ) {
 				var property = schema["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						// if( property["type"] == "string" ) {
@@ -257,7 +263,7 @@ class Instance extends Component {
 		if( schema && schema["properties"] ) {
 			for( var propertyname in schema["properties"] ) {
 				var property = schema["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						// if( property["type"] == "string" ) {
@@ -312,9 +318,9 @@ class Instance extends Component {
 				if( ainstances[type] ) {
 					// for( var idx in value ) {
 					var instance = value; // [idx];
-					if( instance && instance["id"] ) {
+					if( instance && instance["_id"] ) {
 						// var 
-						cinstance = ainstances[type]["entities"][instance["id"]];
+						cinstance = ainstances[type]["entities"][instance["_id"]];
 						// cinstances.push(cinstance);
 					}
 					// }
@@ -334,8 +340,8 @@ class Instance extends Component {
 				if( ainstances[type] ) {
 					for( var idx in value ) {
 						var instance = value[idx];
-						if( instance && instance["id"] ) {
-							var cinstance = ainstances[type]["entities"][instance["id"]];
+						if( instance && instance["_id"] ) {
+							var cinstance = ainstances[type]["entities"][instance["_id"]];
 							cinstances.push(cinstance);
 						}
 					}
@@ -415,8 +421,8 @@ class Instance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop> */}
 			{/* <Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				className={} 
+				// className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -450,9 +456,12 @@ class Instance extends Component {
 				{ instance && dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
 						return <>
-							<MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
 								<h1>{item.name}</h1> 
-							</MuiLink>
+							</MuiLink> */}
+							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+								<h1>{item.name}</h1> 
+							</Link>							 */}
 							<InstancesView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
@@ -463,9 +472,12 @@ class Instance extends Component {
 							</>
 					} else {
 						return <> 
-							<MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
 								<h1>{item.name}</h1> 
-							</MuiLink>
+							</MuiLink> */}
+							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+								<h1>{item.name}</h1> 
+							</Link> */}
 							<InstanceView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 

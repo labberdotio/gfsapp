@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -23,6 +23,10 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+// import {
+// 	Link,
+// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -94,8 +98,8 @@ const styles = theme => ({
 // 		{Object.keys(items).map((key, index) => ( 
 // 			<TreeItem 
 // 				key={ key }
-// 				nodeId={ "" + items[key]["id"] }
-// 				label={ "" + items[key]["label"] }
+// 				nodeId={ "" + items[key]["_id"] }
+// 				label={ "" + items[key]["_label"] }
 // 				onClick={event => {
 // 					event.stopPropagation();
 // 					event.preventDefault();
@@ -248,8 +252,13 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "id",
-			field: "id",
+			title: "name",
+			field: "name",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		});
+		cols.push({
+			title: "_id",
+			field: "_id",
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
 		// cols.push({
@@ -257,15 +266,10 @@ class RootInstances extends Component {
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "uuid",
+		// 	field: "uuid"
+		// });
 		// cols.push({
 		// 	title: "created",
 		// 	field: "created"
@@ -278,7 +282,7 @@ class RootInstances extends Component {
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "uuid", "name", "created", "modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -295,8 +299,13 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "id",
-			field: "id",
+			title: "name",
+			field: "name",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		});
+		cols.push({
+			title: "_id",
+			field: "_id",
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		});
 		// cols.push({
@@ -304,15 +313,10 @@ class RootInstances extends Component {
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "uuid",
+		// 	field: "uuid"
+		// });
 		// cols.push({
 		// 	title: "created",
 		// 	field: "created"
@@ -325,7 +329,7 @@ class RootInstances extends Component {
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "uuid", "name", "created", "modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -388,21 +392,21 @@ class RootInstances extends Component {
 	// 			var instance = instances["entities"][cinstanceid];
 	// 			if( instance ) {
 	// 
-	// 				// if( !(instance["label"] in treestruc) ) {
-	// 				// 	treestruc[instance["label"]] = {
-	// 				// 		id: instance["label"], 
-	// 				// 		name: instance["label"], 
-	// 				// 		label: instance["label"], 
+	// 				// if( !(instance["_label"] in treestruc) ) {
+	// 				// 	treestruc[instance["_label"]] = {
+	// 				// 		id: instance["_label"], 
+	// 				// 		name: instance["_label"], 
+	// 				// 		label: instance["_label"], 
 	// 				// 		tree: {
 	// 				// 		}
 	// 				// 	};
 	// 				// }
 	// 
-	// 				// treestruc[instance["label"]]["tree"][instance["name"]] = {
-	// 				treestruc[instance["label"]]["tree"][instance["id"]] = {
-	// 					id: instance["id"], 
+	// 				// treestruc[instance["_label"]]["tree"][instance["name"]] = {
+	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
+	// 					id: instance["_id"], 
 	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["label"], 
+	// 					label: instance["name"], // + "." + instance["_label"], 
 	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
@@ -458,8 +462,8 @@ class RootInstances extends Component {
 
 		// var cols = [];
 		// cols.push({
-		// 	title: "id",
-		// 	field: "id"
+		// 	title: "_id",
+		// 	field: "_id"
 		// });
 		// cols.push({
 		// 	title: "uuid",
@@ -481,7 +485,7 @@ class RootInstances extends Component {
 		// if( type ) {
 		// 	if( type["properties"] ) {
 		// 		for( var property in type["properties"] ) {
-		// 			if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+		// 			if( !["_id", "uuid", "name", "created", "modified"].includes(property) ) {
 		// 				cols.push({
 		// 					title: property,
 		// 					field: property
@@ -520,14 +524,17 @@ class RootInstances extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-				<MuiLink color="inherit" href="/" onClick={handleClick}>
+				<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
 					{namespace}
-				</MuiLink>
+				</Link>
 				<Typography color="textPrimary">{typename}</Typography>
 			</Breadcrumbs>
 			<Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -569,11 +576,11 @@ class RootInstances extends Component {
 					</List> */}
 				{/* </Grid> */}
 				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
+					// className={classes.leftGrid} 
+					className="leftGrid" 
 					container 
 					item 
-					xs={12} 
+					xs={6} 
 					spacing={0} 
 				>
 					<InstancesView 

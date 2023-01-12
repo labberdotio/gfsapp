@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -84,42 +84,42 @@ class Detail extends Component {
 
 		return (
 			<>
-			<Container
+			{/* <Container
 				className={classes.mainContainer} 
-			>
-			{/* <Paper
-				className={classes.mainPaper} 
 			> */}
+			<Paper
+				className={classes.mainPaper} 
+			>
 
-				{/* <h1>{title}</h1>
-				<h5>{description}</h5> */}
+				<h1>{title}</h1>
+				<h5>{description}</h5>
 
 				{/* {instanceid && instance &&
 					<p><h1>{instanceid}</h1></p>
 				} */}
 
-				{/* {instance && instance["name"] &&
-					<h1>{instance["name"]}</h1>
+				{/* {instance && instance["_name"] &&
+					<h1>{instance["_name"]}</h1>
 				}
 
-				{instance && instance["label"] &&
-					<h2>{instance["label"]}</h2>
+				{instance && instance["_label"] &&
+					<h2>{instance["_label"]}</h2>
 				}
 
-				{instance && instance["id"] &&
-					<p><label>ID: </label>{instance["id"]}</p>
+				{instance && instance["_id"] &&
+					<p><label>ID: </label>{instance["_id"]}</p>
 				}
 
-				{instance && instance["uuid"] &&
-					<p><label>UUID: </label>{instance["uuid"]}</p>
+				{instance && instance["_uuid"] &&
+					<p><label>UUID: </label>{instance["_uuid"]}</p>
 				}
 
-				{instance && instance["created"] &&
-					<p><label>Created: </label>{instance["created"]}</p>
+				{instance && instance["_created"] &&
+					<p><label>Created: </label>{instance["_created"]}</p>
 				}
 
-				{instance && instance["modified"] &&
-					<p><label>Modified: </label>{instance["modified"]}</p>
+				{instance && instance["_modified"] &&
+					<p><label>Modified: </label>{instance["_modified"]}</p>
 				} */}
 
 				{/* { instance && Object.keys(instance).map((item, i) => (
@@ -144,8 +144,8 @@ class Detail extends Component {
 					))}
 				</List>
 
-			{/* </Paper> */}
-			</Container>
+			</Paper>
+			{/* </Container> */}
 			</>
 		);
 	}

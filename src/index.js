@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -57,7 +57,7 @@ import RelInstanceView from './components/RelInstance'
 import Namespaces from './components/Namespaces'
 
 require('./style.css');
-// require('./style.light.css');
+require('./style.light.css');
 // require('./style.dark.css');
 
 require('./index.css');

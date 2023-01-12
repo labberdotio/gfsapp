@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -32,6 +32,10 @@ import { useHistory } from "react-router-dom";
 
 // import InstancesView from './Instances'
 import ListView from './List'
+// import { Link } from '@material-ui/core';
+import {
+	Link,
+} from "react-router-dom";
 
 // import { 
 // 	loadEntitiesIntoState, 
@@ -137,31 +141,33 @@ class Instances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "id",
-			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			title: "_name",
+			field: "_name",
+			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</Link>
+		});
+		cols.push({
+			title: "_id",
+			field: "_id",
+			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</Link>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_created",
+		// 	field: "_created"
+		// });
+		// cols.push({
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
@@ -175,7 +181,7 @@ class Instances extends Component {
 							   (property["items"]) ) {
 						// 
 					} else {
-						if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+						if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 							cols.push({
 								title: propertyname,
 								field: propertyname
@@ -193,8 +199,8 @@ class Instances extends Component {
 
 		// var cols = [];
 		// cols.push({
-		// 	title: "id",
-		// 	field: "id",
+		// 	title: "_id",
+		// 	field: "_id",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
 		// });
 		// // cols.push({
@@ -203,27 +209,27 @@ class Instances extends Component {
 		// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// // });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "name",
-		// 	field: "name",
+		// 	title: "_name",
+		// 	field: "_name",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
 		// // cols.push({
-		// // 	title: "created",
-		// // 	field: "created"
+		// // 	title: "_created",
+		// // 	field: "_created"
 		// // });
 		// // cols.push({
-		// // 	title: "modified",
-		// // 	field: "modified"
+		// // 	title: "_modified",
+		// // 	field: "_modified"
 		// // });
 		// 
 		// if( type ) {
 		// 	if( type["properties"] ) {
 		// 		for( var property in type["properties"] ) {
-		// 			if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+		// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 		// 				cols.push({
 		// 					title: property,
 		// 					field: property
@@ -282,30 +288,30 @@ class Instances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "id",
-			field: "id"
+			title: "_id",
+			field: "_id"
 		});
 		cols.push({
-			title: "uuid",
-			field: "uuid"
+			title: "_uuid",
+			field: "_uuid"
 		});
 		cols.push({
-			title: "name",
-			field: "name"
+			title: "_name",
+			field: "_name"
 		});
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -336,8 +342,8 @@ class Instances extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop> */}
 			{/* <Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				className={} 
+				// className="" 
 				container 
 				xs={12} 
 				spacing={0} 

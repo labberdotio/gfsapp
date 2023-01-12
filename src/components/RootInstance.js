@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -23,6 +23,10 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+// import {
+// 	Link,
+// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -47,7 +51,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// import InstancesView from './Instances'
+import InstancesView from './Instances'
 import InstanceView from './Instance'
 // import DependentsView from './Dependents'
 
@@ -90,8 +94,8 @@ const styles = theme => ({
 // 		{Object.keys(items).map((key, index) => ( 
 // 			<TreeItem 
 // 				key={ key }
-// 				nodeId={ "" + items[key]["id"] }
-// 				label={ "" + items[key]["label"] }
+// 				nodeId={ "" + items[key]["_id"] }
+// 				label={ "" + items[key]["_label"] }
 // 				onClick={event => {
 // 					event.stopPropagation();
 // 					event.preventDefault();
@@ -182,7 +186,7 @@ class RootInstance extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -265,7 +269,7 @@ class RootInstance extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -344,21 +348,21 @@ class RootInstance extends Component {
 	// 			var instance = instances["entities"][cinstanceid];
 	// 			if( instance ) {
 	// 
-	// 				// if( !(instance["label"] in treestruc) ) {
-	// 				// 	treestruc[instance["label"]] = {
-	// 				// 		id: instance["label"], 
-	// 				// 		name: instance["label"], 
-	// 				// 		label: instance["label"], 
+	// 				// if( !(instance["_label"] in treestruc) ) {
+	// 				// 	treestruc[instance["_label"]] = {
+	// 				// 		id: instance["_label"], 
+	// 				// 		name: instance["_label"], 
+	// 				// 		label: instance["_label"], 
 	// 				// 		tree: {
 	// 				// 		}
 	// 				// 	};
 	// 				// }
 	// 
-	// 				// treestruc[instance["label"]]["tree"][instance["name"]] = {
-	// 				treestruc[instance["label"]]["tree"][instance["id"]] = {
-	// 					id: instance["id"], 
+	// 				// treestruc[instance["_label"]]["tree"][instance["name"]] = {
+	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
+	// 					id: instance["_id"], 
 	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["label"], 
+	// 					label: instance["name"], // + "." + instance["_label"], 
 	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
@@ -415,9 +419,11 @@ class RootInstance extends Component {
 
 		var instance = undefined;
 		if( instanceid ) {
-			var cinstance = instances["entities"][instanceid];
-			if( cinstance ) {
-				instance = cinstance;
+			if( instances["entities"] && instances["entities"][instanceid] ) {
+				var cinstance = instances["entities"][instanceid];
+				if( cinstance ) {
+					instance = cinstance;
+				}
 			}
 		}
 
@@ -427,7 +433,7 @@ class RootInstance extends Component {
 		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		// 	for( var propertyname in schema["entity"]["properties"] ) {
 		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+		// 		if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 		// 			if( property && property["type"] ) {
 		// 				if( property["type"] == "string" ) {
 		// 					properties.push(propertyname);
@@ -454,17 +460,20 @@ class RootInstance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-				<MuiLink color="inherit" href="/" onClick={handleClick}>
+				<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
 					{namespace}
-				</MuiLink>
-				<MuiLink color="inherit" href={"/list/" + typename} onClick={handleClick}>
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
 					{typename}
-				</MuiLink>
+				</Link>
 				<Typography color="textPrimary">{ instance && instance["name"] }</Typography>
 			</Breadcrumbs>
 			<Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -505,12 +514,32 @@ class RootInstance extends Component {
 						))}
 					</List> */}
 				{/* </Grid> */}
+
 				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
+					// className={classes.leftGrid} 
+					className="leftGrid" 
 					container 
 					item 
-					xs={12} 
+					xs={4} 
+					spacing={0} 
+				>
+					<InstancesView 
+						title={typename} 
+						description={typename} 
+						namespace={namespace} 
+						typename={typename} 
+						type={type} 
+						schema={schema["entity"]} 
+						instances={instances["entities"]} 
+						ainstances={ainstances} />
+				</Grid>
+
+				<Grid 
+					// className={classes.rightGrid} 
+					className="rightGrid" 
+					container 
+					item 
+					xs={8} 
 					spacing={0} 
 				>
 					<InstanceView 
@@ -593,7 +622,7 @@ function mapStateToProps(state, ownProps) {
 	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
-			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+			if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 				// if( property && property["type"] ) {
 				if( property ) {
 					if( property["type"] == "string" ) {
