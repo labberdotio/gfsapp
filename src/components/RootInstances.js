@@ -274,17 +274,17 @@ class RootInstances extends Component {
 		cols.push({
 			title: "_name",
 			field: "_name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["name"]}</a>
 		});
 		cols.push({
 			title: "_id",
 			field: "_id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["name"]}</a>
 		// });
 		// cols.push({
 		// 	title: "_uuid",
@@ -321,17 +321,17 @@ class RootInstances extends Component {
 		cols.push({
 			title: "_name",
 			field: "_name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		});
 		cols.push({
 			title: "_id",
 			field: "_id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		// });
 		// cols.push({
 		// 	title: "_uuid",
@@ -626,9 +626,9 @@ class RootInstances extends Component {
 				direction={direction}>
 				{actions.map(action => (
 					<SpeedDialAction
-						key={action.name}
+						key={action["_name"]}
 						icon={action.icon}
-						tooltipTitle={action.name}
+						tooltipTitle={action["_name"]}
 						onClick={this.onCloseDial}/>
 				))}
 			</SpeedDial>
