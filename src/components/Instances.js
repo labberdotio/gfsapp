@@ -32,6 +32,10 @@ import { useHistory } from "react-router-dom";
 
 // import InstancesView from './Instances'
 import ListView from './List'
+// import { Link } from '@material-ui/core';
+import {
+	Link,
+} from "react-router-dom";
 
 // import { 
 // 	loadEntitiesIntoState, 
@@ -137,24 +141,26 @@ class Instances extends Component {
 
 		var cols = [];
 		cols.push({
+			title: "name",
+			field: "name",
+			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</Link>
+		});
+		cols.push({
 			title: "id",
 			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</Link>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "uuid",
+		// 	field: "uuid"
+		// });
 		// cols.push({
 		// 	title: "created",
 		// 	field: "created"
@@ -336,8 +342,8 @@ class Instances extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop> */}
 			{/* <Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				className={} 
+				// className="" 
 				container 
 				xs={12} 
 				spacing={0} 

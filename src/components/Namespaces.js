@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2022, John Grundback
+// Copyright (c) 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -48,6 +48,10 @@ import {
 const styles = theme => ({
 
 });
+
+function handleClick(event) {
+	// event.preventDefault();
+}
 
 class Namespaces extends Component {
 
@@ -173,8 +177,8 @@ class Namespaces extends Component {
 			</Breadcrumbs>
 
 			<Grid 
-				className={classes.fullGrid} 
-				className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 

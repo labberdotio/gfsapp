@@ -31,6 +31,10 @@ import { useHistory } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+import {
+	Link,
+} from "react-router-dom";
 
 import InstanceView from './Instance'
 import InstancesView from './Instances'
@@ -169,7 +173,8 @@ class Instance extends Component {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
+				// "value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
+				"value": <Link to={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</Link>
 			});
 			// var propertyname = "link";
 			// // if( instance && instance[propertyname] ) {
@@ -193,7 +198,8 @@ class Instance extends Component {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				// "value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+				"value": <Link to={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</Link>
 			});
 		}
 
@@ -415,8 +421,8 @@ class Instance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop> */}
 			{/* <Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				className={} 
+				// className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -450,9 +456,12 @@ class Instance extends Component {
 				{ instance && dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
 						return <>
-							<MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
 								<h1>{item.name}</h1> 
-							</MuiLink>
+							</MuiLink> */}
+							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+								<h1>{item.name}</h1> 
+							</Link>							 */}
 							<InstancesView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
@@ -463,9 +472,12 @@ class Instance extends Component {
 							</>
 					} else {
 						return <> 
-							<MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
 								<h1>{item.name}</h1> 
-							</MuiLink>
+							</MuiLink> */}
+							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
+								<h1>{item.name}</h1> 
+							</Link> */}
 							<InstanceView 
 							title={ item && item.name } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 

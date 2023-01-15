@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -90,31 +90,34 @@ class List extends Component {
 
 		return (
 			<>
-			<Container
+			{/* <Container
 				className={classes.mainContainer} 
-			>
-			{/* <Paper
-				className={classes.mainPaper} 
 			> */}
-			{/* <h1>{title}</h1> */}
-			{/* <h2>{description}</h2> */}
-			<MaterialTable
-				title={description}
-				columns={cols}
-				data={rows}
-				options={{
-					// pageSize: ...
-					pageSizeOptions: [],
-					toolbar: true,
-					paging: false // true
-				}}
-				editable={{
-				}}
-				style={{
-					width: "100%"
-				}}/>
-			{/* </Paper> */}
-			</Container>
+			<Paper
+				className={classes.mainPaper} 
+			>
+
+				<h1>{title}</h1>
+				<h2>{description}</h2>
+
+				<MaterialTable
+					// title={description}
+					columns={cols}
+					data={rows}
+					options={{
+						// pageSize: ...
+						pageSizeOptions: [],
+						toolbar: true,
+						paging: false // true
+					}}
+					editable={{
+					}}
+					style={{
+						width: "100%"
+					}}/>
+
+			</Paper>
+			{/* </Container> */}
 			</>
 		);
 	}

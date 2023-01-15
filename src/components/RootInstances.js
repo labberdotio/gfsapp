@@ -23,6 +23,10 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+// import {
+// 	Link,
+// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -187,6 +191,16 @@ class RootInstances extends Component {
 			}
 		}
 
+		if( (!this.props.type["loading"]) && 
+			(!this.props.type["loaded"]) && 
+			(!this.props.type["failed"]) ) {
+			// if( typename ) {
+			if( api && namespace && typename ) {
+				this.props.loadType(api, namespace, typename);
+			}
+			// }
+		}
+
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
@@ -219,15 +233,20 @@ class RootInstances extends Component {
 			schema
 		} = this.props;
 
-		// if( namespace ) {
-		// 	// store.dispatch(selectNamespace(namespace));
-		// 	this.props.selectNamespace(namespace);
-		// }
-
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
 			(!this.props.instances["failed"]) ) {
 			this.props.loadInstances(api, namespace, typename);
+		}
+
+		if( (!this.props.type["loading"]) && 
+			(!this.props.type["loaded"]) && 
+			(!this.props.type["failed"]) ) {
+			// if( typename ) {
+			if( api && namespace && typename ) {
+				this.props.loadType(api, namespace, typename);
+			}
+			// }
 		}
 
 		if( (!this.props.schema["loading"]) && 
@@ -263,6 +282,11 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
+			title: "name",
+			field: "name",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		});
+		cols.push({
 			title: "id",
 			field: "id",
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
@@ -272,15 +296,10 @@ class RootInstances extends Component {
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "uuid",
+		// 	field: "uuid"
+		// });
 		// cols.push({
 		// 	title: "created",
 		// 	field: "created"
@@ -310,6 +329,11 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
+			title: "name",
+			field: "name",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		});
+		cols.push({
 			title: "id",
 			field: "id",
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
@@ -319,15 +343,10 @@ class RootInstances extends Component {
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
 		// });
-		cols.push({
-			title: "uuid",
-			field: "uuid"
-		});
-		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-		});
+		// cols.push({
+		// 	title: "uuid",
+		// 	field: "uuid"
+		// });
 		// cols.push({
 		// 	title: "created",
 		// 	field: "created"
@@ -535,14 +554,17 @@ class RootInstances extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-				<MuiLink color="inherit" href="/" onClick={handleClick}>
+				<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
 					{namespace}
-				</MuiLink>
+				</Link>
 				<Typography color="textPrimary">{typename}</Typography>
 			</Breadcrumbs>
 			<Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -584,11 +606,11 @@ class RootInstances extends Component {
 					</List> */}
 				{/* </Grid> */}
 				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
+					// className={classes.leftGrid} 
+					className="leftGrid" 
 					container 
 					item 
-					xs={12} 
+					xs={6} 
 					spacing={0} 
 				>
 					<InstancesView 
@@ -596,7 +618,7 @@ class RootInstances extends Component {
 						description={typename} 
 						namespace={namespace} 
 						typename={typename} 
-						type={type} 
+						type={type["entity"]} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
 						ainstances={ainstances} />
@@ -637,6 +659,8 @@ function mapDispatchToProps(dispatch) {
 
 		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)),
 
+		loadType: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "type", typename)),
+
 		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
 	}
@@ -663,6 +687,17 @@ function mapStateToProps(state, ownProps) {
 	// 	entities: instances
 	// } = getEntitiesFromState(state, api, namespace, typename);
 	const instances = getEntitiesFromState(state, api, namespace, typename);
+	console.log(instances);
+
+	// const {
+	// 	loading: , 
+	// 	loaded: , 
+	// 	failed: , 
+	// 	timestamp: , 
+	// 	entity: schema
+	// } = getEntityFromState(state, api, namespace, "schema", typename);
+	const type = getEntityFromState(state, api, namespace, "type", typename);
+	console.log(type);
 
 	// const {
 	// 	loading: , 
@@ -672,6 +707,7 @@ function mapStateToProps(state, ownProps) {
 	// 	entity: schema
 	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
+	console.log(schema);
 
 	// console.log( " SCHEMA >> " );
 	// console.log(  );
@@ -691,7 +727,7 @@ function mapStateToProps(state, ownProps) {
 		api, 
 		namespace: namespace, 
 		typename: typename, 
-		// type: type, 
+		type: type, 
 		// : , 
 		// : , 
 		// : , 
