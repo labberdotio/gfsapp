@@ -23,6 +23,10 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+// import {
+// 	Link,
+// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -47,7 +51,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// import InstancesView from './Instances'
+import InstancesView from './Instances'
 import InstanceView from './Instance'
 // import DependentsView from './Dependents'
 
@@ -415,9 +419,11 @@ class RootInstance extends Component {
 
 		var instance = undefined;
 		if( instanceid ) {
-			var cinstance = instances["entities"][instanceid];
-			if( cinstance ) {
-				instance = cinstance;
+			if( instances["entities"] && instances["entities"][instanceid] ) {
+				var cinstance = instances["entities"][instanceid];
+				if( cinstance ) {
+					instance = cinstance;
+				}
 			}
 		}
 
@@ -454,17 +460,20 @@ class RootInstance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-				<MuiLink color="inherit" href="/" onClick={handleClick}>
+				<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
 					{namespace}
-				</MuiLink>
-				<MuiLink color="inherit" href={"/list/" + typename} onClick={handleClick}>
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
 					{typename}
-				</MuiLink>
+				</Link>
 				<Typography color="textPrimary">{ instance && instance["name"] }</Typography>
 			</Breadcrumbs>
 			<Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -505,12 +514,32 @@ class RootInstance extends Component {
 						))}
 					</List> */}
 				{/* </Grid> */}
+
 				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
+					// className={classes.leftGrid} 
+					className="leftGrid" 
 					container 
 					item 
-					xs={12} 
+					xs={4} 
+					spacing={0} 
+				>
+					<InstancesView 
+						title={typename} 
+						description={typename} 
+						namespace={namespace} 
+						typename={typename} 
+						type={type} 
+						schema={schema["entity"]} 
+						instances={instances["entities"]} 
+						ainstances={ainstances} />
+				</Grid>
+
+				<Grid 
+					// className={classes.rightGrid} 
+					className="rightGrid" 
+					container 
+					item 
+					xs={8} 
 					spacing={0} 
 				>
 					<InstanceView 

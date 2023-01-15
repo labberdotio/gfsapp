@@ -23,6 +23,10 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import MuiLink from '@material-ui/core/Link';
+// import { Link } from '@material-ui/core';
+// import {
+// 	Link,
+// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -290,20 +294,23 @@ class RelInstance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-				<MuiLink color="inherit" href="/" onClick={handleClick}>
+			<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
 					{namespace}
-				</MuiLink>
-				<MuiLink color="inherit" href={"/namespaces/" + namespace + "/" + typename} onClick={handleClick}>
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
 					{typename}
-				</MuiLink>
-				<MuiLink color="inherit" href={"/namespaces/" + namespace + "/" + typename + "/" + instanceid} onClick={handleClick}>
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
 					{ instance && instance["entity"] && instance["entity"]["name"] }
-				</MuiLink>
+				</Link>
 				<Typography color="textPrimary">{ relname }</Typography>
 			</Breadcrumbs>
 			<Grid 
-				className={classes.fullGrid} 
-				// className="fullGrid" 
+				// className={} 
+				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
@@ -345,8 +352,8 @@ class RelInstance extends Component {
 					</List> */}
 				{/* </Grid> */}
 				<Grid 
-					className={classes.mainGrid} 
-					// className="mainGrid" 
+					// className={classes.leftGrid} 
+					className="leftGrid" 
 					container 
 					item 
 					xs={12} 

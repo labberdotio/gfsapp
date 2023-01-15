@@ -59,13 +59,15 @@ a:hover {
 
 .MuiPaper-root {
     color: rgb(97, 97, 97) !important;
-    background-color: rgb(243, 243, 243) !important;
+    /* background-color: rgb(243, 243, 243) !important; */
+    box-shadow: none !important;
+    border-radius: none !important;
 }
 
 .MuiTable-root,
 .MuiTableHead-root th {
     color: rgb(97, 97, 97) !important;
-    background-color: rgb(243, 243, 243) !important;
+    /* background-color: rgb(243, 243, 243) !important; */
 }
 
 .MuiButton-root {
@@ -80,6 +82,48 @@ a:hover {
 .MuiGrid-root {
     color: rgb(97, 97, 97) !important;
     /* background-color: rgb(255, 255, 255) !important; */
+}
+
+.MuiGrid-root .leftGrid {
+    color: rgb(97, 97, 97) !important;
+    background-color: rgb(243, 243, 243) !important; 
+}
+
+.MuiGrid-root .rightGrid {
+    color: rgb(97, 97, 97) !important;
+    /* background-color: rgb(243, 243, 243) !important;  */
+}
+
+.MuiGrid-root .leftGrid .MuiPaper-root {
+    color: rgb(97, 97, 97) !important;
+    background-color: rgb(243, 243, 243) !important; 
+}
+
+.MuiGrid-root .leftGrid .MuiTable-root,
+.MuiGrid-root .leftGrid .MuiTableHead-root th {
+    color: rgb(97, 97, 97) !important;
+    background-color: rgb(243, 243, 243) !important; 
+}
+
+.MuiGrid-root .leftGrid .MuiTableHead-root th {
+    color: rgb(97, 97, 97) !important;
+    background-color: rgb(243, 243, 243) !important; 
+}
+
+.MuiGrid-root .rightGrid .MuiPaper-root {
+    color: rgb(97, 97, 97) !important;
+    /* background-color: rgb(243, 243, 243) !important;  */
+}
+
+.MuiGrid-root .rightGrid .MuiTable-root,
+.MuiGrid-root .rightGrid .MuiTableHead-root th {
+    color: rgb(97, 97, 97) !important;
+    /* background-color: rgb(243, 243, 243) !important; */
+}
+
+.MuiGrid-root .rightGrid .MuiTableHead-root th {
+    color: rgb(97, 97, 97) !important;
+    /* background-color: rgb(243, 243, 243) !important;  */
 }
 
 .MuiPaper-root .MuiFormControl-root {
@@ -217,7 +261,7 @@ a:hover {
 .MuiGrid-root.MuiGrid-container, 
 .MuiGrid-root.Explorer-mainGrid-71 {
     color: rgb(97, 97, 97) !important;
-    background-color: rgb(255, 255, 255) !important;
+    /* background-color: rgb(255, 255, 255) !important; */
 }
 
 .MuiContainer-root.graphContainer, 
