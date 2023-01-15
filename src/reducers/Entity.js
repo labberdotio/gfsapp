@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -176,7 +176,7 @@ function __entities(
 					const entity = action.entities[index];
 					if( (entity) && 
 						(entity["@value"]) && 
-						(entity["@value"]["id"]) && 
+						(entity["@value"]["_id"]) && 
 						(entity["@value"]["properties"]) ) {
 							var centity = entity["@value"]["properties"];
 							if( centity ) {
@@ -189,11 +189,11 @@ function __entities(
 									}
 								}
 							}
-							entities[ centity["id"] ] = centity;
+							entities[ centity["_id"] ] = centity;
 					} else if( 
 						(entity) && 
 						(entity["@value"]) && 
-						(entity["@value"]["id"]) ) {
+						(entity["@value"]["_id"]) ) {
 							var centity = entity["@value"];
 							if( centity ) {
 								for( var key in centity ) {
@@ -205,10 +205,10 @@ function __entities(
 									}
 								}
 							}
-							entities[ centity["id"] ] = centity;
+							entities[ centity["_id"] ] = centity;
 					} else if( 
 						(entity) && 
-						(entity["id"]) ) {
+						(entity["_id"]) ) {
 							// var centity = entity;
 							// if( centity ) {
 							// 	for( var key in centity ) {
@@ -220,11 +220,11 @@ function __entities(
 							// 		}
 							// 	}
 							// }
-							// entities[ centity["id"] ] = centity;
-							entities[ entity["id"] ] = entity;
+							// entities[ centity["_id"] ] = centity;
+							entities[ entity["_id"] ] = entity;
 					}
 					// else {
-					// 	entities[ entity["@value"]["id"] ] = entity;
+					// 	entities[ entity["@value"]["_id"] ] = entity;
 					// }
 				}
 			}

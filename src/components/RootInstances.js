@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -103,8 +103,8 @@ const styles = theme => ({
 // 		{Object.keys(items).map((key, index) => ( 
 // 			<TreeItem 
 // 				key={ key }
-// 				nodeId={ "" + items[key]["id"] }
-// 				label={ "" + items[key]["label"] }
+// 				nodeId={ "" + items[key]["_id"] }
+// 				label={ "" + items[key]["_label"] }
 // 				onClick={event => {
 // 					event.stopPropagation();
 // 					event.preventDefault();
@@ -282,37 +282,37 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			title: "_name",
+			field: "_name",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["name"]}</a>
 		});
 		cols.push({
-			title: "id",
-			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			title: "_id",
+			field: "_id",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["name"]}</a>
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -329,37 +329,37 @@ class RootInstances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "name",
-			field: "name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+			title: "_name",
+			field: "_name",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		});
 		cols.push({
-			title: "id",
-			field: "id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+			title: "_id",
+			field: "_id",
+			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property
@@ -422,21 +422,21 @@ class RootInstances extends Component {
 	// 			var instance = instances["entities"][cinstanceid];
 	// 			if( instance ) {
 	// 
-	// 				// if( !(instance["label"] in treestruc) ) {
-	// 				// 	treestruc[instance["label"]] = {
-	// 				// 		id: instance["label"], 
-	// 				// 		name: instance["label"], 
-	// 				// 		label: instance["label"], 
+	// 				// if( !(instance["_label"] in treestruc) ) {
+	// 				// 	treestruc[instance["_label"]] = {
+	// 				// 		id: instance["_label"], 
+	// 				// 		name: instance["_label"], 
+	// 				// 		label: instance["_label"], 
 	// 				// 		tree: {
 	// 				// 		}
 	// 				// 	};
 	// 				// }
 	// 
-	// 				// treestruc[instance["label"]]["tree"][instance["name"]] = {
-	// 				treestruc[instance["label"]]["tree"][instance["id"]] = {
-	// 					id: instance["id"], 
-	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["label"], 
+	// 				// treestruc[instance["_label"]]["tree"][instance["_name"]] = {
+	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
+	// 					id: instance["_id"], 
+	// 					name: instance["_name"], 
+	// 					label: instance["_name"], // + "." + instance["_label"], 
 	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
@@ -492,30 +492,30 @@ class RootInstances extends Component {
 
 		// var cols = [];
 		// cols.push({
-		// 	title: "id",
-		// 	field: "id"
+		// 	title: "_id",
+		// 	field: "_id"
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "name",
-		// 	field: "name"
+		// 	title: "_name",
+		// 	field: "_name"
 		// });
 		// // cols.push({
-		// // 	title: "created",
-		// // 	field: "created"
+		// // 	title: "_created",
+		// // 	field: "_created"
 		// // });
 		// // cols.push({
-		// // 	title: "modified",
-		// // 	field: "modified"
+		// // 	title: "_modified",
+		// // 	field: "_modified"
 		// // });
 
 		// if( type ) {
 		// 	if( type["properties"] ) {
 		// 		for( var property in type["properties"] ) {
-		// 			if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+		// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 		// 				cols.push({
 		// 					title: property,
 		// 					field: property
@@ -600,7 +600,7 @@ class RootInstances extends Component {
 							// onClick={onItemClick(title)}
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{entity["name"]}</ListItemText>
+							<ListItemText>{entity["_name"]}</ListItemText>
 						</ListItem>
 						))}
 					</List> */}
@@ -636,9 +636,9 @@ class RootInstances extends Component {
 				direction={direction}>
 				{actions.map(action => (
 					<SpeedDialAction
-						key={action.name}
+						key={action["_name"]}
 						icon={action.icon}
-						tooltipTitle={action.name}
+						tooltipTitle={action["_name"]}
 						onClick={this.onCloseDial}/>
 				))}
 			</SpeedDial>

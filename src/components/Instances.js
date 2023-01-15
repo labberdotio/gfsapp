@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -141,47 +141,46 @@ class Instances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "name",
-			field: "name",
-			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
-			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</Link>
+			title: "_name",
+			field: "_name",
+			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</Link>
 		});
 		cols.push({
-			title: "id",
-			field: "id",
-			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
-			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</Link>
+			title: "_id",
+			field: "_id",
+			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</Link>
 		});
 		// cols.push({
 		// 	title: "link",
 		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		// });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var propertyname in type["properties"] ) {
 					var property = type["properties"][propertyname];
-					console.log(property);
 					if( property["$ref"] ) {
 						// 
 					} else if( (property["type"] == "array") && 
 							   (property["items"]) ) {
 						// 
 					} else {
-						if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+						if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 							cols.push({
 								title: propertyname,
 								field: propertyname
@@ -199,37 +198,37 @@ class Instances extends Component {
 
 		// var cols = [];
 		// cols.push({
-		// 	title: "id",
-		// 	field: "id",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.id}</a>
+		// 	title: "_id",
+		// 	field: "_id",
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 		// });
 		// // cols.push({
 		// // 	title: "link",
 		// // 	field: "link",
-		// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		// // });
 		// cols.push({
-		// 	title: "uuid",
-		// 	field: "uuid"
+		// 	title: "_uuid",
+		// 	field: "_uuid"
 		// });
 		// cols.push({
-		// 	title: "name",
-		// 	field: "name",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData.label, rowData.id)} style={{width: 50, borderRadius: '50%'}}>{rowData.name}</a>
+		// 	title: "_name",
+		// 	field: "_name",
+		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		// });
 		// // cols.push({
-		// // 	title: "created",
-		// // 	field: "created"
+		// // 	title: "_created",
+		// // 	field: "_created"
 		// // });
 		// // cols.push({
-		// // 	title: "modified",
-		// // 	field: "modified"
+		// // 	title: "_modified",
+		// // 	field: "_modified"
 		// // });
 		// 
 		// if( type ) {
 		// 	if( type["properties"] ) {
 		// 		for( var property in type["properties"] ) {
-		// 			if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+		// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 		// 				cols.push({
 		// 					title: property,
 		// 					field: property
@@ -288,30 +287,30 @@ class Instances extends Component {
 
 		var cols = [];
 		cols.push({
-			title: "id",
-			field: "id"
+			title: "_id",
+			field: "_id"
 		});
 		cols.push({
-			title: "uuid",
-			field: "uuid"
+			title: "_uuid",
+			field: "_uuid"
 		});
 		cols.push({
-			title: "name",
-			field: "name"
+			title: "_name",
+			field: "_name"
 		});
 		// cols.push({
-		// 	title: "created",
-		// 	field: "created"
+		// 	title: "_created",
+		// 	field: "_created"
 		// });
 		// cols.push({
-		// 	title: "modified",
-		// 	field: "modified"
+		// 	title: "_modified",
+		// 	field: "_modified"
 		// });
 
 		if( type ) {
 			if( type["properties"] ) {
 				for( var property in type["properties"] ) {
-					if( !["id", "uuid", "name", "created", "modified"].includes(property) ) {
+					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
 						cols.push({
 							title: property,
 							field: property

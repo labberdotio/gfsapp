@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -168,24 +168,24 @@ class Instance extends Component {
 		var properties = [];
 		// var dependencies = [];
 
-		var propertyname = "id";
+		var propertyname = "_id";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				// "value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</a>
-				"value": <Link to={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.id}</Link>
+				// "value": <a href={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_id"]}</a>
+				"value": <Link to={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_id"]}</Link>
 			});
 			// var propertyname = "link";
 			// // if( instance && instance[propertyname] ) {
 			// 	properties.push({
 			// 		"name": propertyname, 
-			// 		"value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
+			// 		"value": <a href={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</a>
 			// 	});
 			// // }
 		}
 
-		propertyname = "uuid";
+		propertyname = "_uuid";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
@@ -193,17 +193,17 @@ class Instance extends Component {
 			});
 		}
 
-		propertyname = "name";
+		propertyname = "_name";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
 				// "value": instance[propertyname],
-				// "value": <a href={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</a>
-				"value": <Link to={this.makeInstanceLink(namespace, instance.label, instance.id)} style={{width: 50, borderRadius: '50%'}}>{instance.name}</Link>
+				// "value": <a href={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</a>
+				"value": <Link to={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</Link>
 			});
 		}
 
-		propertyname = "created";
+		propertyname = "_created";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
@@ -211,7 +211,7 @@ class Instance extends Component {
 			});
 		}
 
-		propertyname = "modified";
+		propertyname = "_modified";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
@@ -222,7 +222,7 @@ class Instance extends Component {
 		if( schema && schema["properties"] ) {
 			for( var propertyname in schema["properties"] ) {
 				var property = schema["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						// if( property["type"] == "string" ) {
@@ -263,7 +263,7 @@ class Instance extends Component {
 		if( schema && schema["properties"] ) {
 			for( var propertyname in schema["properties"] ) {
 				var property = schema["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						// if( property["type"] == "string" ) {
@@ -318,9 +318,9 @@ class Instance extends Component {
 				if( ainstances[type] ) {
 					// for( var idx in value ) {
 					var instance = value; // [idx];
-					if( instance && instance["id"] ) {
+					if( instance && instance["_id"] ) {
 						// var 
-						cinstance = ainstances[type]["entities"][instance["id"]];
+						cinstance = ainstances[type]["entities"][instance["_id"]];
 						// cinstances.push(cinstance);
 					}
 					// }
@@ -340,8 +340,8 @@ class Instance extends Component {
 				if( ainstances[type] ) {
 					for( var idx in value ) {
 						var instance = value[idx];
-						if( instance && instance["id"] ) {
-							var cinstance = ainstances[type]["entities"][instance["id"]];
+						if( instance && instance["_id"] ) {
+							var cinstance = ainstances[type]["entities"][instance["_id"]];
 							cinstances.push(cinstance);
 						}
 					}
@@ -439,50 +439,50 @@ class Instance extends Component {
 					)} />
 				{/* { dependencies && dependencies.filter(function(item){if(item.cardinality == "multiple"){return true;}else{return false;}}).map((item, i) => (
 					<InstancesView 
-						title={ item && item.name } 
+						title={ item && item["_name"] } 
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-						instances={ instance && item && this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
+						instances={ instance && item && this.getMultipleDependencyEntities( namespace, item["_name"], item.type, instance[item["_name"]], ainstances ) }
 						typename={ item && item.type } 
 						type={ item && item.type } />
 				))} */}
 				{/* { dependencies && dependencies.filter(function(item){ if(item.cardinality == "single"){return true;}else{return false;}}).map((item, i) => (
 					<InstanceView 
-						title={ item && item.name } 
+						title={ item && item["_name"] } 
 						description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-						instance={ instance && item && this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
+						instance={ instance && item && this.getSingleDependencyEntities( namespace, item["_name"], item.type, instance[item["_name"]], ainstances ) }
 						typename={ item && item.type } 
 						type={ item && item.type } />
 				))} */}
 				{ instance && dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
 						return <>
-							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
-								<h1>{item.name}</h1> 
+							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance["_label"], instance["_id"], item["_name"])}>
+								<h1>{item["_name"]}</h1> 
 							</MuiLink> */}
-							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
-								<h1>{item.name}</h1> 
+							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance["_label"], instance["_id"], item["_name"])}>
+								<h1>{item["_name"]}</h1> 
 							</Link>							 */}
 							<InstancesView 
-							title={ item && item.name } 
+							title={ item && item["_name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
+							instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item["_name"], item.type, instance[item["_name"]], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
 					} else {
 						return <> 
-							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
-								<h1>{item.name}</h1> 
+							{/* <MuiLink color="inherit" href={_this.makeRelInstanceLink(namespace, instance["_label"], instance["_id"], item["_name"])}>
+								<h1>{item["_name"]}</h1> 
 							</MuiLink> */}
-							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance.label, instance.id, item.name)}>
-								<h1>{item.name}</h1> 
+							{/* <Link color="inherit" to={_this.makeRelInstanceLink(namespace, instance["_label"], instance["_id"], item["_name"])}>
+								<h1>{item["_name"]}</h1> 
 							</Link> */}
 							<InstanceView 
-							title={ item && item.name } 
+							title={ item && item["_name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							instance={ instance && item && _this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
+							instance={ instance && item && _this.getSingleDependencyEntities( namespace, item["_name"], item.type, instance[item["_name"]], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>

@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -93,7 +93,7 @@ class CreateInstanceDialog extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -162,7 +162,7 @@ class CreateInstanceDialog extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -265,12 +265,12 @@ class CreateInstanceDialog extends Component {
 						var instancenames = [];
 						for( var instanceid in instances ) {
 							var instance = instances[instanceid];
-							if( instance && instance["id"] && instance["name"] ) {
-								instanceids.push(instance["id"]);
-								instancenames.push(instance["name"]);
+							if( instance && instance["_id"] && instance["_name"] ) {
+								instanceids.push(instance["_id"]);
+								instancenames.push(instance["_name"]);
 							}
 						}
-						nschema["definitions"][defname]["properties"]["id"] = {
+						nschema["definitions"][defname]["properties"]["_id"] = {
 							"type": "string",
 							"enum": instanceids,
 							"enumNames": instancenames
@@ -450,7 +450,7 @@ function mapStateToProps(state, ownProps) {
 	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
-			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 				// if( property && property["type"] ) {
 				if( property ) {
 					if( property["type"] == "string" ) {
