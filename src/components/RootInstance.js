@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -94,8 +94,8 @@ const styles = theme => ({
 // 		{Object.keys(items).map((key, index) => ( 
 // 			<TreeItem 
 // 				key={ key }
-// 				nodeId={ "" + items[key]["id"] }
-// 				label={ "" + items[key]["label"] }
+// 				nodeId={ "" + items[key]["_id"] }
+// 				label={ "" + items[key]["_label"] }
 // 				onClick={event => {
 // 					event.stopPropagation();
 // 					event.preventDefault();
@@ -186,7 +186,7 @@ class RootInstance extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -269,7 +269,7 @@ class RootInstance extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -348,21 +348,21 @@ class RootInstance extends Component {
 	// 			var instance = instances["entities"][cinstanceid];
 	// 			if( instance ) {
 	// 
-	// 				// if( !(instance["label"] in treestruc) ) {
-	// 				// 	treestruc[instance["label"]] = {
-	// 				// 		id: instance["label"], 
-	// 				// 		name: instance["label"], 
-	// 				// 		label: instance["label"], 
+	// 				// if( !(instance["_label"] in treestruc) ) {
+	// 				// 	treestruc[instance["_label"]] = {
+	// 				// 		id: instance["_label"], 
+	// 				// 		name: instance["_label"], 
+	// 				// 		label: instance["_label"], 
 	// 				// 		tree: {
 	// 				// 		}
 	// 				// 	};
 	// 				// }
 	// 
-	// 				// treestruc[instance["label"]]["tree"][instance["name"]] = {
-	// 				treestruc[instance["label"]]["tree"][instance["id"]] = {
-	// 					id: instance["id"], 
+	// 				// treestruc[instance["_label"]]["tree"][instance["name"]] = {
+	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
+	// 					id: instance["_id"], 
 	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["label"], 
+	// 					label: instance["name"], // + "." + instance["_label"], 
 	// 					link: this.makeInstanceLink(namespace, instance), 
 	// 					instance: this.makeInstance(instance), 
 	// 					tree: {
@@ -433,7 +433,7 @@ class RootInstance extends Component {
 		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		// 	for( var propertyname in schema["entity"]["properties"] ) {
 		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+		// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 		// 			if( property && property["type"] ) {
 		// 				if( property["type"] == "string" ) {
 		// 					properties.push(propertyname);
@@ -622,7 +622,7 @@ function mapStateToProps(state, ownProps) {
 	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
-			if( !["id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
+			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
 				// if( property && property["type"] ) {
 				if( property ) {
 					if( property["type"] == "string" ) {
