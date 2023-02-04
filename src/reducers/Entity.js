@@ -183,7 +183,9 @@ function __entities(
 								for( var key in centity ) {
 									if( centity.hasOwnProperty(key) ) {
 										var value = centity[key];
-										if( (value) && (value['@value']) ) {
+										// if( (value) && (value['@value']) ) {
+										// if( (value) && ('@value' in value) ) {
+										if( (value) && (value.hasOwnProperty('@value')) ) {
 											centity[key] = value['@value']
 										} 
 									}
@@ -199,7 +201,9 @@ function __entities(
 								for( var key in centity ) {
 									if( centity.hasOwnProperty(key) ) {
 										var value = centity[key];
-										if( (value) && (value['@value']) ) {
+										// if( (value) && (value['@value']) ) {
+										// if( (value) && ('@value' in value) ) {
+										if( (value) && (value.hasOwnProperty('@value')) ) {
 											centity[key] = value['@value']
 										} 
 									}
