@@ -21,14 +21,24 @@ import {
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
+// import MuiLink from '@material-ui/core/Link';
+// import Button from '@mui/material/Button';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+// import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemText from '@material-ui/core/ListItemText';
 
 import ExtensionIcon from '@material-ui/icons/Extension';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AppsIcon from '@material-ui/icons/Apps';
+import IconButton from '@material-ui/core/IconButton';
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -37,13 +47,18 @@ import {
 	loadNamespacesIntoState 
 } from '../actions/Namespace'
 
-import { 
+import {
+	loadEntitiesIntoState, 
 	invalidateEntitiesInState
 } from '../actions/Entity'
 
 import { 
 	getNamespacesFromState 
 } from '../stores/Namespace'
+
+import {
+	getEntitiesFromState
+} from '../stores/Entity'
 
 const styles = theme => ({
 
@@ -84,6 +99,14 @@ class Namespaces extends Component {
 			}
 		}
 
+		if( namespace ) {
+			if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
+				if( api && namespace ) {
+					this.props.loadTypes(api, namespace);
+				}
+			}
+		}
+
 	}
 
 	componentDidMount() {
@@ -96,6 +119,14 @@ class Namespaces extends Component {
 		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
 			if( api ) {
 				this.props.loadNamespaces(api);
+			}
+		}
+
+		if( namespace ) {
+			if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
+				if( api && namespace ) {
+					this.props.loadTypes(api, namespace);
+				}
 			}
 		}
 
@@ -133,10 +164,17 @@ class Namespaces extends Component {
 		const {
 			// api, 
 			namespace, 
+
 			nsloading, 
 			nsloaded, 
 			nsfailed, 
 			namespaces, 
+
+			tsloading, 
+			tsloaded, 
+			tsfailed, 
+			types, 
+
 			search
 		} = this.props;
 
@@ -172,40 +210,116 @@ class Namespaces extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 
-			<Breadcrumbs aria-label="breadcrumb">
-				<Typography color="textPrimary">Namespaces</Typography>
-			</Breadcrumbs>
+			{!namespace &&
+				<>
+				<Breadcrumbs aria-label="breadcrumb">
+					<Typography color="textPrimary">Namespaces</Typography>
+				</Breadcrumbs>
+				</>
+			}
+
+			{namespace &&
+				<>
+				<Breadcrumbs aria-label="breadcrumb">
+					<Link color="inherit" to="/namespaces">
+						Namespaces
+					</Link>
+					<Typography color="textPrimary">{namespace}</Typography>
+				</Breadcrumbs>
+				</>
+			}
+
+			<div style={{ padding: 12 }}>
 
 			<Grid 
 				// className={} 
-				className="" 
+				// className="" 
 				container 
-				xs={12} 
-				spacing={0} 
+				// xs={12} 
+				spacing={3} 
 			>
 
-			{namespaces &&
+			{namespace && types && types.length &&
 				<>
-				<List>
-					{namespaces.map(function(namespace, idx) {
-						return (
-							<ListItem 
-								button 
-								selected={false} 
-								component={Link} 
-								to={"/namespaces/" + namespace} 
-								// onClick={() => _this.selectNamespace(namespace)}
-								>
-								<ListItemIcon><ExtensionIcon/></ListItemIcon>
-								<ListItemText>{namespace}</ListItemText>
-							</ListItem>
-						)
-					})}
-				</List>
+				{types.map(function(type, idx) {
+				// {Array.from(types).map(function(type, idx) {
+					return (
+						<>
+						<Grid item sm={3}>
+						<Grid container spacing={3}>
+						<Card className={classes.root} raised={true} style={{width: "100%"}}>
+							<CardHeader
+								avatar={
+									<ExtensionIcon/>
+								}
+								action={
+									<IconButton aria-label="settings">
+										<MoreVertIcon />
+									</IconButton>
+								}
+								title={type["title"]}
+								subheader={type["name"]}
+							/>
+							<CardContent>
+								<Typography variant="body2" color="textSecondary" component="p">
+									{type["description"]}
+								</Typography>
+							</CardContent>
+							<CardActions disableSpacing>
+								<Link color="inherit" to={"/namespaces/" + namespace + "/" + type["name"]}>
+									View
+								</Link>
+							</CardActions>
+						</Card>
+						</Grid>
+						</Grid>
+						</>
+					)
+				})}
+				</>
+			}
+
+			{namespaces && !types &&
+				<>
+				{namespaces.map(function(namespace, idx) {
+					return (
+						<>
+						<Grid item sm={3}>
+						<Grid container spacing={3}>
+						<Card className={classes.root} raised={true} style={{width: "100%"}}>
+							<CardHeader
+								avatar={
+									<AppsIcon/>
+								}
+								action={
+									<IconButton aria-label="settings">
+										<MoreVertIcon />
+									</IconButton>
+								}
+								title={namespace}
+								subheader={namespace}
+							/>
+							<CardContent>
+								<Typography variant="body2" color="textSecondary" component="p">
+									{namespace}
+								</Typography>
+							</CardContent>
+							<CardActions disableSpacing>
+								<Link color="inherit" to={"/namespaces/" + namespace}>
+									View
+								</Link>
+							</CardActions>
+						</Card>
+						</Grid>
+						</Grid>
+						</>
+					)
+				})}
 				</>
 			}
 
 			</Grid>
+			</div>
 			</Container>
 			</>
 		);
@@ -221,6 +335,9 @@ function mapDispatchToProps(dispatch) {
 	return {
 
 		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
+
+		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
 
 		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
 
@@ -247,14 +364,58 @@ function mapStateToProps(state, ownProps) {
 		namespaces: nsnamespaces
 	} = getNamespacesFromState(state, api);
 
-	return {
-		api, 
-		namespace: namespace, 
-		nsloading: nsloading, 
-		nsloaded: nsloaded, 
-		nsfailed: nsfailed, 
-		nstimestamp: nstimestamp, 	
-		namespaces: nsnamespaces	
+	if( namespace ) {
+
+		const {
+			loading: tsloading, 
+			loaded: tsloaded, 
+			failed: tsfailed, 
+			timestamp: ttimestamp, 
+			entities: types
+		} = getEntitiesFromState(state, api, namespace, 'type');
+
+		var atypes = [];
+		if( types ) {
+			for( var typeid in types ) {
+				if( typeid ) {
+					var type = types[typeid];
+					if( type ) {
+						atypes.push(type);
+					}
+				}
+			}
+		}
+
+		return {
+			api, 
+			namespace: namespace, 
+			nsloading: nsloading, 
+			nsloaded: nsloaded, 
+			nsfailed: nsfailed, 
+			nstimestamp: nstimestamp, 
+			namespaces: nsnamespaces, 
+			tsloading: tsloading, 
+			tsloaded: tsloaded, 
+			tsfailed: tsfailed, 
+			ttimestamp: ttimestamp, 
+			types: atypes, // types, 
+		}
+
+	} else {
+		return {
+			api, 
+			namespace: namespace, 
+			nsloading: nsloading, 
+			nsloaded: nsloaded, 
+			nsfailed: nsfailed, 
+			nstimestamp: nstimestamp, 
+			namespaces: nsnamespaces, 
+			// tsloading: tsloading, 
+			// tsloaded: tsloaded, 
+			// tsfailed: tsfailed, 
+			// ttimestamp: ttimestamp, 
+			// types: types, 
+		}
 	}
 
 }
