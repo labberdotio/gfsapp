@@ -124,7 +124,7 @@ const styles = theme => ({
 			flexShrink: 0,
 			overflow: 'hidden',
 		},
-		[theme.breakpoints.up('md')]: {
+		[theme.breakpoints.up('xl')]: {
 			width: drawerWidth2,
 			flexShrink: 0,
 			overflow: 'hidden',
@@ -138,7 +138,7 @@ const styles = theme => ({
 		// 	width: drawerWidth1,
 		// 	flexShrink: 0,
 		// },
-		// [theme.breakpoints.up('md')]: {
+		// [theme.breakpoints.up('xl')]: {
 		width: drawerWidth2,
 		flexShrink: 0,
 		// },
@@ -150,7 +150,7 @@ const styles = theme => ({
 		// 	width: `calc(100% - ${drawerWidth1}px)`,
 		// 	marginLeft: drawerWidth1,
 		// },
-		// [theme.breakpoints.up('md')]: {
+		// [theme.breakpoints.up('xl')]: {
 		// 	width: `calc(100% - ${drawerWidth2}px)`,
 		// 	marginLeft: drawerWidth2,
 		// },
@@ -161,7 +161,7 @@ const styles = theme => ({
 		[theme.breakpoints.up('sm')]: {
 			// display: 'none',
 		},
-		[theme.breakpoints.up('md')]: {
+		[theme.breakpoints.up('xl')]: {
 			// display: 'none',
 		},
 	},
@@ -204,7 +204,7 @@ const styles = theme => ({
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create('width'),
 		width: '100%',
-			[theme.breakpoints.up('md')]: {
+			[theme.breakpoints.up('xl')]: {
 			width: '20ch',
 		},
 	},
@@ -217,7 +217,7 @@ const styles = theme => ({
 		// [theme.breakpoints.up('sm')]: {
 		// 	width: drawerWidth1,
 		// },
-		// [theme.breakpoints.up('md')]: {
+		// [theme.breakpoints.up('xl')]: {
 		// 	width: drawerWidth2,
 		// },
 		width: drawerWidth1,
@@ -546,7 +546,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							selected={item.selected} 
 							component={Link} 
 							to={item.path} 
-							// onClick={onItemClick(title)}
+							// onClick={onItemClick(title)} 
+							title={item.text} 
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{item.text}</ListItemText>
@@ -563,7 +564,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							selected={item.selected} 
 							component={Link} 
 							to={item.path} 
-							// onClick={onItemClick(title)}
+							// onClick={onItemClick(title)} 
+							title={item.text} 
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{item.text}</ListItemText>
@@ -580,7 +582,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							selected={item.selected} 
 							component={Link} 
 							to={item.path} 
-							// onClick={onItemClick(title)}
+							// onClick={onItemClick(title)} 
+							title={item.text} 
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{item.text}</ListItemText>
@@ -622,7 +625,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							selected={item.selected} 
 							component={Link} 
 							to={item.path} 
-							// onClick={onItemClick(title)}
+							// onClick={onItemClick(title)} 
+							title={item.text} 
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{item.text}</ListItemText>
@@ -639,7 +643,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							selected={item.selected} 
 							component={Link} 
 							to={item.path} 
-							// onClick={onItemClick(title)}
+							// onClick={onItemClick(title)} 
+							title={item.text} 
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{item.text}</ListItemText>
@@ -656,7 +661,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 							selected={item.selected} 
 							component={Link} 
 							to={item.path} 
-							// onClick={onItemClick(title)}
+							// onClick={onItemClick(title)} 
+							title={item.text} 
 							>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText>{item.text}</ListItemText>
