@@ -186,7 +186,7 @@ class RootInstance extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+				if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -269,7 +269,7 @@ class RootInstance extends Component {
 		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 			for( var propertyname in schema["entity"]["properties"] ) {
 				var property = schema["entity"]["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+				if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 					// if( property && property["type"] ) {
 					if( property ) {
 						if( property["type"] == "string" ) {
@@ -433,7 +433,7 @@ class RootInstance extends Component {
 		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		// 	for( var propertyname in schema["entity"]["properties"] ) {
 		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+		// 		if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 		// 			if( property && property["type"] ) {
 		// 				if( property["type"] == "string" ) {
 		// 					properties.push(propertyname);
@@ -622,7 +622,7 @@ function mapStateToProps(state, ownProps) {
 	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
 		for( var propertyname in schema["entity"]["properties"] ) {
 			var property = schema["entity"]["properties"][propertyname];
-			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+			if( !["_id", "uuid", "name", "created", "modified"].includes(propertyname) ) {
 				// if( property && property["type"] ) {
 				if( property ) {
 					if( property["type"] == "string" ) {
