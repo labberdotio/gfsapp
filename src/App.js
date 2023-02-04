@@ -490,6 +490,15 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	// }
 	];
 
+	if( namespace ) {
+		var topitems = [{
+			"text": currentns, // "Namespaces", 
+			"path": "/namespaces/" + currentns, // "/namespaces", 
+			"icon": <AppsIcon/>, 
+			"selected": true
+		}];
+	}
+
 	/*
 	 * I have this idea of showing per type specifics here
 	 */
