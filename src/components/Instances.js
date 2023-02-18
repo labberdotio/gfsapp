@@ -149,6 +149,7 @@ class Instances extends Component {
 		cols.push({
 			title: "_id",
 			field: "_id",
+			editable: 'never',
 			// render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</Link>
 		});
@@ -163,19 +164,22 @@ class Instances extends Component {
 		});
 		cols.push({
 			title: "_created",
-			field: "_created"
+			field: "_created",
+			type: 'numeric'
 		});
 		cols.push({
 			title: "_modified",
-			field: "_modified"
+			field: "_modified",
+			type: 'numeric'
 		});
 
 		// if( type ) {
 		// 	if( type["properties"] ) {
-			if( schema ) {
-				if( schema["properties"] ) {
+		if( schema ) {
+			if( schema["properties"] ) {
 				for( var propertyname in schema["properties"] ) {
 					var property = schema["properties"][propertyname];
+					console.log(property);
 					if( property["$ref"] ) {
 						// 
 					} else if( (property["type"] == "array") && 
@@ -183,10 +187,20 @@ class Instances extends Component {
 						// 
 					} else {
 						if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-							cols.push({
-								title: propertyname,
-								field: propertyname
-							});
+
+							if( property["type"] == "integer" ) {
+								cols.push({
+									title: propertyname,
+									field: propertyname,
+									type: 'numeric'
+								});
+							} else {
+								cols.push({
+									title: propertyname,
+									field: propertyname
+								});
+							}
+
 						}
 					}
 				}
@@ -251,6 +265,54 @@ class Instances extends Component {
 		}
 
 		return rows;
+	}
+
+	getActions(namespace, typename, type, schema, instances, ainstances) {
+
+		const {
+			editable
+		} = this.props;
+
+		if( editable ) {
+			return [
+				// {
+				// 	icon: 'save',
+				// 	tooltip: 'Save', // + ' ' + typename,
+				// 	onClick: (event, rowData) => window.alert("You saved " + rowData["_name"])
+				// }, 
+				{
+					icon: 'delete',
+					tooltip: 'Delete', // + ' ' + typename,
+					onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["_name"] + "?")
+				}, 
+				// {
+				// 	icon: 'add',
+				// 	tooltip: 'Add User',
+				// 	isFreeAction: true,
+				// 	onClick: (event) => window.alert("Please fill out row")
+				// }
+				]
+		} else {
+			return []
+		}
+
+	}
+
+	getEditable(namespace, typename, type, schema, instances, ainstances) {
+
+		const {
+			editable
+		} = this.props;
+
+		if( editable ) {
+			return {
+				onRowAdd: newData => window.alert(""),
+				onRowUpdate: (newData, oldData) => window.alert(""),
+			}
+		} else {
+			return {}
+		}
+
 	}
 
 	/*
@@ -367,6 +429,22 @@ class Instances extends Component {
 						schema, 
 						instances, 
 						ainstances
+					)}
+					actions={this.getActions(
+						namespace, 
+						typename, 
+						type, 
+						schema, 
+						instances, 
+						ainstances
+					)}
+					editable={this.getEditable(
+						namespace, 
+						typename, 
+						type, 
+						schema, 
+						instances, 
+						ainstances
 					)} />
 			{/* </Grid> */}
 			{/* </Container> */}
@@ -409,7 +487,8 @@ function mapStateToProps(state, ownProps) {
 		type, 
 		schema, 
 		instances, 
-		ainstances
+		ainstances, 
+		editable
 	} = ownProps;	
 
 	const {
@@ -437,7 +516,8 @@ function mapStateToProps(state, ownProps) {
 		// isfailed: isfailed, 
 		// istimestamp: istimestamp, 
 		instances: instances, 
-		ainstances: ainstances
+		ainstances: ainstances, 
+		editable: editable
 	}
 
 }
