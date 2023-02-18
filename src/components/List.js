@@ -99,11 +99,11 @@ class List extends Component {
 				className={classes.mainPaper} 
 			>
 
-				<h1>{title}</h1>
-				<h2>{description}</h2>
+				{/* <h1>{title}</h1> */}
+				{/* <h2>{description}</h2> */}
 
 				<MaterialTable
-					// title={description}
+					title={description}
 					columns={cols}
 					data={rows}
 					// actions={[{
