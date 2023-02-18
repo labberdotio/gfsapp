@@ -466,7 +466,7 @@ class Instance extends Component {
 							title={ item && item["_name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item["_name"], item.type, instance[item["_name"]], ainstances ) }
+							instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
@@ -482,7 +482,7 @@ class Instance extends Component {
 							title={ item && item["_name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							instance={ instance && item && _this.getSingleDependencyEntities( namespace, item["_name"], item.type, instance[item["_name"]], ainstances ) }
+							instance={ instance && item && _this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
