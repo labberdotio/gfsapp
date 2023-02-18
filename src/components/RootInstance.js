@@ -489,7 +489,7 @@ class RootInstance extends Component {
 				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
 					{typename}
 				</Link>
-				<Typography color="textPrimary">{ instance && instance["name"] }</Typography>
+				<Typography color="textPrimary">{ instance && ( instance["_name"] + " (" + instance["_id"] + ")") }</Typography>
 
 			</Breadcrumbs>
 			<Grid 
@@ -565,7 +565,7 @@ class RootInstance extends Component {
 					spacing={0} 
 				>
 					<InstanceView 
-						title={ instance && instance["name"] } 
+						title={ instance && ( instance["_name"] + " (" + instance["_id"] + ")") } 
 						description={typename} 
 						namespace={namespace} 
 						typename={typename} 
