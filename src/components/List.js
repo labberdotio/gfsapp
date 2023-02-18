@@ -77,7 +77,9 @@ class List extends Component {
             title, 
             description, 
 			cols, 
-            rows
+           rows, 
+		   actions, 
+		   editable
 		} = this.props;
 
 		const { classes } = this.props;
@@ -104,14 +106,35 @@ class List extends Component {
 					// title={description}
 					columns={cols}
 					data={rows}
+					// actions={[{
+					// 	icon: 'save',
+					// 	tooltip: 'Save User',
+					// 	onClick: (event, rowData) => window.alert("You saved " + rowData.name)
+					// }, {
+					// 	icon: 'delete',
+					// 	tooltip: 'Delete User',
+					// 	onClick: (event, rowData) => window.confirm("You want to delete " + rowData.name)
+					// }, {
+					// 	icon: 'add',
+					// 	tooltip: 'Add User',
+					// 	isFreeAction: true,
+					// 	onClick: (event) => window.alert("You want to add a new row")
+					// }]}
+					actions={actions}
 					options={{
 						// pageSize: ...
 						pageSizeOptions: [],
 						toolbar: true,
-						paging: false // true
+						paging: false, // true,
+						actionsColumnIndex: -1
 					}}
-					editable={{
-					}}
+					// editable={{
+					// }}
+					// editable={{
+					// 	onRowAdd: newData => window.alert(""),
+					// 	onRowUpdate: (newData, oldData) => window.alert(""),
+					// }}
+					editable={editable}
 					style={{
 						width: "100%"
 					}}/>
@@ -139,12 +162,16 @@ function mapStateToProps(state, ownProps) {
     const description = ownProps["description"];
 	const cols = ownProps["cols"];
     const rows = ownProps["rows"];
+	const actions = ownProps["actions"];
+	const editable = ownProps["editable"];
 
 	return {
         title: title, 
         description: description, 
 		cols: cols, 
-        rows: rows
+        rows: rows, 
+		actions: actions, 
+		editable: editable
 	}
 
 }

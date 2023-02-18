@@ -289,6 +289,7 @@ class RootInstances extends Component {
 		cols.push({
 			title: "_id",
 			field: "_id",
+			editable: 'never',
 			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
 		});
 		// cols.push({
@@ -302,11 +303,13 @@ class RootInstances extends Component {
 		});
 		cols.push({
 			title: "_created",
-			field: "_created"
+			field: "_created",
+			type: 'numeric'
 		});
 		cols.push({
 			title: "_modified",
-			field: "_modified"
+			field: "_modified",
+			type: 'numeric'
 		});
 
 		if( type ) {
@@ -621,7 +624,8 @@ class RootInstances extends Component {
 						type={type["entity"]} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
-						ainstances={ainstances} />
+						ainstances={ainstances} 
+						editable={true}/>
 				</Grid>
 			</Grid>
 
