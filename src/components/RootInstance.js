@@ -170,6 +170,16 @@ class RootInstance extends Component {
 			}
 		}
 
+		if( (!this.props.type["loading"]) && 
+			(!this.props.type["loaded"]) && 
+			(!this.props.type["failed"]) ) {
+			// if( typename ) {
+			if( api && namespace && typename ) {
+				this.props.loadType(api, namespace, typename);
+			}
+			// }
+		}
+
 		if( (!this.props.schema["loading"]) && 
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
@@ -251,6 +261,16 @@ class RootInstance extends Component {
 			if( api && namespace && typename ) {
 				this.props.loadInstances(api, namespace, typename);
 			}
+		}
+
+		if( (!this.props.type["loading"]) && 
+			(!this.props.type["loaded"]) && 
+			(!this.props.type["failed"]) ) {
+			// if( typename ) {
+			if( api && namespace && typename ) {
+				this.props.loadType(api, namespace, typename);
+			}
+			// }
 		}
 
 		if( (!this.props.schema["loading"]) && 
@@ -470,6 +490,7 @@ class RootInstance extends Component {
 					{typename}
 				</Link>
 				<Typography color="textPrimary">{ instance && instance["name"] }</Typography>
+
 			</Breadcrumbs>
 			<Grid 
 				// className={} 
@@ -528,10 +549,11 @@ class RootInstance extends Component {
 						description={typename} 
 						namespace={namespace} 
 						typename={typename} 
-						type={type} 
+						type={type["entity"]} 
 						schema={schema["entity"]} 
 						instances={instances["entities"]} 
-						ainstances={ainstances} />
+						ainstances={ainstances} 
+						editable={false} />
 				</Grid>
 
 				<Grid 
@@ -547,7 +569,7 @@ class RootInstance extends Component {
 						description={typename} 
 						namespace={namespace} 
 						typename={typename} 
-						type={type} 
+						type={type["entity"]} 
 						schema={schema["entity"]} 
 						instanceid={instanceid} 
 						instance={instance} 
@@ -569,6 +591,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 
 		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
+
+		loadType: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "type", typename)),
 
 		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
@@ -596,6 +620,16 @@ function mapStateToProps(state, ownProps) {
 	// 	entities: instances
 	// } = getEntitiesFromState(state, api, namespace, typename);
 	const instances = getEntitiesFromState(state, api, namespace, typename);
+
+	// const {
+	// 	loading: , 
+	// 	loaded: , 
+	// 	failed: , 
+	// 	timestamp: , 
+	// 	entity: schema
+	// } = getEntityFromState(state, api, namespace, "schema", typename);
+	const type = getEntityFromState(state, api, namespace, "type", typename);
+	console.log(type);
 
 	// const {
 	// 	loading: , 
@@ -649,7 +683,7 @@ function mapStateToProps(state, ownProps) {
 		namespace: namespace, 
 		typename: typename, 
 		instanceid: instanceid, 
-		// type: type, 
+		type: type, 
 		// : , 
 		// : , 
 		// : , 
