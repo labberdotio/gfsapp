@@ -296,18 +296,18 @@ class RootInstances extends Component {
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["name"]}</a>
 		// });
-		// cols.push({
-		// 	title: "_uuid",
-		// 	field: "_uuid"
-		// });
-		// cols.push({
-		// 	title: "_created",
-		// 	field: "_created"
-		// });
-		// cols.push({
-		// 	title: "_modified",
-		// 	field: "_modified"
-		// });
+		cols.push({
+			title: "_uuid",
+			field: "_uuid"
+		});
+		cols.push({
+			title: "_created",
+			field: "_created"
+		});
+		cols.push({
+			title: "_modified",
+			field: "_modified"
+		});
 
 		if( type ) {
 			if( type["properties"] ) {

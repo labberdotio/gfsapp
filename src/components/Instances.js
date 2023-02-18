@@ -157,23 +157,25 @@ class Instances extends Component {
 		// 	field: "link",
 		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
 		// });
-		// cols.push({
-		// 	title: "_uuid",
-		// 	field: "_uuid"
-		// });
-		// cols.push({
-		// 	title: "_created",
-		// 	field: "_created"
-		// });
-		// cols.push({
-		// 	title: "_modified",
-		// 	field: "_modified"
-		// });
+		cols.push({
+			title: "_uuid",
+			field: "_uuid"
+		});
+		cols.push({
+			title: "_created",
+			field: "_created"
+		});
+		cols.push({
+			title: "_modified",
+			field: "_modified"
+		});
 
-		if( type ) {
-			if( type["properties"] ) {
-				for( var propertyname in type["properties"] ) {
-					var property = type["properties"][propertyname];
+		// if( type ) {
+		// 	if( type["properties"] ) {
+			if( schema ) {
+				if( schema["properties"] ) {
+				for( var propertyname in schema["properties"] ) {
+					var property = schema["properties"][propertyname];
 					if( property["$ref"] ) {
 						// 
 					} else if( (property["type"] == "array") && 
