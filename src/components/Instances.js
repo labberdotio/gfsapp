@@ -8,8 +8,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { createBrowserHistory } from 'history';
-import { useHistory } from "react-router-dom";
+import { createBrowserHistory } from 'history';
+// import { useHistory } from "react-router-dom";
 
 // import Container from '@material-ui/core/Container';
 // import Grid from '@material-ui/core/Grid';
@@ -37,6 +37,8 @@ import {
 	Link,
 } from "react-router-dom";
 
+import history from '../history'
+
 // import { 
 // 	loadEntitiesIntoState, 
 // 	invalidateEntitiesInState, 
@@ -61,6 +63,16 @@ const styles = theme => ({
 	},
 
 });
+
+// const history = useHistory();
+// const history = createBrowserHistory();
+// const history = createBrowserHistory({forceRefresh:true});
+
+
+// export const test = () => {
+//     let history = useHistory();
+//     navigate('/dashboard');
+// };
 
 class Instances extends Component {
 
@@ -179,7 +191,6 @@ class Instances extends Component {
 			if( schema["properties"] ) {
 				for( var propertyname in schema["properties"] ) {
 					var property = schema["properties"][propertyname];
-					console.log(property);
 					if( property["$ref"] ) {
 						// 
 					} else if( (property["type"] == "array") && 
@@ -327,6 +338,10 @@ class Instances extends Component {
 		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
+	onRowClick(event, rowData, togglePanel) {
+		// 	
+	}
+
 	render() {
 
 		const {
@@ -394,6 +409,13 @@ class Instances extends Component {
 			}
 		}
 
+		// const onRowClick = function(event, rowData, togglePanel) {
+		// 	// window.location.href = "/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"];
+		// 	history.push("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
+		// 	// document.location.reload();
+		// 	// history.go("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
+		// }
+
 		return (
 			<>
 			{/* <Container 
@@ -445,7 +467,8 @@ class Instances extends Component {
 						schema, 
 						instances, 
 						ainstances
-					)} />
+					)}
+					detailLink={(rowData) => this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} />
 			{/* </Grid> */}
 			{/* </Container> */}
 			</>
