@@ -16,7 +16,7 @@ import {
 	useRouteMatch
 } from "react-router-dom";
 
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 
 // import { createStore, applyMiddleware } from 'redux'
 // import { combineReducers } from 'redux'
@@ -56,13 +56,15 @@ import RelInstanceView from './components/RelInstance'
 
 import Namespaces from './components/Namespaces'
 
+import history from './history'
+
 require('./style.css');
 require('./style.light.css');
 // require('./style.dark.css');
 
 require('./index.css');
 
-const history = createBrowserHistory();
+// const history = createBrowserHistory();
 
 /*
  * Defaults
