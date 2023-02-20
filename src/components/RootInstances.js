@@ -5,6 +5,9 @@
 // 
 
 import React, {Component} from 'react';
+
+import { useNavigate} from "react-router-dom";
+
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
@@ -40,6 +43,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import Button from '@material-ui/core/Button';
+
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import AddIcon from '@material-ui/icons/Add';
 
@@ -126,6 +134,34 @@ const styles = theme => ({
 function handleClick(event) {
 	// event.preventDefault();
 }
+
+export const BackNavButton = () => {
+    let history = useHistory();
+    return (
+        <>
+			{/* <button onClick={() => history.goBack()}>Back</button> */}
+			<Button
+				startIcon={<ArrowBackIcon />} 
+				onClick={() => history.goBack()}>
+				Back
+			</Button>
+        </>
+    );
+};
+
+export const ForwardNavButton = () => {
+    let history = useHistory();
+    return (
+		<>
+			{/* <button onClick={() => history.goForward()}>Forward</button> */}
+			<Button
+				endIcon={<ArrowForwardIcon />} 
+				onClick={() => history.goForward()}>
+					Forward
+			</Button>
+        </>
+    );
+};
 
 class RootInstances extends Component {
 
@@ -544,11 +580,12 @@ class RootInstances extends Component {
 				className={classes.mainContainer} 
 				// className="mainContainer" 
 				// maxWidth="false"
-				>
+				>	
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
+				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
 					Namespaces
 				</Link>
@@ -556,6 +593,7 @@ class RootInstances extends Component {
 					{namespace}
 				</Link>
 				<Typography color="textPrimary">{typename}</Typography>
+				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs>
 			<Grid 
 				// className={} 

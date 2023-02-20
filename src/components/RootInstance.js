@@ -46,6 +46,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import Button from '@material-ui/core/Button';
+
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import AddIcon from '@material-ui/icons/Add';
 
 import Backdrop from '@material-ui/core/Backdrop';
@@ -122,6 +127,34 @@ const styles = theme => ({
 function handleClick(event) {
 	// event.preventDefault();
 }
+
+export const BackNavButton = () => {
+    let history = useHistory();
+    return (
+        <>
+			{/* <button onClick={() => history.goBack()}>Back</button> */}
+			<Button
+				startIcon={<ArrowBackIcon />} 
+				onClick={() => history.goBack()}>
+				Back
+			</Button>
+        </>
+    );
+};
+
+export const ForwardNavButton = () => {
+    let history = useHistory();
+    return (
+		<>
+			{/* <button onClick={() => history.goForward()}>Forward</button> */}
+			<Button
+				endIcon={<ArrowForwardIcon />} 
+				onClick={() => history.goForward()}>
+					Forward
+			</Button>
+        </>
+    );
+};
 
 class RootInstance extends Component {
 
@@ -480,6 +513,7 @@ class RootInstance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
+				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
 					Namespaces
 				</Link>
@@ -490,7 +524,7 @@ class RootInstance extends Component {
 					{typename}
 				</Link>
 				<Typography color="textPrimary">{ instance && ( instance["_name"] + " (" + instance["_id"] + ")") }</Typography>
-
+				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs>
 			<Grid 
 				// className={} 
