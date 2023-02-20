@@ -53,11 +53,6 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import InstancesView from './Instances'
 // import ListView from './List'
 
-// import { 
-// 	selectNamespace, 
-// 	loadNamespacesIntoState 
-// } from '../actions/Namespace'
-
 import { 
 	loadEntityIntoState, 
 	loadEntitiesIntoState
@@ -177,11 +172,6 @@ class RootInstances extends Component {
 			// , 
 			schema
 		} = this.props;
-
-		// if( namespace ) {
-		// 	// store.dispatch(selectNamespace(namespace));
-		// 	this.props.selectNamespace(namespace);
-		// }
 
 		if( (!this.props.instances["loading"]) && 
 			(!this.props.instances["loaded"]) && 
@@ -615,7 +605,7 @@ class RootInstances extends Component {
 					className="leftGrid" 
 					container 
 					item 
-					xs={6} 
+					xs={12} 
 					spacing={0} 
 				>
 					<InstancesView 
@@ -677,7 +667,7 @@ function mapStateToProps(state, ownProps) {
 	const {
 		namespace, 
 		typename, 
-		instanceid
+		// instanceid
 	} = ownProps;
 
 	const {

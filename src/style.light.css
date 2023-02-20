@@ -60,7 +60,7 @@ a:hover {
 .MuiPaper-root {
     color: rgb(97, 97, 97) !important;
     /* background-color: rgb(243, 243, 243) !important; */
-    box-shadow: none !important;
+    /* box-shadow: none !important; */
     border-radius: none !important;
 }
 
