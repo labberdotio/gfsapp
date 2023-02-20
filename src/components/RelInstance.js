@@ -46,6 +46,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import Button from '@material-ui/core/Button';
+
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import AddIcon from '@material-ui/icons/Add';
 
 import Backdrop from '@material-ui/core/Backdrop';
@@ -121,6 +126,34 @@ const styles = theme => ({
 function handleClick(event) {
 	// event.preventDefault();
 }
+
+export const BackNavButton = () => {
+    let history = useHistory();
+    return (
+        <>
+			{/* <button onClick={() => history.goBack()}>Back</button> */}
+			<Button
+				startIcon={<ArrowBackIcon />} 
+				onClick={() => history.goBack()}>
+				Back
+			</Button>
+        </>
+    );
+};
+
+export const ForwardNavButton = () => {
+    let history = useHistory();
+    return (
+		<>
+			{/* <button onClick={() => history.goForward()}>Forward</button> */}
+			<Button
+				endIcon={<ArrowForwardIcon />} 
+				onClick={() => history.goForward()}>
+					Forward
+			</Button>
+        </>
+    );
+};
 
 class RelInstance extends Component {
 
@@ -294,7 +327,8 @@ class RelInstance extends Component {
 				<CircularProgress color="inherit"/>
 			</Backdrop>
 			<Breadcrumbs aria-label="breadcrumb">
-			<Link color="inherit" to="/namespaces">
+				<BackNavButton></BackNavButton>
+				<Link color="inherit" to="/namespaces">
 					Namespaces
 				</Link>
 				<Link color="inherit" to={"/namespaces/" + namespace}>
@@ -307,6 +341,7 @@ class RelInstance extends Component {
 					{ instance && instance["entity"] && instance["entity"]["name"] }
 				</Link>
 				<Typography color="textPrimary">{ relname }</Typography>
+				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs>
 			<Grid 
 				// className={} 
