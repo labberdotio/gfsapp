@@ -5,9 +5,15 @@
 // 
 
 import React, {Component} from 'react';
+
+import { useNavigate, Link } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import createStyles from "@material-ui/core/styles/createStyles";
+// import { createBrowserHistory } from 'history';
+import { useHistory } from "react-router-dom";
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
@@ -17,6 +23,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 // import InputLabel from '@material-ui/core/InputLabel';
 // import MenuItem from '@material-ui/core/MenuItem';
@@ -42,6 +51,51 @@ import {
 
 const styles = createStyles({
 });
+
+function handleClick(event) {
+	// event.preventDefault();
+}
+
+export const BackNavButton = () => {
+    let history = useHistory();
+    return (
+        <>
+			{/* <button onClick={() => history.goBack()}>Back</button> */}
+			<Button
+				startIcon={<ArrowBackIcon />} 
+				onClick={() => history.goBack()}>
+				Back
+			</Button>
+        </>
+    );
+};
+
+export const ForwardNavButton = () => {
+    let history = useHistory();
+    return (
+		<>
+			{/* <button onClick={() => history.goForward()}>Forward</button> */}
+			<Button
+				endIcon={<ArrowForwardIcon />} 
+				onClick={() => history.goForward()}>
+					Forward
+			</Button>
+        </>
+    );
+};
+
+export const CancelButton = () => {
+    let history = useHistory();
+    return (
+        <>
+			{/* <button onClick={() => history.goBack()}>Back</button> */}
+			<Button
+				onClick={() => history.goBack()}>
+				Cancel
+			</Button>
+        </>
+    );
+};
 
 class CreateInstanceDialog extends Component {
 
@@ -382,6 +436,8 @@ class CreateInstanceDialog extends Component {
 				onClose={this.onCloseDialog} 
 				aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">
+					<BackNavButton>
+					</BackNavButton>
 					Create new.
 				</DialogTitle>
 				<DialogContent>
@@ -399,9 +455,11 @@ class CreateInstanceDialog extends Component {
 					{renderForm()}
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={this.onCloseDialog} color="primary">
+					{/* <Button onClick={this.onCloseDialog} color="primary">
 						Cancel
-					</Button>
+					</Button> */}
+					<CancelButton>
+					</CancelButton>
 					<Button onClick={this.onCreate} color="primary">
 						Create
 					</Button>
