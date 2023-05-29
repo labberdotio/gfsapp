@@ -20,7 +20,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 // import Select from '@material-ui/core/Select';
 
-import Form from "@rjsf/core";
+// import Form from "@rjsf/core";
+import Form from '@rjsf/material-ui';
+
+import { RJSFSchema } from '@rjsf/utils';
+
+import validator from '@rjsf/validator-ajv6';
+// import validator from '@rjsf/validator-ajv8';
 
 import { 
 	loadEntityIntoState, 
@@ -346,7 +352,8 @@ class CreateInstanceDialog extends Component {
 		const renderForm = function() {
 			if( nschema ) {
 				return <Form 
-					schema={nschema} 
+					schema={nschema}
+					validator={validator}
 					uiSchema={uiSchema}
 					formData={data} 
 					onChange={e => {}} 
