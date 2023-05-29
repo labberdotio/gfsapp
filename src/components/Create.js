@@ -8,6 +8,8 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import createStyles from "@material-ui/core/styles/createStyles";
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,7 +19,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 // import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 // import Select from '@material-ui/core/Select';
 
 // import Form from "@rjsf/core";
@@ -372,6 +374,7 @@ class CreateInstanceDialog extends Component {
 
 		return (
 			<>
+			<Container>
 			<Dialog 
 				fullWidth={fullWidth}
 				maxWidth={maxWidth}
@@ -404,6 +407,7 @@ class CreateInstanceDialog extends Component {
 					</Button>
 				</DialogActions>
 			</Dialog>
+			</Container>
 			</>
 		);
 	}
