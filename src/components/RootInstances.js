@@ -481,6 +481,10 @@ class RootInstances extends Component {
 	// 	return treestruc;
 	// }
 
+	makeCreateInstanceLink(namespace, type) {
+		return "/namespaces/" + namespace + "/create/" + type;
+	}
+
 	makeInstanceLink(namespace, type, id) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
@@ -571,7 +575,11 @@ class RootInstances extends Component {
 		var direction = "up";
 
 		var actions = [
-			{ icon: <AddIcon />, name: 'New' },
+			{
+				name: "Create new " + typename, 
+				link: this.makeCreateInstanceLink(namespace, typename), 
+				icon: <AddIcon />, 
+			},
 		];
 
 		return (
@@ -670,9 +678,9 @@ class RootInstances extends Component {
 				direction={direction}>
 				{actions.map(action => (
 					<SpeedDialAction
-						key={action["_name"]}
-						icon={action.icon}
-						tooltipTitle={action["_name"]}
+						key={action.name}
+						icon=<Link to={action.link}>{action.icon}</Link>
+						tooltipTitle={action.name}
 						onClick={this.onCloseDial}/>
 				))}
 			</SpeedDial>
