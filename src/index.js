@@ -56,6 +56,8 @@ import RelInstanceView from './components/RelInstance'
 
 import Namespaces from './components/Namespaces'
 
+import CreateInstanceDialog from './components/Create'
+
 import history from './history'
 
 require('./style.css');
@@ -240,7 +242,7 @@ ReactDOM.render(
 						</App>
 						</>
 				} />
-			{/* <Route 
+			<Route 
 				exact 
 				path="/namespaces/:namespace/create/:typename" 
 				render={
@@ -256,7 +258,7 @@ ReactDOM.render(
 						/>
 						</App>
 						</>
-				} /> */}
+				} />
 			<Route 
 				exact 
 				path="/namespaces/:namespace/:typename/:instanceid" 
