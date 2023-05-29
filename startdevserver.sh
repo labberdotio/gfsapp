@@ -2,16 +2,16 @@
 
 # pipenv shell
 
-# 10.88.88.171 zookeeper.gfsdev zookeeper.gfsdev.localdomain
-# 10.88.88.171 broker.gfsdev broker.gfsdev.localdomain
-# 10.88.88.171 gremlin.gfsdev gremlin.gfsdev.localdomain
-# 10.88.88.171 gfs.gfsdev gfs.gfsdev.localdomain
-# 10.88.88.171 gfsui.gfsdev gfsui.gfsdev.localdomain
+# 10.88.88.174 zookeeper.gfsdev zookeeper.gfsdev.localdomain
+# 10.88.88.174 broker.gfsdev broker.gfsdev.localdomain
+# 10.88.88.174 gremlin.gfsdev gremlin.gfsdev.localdomain
+# 10.88.88.174 gfs.gfsdev gfs.gfsdev.localdomain
+# 10.88.88.174 gfsui.gfsdev gfsui.gfsdev.localdomain
 
 export LISTEN_ADDR="0.0.0.0"
 export LISTEN_PORT="3001"
 
-export GREMLIN_API_HOST="10.88.88.171"
+export GREMLIN_API_HOST="10.88.88.174"
 export GREMLIN_API_PORT="5000"
 export GREMLIN_API_WS_PORT="5002"
 
