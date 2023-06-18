@@ -408,7 +408,7 @@ class CreateInstanceDialog extends Component {
 		const renderForm = function() {
 			if( nschema ) {
 				return <Form 
-					schema={nschema}
+					schema={nschema} 
 					validator={validator}
 					uiSchema={uiSchema}
 					formData={data} 
@@ -438,11 +438,11 @@ class CreateInstanceDialog extends Component {
 				<DialogTitle id="form-dialog-title">
 					<BackNavButton>
 					</BackNavButton>
-					Create new.
+					Create new {typename}.
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
-						Create new.
+						Create new {typename}.
 					</DialogContentText>
 					{/* <InputLabel id="label">Type</InputLabel> */}
 					{/* <Select 
