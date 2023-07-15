@@ -84,6 +84,8 @@ class Instances extends Component {
 
 		var _this = this;
 
+		this.tableRef = React.createRef();
+
 	}
 
 	state = {
@@ -117,6 +119,9 @@ class Instances extends Component {
 		// 	}
 		// }
 
+		// this.tableRef.current && this.tableRef.current.onQueryChange();
+		this.tableRef.current && !this.tableRef.current.isLoading && this.tableRef.current.onQueryChange();
+
 	}
 
 	componentDidMount() {
@@ -142,6 +147,8 @@ class Instances extends Component {
 		// 		this.props.loadInstances(api, namespace, typename);
 		// 	}
 		// }
+
+		// this.tableRef.current && this.tableRef.current.onQueryChange();
 
 	}
 
@@ -279,8 +286,12 @@ class Instances extends Component {
 	// 	return rows;
 	// }
 
-	getData(namespace, typename, type, schema) {
-		
+	getDataURL(namespace, typename, type, schema) {
+		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
+		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
+		console.log(" >>> DATA URL: ");
+		console.log(dataurl);
+		return dataurl;
 	}
 
 	// getActions(namespace, typename, type, schema, instances, ainstances) {
@@ -443,6 +454,7 @@ class Instances extends Component {
 				<ListView 
 					title={title} 
 					description={description} 
+					tableRef={this.tableRef}
 					cols={this.getListCols(
 						namespace, 
 						typename, 
@@ -459,7 +471,7 @@ class Instances extends Component {
 					// 	instances, 
 					// 	ainstances
 					// )}
-					data={this.getData(
+					dataurl={this.getDataURL(
 						namespace, 
 						typename, 
 						type, 
