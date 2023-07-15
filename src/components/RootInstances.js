@@ -200,8 +200,8 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			// , 
-			instances, 
-			ainstances, 
+			// instances, 
+			// ainstances, 
 			// , 
 			// , 
 			// , 
@@ -209,13 +209,13 @@ class RootInstances extends Component {
 			schema
 		} = this.props;
 
-		if( (!this.props.instances["loading"]) && 
-			(!this.props.instances["loaded"]) && 
-			(!this.props.instances["failed"]) ) {
-			if( api && namespace && typename ) {
-				this.props.loadInstances(api, namespace, typename);
-			}
-		}
+		// if( (!this.props.instances["loading"]) && 
+		// 	(!this.props.instances["loaded"]) && 
+		// 	(!this.props.instances["failed"]) ) {
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadInstances(api, namespace, typename);
+		// 	}
+		// }
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -250,8 +250,8 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			// , 
-			instances, 
-			ainstances, 
+			// instances, 
+			// ainstances, 
 			// , 
 			// , 
 			// , 
@@ -259,11 +259,11 @@ class RootInstances extends Component {
 			schema
 		} = this.props;
 
-		if( (!this.props.instances["loading"]) && 
-			(!this.props.instances["loaded"]) && 
-			(!this.props.instances["failed"]) ) {
-			this.props.loadInstances(api, namespace, typename);
-		}
+		// if( (!this.props.instances["loading"]) && 
+		// 	(!this.props.instances["loaded"]) && 
+		// 	(!this.props.instances["failed"]) ) {
+		// 	this.props.loadInstances(api, namespace, typename);
+		// }
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -304,7 +304,8 @@ class RootInstances extends Component {
 		});
 	}
 
-	getListCols(namespace, typename, type, schema, instances, ainstances) {
+	// getListCols(namespace, typename, type, schema, instances, ainstances) {
+	getListCols(namespace, typename, type, schema) {
 
 		var cols = [];
 		cols.push({
@@ -356,62 +357,62 @@ class RootInstances extends Component {
 		return cols;
 	}
 
-	getListRows(namespace, typename, type, schema, instances, ainstances) {
-
-		var cols = [];
-		cols.push({
-			title: "_name",
-			field: "_name",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-		});
-		cols.push({
-			title: "_id",
-			field: "_id",
-			render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
-		});
-		// cols.push({
-		// 	title: "link",
-		// 	field: "link",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-		// });
-		// cols.push({
-		// 	title: "_uuid",
-		// 	field: "_uuid"
-		// });
-		// cols.push({
-		// 	title: "_created",
-		// 	field: "_created"
-		// });
-		// cols.push({
-		// 	title: "_modified",
-		// 	field: "_modified"
-		// });
-
-		if( type ) {
-			if( type["properties"] ) {
-				for( var property in type["properties"] ) {
-					if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
-						cols.push({
-							title: property,
-							field: property
-						});
-					}
-				}
-			}
-		}
-
-		var rows = [];
-		if( instances ) {
-			for( var instanceid in instances ) {
-				var instance = instances[instanceid];
-				if( instance ) {
-					rows.push(instance);
-				}
-			}
-		}
-
-		return rows;
-	}
+	// getListRows(namespace, typename, type, schema, instances, ainstances) {
+	// 
+	// 	var cols = [];
+	// 	cols.push({
+	// 		title: "_name",
+	// 		field: "_name",
+	// 		render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
+	// 	});
+	// 	cols.push({
+	// 		title: "_id",
+	// 		field: "_id",
+	// 		render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
+	// 	});
+	// 	// cols.push({
+	// 	// 	title: "link",
+	// 	// 	field: "link",
+	// 	// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
+	// 	// });
+	// 	// cols.push({
+	// 	// 	title: "_uuid",
+	// 	// 	field: "_uuid"
+	// 	// });
+	// 	// cols.push({
+	// 	// 	title: "_created",
+	// 	// 	field: "_created"
+	// 	// });
+	// 	// cols.push({
+	// 	// 	title: "_modified",
+	// 	// 	field: "_modified"
+	// 	// });
+	// 
+	// 	if( type ) {
+	// 		if( type["properties"] ) {
+	// 			for( var property in type["properties"] ) {
+	// 				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
+	// 					cols.push({
+	// 						title: property,
+	// 						field: property
+	// 					});
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 
+	// 	var rows = [];
+	// 	if( instances ) {
+	// 		for( var instanceid in instances ) {
+	// 			var instance = instances[instanceid];
+	// 			if( instance ) {
+	// 				rows.push(instance);
+	// 			}
+	// 		}
+	// 	}
+	// 
+	// 	return rows;
+	// }
 
 	/*
 	 * 
@@ -510,8 +511,8 @@ class RootInstances extends Component {
 			// , 
 			// , 
 			// , 
-			instances, 
-			ainstances, 
+			// instances, 
+			// ainstances, 
 			// , 
 			// , 
 			// , 
@@ -661,8 +662,8 @@ class RootInstances extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						instances={instances["entities"]} 
-						ainstances={ainstances} 
+						// instances={instances["entities"]} 
+						// ainstances={ainstances} 
 						editable={true}/>
 				</Grid>
 			</Grid>
@@ -699,7 +700,7 @@ class RootInstances extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)),
+		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)),
 
 		loadType: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "type", typename)),
 
@@ -728,8 +729,8 @@ function mapStateToProps(state, ownProps) {
 	// 	timestamp: , 
 	// 	entities: instances
 	// } = getEntitiesFromState(state, api, namespace, typename);
-	const instances = getEntitiesFromState(state, api, namespace, typename);
-	console.log(instances);
+	// const instances = getEntitiesFromState(state, api, namespace, typename);
+	// console.log(instances);
 
 	// const {
 	// 	loading: , 
@@ -762,8 +763,8 @@ function mapStateToProps(state, ownProps) {
 	/*
 	 * 
 	 */
-	var ainstances = {};
-	ainstances[typename] = instances;
+	// var ainstances = {};
+	// ainstances[typename] = instances;
 
 	return {
 		api, 
@@ -774,8 +775,8 @@ function mapStateToProps(state, ownProps) {
 		// : , 
 		// : , 
 		// : , 
-		instances: instances, 
-		ainstances: ainstances, 
+		// instances: instances, 
+		// ainstances: ainstances, 
 		// : , 
 		// : , 
 		// : , 

@@ -107,8 +107,8 @@ class Instances extends Component {
 			// isloaded, 
 			// isfailed, 
 			// istimestamp, 
-			instances, 
-			ainstances
+			// instances, 
+			// ainstances
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
@@ -133,8 +133,8 @@ class Instances extends Component {
 			// isloaded, 
 			// isfailed, 
 			// istimestamp, 
-			instances, 
-			ainstances
+			// instances, 
+			// ainstances
 		} = this.props;
 
 		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
@@ -149,7 +149,8 @@ class Instances extends Component {
 	 * 
 	 */
 
-	getListCols(namespace, typename, type, schema, instances, ainstances) {
+	// getListCols(namespace, typename, type, schema, instances, ainstances) {
+	getListCols(namespace, typename, type, schema) {
 
 		var cols = [];
 		cols.push({
@@ -221,64 +222,69 @@ class Instances extends Component {
 		return cols;
 	}
 
-	getListRows(namespace, typename, type, schema, instances, ainstances) {
+	// getListRows(namespace, typename, type, schema, instances, ainstances) {
+	// 
+	// 	// var cols = [];
+	// 	// cols.push({
+	// 	// 	title: "_id",
+	// 	// 	field: "_id",
+	// 	// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
+	// 	// });
+	// 	// // cols.push({
+	// 	// // 	title: "link",
+	// 	// // 	field: "link",
+	// 	// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
+	// 	// // });
+	// 	// cols.push({
+	// 	// 	title: "_uuid",
+	// 	// 	field: "_uuid"
+	// 	// });
+	// 	// cols.push({
+	// 	// 	title: "_name",
+	// 	// 	field: "_name",
+	// 	// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
+	// 	// });
+	// 	// // cols.push({
+	// 	// // 	title: "_created",
+	// 	// // 	field: "_created"
+	// 	// // });
+	// 	// // cols.push({
+	// 	// // 	title: "_modified",
+	// 	// // 	field: "_modified"
+	// 	// // });
+	// 	// 
+	// 	// if( type ) {
+	// 	// 	if( type["properties"] ) {
+	// 	// 		for( var property in type["properties"] ) {
+	// 	// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
+	// 	// 				cols.push({
+	// 	// 					title: property,
+	// 	// 					field: property
+	// 	// 				});
+	// 	// 			}
+	// 	// 		}
+	// 	// 	}
+	// 	// }
+	// 
+	// 	var rows = [];
+	// 	if( instances ) {
+	// 		for( var instanceid in instances ) {
+	// 			var instance = instances[instanceid];
+	// 			if( instance ) {
+	// 				rows.push(instance);
+	// 			}
+	// 		}
+	// 	}
+	// 
+	// 	return rows;
+	// }
 
-		// var cols = [];
-		// cols.push({
-		// 	title: "_id",
-		// 	field: "_id",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
-		// });
-		// // cols.push({
-		// // 	title: "link",
-		// // 	field: "link",
-		// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-		// // });
-		// cols.push({
-		// 	title: "_uuid",
-		// 	field: "_uuid"
-		// });
-		// cols.push({
-		// 	title: "_name",
-		// 	field: "_name",
-		// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-		// });
-		// // cols.push({
-		// // 	title: "_created",
-		// // 	field: "_created"
-		// // });
-		// // cols.push({
-		// // 	title: "_modified",
-		// // 	field: "_modified"
-		// // });
-		// 
-		// if( type ) {
-		// 	if( type["properties"] ) {
-		// 		for( var property in type["properties"] ) {
-		// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
-		// 				cols.push({
-		// 					title: property,
-		// 					field: property
-		// 				});
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-		var rows = [];
-		if( instances ) {
-			for( var instanceid in instances ) {
-				var instance = instances[instanceid];
-				if( instance ) {
-					rows.push(instance);
-				}
-			}
-		}
-
-		return rows;
+	getData(namespace, typename, type, schema) {
+		
 	}
 
-	getActions(namespace, typename, type, schema, instances, ainstances) {
+	// getActions(namespace, typename, type, schema, instances, ainstances) {
+	getActions(namespace, typename, type, schema) {
 
 		const {
 			editable
@@ -309,7 +315,8 @@ class Instances extends Component {
 
 	}
 
-	getEditable(namespace, typename, type, schema, instances, ainstances) {
+	// getEditable(namespace, typename, type, schema, instances, ainstances) {
+	getEditable(namespace, typename, type, schema) {
 
 		const {
 			editable
@@ -356,8 +363,8 @@ class Instances extends Component {
 			// isloaded, 
 			// isfailed, 
 			// istimestamp, 
-			instances, 
-			ainstances
+			// instances, 
+			// ainstances
 		} = this.props;
 
 		const { classes } = this.props;
@@ -399,15 +406,15 @@ class Instances extends Component {
 			}
 		}
 
-		var rows = [];
-		if( instances ) {
-			for( var instanceid in instances ) {
-				var instance = instances[instanceid];
-				if( instance ) {
-					rows.push(instance);
-				}
-			}
-		}
+		// var rows = [];
+		// if( instances ) {
+		// 	for( var instanceid in instances ) {
+		// 		var instance = instances[instanceid];
+		// 		if( instance ) {
+		// 			rows.push(instance);
+		// 		}
+		// 	}
+		// }
 
 		// const onRowClick = function(event, rowData, togglePanel) {
 		// 	// window.location.href = "/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"];
@@ -441,32 +448,38 @@ class Instances extends Component {
 						typename, 
 						type, 
 						schema, 
-						instances, 
-						ainstances
+						// instances, 
+						// ainstances
 					)}
-					rows={this.getListRows(
+					// rows={this.getListRows(
+					// 	namespace, 
+					// 	typename, 
+					// 	type, 
+					// 	schema, 
+					// 	instances, 
+					// 	ainstances
+					// )}
+					data={this.getData(
 						namespace, 
 						typename, 
 						type, 
-						schema, 
-						instances, 
-						ainstances
+						schema
 					)}
 					actions={this.getActions(
 						namespace, 
 						typename, 
 						type, 
 						schema, 
-						instances, 
-						ainstances
+						// instances, 
+						// ainstances
 					)}
 					editable={this.getEditable(
 						namespace, 
 						typename, 
 						type, 
 						schema, 
-						instances, 
-						ainstances
+						// instances, 
+						// ainstances
 					)}
 					detailLink={(rowData) => this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} />
 			{/* </Grid> */}
@@ -509,8 +522,8 @@ function mapStateToProps(state, ownProps) {
 		typename, 
 		type, 
 		schema, 
-		instances, 
-		ainstances, 
+		// instances, 
+		// ainstances, 
 		editable
 	} = ownProps;	
 
@@ -538,8 +551,8 @@ function mapStateToProps(state, ownProps) {
 		// isloaded: isloaded, 
 		// isfailed: isfailed, 
 		// istimestamp: istimestamp, 
-		instances: instances, 
-		ainstances: ainstances, 
+		// instances: instances, 
+		// ainstances: ainstances, 
 		editable: editable
 	}
 

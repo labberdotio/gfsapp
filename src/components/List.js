@@ -198,7 +198,8 @@ const List = (props) => {
     const title = ownProps["title"];
     const description = ownProps["description"];
 	const cols = ownProps["cols"];
-    const rows = ownProps["rows"];
+    // const rows = ownProps["rows"];
+	const data = ownProps["data"];
 	const actions = ownProps["actions"];
 	const editable = ownProps["editable"];
 	const detailLink = ownProps["detailLink"];
@@ -230,7 +231,26 @@ const List = (props) => {
 			<MaterialTable
 				title={description}
 				columns={cols}
-				data={rows}
+				// data={rows}
+				// data={data}
+				data={query => 
+					new Promise((resolve, reject) => {
+						let offset = (query.page + 0) * query.pageSize;
+						let limit = query.pageSize; // (query.page + 1) * query.pageSize;
+						let url = 'http://192.168.1.112:5000/api/v2.0/archives/Files?'
+						url += 'offset=' + offset // query.pageSize
+						url += '&limit=' + limit // (query.page + 1)
+						fetch(url)
+							.then(response => response.json())
+							.then(result => {
+								resolve({
+									data: result.data,
+									page: query.page, // result.page - 1,
+									totalCount: result.count,
+								})
+							})
+					})
+				}
 				// actions={[{
 				// 	icon: 'save',
 				// 	tooltip: 'Save User',
