@@ -298,12 +298,12 @@ class RootInstance extends Component {
 			instance = this.state.instance;
 		}
 
-		var dataurl = this.getDataURL(
-			namespace, 
-			typename, 
-			type, 
-			schema
-		);
+		// var dataurl = this.getDataURL(
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// );
 
 		return (
 			<>
@@ -347,7 +347,12 @@ class RootInstance extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						dataurl={dataurl} 
+						dataurl={_this.getDataURL(
+							namespace, 
+							typename, 
+							type["entity"], 
+							schema["entity"]
+						)} 
 						editable={false} 
 						showdeps={true} />
 				</Grid>

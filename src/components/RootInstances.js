@@ -297,12 +297,12 @@ class RootInstances extends Component {
 		var open = true;
 		var direction = "up";
 
-		var dataurl = this.getDataURL(
-			namespace, 
-			typename, 
-			type, 
-			schema
-		);
+		// var dataurl = this.getDataURL(
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// );
 
 		var actions = [
 			{
@@ -351,7 +351,12 @@ class RootInstances extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						dataurl={dataurl} 
+						dataurl={_this.getDataURL(
+							namespace, 
+							typename, 
+							type["entity"], 
+							schema["entity"]
+						)} 
 						editable={true} 
 						showdeps={true} /> 
 				</Grid>
