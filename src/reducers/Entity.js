@@ -170,75 +170,76 @@ function __entities(
 			// if( (vertexes) && (vertexes['@value']) ) {
 			// 	vertexes = vertexes['@value'];
 			// }
-			if( action.entities ) {
-				// for( var entity in action.entities ) {
-				for( let index = 0; index < action.entities.length; ++index ) {
-					const entity = action.entities[index];
-					if( (entity) && 
-						(entity["@value"]) && 
-						(entity["@value"]["_id"]) && 
-						(entity["@value"]["properties"]) ) {
-							var centity = entity["@value"]["properties"];
-							if( centity ) {
-								for( var key in centity ) {
-									if( centity.hasOwnProperty(key) ) {
-										var value = centity[key];
-										// if( (value) && (value['@value']) ) {
-										// if( (value) && ('@value' in value) ) {
-										if( (value) && (value.hasOwnProperty('@value')) ) {
-											centity[key] = value['@value']
-										} 
-									}
-								}
-							}
-							entities[ centity["_id"] ] = centity;
-					} else if( 
-						(entity) && 
-						(entity["@value"]) && 
-						(entity["@value"]["_id"]) ) {
-							var centity = entity["@value"];
-							if( centity ) {
-								for( var key in centity ) {
-									if( centity.hasOwnProperty(key) ) {
-										var value = centity[key];
-										// if( (value) && (value['@value']) ) {
-										// if( (value) && ('@value' in value) ) {
-										if( (value) && (value.hasOwnProperty('@value')) ) {
-											centity[key] = value['@value']
-										} 
-									}
-								}
-							}
-							entities[ centity["_id"] ] = centity;
-					} else if( 
-						(entity) && 
-						(entity["_id"]) ) {
-							// var centity = entity;
-							// if( centity ) {
-							// 	for( var key in centity ) {
-							// 		if( centity.hasOwnProperty(key) ) {
-							// 			var value = centity[key];
-							// 			if( (value) ) {
-							// 				centity[key] = value
-							// 			} 
-							// 		}
-							// 	}
-							// }
-							// entities[ centity["_id"] ] = centity;
-							entities[ entity["_id"] ] = entity;
-					}
-					// else {
-					// 	entities[ entity["@value"]["_id"] ] = entity;
-					// }
-				}
-			}
+			// if( action.entities ) {
+			// 	// for( var entity in action.entities ) {
+			// 	for( let index = 0; index < action.entities.length; ++index ) {
+			// 		const entity = action.entities[index];
+			// 		if( (entity) && 
+			// 			(entity["@value"]) && 
+			// 			(entity["@value"]["_id"]) && 
+			// 			(entity["@value"]["properties"]) ) {
+			// 				var centity = entity["@value"]["properties"];
+			// 				if( centity ) {
+			// 					for( var key in centity ) {
+			// 						if( centity.hasOwnProperty(key) ) {
+			// 							var value = centity[key];
+			// 							// if( (value) && (value['@value']) ) {
+			// 							// if( (value) && ('@value' in value) ) {
+			// 							if( (value) && (value.hasOwnProperty('@value')) ) {
+			// 								centity[key] = value['@value']
+			// 							} 
+			// 						}
+			// 					}
+			// 				}
+			// 				entities[ centity["_id"] ] = centity;
+			// 		} else if( 
+			// 			(entity) && 
+			// 			(entity["@value"]) && 
+			// 			(entity["@value"]["_id"]) ) {
+			// 				var centity = entity["@value"];
+			// 				if( centity ) {
+			// 					for( var key in centity ) {
+			// 						if( centity.hasOwnProperty(key) ) {
+			// 							var value = centity[key];
+			// 							// if( (value) && (value['@value']) ) {
+			// 							// if( (value) && ('@value' in value) ) {
+			// 							if( (value) && (value.hasOwnProperty('@value')) ) {
+			// 								centity[key] = value['@value']
+			// 							} 
+			// 						}
+			// 					}
+			// 				}
+			// 				entities[ centity["_id"] ] = centity;
+			// 		} else if( 
+			// 			(entity) && 
+			// 			(entity["_id"]) ) {
+			// 				// var centity = entity;
+			// 				// if( centity ) {
+			// 				// 	for( var key in centity ) {
+			// 				// 		if( centity.hasOwnProperty(key) ) {
+			// 				// 			var value = centity[key];
+			// 				// 			if( (value) ) {
+			// 				// 				centity[key] = value
+			// 				// 			} 
+			// 				// 		}
+			// 				// 	}
+			// 				// }
+			// 				// entities[ centity["_id"] ] = centity;
+			// 				entities[ entity["_id"] ] = entity;
+			// 		}
+			// 		// else {
+			// 		// 	entities[ entity["@value"]["_id"] ] = entity;
+			// 		// }
+			// 	}
+			// }
 
 			return Object.assign({}, state, {
 				loading: false,
 				loaded: true,
 				failed: false,
 				invalid: false,
-				entities: entities, // action.entities,
+				// entities: entities, // action.entities,
+				entities: action.entities,
 				timestamp: action.timestamp
 			});
 		case FAIL_GET_ENTITIES:
