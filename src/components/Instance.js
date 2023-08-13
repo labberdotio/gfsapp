@@ -196,7 +196,8 @@ class Instance extends Component {
 			typename, 
 			type, 
 			instance, 
-			schema
+			schema, 
+			showdeps
 		} = this.props;
 
 		const { classes } = this.props;
@@ -229,7 +230,7 @@ class Instance extends Component {
 						schema, 
 						instance
 					)} />
-				{ instance && dependencies && dependencies.map(function(item) {
+				{ showdeps && instance && dependencies && dependencies.map(function(item) {
 					if(item && item.cardinality == "multiple") {
 						var deptypename = schema["properties"][item.name]["items"]["$ref"].replace("#/definitions/", "");
 						var deptype = schema["definitions"][deptypename];
@@ -243,7 +244,7 @@ class Instance extends Component {
 								typename={ deptypename } 
 								type={ deptype } 
 								schema={ depschema } 
-								/>
+								showdeps={false} />
 							</>
 					} else if(item && item.value) {
 						var deptypename = schema["properties"][item.name]["$ref"].replace("#/definitions/", "");
@@ -260,7 +261,7 @@ class Instance extends Component {
 								schema={ depschema } 
 								instanceid={item && item.value && item.value["_id"]} 
 								instance={item && item.value} 
-								/>
+								showdeps={false} />
 							</>
 					}
 				})}
