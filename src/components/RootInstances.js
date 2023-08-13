@@ -188,6 +188,12 @@ class RootInstances extends Component {
 
 	}
 
+	getDataURL(namespace, typename, type, schema) {
+		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
+		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
+		return dataurl;
+	}
+
 	createInstance(type, data) {
 		const {api} = this.props;
 		this.props.createInstance(api, type, data);
@@ -291,6 +297,13 @@ class RootInstances extends Component {
 		var open = true;
 		var direction = "up";
 
+		var dataurl = this.getDataURL(
+			namespace, 
+			typename, 
+			type, 
+			schema
+		);
+
 		var actions = [
 			{
 				name: "Create new " + typename, 
@@ -338,6 +351,7 @@ class RootInstances extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
+						dataurl={dataurl} 
 						editable={true} 
 						showdeps={true} /> 
 				</Grid>
