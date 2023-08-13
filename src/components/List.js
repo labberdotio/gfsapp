@@ -193,12 +193,19 @@ const List = (props) => {
 
 	// const namespace = "infra";
 
+	// const tableRef = React.createRef();
+	console.log(" TABLE REF ");
+	console.log(tableRef);
+
 	const ownProps = props;
 
     const title = ownProps["title"];
     const description = ownProps["description"];
+	const tableRef = ownProps["tableRef"];
 	const cols = ownProps["cols"];
-    const rows = ownProps["rows"];
+    // const rows = ownProps["rows"];
+	// const data = ownProps["data"];
+	const dataurl = ownProps["dataurl"];
 	const actions = ownProps["actions"];
 	const editable = ownProps["editable"];
 	const detailLink = ownProps["detailLink"];
@@ -229,8 +236,30 @@ const List = (props) => {
 
 			<MaterialTable
 				title={description}
+				tableRef={tableRef}
 				columns={cols}
-				data={rows}
+				// data={rows}
+				// data={data}
+				data={query => 
+					new Promise((resolve, reject) => {
+						let offset = (query.page + 0) * query.pageSize;
+						let limit = query.pageSize; // (query.page + 1) * query.pageSize;
+						let url = dataurl + '?' // 'http://192.168.1.112:5000/api/v2.0/archives/Files?'
+						url += 'offset=' + offset // query.pageSize
+						url += '&limit=' + limit // (query.page + 1)
+						console.log(" ??? FETCH ??? ");
+						console.log(url);
+						fetch(url)
+							.then(response => response.json())
+							.then(result => {
+								resolve({
+									data: result.data,
+									page: query.page, // result.page - 1,
+									totalCount: result.count,
+								})
+							})
+					})
+				}
 				// actions={[{
 				// 	icon: 'save',
 				// 	tooltip: 'Save User',
@@ -245,12 +274,21 @@ const List = (props) => {
 				// 	isFreeAction: true,
 				// 	onClick: (event) => window.alert("You want to add a new row")
 				// }]}
-				actions={actions}
+				// actions={actions}
+				actions={[
+					{
+					  icon: 'refresh',
+					  tooltip: 'Refresh Data',
+					  isFreeAction: true,
+					  onClick: () => tableRef.current && tableRef.current.onQueryChange(),
+					}
+				  ]}
 				options={{
 					// pageSize: ...
-					pageSizeOptions: [],
+					// pageSizeOptions: [],
+					initialPage: 0,
 					toolbar: true,
-					paging: false, // true,
+					paging: true,
 					actionsColumnIndex: -1
 				}}
 				// editable={{

@@ -94,7 +94,7 @@ class Instance extends Component {
 			type, 
 			instanceid, 
 			instance, 
-			ainstances, 
+			// ainstances, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -132,7 +132,7 @@ class Instance extends Component {
 			type, 
 			instanceid, 
 			instance, 
-			ainstances, 
+			// ainstances, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -309,48 +309,48 @@ class Instance extends Component {
 		return dependencies;
 	}
 
-	getSingleDependencyEntities(namespace, name, type, value, ainstances) {
+	// getSingleDependencyEntities(namespace, name, type, value, ainstances) {
+	// 
+	// 	var cinstance = undefined;
+	// 
+	// 	if( name && type ) {
+	// 		if( value && ainstances ) {
+	// 			if( ainstances[type] ) {
+	// 				// for( var idx in value ) {
+	// 				var instance = value; // [idx];
+	// 				if( instance && instance["_id"] ) {
+	// 					// var 
+	// 					cinstance = ainstances[type]["entities"][instance["_id"]];
+	// 					// cinstances.push(cinstance);
+	// 				}
+	// 				// }
+	// 			}
+	// 		}
+	// 	}
+	// 
+	// 	return cinstance;
+	// }
 
-		var cinstance = undefined;
-
-		if( name && type ) {
-			if( value && ainstances ) {
-				if( ainstances[type] ) {
-					// for( var idx in value ) {
-					var instance = value; // [idx];
-					if( instance && instance["_id"] ) {
-						// var 
-						cinstance = ainstances[type]["entities"][instance["_id"]];
-						// cinstances.push(cinstance);
-					}
-					// }
-				}
-			}
-		}
-
-		return cinstance;
-	}
-
-	getMultipleDependencyEntities(namespace, name, type, value, ainstances) {
-
-		var cinstances = [];
-
-		if( name && type ) {
-			if( value && ainstances ) {
-				if( ainstances[type] ) {
-					for( var idx in value ) {
-						var instance = value[idx];
-						if( instance && instance["_id"] ) {
-							var cinstance = ainstances[type]["entities"][instance["_id"]];
-							cinstances.push(cinstance);
-						}
-					}
-				}
-			}
-		}
-
-		return cinstances;
-	}
+	// getMultipleDependencyEntities(namespace, name, type, value, ainstances) {
+	// 
+	// 	var cinstances = [];
+	// 
+	// 	if( name && type ) {
+	// 		if( value && ainstances ) {
+	// 			if( ainstances[type] ) {
+	// 				for( var idx in value ) {
+	// 					var instance = value[idx];
+	// 					if( instance && instance["_id"] ) {
+	// 						var cinstance = ainstances[type]["entities"][instance["_id"]];
+	// 						cinstances.push(cinstance);
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 
+	// 	return cinstances;
+	// }
 
 	/*
 	 *
@@ -377,7 +377,7 @@ class Instance extends Component {
 			type, 
 			instanceid, 
 			instance, 
-			ainstances, 
+			// ainstances, 
 			// isloading, 
 			// isloaded, 
 			// isfailed, 
@@ -466,7 +466,7 @@ class Instance extends Component {
 							title={ item && item["_name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
+							// instances={ instance && item && _this.getMultipleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
@@ -482,7 +482,7 @@ class Instance extends Component {
 							title={ item && item["_name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							instance={ instance && item && _this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
+							// instance={ instance && item && _this.getSingleDependencyEntities( namespace, item.name, item.type, instance[item.name], ainstances ) }
 							typename={ item && item.type } 
 							type={ item && item.type } />
 							</>
@@ -534,7 +534,7 @@ function mapStateToProps(state, ownProps) {
 		schema, 
 		instanceid, 
 		instance, 
-		ainstances
+		// ainstances
 	} = ownProps;	
 
 	const {
@@ -574,7 +574,7 @@ function mapStateToProps(state, ownProps) {
 		type: type, 
 		instanceid: instanceid, 
 		instance: instance, 
-		ainstances: ainstances, 
+		// ainstances: ainstances, 
 		// isloading: isloading, 
 		// isloaded: isloaded, 
 		// isfailed: isfailed, 

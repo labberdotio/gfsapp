@@ -186,8 +186,8 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
-			reltypeinstances, 
-			relinstances, 
+			// reltypeinstances, 
+			// relinstances, 
 			relinstance, 
 			// ainstances, 	
 		} = this.props;
@@ -210,15 +210,15 @@ class RelInstance extends Component {
 			// }
 		}
 
-		if( reltype ) {
-			if( (!this.props.reltypeinstances["loading"]) && 
-				(!this.props.reltypeinstances["loaded"]) && 
-				(!this.props.reltypeinstances["failed"]) ) {
-				if( api && namespace && reltype ) {
-					this.props.loadInstances(api, namespace, reltype);
-				}
-			}
-		}
+		// if( reltype ) {
+		// 	if( (!this.props.reltypeinstances["loading"]) && 
+		// 		(!this.props.reltypeinstances["loaded"]) && 
+		// 		(!this.props.reltypeinstances["failed"]) ) {
+		// 		if( api && namespace && reltype ) {
+		// 			this.props.loadInstances(api, namespace, reltype);
+		// 		}
+		// 	}
+		// }
 
 	}
 
@@ -235,8 +235,8 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
-			reltypeinstances, 
-			relinstances, 
+			// reltypeinstances, 
+			// relinstances, 
 			relinstance, 
 			// ainstances, 	
 		} = this.props;
@@ -259,15 +259,15 @@ class RelInstance extends Component {
 			// }
 		}
 
-		if( reltype ) {
-			if( (!this.props.reltypeinstances["loading"]) && 
-				(!this.props.reltypeinstances["loaded"]) && 
-				(!this.props.reltypeinstances["failed"]) ) {
-				if( api && namespace && reltype ) {
-					this.props.loadInstances(api, namespace, reltype);
-				}
-			}
-		}
+		// if( reltype ) {
+		// 	if( (!this.props.reltypeinstances["loading"]) && 
+		// 		(!this.props.reltypeinstances["loaded"]) && 
+		// 		(!this.props.reltypeinstances["failed"]) ) {
+		// 		if( api && namespace && reltype ) {
+		// 			this.props.loadInstances(api, namespace, reltype);
+		// 		}
+		// 	}
+		// }
 
 	}
 
@@ -305,7 +305,7 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
-			relinstances, 
+			// relinstances, 
 			relinstance, 
 			// ainstances, 	
 		} = this.props;
@@ -404,9 +404,11 @@ class RelInstance extends Component {
 						schema={relschema} 
 						instanceid={instance.id} 
 						instance={instance} 
-						ainstances={[]} />
+						// ainstances={[]} 
+						/>
 					}
-					{ relname && reltype && relschema && relinstances && 
+					{/* { relname && reltype && relschema && relinstances &&  */}
+					{ relname && reltype && relschema && 
 					<InstancesView 
 						title={relname} 
 						description={reltype} 
@@ -414,8 +416,9 @@ class RelInstance extends Component {
 						typename={reltype} 
 						type={relschema} 
 						schema={relschema} 
-						instances={relinstances} 
-						ainstances={[]} />
+						// instances={relinstances} 
+						// ainstances={[]} 
+						/>
 					}
 				</Grid>
 			</Grid>
@@ -435,7 +438,7 @@ function mapDispatchToProps(dispatch) {
 
 		loadInstance: (api, namespace, typename, instanceid) => dispatch(loadEntityIntoState(api, namespace, typename, instanceid)), 
 
-		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
+		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
 		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
@@ -473,69 +476,69 @@ function mapStateToProps(state, ownProps) {
 	var reltype = undefined;
 	var relschema = undefined;
 
-	var relinstances = undefined;
+	// var relinstances = undefined;
 	var relinstance = undefined;
 
 	/*
 	 * Load dependencies
 	 */
-	// var ainstances = {};
-	// ainstances[typename] = instances;
-	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-		for( var propertyname in schema["entity"]["properties"] ) {
-			var property = schema["entity"]["properties"][propertyname];
-			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-				// if( property && property["type"] ) {
-				if( property ) {
-					if( property["type"] == "string" ) {
-						// 
-					} else if( property["$ref"] ) {
-						if( property["title"] == relname ) {
-							reltype = property["$ref"].replace("#/definitions/", "");
-							relschema = schema["entity"]["definitions"][reltype];
-							if( instance && instance["entity"] ) {
-								relinstance = instance["entity"][relname];
-							}
-						}
-					} else if( (property["type"] == "array") && 
-							   (property["items"]) ) {
-						if( property["title"] == relname ) {
-							reltype = property["items"]["$ref"].replace("#/definitions/", "");
-							relschema = schema["entity"]["definitions"][reltype];
-							if( instance && instance["entity"] ) {
-								relinstances = instance["entity"][relname];
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	// // var ainstances = {};
+	// // ainstances[typename] = instances;
+	// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
+	// 	for( var propertyname in schema["entity"]["properties"] ) {
+	// 		var property = schema["entity"]["properties"][propertyname];
+	// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+	// 			// if( property && property["type"] ) {
+	// 			if( property ) {
+	// 				if( property["type"] == "string" ) {
+	// 					// 
+	// 				} else if( property["$ref"] ) {
+	// 					if( property["title"] == relname ) {
+	// 						reltype = property["$ref"].replace("#/definitions/", "");
+	// 						relschema = schema["entity"]["definitions"][reltype];
+	// 						if( instance && instance["entity"] ) {
+	// 							relinstance = instance["entity"][relname];
+	// 						}
+	// 					}
+	// 				} else if( (property["type"] == "array") && 
+	// 						   (property["items"]) ) {
+	// 					if( property["title"] == relname ) {
+	// 						reltype = property["items"]["$ref"].replace("#/definitions/", "");
+	// 						relschema = schema["entity"]["definitions"][reltype];
+	// 						if( instance && instance["entity"] ) {
+	// 							relinstances = instance["entity"][relname];
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 
-	var newrelinstances = undefined;
-	var newrelinstance = undefined;
+	// var newrelinstances = undefined;
+	// var newrelinstance = undefined;
 
-	var reltypeinstances = undefined;
-	if( reltype ) {
-		reltypeinstances = getEntitiesFromState(state, api, namespace, reltype);
-		if( reltypeinstances && reltypeinstances["entities"] ) {
-			if( relinstance && relinstance["_id"] ) {
-				if( reltypeinstances["entities"][relinstance["_id"]] ) {
-					newrelinstance = reltypeinstances["entities"][relinstance["_id"]];
-				}
-			} else if( relinstances ) {
-				newrelinstances = [];
-				for( var crelinstanceidx in relinstances ) {
-					var crelinstance = relinstances[crelinstanceidx];
-					if( crelinstance && crelinstance["_id"] ) {
-						if( reltypeinstances["entities"][crelinstance["_id"]] ) {
-							newrelinstances.push( reltypeinstances["entities"][crelinstance["_id"]] );
-						}
-					}
-				}
-			}
-		}
-	}
+	// var reltypeinstances = undefined;
+	// if( reltype ) {
+	// 	reltypeinstances = getEntitiesFromState(state, api, namespace, reltype);
+	// 	if( reltypeinstances && reltypeinstances["entities"] ) {
+	// 		if( relinstance && relinstance["_id"] ) {
+	// 			if( reltypeinstances["entities"][relinstance["_id"]] ) {
+	// 				newrelinstance = reltypeinstances["entities"][relinstance["_id"]];
+	// 			}
+	// 		} else if( relinstances ) {
+	// 			newrelinstances = [];
+	// 			for( var crelinstanceidx in relinstances ) {
+	// 				var crelinstance = relinstances[crelinstanceidx];
+	// 				if( crelinstance && crelinstance["_id"] ) {
+	// 					if( reltypeinstances["entities"][crelinstance["_id"]] ) {
+	// 						newrelinstances.push( reltypeinstances["entities"][crelinstance["_id"]] );
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	return {
 		api, 
@@ -548,9 +551,10 @@ function mapStateToProps(state, ownProps) {
 		reltype: reltype, 
 		relschema: relschema, 
 		instance: instance, 
-		reltypeinstances: reltypeinstances, 
-		relinstances: newrelinstances, // relinstances, 
-		relinstance: newrelinstance, // relinstance, 
+		// reltypeinstances: reltypeinstances, 
+		// relinstances: newrelinstances, // relinstances, 
+		// relinstance: newrelinstance, // relinstance, 
+		relinstance: relinstance, 
 		// ainstances: ainstances, 
 	}
 
