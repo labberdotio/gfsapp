@@ -379,13 +379,11 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		namespace, 
-		typename, 
-		// instanceid
+		typename
 	} = ownProps;
 
 	const {
-		api, 
-		// namespace
+		api
 	} = state;
 
 	const type = getEntityFromState(state, api, namespace, "type", typename);

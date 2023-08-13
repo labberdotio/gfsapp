@@ -57,7 +57,6 @@ class Instance extends Component {
 
 	}
 
-
 	getProperties(namespace, typename, type, schema, instance) {
 
 		var properties = [];
@@ -271,7 +270,7 @@ function mapStateToProps(state, ownProps) {
 		type, 
 		schema, 
 		instanceid, 
-		instance, 
+		instance 
 	} = ownProps;	
 
 	const {

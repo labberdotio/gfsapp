@@ -1,11 +1,10 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
 
 import _ from 'lodash';
 
@@ -15,14 +14,12 @@ import Grid from '@material-ui/core/Grid';
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
 import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import Paper from '@material-ui/core/Paper';
@@ -108,7 +105,6 @@ function getRandomInt(max) {
 	return Math.floor(Math.random() * Math.floor(max));
 }
 
-// function createData(name, memory, cpu, netio, diskio) {
 function createData(name) {
 	var memory = getRandomInt(100); // (int)(Math.random() * 100);
 	var cpu = getRandomInt(100); // Math.random() * 100;
@@ -153,10 +149,6 @@ class Dashboard extends Component {
 
 	componentDidMount() {
 	}
-
-	/*
-	 * 
-	 */
 
 	render() {
 		return (

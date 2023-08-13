@@ -302,7 +302,7 @@ function mapStateToProps(state, ownProps) {
 	} = ownProps;
 
 	const {
-		api, 
+		api
 	} = state;
 
 	const instance = getEntityFromState(state, api, namespace, typename, instanceid);

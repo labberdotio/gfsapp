@@ -6,15 +6,12 @@
 
 import React, {Component} from 'react';
 
-import { useNavigate, Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import createStyles from "@material-ui/core/styles/createStyles";
 import { useHistory } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,8 +24,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import Form from '@rjsf/material-ui';
-
-import { RJSFSchema } from '@rjsf/utils';
 
 import validator from '@rjsf/validator-ajv6';
 // import validator from '@rjsf/validator-ajv8';
@@ -276,7 +271,6 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-
 function mapStateToProps(state, ownProps) {
 
 	const {
@@ -285,7 +279,7 @@ function mapStateToProps(state, ownProps) {
 	} = ownProps;
 
 	const {
-		api, 
+		api
 	} = state;
 
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);

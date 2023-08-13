@@ -61,10 +61,6 @@ class Instances extends Component {
 
 	}
 
-	/*
-	 * 
-	 */
-
 	getListCols(namespace, typename, type, schema) {
 
 		var cols = [];

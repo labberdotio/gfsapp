@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
 
 import debounce from 'lodash.debounce';
-import InputBase from '@material-ui/core/InputBase';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -21,7 +20,6 @@ import {
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -119,15 +117,9 @@ class Namespaces extends Component {
 
 	render() {
 
-		var _this = this;
-
 		const {
-			namespace, 
 			nsloading, 
-			nsloaded, 
-			nsfailed, 
-			namespaces, 
-			search
+			namespaces 
 		} = this.props;
 
 		const { classes } = this.props;
@@ -147,9 +139,6 @@ class Namespaces extends Component {
 		if( nsloading ) {
 			backdropOpen = true;
 		}
-
-		// const debouncedUpdateSearch = debounce((event) => this.updateSearch(event), 1000);
-		const debouncedUpdateSearch = debounce((event) => this.updateSearch(event), 250);
 
 		return (
 			<>
@@ -223,8 +212,7 @@ function mapStateToProps(state, ownProps) {
 	} = ownProps;
 
 	const {
-		api,
-		namespaces
+		api
 	} = state;
 
 	const {

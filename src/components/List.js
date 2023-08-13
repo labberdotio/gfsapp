@@ -66,8 +66,6 @@ const List = (props) => {
 						let url = dataurl + '?' // 'http://192.168.1.112:5000/api/v2.0/archives/Files?'
 						url += 'offset=' + offset // query.pageSize
 						url += '&limit=' + limit // (query.page + 1)
-						console.log(" ??? FETCH ??? ");
-						console.log(url);
 						fetch(url)
 							.then(response => response.json())
 							.then(result => {
