@@ -338,7 +338,8 @@ class RootInstances extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						editable={true}/>
+						editable={true} 
+						showdeps={true} /> 
 				</Grid>
 			</Grid>
 			<SpeedDial

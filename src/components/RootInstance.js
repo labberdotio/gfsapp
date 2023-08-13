@@ -336,7 +336,8 @@ class RootInstance extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						editable={false} />
+						editable={false} 
+						showdeps={true} />
 				</Grid>
 
 				<Grid 
@@ -355,7 +356,7 @@ class RootInstance extends Component {
 						schema={schema["entity"]} 
 						instanceid={instanceid} 
 						instance={instance} 
-						/>
+						showdeps={true} />
 				</Grid>
 			</Grid>
 			</Container>
