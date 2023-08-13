@@ -5,16 +5,10 @@
 // 
 
 import React, {Component} from 'react';
-
-import { useNavigate} from "react-router-dom";
-
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
-// import { Router, Switch, Route, Link } from "react-router-dom";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -25,24 +19,9 @@ import {
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
-// import { Link } from '@material-ui/core';
-// import {
-// 	Link,
-// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-
-// import TreeView from '@material-ui/lab/TreeView';
-// import TreeItem from '@material-ui/lab/TreeItem';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import Button from '@material-ui/core/Button';
 
@@ -59,7 +38,6 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 import InstancesView from './Instances'
-// import ListView from './List'
 
 import { 
 	loadEntityIntoState, 
@@ -70,11 +48,6 @@ import {
 	getEntityFromState, 
 	getEntitiesFromState 
 } from '../stores/Entity'
-
-// const history = createBrowserHistory();
-// const history = useHistory();
-// 
-// const queryString = require('query-string');
 
 const styles = theme => ({
 
@@ -97,40 +70,6 @@ const styles = theme => ({
 
 });
 
-// function TreeViewItems(props) {
-// 	const history = useHistory();
-// 	var items = props.items;
-// 	var onSelectFn = props.onSelect;
-// 	return (
-// 		<>
-// 		{Object.keys(items).map((key, index) => ( 
-// 			<TreeItem 
-// 				key={ key }
-// 				nodeId={ "" + items[key]["_id"] }
-// 				label={ "" + items[key]["_label"] }
-// 				onClick={event => {
-// 					event.stopPropagation();
-// 					event.preventDefault();
-// 					if( items[key]["instance"] ) {
-// 						onSelectFn(items[key]["instance"]);
-// 					}
-// 					if( items[key]["link"] ) {
-// 						history.push(items[key]["link"]);
-// 					}
-// 				}}>
-// 				{items[key]["tree"] && 
-// 				Object.keys(items[key]["tree"]).length > 0 &&
-// 					<TreeViewItems 
-// 						onSelect={onSelectFn} 
-// 						items={items[key]["tree"]}
-// 					/>
-// 				}
-// 			</TreeItem>
-// 		))}
-// 		</>
-// 	)
-// }
-
 function handleClick(event) {
 	// event.preventDefault();
 }
@@ -139,7 +78,6 @@ export const BackNavButton = () => {
     let history = useHistory();
     return (
         <>
-			{/* <button onClick={() => history.goBack()}>Back</button> */}
 			<Button
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => history.goBack()}>
@@ -153,7 +91,6 @@ export const ForwardNavButton = () => {
     let history = useHistory();
     return (
 		<>
-			{/* <button onClick={() => history.goForward()}>Forward</button> */}
 			<Button
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => history.goForward()}>
@@ -196,26 +133,8 @@ class RootInstances extends Component {
 			namespace, 
 			typename, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			// instances, 
-			// ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
 			schema
 		} = this.props;
-
-		// if( (!this.props.instances["loading"]) && 
-		// 	(!this.props.instances["loaded"]) && 
-		// 	(!this.props.instances["failed"]) ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadInstances(api, namespace, typename);
-		// 	}
-		// }
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -246,24 +165,8 @@ class RootInstances extends Component {
 			namespace, 
 			typename, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			// instances, 
-			// ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
 			schema
 		} = this.props;
-
-		// if( (!this.props.instances["loading"]) && 
-		// 	(!this.props.instances["loaded"]) && 
-		// 	(!this.props.instances["failed"]) ) {
-		// 	this.props.loadInstances(api, namespace, typename);
-		// }
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -285,10 +188,6 @@ class RootInstances extends Component {
 
 	}
 
-	/*
-	 * 
-	 */
-
 	createInstance(type, data) {
 		const {api} = this.props;
 		this.props.createInstance(api, type, data);
@@ -304,7 +203,6 @@ class RootInstances extends Component {
 		});
 	}
 
-	// getListCols(namespace, typename, type, schema, instances, ainstances) {
 	getListCols(namespace, typename, type, schema) {
 
 		var cols = [];
@@ -357,131 +255,6 @@ class RootInstances extends Component {
 		return cols;
 	}
 
-	// getListRows(namespace, typename, type, schema, instances, ainstances) {
-	// 
-	// 	var cols = [];
-	// 	cols.push({
-	// 		title: "_name",
-	// 		field: "_name",
-	// 		render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-	// 	});
-	// 	cols.push({
-	// 		title: "_id",
-	// 		field: "_id",
-	// 		render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
-	// 	});
-	// 	// cols.push({
-	// 	// 	title: "link",
-	// 	// 	field: "link",
-	// 	// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-	// 	// });
-	// 	// cols.push({
-	// 	// 	title: "_uuid",
-	// 	// 	field: "_uuid"
-	// 	// });
-	// 	// cols.push({
-	// 	// 	title: "_created",
-	// 	// 	field: "_created"
-	// 	// });
-	// 	// cols.push({
-	// 	// 	title: "_modified",
-	// 	// 	field: "_modified"
-	// 	// });
-	// 
-	// 	if( type ) {
-	// 		if( type["properties"] ) {
-	// 			for( var property in type["properties"] ) {
-	// 				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
-	// 					cols.push({
-	// 						title: property,
-	// 						field: property
-	// 					});
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 
-	// 	var rows = [];
-	// 	if( instances ) {
-	// 		for( var instanceid in instances ) {
-	// 			var instance = instances[instanceid];
-	// 			if( instance ) {
-	// 				rows.push(instance);
-	// 			}
-	// 		}
-	// 	}
-	// 
-	// 	return rows;
-	// }
-
-	/*
-	 * 
-	 */
-
-	// getTreeData() {
-	// 
-	// 	const {
-	// 		api, 
-	// 		namespace, 
-	// 		typename, 
-	// 		type, 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		instances, 
-	// 		ainstances, 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		schema
-	// 	} = this.props;
-	// 
-	// 	var treestruc = {
-	// 	};
-	// 
-	// 	treestruc[typename] = {
-	// 		id: typename, 
-	// 		name: typename, 
-	// 		label: typename, 
-	// 		tree: {
-	// 		}
-	// 	}
-	// 
-	// 	if( instances && instances["entities"] ) {
-	// 		for( var cinstanceid in instances["entities"] ) {
-	// 			var instance = instances["entities"][cinstanceid];
-	// 			if( instance ) {
-	// 
-	// 				// if( !(instance["_label"] in treestruc) ) {
-	// 				// 	treestruc[instance["_label"]] = {
-	// 				// 		id: instance["_label"], 
-	// 				// 		name: instance["_label"], 
-	// 				// 		label: instance["_label"], 
-	// 				// 		tree: {
-	// 				// 		}
-	// 				// 	};
-	// 				// }
-	// 
-	// 				// treestruc[instance["_label"]]["tree"][instance["_name"]] = {
-	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
-	// 					id: instance["_id"], 
-	// 					name: instance["_name"], 
-	// 					label: instance["_name"], // + "." + instance["_label"], 
-	// 					link: this.makeInstanceLink(namespace, instance), 
-	// 					instance: this.makeInstance(instance), 
-	// 					tree: {
-	// 					}
-	// 				};
-	// 
-	// 			}
-	// 		}
-	// 	}
-	// 
-	// 	return treestruc;
-	// }
-
 	makeCreateInstanceLink(namespace, type) {
 		return "/namespaces/" + namespace + "/create/" + type;
 	}
@@ -507,69 +280,12 @@ class RootInstances extends Component {
 			namespace, 
 			typename, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			// instances, 
-			// ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
 			schema
 		} = this.props;
 
 		const { classes } = this.props;
 
-		// var treestruc = this.getTreeData(instances["entities"]);
-
 		var backdropOpen = false;
-
-		// var cols = [];
-		// cols.push({
-		// 	title: "_id",
-		// 	field: "_id"
-		// });
-		// cols.push({
-		// 	title: "_uuid",
-		// 	field: "_uuid"
-		// });
-		// cols.push({
-		// 	title: "_name",
-		// 	field: "_name"
-		// });
-		// // cols.push({
-		// // 	title: "_created",
-		// // 	field: "_created"
-		// // });
-		// // cols.push({
-		// // 	title: "_modified",
-		// // 	field: "_modified"
-		// // });
-
-		// if( type ) {
-		// 	if( type["properties"] ) {
-		// 		for( var property in type["properties"] ) {
-		// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
-		// 				cols.push({
-		// 					title: property,
-		// 					field: property
-		// 				});
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-		// var rows = [];
-		// if( instances ) {
-		// 	for( var instanceid in instances ) {
-		// 		var instance = instances[instanceid];
-		// 		if( instance ) {
-		// 			rows.push(instance);
-		// 		}
-		// 	}
-		// }
 
 		var hidden = false;
 		var open = true;
@@ -587,8 +303,6 @@ class RootInstances extends Component {
 			<>
 			<Container 
 				className={classes.mainContainer} 
-				// className="mainContainer" 
-				// maxWidth="false"
 				>	
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
@@ -605,50 +319,12 @@ class RootInstances extends Component {
 				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs>
 			<Grid 
-				// className={} 
 				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
 			>
-				{/* <Grid 
-					className={classes.treeGrid} 
-					// className="treeGrid" 
-					item 
-					xs={3} 
-					spacing={0} 
-				> */}
-					{/* <TreeView
-						className={classes.tree} 
-						// className="tree" 
-						defaultCollapseIcon={<ExpandMoreIcon />}
-						defaultExpandIcon={<ChevronRightIcon />}
-						defaultExpanded={[typename]}
-					>
-						<TreeViewItems 
-							onSelect={item => {
-								// 
-							}}
-							items={treestruc}
-						/>
-					</TreeView> */}
-					{/* <List component="nav" className={classes.root} aria-label="Entities">
-						{ instances && instances["entities"] && Object.entries(instances["entities"]).map(([entityid, entity]) => (
-						<ListItem 
-							button 
-							selected={false} 
-							component={Link} 
-							to={this.makeInstanceLink(namespace, entity)} 
-							// onClick={onItemClick(title)}
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{entity["_name"]}</ListItemText>
-						</ListItem>
-						))}
-					</List> */}
-				{/* </Grid> */}
 				<Grid 
-					// className={classes.leftGrid} 
 					className="leftGrid" 
 					container 
 					item 
@@ -662,12 +338,9 @@ class RootInstances extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						// instances={instances["entities"]} 
-						// ainstances={ainstances} 
 						editable={true}/>
 				</Grid>
 			</Grid>
-
 			<SpeedDial
 				ariaLabel="GraphActions"
 				className={classes.speedDial}
@@ -685,7 +358,6 @@ class RootInstances extends Component {
 						onClick={this.onCloseDial}/>
 				))}
 			</SpeedDial>
-
 			</Container>
 			</>
 		);
@@ -693,14 +365,8 @@ class RootInstances extends Component {
 
 }
 
-// RootInstances.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
-
 function mapDispatchToProps(dispatch) {
 	return {
-
-		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)),
 
 		loadType: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "type", typename)),
 
@@ -713,78 +379,25 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		namespace, 
-		typename, 
-		// instanceid
+		typename
 	} = ownProps;
 
 	const {
-		api, 
-		// namespace
+		api
 	} = state;
 
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entities: instances
-	// } = getEntitiesFromState(state, api, namespace, typename);
-	// const instances = getEntitiesFromState(state, api, namespace, typename);
-	// console.log(instances);
-
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entity: schema
-	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const type = getEntityFromState(state, api, namespace, "type", typename);
-	console.log(type);
 
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entity: schema
-	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
-	console.log(schema);
-
-	// console.log( " SCHEMA >> " );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log( schema );
-	// console.log( " << SCHEMA " );
-
-	/*
-	 * 
-	 */
-	// var ainstances = {};
-	// ainstances[typename] = instances;
 
 	return {
 		api, 
 		namespace: namespace, 
 		typename: typename, 
 		type: type, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
-		// instances: instances, 
-		// ainstances: ainstances, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
 		schema: schema
 	}
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(RootInstances);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances));

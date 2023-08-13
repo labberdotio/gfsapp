@@ -5,13 +5,10 @@
 // 
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
-// import { Router, Switch, Route, Link } from "react-router-dom";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -22,36 +19,14 @@ import {
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
-// import { Link } from '@material-ui/core';
-// import {
-// 	Link,
-// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-
-// import Typography from '@material-ui/core/Typography';
-// import Paper from '@material-ui/core/Paper';
-
-// import TreeView from '@material-ui/lab/TreeView';
-// import TreeItem from '@material-ui/lab/TreeItem';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-import MaterialTable from 'material-table';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import Button from '@material-ui/core/Button';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
-import AddIcon from '@material-ui/icons/Add';
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -69,11 +44,6 @@ import {
 	getEntitiesFromState 
 } from '../stores/Entity'
 
-// const history = createBrowserHistory();
-// const history = useHistory();
-// 
-// const queryString = require('query-string');
-
 const styles = theme => ({
 
 	mainContainer: {
@@ -89,40 +59,6 @@ const styles = theme => ({
 
 });
 
-// function TreeViewItems(props) {
-// 	const history = useHistory();
-// 	var items = props.items;
-// 	var onSelectFn = props.onSelect;
-// 	return (
-// 		<>
-// 		{Object.keys(items).map((key, index) => ( 
-// 			<TreeItem 
-// 				key={ key }
-// 				nodeId={ "" + items[key]["_id"] }
-// 				label={ "" + items[key]["_label"] }
-// 				onClick={event => {
-// 					event.stopPropagation();
-// 					event.preventDefault();
-// 					if( items[key]["instance"] ) {
-// 						onSelectFn(items[key]["instance"]);
-// 					}
-// 					if( items[key]["link"] ) {
-// 						history.push(items[key]["link"]);
-// 					}
-// 				}}>
-// 				{items[key]["tree"] && 
-// 				Object.keys(items[key]["tree"]).length > 0 &&
-// 					<TreeViewItems 
-// 						onSelect={onSelectFn} 
-// 						items={items[key]["tree"]}
-// 					/>
-// 				}
-// 			</TreeItem>
-// 		))}
-// 		</>
-// 	)
-// }
-
 function handleClick(event) {
 	// event.preventDefault();
 }
@@ -131,7 +67,6 @@ export const BackNavButton = () => {
     let history = useHistory();
     return (
         <>
-			{/* <button onClick={() => history.goBack()}>Back</button> */}
 			<Button
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => history.goBack()}>
@@ -145,7 +80,6 @@ export const ForwardNavButton = () => {
     let history = useHistory();
     return (
 		<>
-			{/* <button onClick={() => history.goForward()}>Forward</button> */}
 			<Button
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => history.goForward()}>
@@ -186,10 +120,7 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
-			// reltypeinstances, 
-			// relinstances, 
-			relinstance, 
-			// ainstances, 	
+			relinstance
 		} = this.props;
 
 		if( (!this.props.instance["loading"]) && 
@@ -209,16 +140,6 @@ class RelInstance extends Component {
 			}
 			// }
 		}
-
-		// if( reltype ) {
-		// 	if( (!this.props.reltypeinstances["loading"]) && 
-		// 		(!this.props.reltypeinstances["loaded"]) && 
-		// 		(!this.props.reltypeinstances["failed"]) ) {
-		// 		if( api && namespace && reltype ) {
-		// 			this.props.loadInstances(api, namespace, reltype);
-		// 		}
-		// 	}
-		// }
 
 	}
 
@@ -235,10 +156,7 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
-			// reltypeinstances, 
-			// relinstances, 
-			relinstance, 
-			// ainstances, 	
+			relinstance
 		} = this.props;
 
 		if( (!this.props.instance["loading"]) && 
@@ -259,24 +177,7 @@ class RelInstance extends Component {
 			// }
 		}
 
-		// if( reltype ) {
-		// 	if( (!this.props.reltypeinstances["loading"]) && 
-		// 		(!this.props.reltypeinstances["loaded"]) && 
-		// 		(!this.props.reltypeinstances["failed"]) ) {
-		// 		if( api && namespace && reltype ) {
-		// 			this.props.loadInstances(api, namespace, reltype);
-		// 		}
-		// 	}
-		// }
-
 	}
-
-	/*
-	 * 
-	 */
-
-	// getTreeData() {
-	// }
 
 	makeInstanceLink(namespace, type, id) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id;
@@ -305,14 +206,10 @@ class RelInstance extends Component {
 			reltype, 
 			relschema, 
 			instance, 
-			// relinstances, 
-			relinstance, 
-			// ainstances, 	
+			relinstance
 		} = this.props;
 
 		const { classes } = this.props;
-
-		// var treestruc = this.getTreeData(instances["entities"]);
 
 		var backdropOpen = false;
 
@@ -320,8 +217,6 @@ class RelInstance extends Component {
 			<>
 			<Container 
 				className={classes.mainContainer} 
-				// className="mainContainer" 
-				// maxWidth="false"
 				>
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
@@ -344,50 +239,12 @@ class RelInstance extends Component {
 				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs>
 			<Grid 
-				// className={} 
 				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
 			>
-				{/* <Grid 
-					className={classes.treeGrid} 
-					// className="treeGrid" 
-					item 
-					xs={3} 
-					spacing={0} 
-				> */}
-					{/* <TreeView
-						className={classes.tree} 
-						// className="tree" 
-						defaultCollapseIcon={<ExpandMoreIcon />}
-						defaultExpandIcon={<ChevronRightIcon />}
-						defaultExpanded={[typename]}
-					>
-						<TreeViewItems 
-							onSelect={item => {
-								// 
-							}}
-							items={treestruc}
-						/>
-					</TreeView> */}
-					{/* <List component="nav" className={classes.root} aria-label="Entities">
-						{ instances && instances["entities"] && Object.entries(instances["entities"]).map(([entityid, entity]) => (
-						<ListItem 
-							button 
-							selected={false} 
-							component={Link} 
-							to={this.makeInstanceLink(namespace, entity)} 
-							// onClick={onItemClick(title)}
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{entity["name"]}</ListItemText>
-						</ListItem>
-						))}
-					</List> */}
-				{/* </Grid> */}
 				<Grid 
-					// className={classes.leftGrid} 
 					className="leftGrid" 
 					container 
 					item 
@@ -404,10 +261,8 @@ class RelInstance extends Component {
 						schema={relschema} 
 						instanceid={instance.id} 
 						instance={instance} 
-						// ainstances={[]} 
 						/>
 					}
-					{/* { relname && reltype && relschema && relinstances &&  */}
 					{ relname && reltype && relschema && 
 					<InstancesView 
 						title={relname} 
@@ -416,8 +271,6 @@ class RelInstance extends Component {
 						typename={reltype} 
 						type={relschema} 
 						schema={relschema} 
-						// instances={relinstances} 
-						// ainstances={[]} 
 						/>
 					}
 				</Grid>
@@ -429,16 +282,10 @@ class RelInstance extends Component {
 
 }
 
-// RelInstance.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
-
 function mapDispatchToProps(dispatch) {
 	return {
 
 		loadInstance: (api, namespace, typename, instanceid) => dispatch(loadEntityIntoState(api, namespace, typename, instanceid)), 
-
-		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
 		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
 
@@ -455,90 +302,17 @@ function mapStateToProps(state, ownProps) {
 	} = ownProps;
 
 	const {
-		api, 
-		// namespace
+		api
 	} = state;
 
 	const instance = getEntityFromState(state, api, namespace, typename, instanceid);
-	// console.log( " INSTANCE >> " );
-	// console.log( instance );
-	// console.log( " << INSTANCE " );
 
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
-	// console.log( " SCHEMA >> " );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log( schema );
-	// console.log( " << SCHEMA " );
 
 	var reltype = undefined;
 	var relschema = undefined;
 
-	// var relinstances = undefined;
 	var relinstance = undefined;
-
-	/*
-	 * Load dependencies
-	 */
-	// // var ainstances = {};
-	// // ainstances[typename] = instances;
-	// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-	// 	for( var propertyname in schema["entity"]["properties"] ) {
-	// 		var property = schema["entity"]["properties"][propertyname];
-	// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-	// 			// if( property && property["type"] ) {
-	// 			if( property ) {
-	// 				if( property["type"] == "string" ) {
-	// 					// 
-	// 				} else if( property["$ref"] ) {
-	// 					if( property["title"] == relname ) {
-	// 						reltype = property["$ref"].replace("#/definitions/", "");
-	// 						relschema = schema["entity"]["definitions"][reltype];
-	// 						if( instance && instance["entity"] ) {
-	// 							relinstance = instance["entity"][relname];
-	// 						}
-	// 					}
-	// 				} else if( (property["type"] == "array") && 
-	// 						   (property["items"]) ) {
-	// 					if( property["title"] == relname ) {
-	// 						reltype = property["items"]["$ref"].replace("#/definitions/", "");
-	// 						relschema = schema["entity"]["definitions"][reltype];
-	// 						if( instance && instance["entity"] ) {
-	// 							relinstances = instance["entity"][relname];
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// var newrelinstances = undefined;
-	// var newrelinstance = undefined;
-
-	// var reltypeinstances = undefined;
-	// if( reltype ) {
-	// 	reltypeinstances = getEntitiesFromState(state, api, namespace, reltype);
-	// 	if( reltypeinstances && reltypeinstances["entities"] ) {
-	// 		if( relinstance && relinstance["_id"] ) {
-	// 			if( reltypeinstances["entities"][relinstance["_id"]] ) {
-	// 				newrelinstance = reltypeinstances["entities"][relinstance["_id"]];
-	// 			}
-	// 		} else if( relinstances ) {
-	// 			newrelinstances = [];
-	// 			for( var crelinstanceidx in relinstances ) {
-	// 				var crelinstance = relinstances[crelinstanceidx];
-	// 				if( crelinstance && crelinstance["_id"] ) {
-	// 					if( reltypeinstances["entities"][crelinstance["_id"]] ) {
-	// 						newrelinstances.push( reltypeinstances["entities"][crelinstance["_id"]] );
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 	return {
 		api, 
@@ -546,19 +320,13 @@ function mapStateToProps(state, ownProps) {
 		typename: typename, 
 		instanceid: instanceid, 
 		relname: relname, 
-		// type: type, 
 		schema: schema, 
 		reltype: reltype, 
 		relschema: relschema, 
 		instance: instance, 
-		// reltypeinstances: reltypeinstances, 
-		// relinstances: newrelinstances, // relinstances, 
-		// relinstance: newrelinstance, // relinstance, 
-		relinstance: relinstance, 
-		// ainstances: ainstances, 
+		relinstance: relinstance
 	}
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(RelInstance);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RelInstance));

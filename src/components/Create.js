@@ -6,16 +6,12 @@
 
 import React, {Component} from 'react';
 
-import { useNavigate, Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import createStyles from "@material-ui/core/styles/createStyles";
-// import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -27,14 +23,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-// import InputLabel from '@material-ui/core/InputLabel';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Select from '@material-ui/core/Select';
-
-// import Form from "@rjsf/core";
 import Form from '@rjsf/material-ui';
-
-import { RJSFSchema } from '@rjsf/utils';
 
 import validator from '@rjsf/validator-ajv6';
 // import validator from '@rjsf/validator-ajv8';
@@ -60,7 +49,6 @@ export const BackNavButton = () => {
     let history = useHistory();
     return (
         <>
-			{/* <button onClick={() => history.goBack()}>Back</button> */}
 			<Button
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => history.goBack()}>
@@ -74,7 +62,6 @@ export const ForwardNavButton = () => {
     let history = useHistory();
     return (
 		<>
-			{/* <button onClick={() => history.goForward()}>Forward</button> */}
 			<Button
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => history.goForward()}>
@@ -88,7 +75,6 @@ export const CancelButton = () => {
     let history = useHistory();
     return (
         <>
-			{/* <button onClick={() => history.goBack()}>Back</button> */}
 			<Button
 				onClick={() => history.goBack()}>
 				Cancel
@@ -131,12 +117,7 @@ class CreateInstanceDialog extends Component {
 			namespace, 
 			typename, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema, 
-			ainstances
+			schema
 		} = this.props;
 
 		if( (!this.props.schema["loading"]) && 
@@ -147,48 +128,6 @@ class CreateInstanceDialog extends Component {
 				this.props.loadSchema(api, namespace, typename);
 			}
 			// }
-		}
-
-		/*
-		 * Load dependencies
-		 */
-		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-			for( var propertyname in schema["entity"]["properties"] ) {
-				var property = schema["entity"]["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-					// if( property && property["type"] ) {
-					if( property ) {
-						if( property["type"] == "string" ) {
-							// 
-						} else if( property["$ref"] ) {
-							// property["$ref"].replace("#/definitions/", "")
-							const dtypename = property["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								if( api && namespace && dtypename ) {
-									this.props.loadInstances(api, namespace, dtypename);
-								}
-								// }
-							}
-						} else if( (property["type"] == "array") && 
-								   (property["items"]) ) {
-							// property["items"]["$ref"].replace("#/definitions/", "")
-							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								if( api && namespace && dtypename ) {
-									this.props.loadInstances(api, namespace, dtypename);
-								}
-								// }
-							}
-						}
-					}
-				}
-			}
 		}
 
 	}
@@ -200,12 +139,7 @@ class CreateInstanceDialog extends Component {
 			namespace, 
 			typename, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema, 
-			ainstances
+			schema
 		} = this.props;
 
 		if( (!this.props.schema["loading"]) && 
@@ -218,52 +152,9 @@ class CreateInstanceDialog extends Component {
 			// }
 		}
 
-		/*
-		 * Load dependencies
-		 */
-		if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-			for( var propertyname in schema["entity"]["properties"] ) {
-				var property = schema["entity"]["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-					// if( property && property["type"] ) {
-					if( property ) {
-						if( property["type"] == "string" ) {
-							// 
-						} else if( property["$ref"] ) {
-							// property["$ref"].replace("#/definitions/", "")
-							const dtypename = property["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								if( api && namespace ) {
-									this.props.loadInstances(api, namespace, dtypename);
-								}
-								// }
-							}
-						} else if( (property["type"] == "array") && 
-								   (property["items"]) ) {
-							// property["items"]["$ref"].replace("#/definitions/", "")
-							const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-							if( (!this.props.ainstances[dtypename]["loading"]) && 
-								(!this.props.ainstances[dtypename]["loaded"]) && 
-								(!this.props.ainstances[dtypename]["failed"]) ) {
-								// if( dtypename ) {
-								if( api && namespace ) {
-									this.props.loadInstances(api, namespace, dtypename);
-								}
-								// }
-							}
-						}
-					}
-				}
-			}
-		}
-
 	}
 
 	onCreate() {
-		
 	}
 
 	openDialog() {
@@ -294,12 +185,7 @@ class CreateInstanceDialog extends Component {
 			namespace, 
 			typename, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			schema, 
-			ainstances
+			schema
 		} = this.props;
 
 		var open = true; // this.state.open;
@@ -317,93 +203,8 @@ class CreateInstanceDialog extends Component {
 			modified: {"ui:widget": "hidden"}
 		};
 
-		// var loaded = true;
-		if( nschema && nschema["definitions"] ) {
-			for( var defname in nschema["definitions"] ) {
-				if( defname && ainstances[defname] ) {
-					var instances = ainstances[defname]["entities"];
-					if( instances ) {
-						var instanceids = [];
-						var instancenames = [];
-						for( var instanceid in instances ) {
-							var instance = instances[instanceid];
-							if( instance && instance["_id"] && instance["_name"] ) {
-								instanceids.push(instance["_id"]);
-								instancenames.push(instance["_name"]);
-							}
-						}
-						nschema["definitions"][defname]["properties"]["_id"] = {
-							"type": "string",
-							"enum": instanceids,
-							"enumNames": instancenames
-						}
-					}
-				}
-			}
-		}
-
-		/*
-		 * Why do I need this?? Because if I don't fill out all enums above with loaded instances
-		 * at the same time then the select dropdown does not get updated after loading is complete.
-		 */ 
-		var loaded = true;
-		if( nschema && nschema["properties"] ) {
-			for( var propname in nschema["properties"] ) {
-				var prop = nschema["properties"][propname];
-				if( (prop["type"] == "array") && (prop["items"]) ) {
-					var ref = prop["items"]["$ref"];
-					var refname = ref.replace("#/definitions/", "");
-					if( !ainstances[refname] ) {
-						/*
-						 * Why do I need this?? Because if I don't fill out all enums above with loaded instances
-						 * at the same time then the select dropdown does not get updated after loading is complete.
-						 */ 
-						loaded = false;
-					} else if( (ainstances[refname]) && (!ainstances[refname]["loaded"]) ) {
-						/*
-						 * Why do I need this?? Because if I don't fill out all enums above with loaded instances
-						 * at the same time then the select dropdown does not get updated after loading is complete.
-						 */ 
-						loaded = false;
-					}
-					uiSchema[propname] = {
-						items: {
-							id: {"ui:widget": "select"}, 
-							uuid: {"ui:widget": "hidden"}, 
-							created: {"ui:widget": "hidden"}, 
-							modified: {"ui:widget": "hidden"},
-						}
-					}
-				} else if( prop["$ref"] ) {
-					var ref = prop["$ref"];
-					var refname = ref.replace("#/definitions/", "");
-					if( !ainstances[refname] ) {
-						loaded = false;
-					} else if( (ainstances[refname]) && (!ainstances[refname]["loaded"]) ) {
-						loaded = false;
-					}
-					uiSchema[propname] = {
-						id: {"ui:widget": "select"}, 
-						uuid: {"ui:widget": "hidden"}, 
-						created: {"ui:widget": "hidden"}, 
-						modified: {"ui:widget": "hidden"},
-					}
-				}
-			}
-		}
-
-		if( !loaded ) {
-			nschema = {};
-			uiSchema = {};
-		} else if( !nschema ) {
-			nschema = {};
-			uiSchema = {};
-		} else if( !uiSchema ) {
-			nschema = {};
-			uiSchema = {};
-		} else {
-			// 
-		}
+		nschema = {};
+		uiSchema = {};
 
 		const renderForm = function() {
 			if( nschema ) {
@@ -444,20 +245,9 @@ class CreateInstanceDialog extends Component {
 					<DialogContentText>
 						Create new {typename}.
 					</DialogContentText>
-					{/* <InputLabel id="label">Type</InputLabel> */}
-					{/* <Select 
-						labelId="label" 
-						id="type" 
-						value={form} 
-						onChange={(event) => _this.selectForm(event.target.value)} >
-						{formnames.map((item) => <MenuItem value={item}>{item}</MenuItem>)}
-					</Select> */}
 					{renderForm()}
 				</DialogContent>
 				<DialogActions>
-					{/* <Button onClick={this.onCloseDialog} color="primary">
-						Cancel
-					</Button> */}
 					<CancelButton>
 					</CancelButton>
 					<Button onClick={this.onCreate} color="primary">
@@ -481,7 +271,6 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-
 function mapStateToProps(state, ownProps) {
 
 	const {
@@ -490,68 +279,16 @@ function mapStateToProps(state, ownProps) {
 	} = ownProps;
 
 	const {
-		api, 
-		// namespace
+		api
 	} = state;
 
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entity: schema
-	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
-
-	// console.log( " SCHEMA >> " );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log( schema );
-	// console.log( " << SCHEMA " );
-
-	/*
-	 * Load dependencies
-	 */
-	var ainstances = {};
-	// ainstances[typename] = instances;
-	if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-		for( var propertyname in schema["entity"]["properties"] ) {
-			var property = schema["entity"]["properties"][propertyname];
-			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-				// if( property && property["type"] ) {
-				if( property ) {
-					if( property["type"] == "string" ) {
-						// 
-					} else if( property["$ref"] ) {
-						// property["$ref"].replace("#/definitions/", "")
-						const dtypename = property["$ref"].replace("#/definitions/", "");
-						const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-						ainstances[dtypename] = dinstances;
-					} else if( (property["type"] == "array") && 
-							   (property["items"]) ) {
-						// property["items"]["$ref"].replace("#/definitions/", "")
-						const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-						const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-						ainstances[dtypename] = dinstances;
-					}
-				}
-			}
-		}
-	}
 
 	return {
 		api, 
 		namespace: namespace, 
 		typename: typename, 
-		// type: type, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
-		schema: schema, 
-		ainstances: ainstances
+		schema: schema
 	}
 
 };

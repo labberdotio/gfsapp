@@ -5,54 +5,13 @@
 // 
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-import { createBrowserHistory } from 'history';
-// import { useHistory } from "react-router-dom";
 
-// import Container from '@material-ui/core/Container';
-// import Grid from '@material-ui/core/Grid';
-
-// import TreeView from '@material-ui/lab/TreeView';
-// import TreeItem from '@material-ui/lab/TreeItem';
-
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-// import AddIcon from '@material-ui/icons/Add';
-
-// import MaterialTable from 'material-table';
-
-// import Backdrop from '@material-ui/core/Backdrop';
-// import CircularProgress from '@material-ui/core/CircularProgress';
-
-// import SpeedDial from '@material-ui/lab/SpeedDial';
-// import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-// import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-
-// import InstancesView from './Instances'
 import ListView from './List'
-// import { Link } from '@material-ui/core';
 import {
 	Link,
 } from "react-router-dom";
-
-import history from '../history'
-
-// import { 
-// 	loadEntitiesIntoState, 
-// 	invalidateEntitiesInState, 
-// 	refreshEntityInState 
-// } from '../actions/Entity'
-
-// import { 
-// 	getEntitiesFromState 
-// } from '../stores/Entity'
-
-// const history = createBrowserHistory();
-// const history = useHistory();
-// 
-// const queryString = require('query-string');
 
 const styles = theme => ({
 
@@ -64,22 +23,11 @@ const styles = theme => ({
 
 });
 
-// const history = useHistory();
-// const history = createBrowserHistory();
-// const history = createBrowserHistory({forceRefresh:true});
-
-
-// export const test = () => {
-//     let history = useHistory();
-//     navigate('/dashboard');
-// };
-
 class Instances extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			
 		}
 
 		var _this = this;
@@ -98,28 +46,8 @@ class Instances extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		const {
-			// api, 
-			// namespace, 
-			title, 
-            description, 
-			typename, 
-			type, 
-			schema, 
-			// isloading, 
-			// isloaded, 
-			// isfailed, 
-			// istimestamp, 
-			// instances, 
-			// ainstances
 		} = this.props;
 
-		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadInstances(api, namespace, typename);
-		// 	}
-		// }
-
-		// this.tableRef.current && this.tableRef.current.onQueryChange();
 		this.tableRef.current && !this.tableRef.current.isLoading && this.tableRef.current.onQueryChange();
 
 	}
@@ -127,36 +55,12 @@ class Instances extends Component {
 	componentDidMount() {
 
 		const {
-			// api, 
-			// namespace, 
-			title, 
-            description, 
-			typename, 
-			type, 
-			schema, 
-			// isloading, 
-			// isloaded, 
-			// isfailed, 
-			// istimestamp, 
-			// instances, 
-			// ainstances
 		} = this.props;
-
-		// if( (!this.props.isloading) && (!this.props.isloaded) && (!this.props.isfailed) ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadInstances(api, namespace, typename);
-		// 	}
-		// }
 
 		// this.tableRef.current && this.tableRef.current.onQueryChange();
 
 	}
 
-	/*
-	 * 
-	 */
-
-	// getListCols(namespace, typename, type, schema, instances, ainstances) {
 	getListCols(namespace, typename, type, schema) {
 
 		var cols = [];
@@ -229,72 +133,12 @@ class Instances extends Component {
 		return cols;
 	}
 
-	// getListRows(namespace, typename, type, schema, instances, ainstances) {
-	// 
-	// 	// var cols = [];
-	// 	// cols.push({
-	// 	// 	title: "_id",
-	// 	// 	field: "_id",
-	// 	// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_id"]}</a>
-	// 	// });
-	// 	// // cols.push({
-	// 	// // 	title: "link",
-	// 	// // 	field: "link",
-	// 	// // 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-	// 	// // });
-	// 	// cols.push({
-	// 	// 	title: "_uuid",
-	// 	// 	field: "_uuid"
-	// 	// });
-	// 	// cols.push({
-	// 	// 	title: "_name",
-	// 	// 	field: "_name",
-	// 	// 	render: rowData => <a href={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</a>
-	// 	// });
-	// 	// // cols.push({
-	// 	// // 	title: "_created",
-	// 	// // 	field: "_created"
-	// 	// // });
-	// 	// // cols.push({
-	// 	// // 	title: "_modified",
-	// 	// // 	field: "_modified"
-	// 	// // });
-	// 	// 
-	// 	// if( type ) {
-	// 	// 	if( type["properties"] ) {
-	// 	// 		for( var property in type["properties"] ) {
-	// 	// 			if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(property) ) {
-	// 	// 				cols.push({
-	// 	// 					title: property,
-	// 	// 					field: property
-	// 	// 				});
-	// 	// 			}
-	// 	// 		}
-	// 	// 	}
-	// 	// }
-	// 
-	// 	var rows = [];
-	// 	if( instances ) {
-	// 		for( var instanceid in instances ) {
-	// 			var instance = instances[instanceid];
-	// 			if( instance ) {
-	// 				rows.push(instance);
-	// 			}
-	// 		}
-	// 	}
-	// 
-	// 	return rows;
-	// }
-
 	getDataURL(namespace, typename, type, schema) {
 		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
 		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
-		console.log(" >>> DATA URL: ");
-		console.log(dataurl);
 		return dataurl;
 	}
 
-	// getActions(namespace, typename, type, schema, instances, ainstances) {
 	getActions(namespace, typename, type, schema) {
 
 		const {
@@ -326,7 +170,6 @@ class Instances extends Component {
 
 	}
 
-	// getEditable(namespace, typename, type, schema, instances, ainstances) {
 	getEditable(namespace, typename, type, schema) {
 
 		const {
@@ -344,10 +187,6 @@ class Instances extends Component {
 
 	}
 
-	/*
-	 *
-	 */
-
 	makeInstanceLink(namespace, type, id) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
@@ -357,30 +196,20 @@ class Instances extends Component {
 	}
 
 	onRowClick(event, rowData, togglePanel) {
-		// 	
 	}
 
 	render() {
 
 		const {
-			api, 
 			namespace, 
 			title, 
             description, 
 			typename, 
 			type, 
 			schema, 
-			// isloading, 
-			// isloaded, 
-			// isfailed, 
-			// istimestamp, 
-			// instances, 
-			// ainstances
 		} = this.props;
 
 		const { classes } = this.props;
-
-		// var backdropOpen = false;
 
 		var cols = [];
 		cols.push({
@@ -417,40 +246,8 @@ class Instances extends Component {
 			}
 		}
 
-		// var rows = [];
-		// if( instances ) {
-		// 	for( var instanceid in instances ) {
-		// 		var instance = instances[instanceid];
-		// 		if( instance ) {
-		// 			rows.push(instance);
-		// 		}
-		// 	}
-		// }
-
-		// const onRowClick = function(event, rowData, togglePanel) {
-		// 	// window.location.href = "/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"];
-		// 	history.push("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
-		// 	// document.location.reload();
-		// 	// history.go("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
-		// }
-
 		return (
 			<>
-			{/* <Container 
-				className={classes.listContainer} 
-				// className="listContainer" 
-				// maxWidth="false"
-				> */}
-			{/* <Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop> */}
-			{/* <Grid 
-				className={} 
-				// className="" 
-				container 
-				xs={12} 
-				spacing={0} 
-			> */}
 				<ListView 
 					title={title} 
 					description={description} 
@@ -459,18 +256,8 @@ class Instances extends Component {
 						namespace, 
 						typename, 
 						type, 
-						schema, 
-						// instances, 
-						// ainstances
+						schema
 					)}
-					// rows={this.getListRows(
-					// 	namespace, 
-					// 	typename, 
-					// 	type, 
-					// 	schema, 
-					// 	instances, 
-					// 	ainstances
-					// )}
 					dataurl={this.getDataURL(
 						namespace, 
 						typename, 
@@ -481,52 +268,27 @@ class Instances extends Component {
 						namespace, 
 						typename, 
 						type, 
-						schema, 
-						// instances, 
-						// ainstances
+						schema
 					)}
 					editable={this.getEditable(
 						namespace, 
 						typename, 
 						type, 
-						schema, 
-						// instances, 
-						// ainstances
+						schema
 					)}
 					detailLink={(rowData) => this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} />
-			{/* </Grid> */}
-			{/* </Container> */}
 			</>
 		);
 	}
 
 }
 
-// Instances.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
-
 function mapDispatchToProps(dispatch) {
 	return {
-
-		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename))
-
 	}
 }
 
 function mapStateToProps(state, ownProps) {
-
-	// const { match } = ownProps;
-
-	// const title = ownProps["title"];
-    // const description = ownProps["description"];
-
-	// // const typename = match["params"]["typename"];
-	// const typename = ownProps["typename"];
-	// const type = ownProps["type"];
-	// const schema = ownProps["schema"];
-	// const instances = ownProps["instances"];
-	// const ainstances = ownProps["ainstances"];
 
 	const {
 		title, 
@@ -534,41 +296,21 @@ function mapStateToProps(state, ownProps) {
 		typename, 
 		type, 
 		schema, 
-		// instances, 
-		// ainstances, 
 		editable
 	} = ownProps;	
 
 	const {
-		// api, 
 	} = state;
 
-	// const {
-	// 	loading: isloading, 
-	// 	loaded: isloaded, 
-	// 	failed: isfailed, 
-	// 	timestamp: istimestamp, 
-	// 	entities: instances
-	// } = getEntitiesFromState(state, api, namespace, typename);
-
 	return {
-		// api, 
-		// namespace: namespace, 
 		title: title, 
         description: description, 
 		typename: typename, 
 		type: type, 
 		schema: schema, 
-		// isloading: isloading, 
-		// isloaded: isloaded, 
-		// isfailed: isfailed, 
-		// istimestamp: istimestamp, 
-		// instances: instances, 
-		// ainstances: ainstances, 
 		editable: editable
 	}
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Instances);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Instances));

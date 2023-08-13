@@ -10,7 +10,6 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
 
 import debounce from 'lodash.debounce';
-import InputBase from '@material-ui/core/InputBase';
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -21,7 +20,6 @@ import {
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -101,17 +99,9 @@ class Namespaces extends Component {
 
 	}
 
-	/*
-	 * 
-	 */
-
 	onContextCommand(type, command, selected, allselected) {
 
 	};
-
-	/*
-	 *
-	 */
 
 	getTreeData(vertexes, edges) {
 
@@ -123,21 +113,13 @@ class Namespaces extends Component {
 	}
 
 	updateSearch(event) {
-		
 	}
 
 	render() {
 
-		var _this = this;
-
 		const {
-			// api, 
-			namespace, 
 			nsloading, 
-			nsloaded, 
-			nsfailed, 
-			namespaces, 
-			search
+			namespaces 
 		} = this.props;
 
 		const { classes } = this.props;
@@ -158,9 +140,6 @@ class Namespaces extends Component {
 			backdropOpen = true;
 		}
 
-		// const debouncedUpdateSearch = debounce((event) => this.updateSearch(event), 1000);
-		const debouncedUpdateSearch = debounce((event) => this.updateSearch(event), 250);
-
 		return (
 			<>
 			<Container 
@@ -177,7 +156,6 @@ class Namespaces extends Component {
 			</Breadcrumbs>
 
 			<Grid 
-				// className={} 
 				className="" 
 				container 
 				xs={12} 
@@ -234,9 +212,7 @@ function mapStateToProps(state, ownProps) {
 	} = ownProps;
 
 	const {
-		api,
-		// namespace,
-		namespaces
+		api
 	} = state;
 
 	const {
@@ -259,5 +235,4 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Namespaces);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Namespaces));
