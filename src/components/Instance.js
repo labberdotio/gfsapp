@@ -230,7 +230,7 @@ class Instance extends Component {
 						instance
 					)} />
 				{ instance && dependencies && dependencies.map(function(item) {
-					if(item.cardinality == "multiple") {
+					if(item && item.cardinality == "multiple") {
 						var deptypename = schema["properties"][item.name]["items"]["$ref"].replace("#/definitions/", "");
 						var deptype = schema["definitions"][deptypename];
 						var depschema = schema["definitions"][deptypename];
@@ -245,7 +245,7 @@ class Instance extends Component {
 								schema={ depschema } 
 								/>
 							</>
-					} else {
+					} else if(item && item.value) {
 						var deptypename = schema["properties"][item.name]["$ref"].replace("#/definitions/", "");
 						var deptype = schema["definitions"][deptypename];
 						var depschema = schema["definitions"][deptypename];
