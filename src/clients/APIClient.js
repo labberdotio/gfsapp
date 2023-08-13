@@ -13,7 +13,12 @@ class APIClient {
 		this.hostname = hostname;
 		this.port = port;
 
-		this.url = 'http://' + hostname + ':' + port + '/api/v1.0';
+		// var version = "v1.0"
+		var version = "v2.0"
+
+		// this.url = 'http://' + hostname + ':' + port + '/api/v1.0';
+		this.url = 'http://' + hostname + ':' + port + '/api/' + version;
+
 		this.jsontype = 'application/json';
 		this.yamltype = 'application/yaml';
 		this.texttype = 'text/plain';

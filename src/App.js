@@ -284,10 +284,10 @@ class ThemeProvider extends React.Component {
 
 function getType(props, types) {
 	var typename = props["match"]["params"]["typename"];
-	if( types ) {
-		for( var typeid in types ) {
+	if( types["data"] ) {
+		for( var typeid in types["data"] ) {
 			if( typeid ) {
-				var type = types[typeid];
+				var type = types["data"][typeid];
 				if( (type) && (type["name"] == typename) ) {
 					return type;
 				}
@@ -503,10 +503,10 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	 * I have this idea of showing per type specifics here
 	 */
 	var miditems = [];
-	if( types ) {
-		for( var typeid in types ) {
+	if( types["data"] ) {
+		for( var typeid in types["data"] ) {
 			if( typeid ) {
-				var type = types[typeid];
+				var type = types["data"][typeid];
 				if( type ) {
 					miditems.push({
 						"text": type["name"], 
