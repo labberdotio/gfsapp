@@ -57,6 +57,13 @@ class Instance extends Component {
 
 	}
 
+	getDataURL(namespace, typename, type, schema, instance, instancefield) {
+		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
+		// var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
+		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
+		return dataurl;
+	}
+
 	getProperties(namespace, typename, type, schema, instance) {
 
 		var properties = [];
@@ -218,6 +225,13 @@ class Instance extends Component {
 			instance
 		);
 
+		// var dataurl = this.getDataURL(
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// );
+
 		return (
 			<>
 				<DetailView 
@@ -244,6 +258,14 @@ class Instance extends Component {
 								typename={ deptypename } 
 								type={ deptype } 
 								schema={ depschema } 
+								dataurl={_this.getDataURL(
+									namespace, 
+									typename, // deptypename, 
+									type, // deptype, 
+									schema, // depschema, 
+									instance, // item && item.value, 
+									item && item["name"]
+								)} 
 								showdeps={false} />
 							</>
 					} else if(item && item.value) {
