@@ -5,13 +5,10 @@
 // 
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { createBrowserHistory } from 'history';
 import { useHistory } from "react-router-dom";
 
-// import { Router, Switch, Route, Link } from "react-router-dom";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -22,43 +19,20 @@ import {
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import MuiLink from '@material-ui/core/Link';
-// import { Link } from '@material-ui/core';
-// import {
-// 	Link,
-// } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-
-// import Typography from '@material-ui/core/Typography';
-// import Paper from '@material-ui/core/Paper';
-
-// import TreeView from '@material-ui/lab/TreeView';
-// import TreeItem from '@material-ui/lab/TreeItem';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-import MaterialTable from 'material-table';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import Button from '@material-ui/core/Button';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import AddIcon from '@material-ui/icons/Add';
-
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import InstancesView from './Instances'
 import InstanceView from './Instance'
-// import DependentsView from './Dependents'
 
 import { 
 	loadEntityIntoState, 
@@ -69,11 +43,6 @@ import {
 	getEntityFromState, 
 	getEntitiesFromState 
 } from '../stores/Entity'
-
-// const history = createBrowserHistory();
-// const history = useHistory();
-// 
-// const queryString = require('query-string');
 
 import APIClient from '../clients/APIClient';
 
@@ -92,40 +61,6 @@ const styles = theme => ({
 
 });
 
-// function TreeViewItems(props) {
-// 	const history = useHistory();
-// 	var items = props.items;
-// 	var onSelectFn = props.onSelect;
-// 	return (
-// 		<>
-// 		{Object.keys(items).map((key, index) => ( 
-// 			<TreeItem 
-// 				key={ key }
-// 				nodeId={ "" + items[key]["_id"] }
-// 				label={ "" + items[key]["_label"] }
-// 				onClick={event => {
-// 					event.stopPropagation();
-// 					event.preventDefault();
-// 					if( items[key]["instance"] ) {
-// 						onSelectFn(items[key]["instance"]);
-// 					}
-// 					if( items[key]["link"] ) {
-// 						history.push(items[key]["link"]);
-// 					}
-// 				}}>
-// 				{items[key]["tree"] && 
-// 				Object.keys(items[key]["tree"]).length > 0 &&
-// 					<TreeViewItems 
-// 						onSelect={onSelectFn} 
-// 						items={items[key]["tree"]}
-// 					/>
-// 				}
-// 			</TreeItem>
-// 		))}
-// 		</>
-// 	)
-// }
-
 function handleClick(event) {
 	// event.preventDefault();
 }
@@ -134,7 +69,6 @@ export const BackNavButton = () => {
     let history = useHistory();
     return (
         <>
-			{/* <button onClick={() => history.goBack()}>Back</button> */}
 			<Button
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => history.goBack()}>
@@ -148,7 +82,6 @@ export const ForwardNavButton = () => {
     let history = useHistory();
     return (
 		<>
-			{/* <button onClick={() => history.goForward()}>Forward</button> */}
 			<Button
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => history.goForward()}>
@@ -198,26 +131,8 @@ class RootInstance extends Component {
 			typename, 
 			instanceid, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			// instances, 
-			// ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
 			schema
 		} = this.props;
-
-		// if( (!this.props.instances["loading"]) && 
-		// 	(!this.props.instances["loaded"]) && 
-		// 	(!this.props.instances["failed"]) ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadInstances(api, namespace, typename);
-		// 	}
-		// }
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -238,48 +153,6 @@ class RootInstance extends Component {
 			}
 			// }
 		}
-
-		/*
-		 * Load dependencies
-		 */
-		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-		// 	for( var propertyname in schema["entity"]["properties"] ) {
-		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-		// 			// if( property && property["type"] ) {
-		// 			if( property ) {
-		// 				if( property["type"] == "string" ) {
-		// 					// 
-		// 				} else if( property["$ref"] ) {
-		// 					// property["$ref"].replace("#/definitions/", "")
-		// 					const dtypename = property["$ref"].replace("#/definitions/", "");
-		// 					if( (!this.props.ainstances[dtypename]["loading"]) && 
-		// 						(!this.props.ainstances[dtypename]["loaded"]) && 
-		// 						(!this.props.ainstances[dtypename]["failed"]) ) {
-		// 						// if( dtypename ) {
-		// 						if( api && namespace && dtypename ) {
-		// 							this.props.loadInstances(api, namespace, dtypename);
-		// 						}
-		// 						// }
-		// 					}
-		// 				} else if( (property["type"] == "array") && 
-		// 						   (property["items"]) ) {
-		// 					// property["items"]["$ref"].replace("#/definitions/", "")
-		// 					const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-		// 					if( (!this.props.ainstances[dtypename]["loading"]) && 
-		// 						(!this.props.ainstances[dtypename]["loaded"]) && 
-		// 						(!this.props.ainstances[dtypename]["failed"]) ) {
-		// 						// if( dtypename ) {
-		// 						if( api && namespace && dtypename ) {
-		// 							this.props.loadInstances(api, namespace, dtypename);
-		// 						}
-		// 						// }
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
@@ -300,26 +173,8 @@ class RootInstance extends Component {
 			typename, 
 			instanceid, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			// instances, 
-			// ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
 			schema
 		} = this.props;
-
-		// if( (!this.props.instances["loading"]) && 
-		// 	(!this.props.instances["loaded"]) && 
-		// 	(!this.props.instances["failed"]) ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadInstances(api, namespace, typename);
-		// 	}
-		// }
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -340,48 +195,6 @@ class RootInstance extends Component {
 			}
 			// }
 		}
-
-		/*
-		 * Load dependencies
-		 */
-		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-		// 	for( var propertyname in schema["entity"]["properties"] ) {
-		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-		// 			// if( property && property["type"] ) {
-		// 			if( property ) {
-		// 				if( property["type"] == "string" ) {
-		// 					// 
-		// 				} else if( property["$ref"] ) {
-		// 					// property["$ref"].replace("#/definitions/", "")
-		// 					const dtypename = property["$ref"].replace("#/definitions/", "");
-		// 					if( (!this.props.ainstances[dtypename]["loading"]) && 
-		// 						(!this.props.ainstances[dtypename]["loaded"]) && 
-		// 						(!this.props.ainstances[dtypename]["failed"]) ) {
-		// 						// if( dtypename ) {
-		// 						if( api && namespace && dtypename ) {
-		// 							this.props.loadInstances(api, namespace, dtypename);
-		// 						}
-		// 						// }
-		// 					}
-		// 				} else if( (property["type"] == "array") && 
-		// 						   (property["items"]) ) {
-		// 					// property["items"]["$ref"].replace("#/definitions/", "")
-		// 					const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-		// 					if( (!this.props.ainstances[dtypename]["loading"]) && 
-		// 						(!this.props.ainstances[dtypename]["loaded"]) && 
-		// 						(!this.props.ainstances[dtypename]["failed"]) ) {
-		// 						// if( dtypename ) {
-		// 						if( api && namespace && dtypename ) {
-		// 							this.props.loadInstances(api, namespace, dtypename);
-		// 						}
-		// 						// }
-		// 					}
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
@@ -439,74 +252,6 @@ class RootInstance extends Component {
 		}
 	}
 
-	/*
-	 * 
-	 */
-
-	// getTreeData() {
-	// 
-	// 	const {
-	// 		api, 
-	// 		namespace, 
-	// 		typename, 
-	// 		instanceid, 
-	// 		type, 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		instances, 
-	// 		ainstances, 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		// , 
-	// 		schema
-	// 	} = this.props;
-	// 
-	// 	var treestruc = {
-	// 	};
-	// 
-	// 	treestruc[typename] = {
-	// 		id: typename, 
-	// 		name: typename, 
-	// 		label: typename, 
-	// 		tree: {
-	// 		}
-	// 	}
-	// 
-	// 	if( instances && instances["entities"] ) {
-	// 		for( var cinstanceid in instances["entities"] ) {
-	// 			var instance = instances["entities"][cinstanceid];
-	// 			if( instance ) {
-	// 
-	// 				// if( !(instance["_label"] in treestruc) ) {
-	// 				// 	treestruc[instance["_label"]] = {
-	// 				// 		id: instance["_label"], 
-	// 				// 		name: instance["_label"], 
-	// 				// 		label: instance["_label"], 
-	// 				// 		tree: {
-	// 				// 		}
-	// 				// 	};
-	// 				// }
-	// 
-	// 				// treestruc[instance["_label"]]["tree"][instance["name"]] = {
-	// 				treestruc[instance["_label"]]["tree"][instance["_id"]] = {
-	// 					id: instance["_id"], 
-	// 					name: instance["name"], 
-	// 					label: instance["name"], // + "." + instance["_label"], 
-	// 					link: this.makeInstanceLink(namespace, instance), 
-	// 					instance: this.makeInstance(instance), 
-	// 					tree: {
-	// 					}
-	// 				};
-	// 
-	// 			}
-	// 		}
-	// 	}
-	// 
-	// 	return treestruc;
-	// }
 
 	makeInstanceLink(namespace, type, id) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id;
@@ -530,22 +275,10 @@ class RootInstance extends Component {
 			typename, 
 			instanceid, 
 			type, 
-			// , 
-			// , 
-			// , 
-			// , 
-			// instances, 
-			// ainstances, 
-			// , 
-			// , 
-			// , 
-			// , 
 			schema
 		} = this.props;
 
 		const { classes } = this.props;
-
-		// var treestruc = this.getTreeData(instances["entities"]);
 
 		var backdropOpen = false;
 
@@ -560,43 +293,11 @@ class RootInstance extends Component {
 		}
 
 		var instance = undefined;
-		// if( instanceid ) {
-		// 	if( instances["entities"] && instances["entities"][instanceid] ) {
-		// 		var cinstance = instances["entities"][instanceid];
-		// 		if( cinstance ) {
-		// 			instance = cinstance;
-		// 		}
-		// 	}
-		// }
-
-		// var properties = [];
-		// var dependencies = [];
-
-		// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-		// 	for( var propertyname in schema["entity"]["properties"] ) {
-		// 		var property = schema["entity"]["properties"][propertyname];
-		// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-		// 			if( property && property["type"] ) {
-		// 				if( property["type"] == "string" ) {
-		// 					properties.push(propertyname);
-		// 				} else if( (property["type"] == "array") && 
-		// 						   (property["items"]) ) {
-		// 					dependencies.push({
-		// 						"name": propertyname,
-		// 						"type": property["items"]["$ref"].replace("#/definitions/", "")
-		// 					});
-		// 				}
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 		return (
 			<>
 			<Container 
 				className={classes.mainContainer} 
-				// className="mainContainer" 
-				// maxWidth="false"
 				>
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
@@ -616,51 +317,12 @@ class RootInstance extends Component {
 				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs>
 			<Grid 
-				// className={} 
 				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
 			>
-				{/* <Grid 
-					className={classes.treeGrid} 
-					// className="treeGrid" 
-					item 
-					xs={3} 
-					spacing={0} 
-				> */}
-					{/* <TreeView
-						className={classes.tree} 
-						// className="tree" 
-						defaultCollapseIcon={<ExpandMoreIcon />}
-						defaultExpandIcon={<ChevronRightIcon />}
-						defaultExpanded={[typename]}
-					>
-						<TreeViewItems 
-							onSelect={item => {
-								// 
-							}}
-							items={treestruc}
-						/>
-					</TreeView> */}
-					{/* <List component="nav" className={classes.root} aria-label="Entities">
-						{ instances && instances["entities"] && Object.entries(instances["entities"]).map(([entityid, entity]) => (
-						<ListItem 
-							button 
-							selected={false} 
-							component={Link} 
-							to={this.makeInstanceLink(namespace, entity)} 
-							// onClick={onItemClick(title)}
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{entity["name"]}</ListItemText>
-						</ListItem>
-						))}
-					</List> */}
-				{/* </Grid> */}
-
 				<Grid 
-					// className={classes.leftGrid} 
 					className="leftGrid" 
 					container 
 					item 
@@ -674,13 +336,10 @@ class RootInstance extends Component {
 						typename={typename} 
 						type={type["entity"]} 
 						schema={schema["entity"]} 
-						// instances={instances["entities"]} 
-						// ainstances={ainstances} 
 						editable={false} />
 				</Grid>
 
 				<Grid 
-					// className={classes.rightGrid} 
 					className="rightGrid" 
 					container 
 					item 
@@ -696,7 +355,6 @@ class RootInstance extends Component {
 						schema={schema["entity"]} 
 						instanceid={instanceid} 
 						instance={instance} 
-						// ainstances={ainstances} 
 						/>
 				</Grid>
 			</Grid>
@@ -707,14 +365,8 @@ class RootInstance extends Component {
 
 }
 
-// RootInstance.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
-
 function mapDispatchToProps(dispatch) {
 	return {
-
-		// loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
 
 		loadType: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "type", typename)),
 
@@ -736,71 +388,9 @@ function mapStateToProps(state, ownProps) {
 		// namespace
 	} = state;
 
-	// // const {
-	// // 	loading: , 
-	// // 	loaded: , 
-	// // 	failed: , 
-	// // 	timestamp: , 
-	// // 	entities: instances
-	// // } = getEntitiesFromState(state, api, namespace, typename);
-	// const instances = getEntitiesFromState(state, api, namespace, typename);
-
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entity: schema
-	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const type = getEntityFromState(state, api, namespace, "type", typename);
-	console.log(type);
 
-	// const {
-	// 	loading: , 
-	// 	loaded: , 
-	// 	failed: , 
-	// 	timestamp: , 
-	// 	entity: schema
-	// } = getEntityFromState(state, api, namespace, "schema", typename);
 	const schema = getEntityFromState(state, api, namespace, "schema", typename);
-
-	// console.log( " SCHEMA >> " );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log(  );
-	// console.log( schema );
-	// console.log( " << SCHEMA " );
-
-	/*
-	 * Load dependencies
-	 */
-	// var ainstances = {};
-	// ainstances[typename] = instances;
-	// if( schema && schema["entity"] && schema["entity"]["properties"] ) {
-	// 	for( var propertyname in schema["entity"]["properties"] ) {
-	// 		var property = schema["entity"]["properties"][propertyname];
-	// 		if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-	// 			// if( property && property["type"] ) {
-	// 			if( property ) {
-	// 				if( property["type"] == "string" ) {
-	// 					// 
-	// 				} else if( property["$ref"] ) {
-	// 					// property["$ref"].replace("#/definitions/", "")
-	// 					const dtypename = property["$ref"].replace("#/definitions/", "");
-	// 					const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-	// 					ainstances[dtypename] = dinstances;
-	// 				} else if( (property["type"] == "array") && 
-	// 						   (property["items"]) ) {
-	// 					// property["items"]["$ref"].replace("#/definitions/", "")
-	// 					const dtypename = property["items"]["$ref"].replace("#/definitions/", "");
-	// 					const dinstances = getEntitiesFromState(state, api, namespace, dtypename);
-	// 					ainstances[dtypename] = dinstances;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 	return {
 		api, 
@@ -808,20 +398,9 @@ function mapStateToProps(state, ownProps) {
 		typename: typename, 
 		instanceid: instanceid, 
 		type: type, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
-		// instances: instances, 
-		// ainstances: ainstances, 
-		// : , 
-		// : , 
-		// : , 
-		// : , 
 		schema: schema
 	}
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(RootInstance);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstance));

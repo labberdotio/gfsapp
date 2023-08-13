@@ -101,17 +101,9 @@ class Namespaces extends Component {
 
 	}
 
-	/*
-	 * 
-	 */
-
 	onContextCommand(type, command, selected, allselected) {
 
 	};
-
-	/*
-	 *
-	 */
 
 	getTreeData(vertexes, edges) {
 
@@ -123,7 +115,6 @@ class Namespaces extends Component {
 	}
 
 	updateSearch(event) {
-		
 	}
 
 	render() {
@@ -131,7 +122,6 @@ class Namespaces extends Component {
 		var _this = this;
 
 		const {
-			// api, 
 			namespace, 
 			nsloading, 
 			nsloaded, 
@@ -177,7 +167,6 @@ class Namespaces extends Component {
 			</Breadcrumbs>
 
 			<Grid 
-				// className={} 
 				className="" 
 				container 
 				xs={12} 
@@ -235,7 +224,6 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api,
-		// namespace,
 		namespaces
 	} = state;
 
@@ -259,5 +247,4 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Namespaces);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Namespaces));

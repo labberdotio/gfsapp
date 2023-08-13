@@ -5,21 +5,13 @@
 // 
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { createBrowserHistory } from 'history';
-import { useHistory } from "react-router-dom";
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
@@ -49,9 +41,6 @@ class Detail extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		const {
-			title, 
-            description, 
-			properties
 		} = this.props;
 
 	}
@@ -59,16 +48,9 @@ class Detail extends Component {
 	componentDidMount() {
 
 		const {
-			title, 
-            description, 
-			properties
 		} = this.props;
 
 	}
-
-	/*
-	 *
-	 */
 
 	render() {
 
@@ -80,59 +62,14 @@ class Detail extends Component {
 
 		const { classes } = this.props;
 
-		// const instance = properties;
-
 		return (
 			<>
-			{/* <Container
-				className={classes.mainContainer} 
-			> */}
 			<Paper
 				className={classes.mainPaper} 
 			>
 
 				<h1>{title}</h1>
 				<h5>{description}</h5>
-
-				{/* {instanceid && instance &&
-					<p><h1>{instanceid}</h1></p>
-				} */}
-
-				{/* {instance && instance["_name"] &&
-					<h1>{instance["_name"]}</h1>
-				}
-
-				{instance && instance["_label"] &&
-					<h2>{instance["_label"]}</h2>
-				}
-
-				{instance && instance["_id"] &&
-					<p><label>ID: </label>{instance["_id"]}</p>
-				}
-
-				{instance && instance["_uuid"] &&
-					<p><label>UUID: </label>{instance["_uuid"]}</p>
-				}
-
-				{instance && instance["_created"] &&
-					<p><label>Created: </label>{instance["_created"]}</p>
-				}
-
-				{instance && instance["_modified"] &&
-					<p><label>Modified: </label>{instance["_modified"]}</p>
-				} */}
-
-				{/* { instance && Object.keys(instance).map((item, i) => (
-					<h3>{item}: {instance[item]}</h3>
-				))} */}
-
-				{/* { schema && schema["properties"] && Object.keys(schema["properties"]).map((item, i) => (
-					<h3>{item}</h3>
-				))} */}
-
-				{/* { properties && properties.map((item, i) => (
-					<p><label>{item.name}: </label>{ item.value }</p>
-				))} */}
 
 				<List component="nav" className={classes.root} aria-label="Properties">
 					{ properties && properties.map((item, i) => (
@@ -145,16 +82,11 @@ class Detail extends Component {
 				</List>
 
 			</Paper>
-			{/* </Container> */}
 			</>
 		);
 	}
 
 }
-
-// Detail.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
 
 function mapDispatchToProps(dispatch) {
 	return {
@@ -175,5 +107,4 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Detail);
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Detail));
