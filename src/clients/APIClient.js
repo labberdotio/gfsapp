@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -47,6 +47,24 @@ class APIClient {
 			return this.url + '/' + namespace + '/' + resource + '/' + path;
 		}
 		return this.url + '/' + namespace + '/' + resource;
+	}
+
+	/*
+	 * Have to go back to commit cc6304f for this.
+	 * Sun Jul 26 20:54:32 2020 -0700
+	 * Sun Mar 29 16:20:36 2020 -0500
+	 */
+	getInstance(namespace, typename, instanceid, callback) {
+		fetch(this.url + '/' + namespace + '/' + typename +  '/' + instanceid, {
+			method: 'GET',
+			headers: {
+				'Accept': this.jsontype // this.type
+			}
+		})
+		.then(res => res.json())
+		.then((data) => {
+			callback(data);
+		});
 	}
 
 }

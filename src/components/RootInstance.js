@@ -75,6 +75,8 @@ import {
 // 
 // const queryString = require('query-string');
 
+import APIClient from '../clients/APIClient';
+
 const styles = theme => ({
 
 	mainContainer: {
@@ -160,16 +162,30 @@ class RootInstance extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			
-		}
-
-		var _this = this;
-
+		this.state = this.calcState({
+			insloading: false, 
+			insloaded: false, 
+			insfailed: false, 
+			instanceid: false, 
+			instance: false
+		});
+		// this.apiClient = new APIClient();
 	}
 
 	state = {
+		insloading: false, 
+		insloaded: false, 
+		insfailed: false, 
+		instanceid: false, 
+		instance: false
 	};
+
+	calcState(state) {
+
+		state = Object.assign({}, this.state, state)
+
+		return state;
+	}
 
 	// componentWillUpdate(nextProps, nextState) {
 	// }
@@ -265,6 +281,15 @@ class RootInstance extends Component {
 		// 	}
 		// }
 
+		/*
+		 * Have to go back to commit cc6304f for this.
+		 * Sun Jul 26 20:54:32 2020 -0700
+		 * Sun Mar 29 16:20:36 2020 -0500
+		 */
+		if( instanceid ) {
+			this.loadInstance(api, namespace, typename, instanceid)
+		}
+
 	}
 
 	componentDidMount() {
@@ -358,6 +383,60 @@ class RootInstance extends Component {
 		// 	}
 		// }
 
+		/*
+		 * Have to go back to commit cc6304f for this.
+		 * Sun Jul 26 20:54:32 2020 -0700
+		 * Sun Mar 29 16:20:36 2020 -0500
+		 */
+		if( instanceid ) {
+			this.loadInstance(api, namespace, typename, instanceid)
+		}
+
+	}
+
+	/*
+	 * Have to go back to commit cc6304f for this.
+	 * Sun Jul 26 20:54:32 2020 -0700
+	 * Sun Mar 29 16:20:36 2020 -0500
+	 */
+	loadInstance(api, namespace, typename, instanceid) {
+		if( this.state.instanceid != instanceid ) {
+			this.setState({
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false, 
+				instanceid: instanceid, 
+				instance: false
+			});
+		}
+		if( (!this.state.insloading) && 
+			(!this.state.insloaded) && 
+			(!this.state.insfailed) ) {
+			this.setState({
+				insloading: true, 
+				insloaded: false, 
+				insfailed: false, 
+				instanceid: instanceid, 
+				instance: false
+			});
+			this.apiClient = new APIClient(
+				api.api.host, 
+				api.api.port
+			);
+			this.apiClient.getInstance(
+				namespace, 
+				typename, 
+				instanceid, 
+				(data) => {
+					this.setState({
+						insloading: false, 
+						insloaded: true, 
+						insfailed: false, 
+						instanceid: instanceid, 
+						instance: data
+					});
+				});
+		}
 	}
 
 	/*
@@ -469,6 +548,16 @@ class RootInstance extends Component {
 		// var treestruc = this.getTreeData(instances["entities"]);
 
 		var backdropOpen = false;
+
+		/*
+		 * Have to go back to commit cc6304f for this.
+		 * Sun Jul 26 20:54:32 2020 -0700
+		 * Sun Mar 29 16:20:36 2020 -0500
+		 */
+		var instance = undefined;
+		if( this.state.instance ) {
+			instance = this.state.instance;
+		}
 
 		var instance = undefined;
 		// if( instanceid ) {
