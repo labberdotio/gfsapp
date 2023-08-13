@@ -231,13 +231,19 @@ class Instance extends Component {
 					)} />
 				{ instance && dependencies && dependencies.map(function(item) {
 					if(item.cardinality == "multiple") {
+						var deptypename = schema["properties"][item.name]["items"]["$ref"].replace("#/definitions/", "");
+						var deptype = schema["definitions"][deptypename];
+						var depschema = schema["definitions"][deptypename];
+						depschema["definitions"] = schema["definitions"];
 						return <>
 							<InstancesView 
-							title={ item && item["_name"] } 
+								title={ item && item["name"] } 
 							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
 							namespace={namespace} 
-							typename={ item && item.type } 
-							type={ item && item.type } />
+								typename={ deptypename } 
+								type={ deptype } 
+								schema={ depschema } 
+								/>
 							</>
 					} else {
 						var deptypename = schema["properties"][item.name]["$ref"].replace("#/definitions/", "");
