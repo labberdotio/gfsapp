@@ -240,13 +240,21 @@ class Instance extends Component {
 							type={ item && item.type } />
 							</>
 					} else {
+						var deptypename = schema["properties"][item.name]["$ref"].replace("#/definitions/", "");
+						var deptype = schema["definitions"][deptypename];
+						var depschema = schema["definitions"][deptypename];
+						depschema["definitions"] = schema["definitions"];
 						return <> 
 							<InstanceView 
-							title={ item && item["_name"] } 
-							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-							namespace={namespace} 
-							typename={ item && item.type } 
-							type={ item && item.type } />
+								title={ item && item["name"] } 
+								description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+								namespace={namespace} 
+								typename={ deptypename } 
+								type={ deptype } 
+								schema={ depschema } 
+								instanceid={item && item.value && item.value["_id"]} 
+								instance={item && item.value} 
+								/>
 							</>
 					}
 				})}
