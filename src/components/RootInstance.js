@@ -271,6 +271,75 @@ class RootInstance extends Component {
 		return instance;
 	}
 
+	makeInstancesView(
+		title, 
+		description, 
+		namespace, 
+		typename, 
+		type, 
+		schema, 
+		dataurl, 
+		editable, 
+		showdeps
+	) {
+
+		var _this = this;
+
+		// const {
+		// 	api, 
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// } = this.props;
+
+		return <InstancesView 
+			title={title} 
+			description={description} 
+			namespace={namespace} 
+			typename={typename} 
+			type={type} 
+			schema={schema} 
+			dataurl={dataurl} 
+			editable={editable} 
+			showdeps={showdeps} />
+	}
+
+	makeInstanceView(
+		title, 
+		description, 
+		namespace, 
+		typename, 
+		type, 
+		schema, 
+		instanceid, 
+		instance, 
+		showdeps
+	) {
+
+		var _this = this;
+
+		// const {
+		// 	api, 
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// } = this.props;
+
+		return <InstanceView 
+			title={title} 
+			description={description} 
+			namespace={namespace} 
+			typename={typename} 
+			type={type} 
+			schema={schema} 
+			instanceid={instanceid} 
+			instance={instance} 
+			showdeps={showdeps} />
+
+	}
+
 	render() {
 
 		var _this = this;
@@ -340,7 +409,7 @@ class RootInstance extends Component {
 					xs={4} 
 					spacing={0} 
 				>
-					<InstancesView 
+					{/* <InstancesView 
 						title={typename} 
 						description={typename} 
 						namespace={namespace} 
@@ -354,7 +423,23 @@ class RootInstance extends Component {
 							schema["entity"]
 						)} 
 						editable={false} 
-						showdeps={true} />
+						showdeps={true} /> */}
+						{_this.makeInstancesView(
+							typename, 
+							typename, 
+							namespace, 
+							typename, 
+							type["entity"], 
+							schema["entity"], 
+							_this.getDataURL(
+								namespace, 
+								typename, 
+								type["entity"], 
+								schema["entity"]
+							), 
+							false, 
+							true
+						)}
 				</Grid>
 
 				<Grid 
@@ -364,7 +449,7 @@ class RootInstance extends Component {
 					xs={8} 
 					spacing={0} 
 				>
-					<InstanceView 
+					{/* <InstanceView 
 						title={ instance && ( instance["_name"] + " (" + instance["_id"] + ")") } 
 						description={typename} 
 						namespace={namespace} 
@@ -373,7 +458,18 @@ class RootInstance extends Component {
 						schema={schema["entity"]} 
 						instanceid={instanceid} 
 						instance={instance} 
-						showdeps={true} />
+						showdeps={true} /> */}
+						{_this.makeInstanceView(
+							instance && ( instance["name"] + " (" + instance["_id"] + ")"), 
+							typename, 
+							namespace, 
+							typename, 
+							type["entity"], 
+							schema["entity"], 
+							instanceid, 
+							instance, 
+							true
+						)}
 				</Grid>
 			</Grid>
 			</Container>
