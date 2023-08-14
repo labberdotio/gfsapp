@@ -277,6 +277,53 @@ class RootInstances extends Component {
 		return instance;
 	}
 
+	makeInstancesView(
+		title, 
+		description, 
+		namespace, 
+		typename, 
+		type, 
+		schema, 
+		dataurl, 
+		editable, 
+		showdeps
+	) {
+
+		var _this = this;
+
+		// const {
+		// 	api, 
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// } = this.props;
+
+		return <InstancesView 
+			title={title} 
+			description={description} 
+			namespace={namespace} 
+			typename={typename} 
+			type={type} 
+			schema={schema} 
+			dataurl={dataurl} 
+			editable={editable} 
+			showdeps={showdeps} />
+	}
+
+	// makeInstanceView(
+	// 	title, 
+	// 	description, 
+	// 	namespace, 
+	// 	typename, 
+	// 	type, 
+	// 	schema, 
+	// 	instanceid, 
+	// 	instance, 
+	// 	showdeps
+	// ) {
+	// }
+
 	render() {
 
 		var _this = this;
@@ -344,7 +391,7 @@ class RootInstances extends Component {
 					xs={12} 
 					spacing={0} 
 				>
-					<InstancesView 
+					{/* <InstancesView 
 						title={typename} 
 						description={typename} 
 						namespace={namespace} 
@@ -358,7 +405,23 @@ class RootInstances extends Component {
 							schema["entity"]
 						)} 
 						editable={true} 
-						showdeps={true} /> 
+						showdeps={true} />  */}
+						{_this.makeInstancesView(
+							typename, 
+							typename, 
+							namespace, 
+							typename, 
+							type["entity"], 
+							schema["entity"], 
+							_this.getDataURL(
+								namespace, 
+								typename, 
+								type["entity"], 
+								schema["entity"]
+							), 
+							true, 
+							true
+						)}
 				</Grid>
 			</Grid>
 			<SpeedDial

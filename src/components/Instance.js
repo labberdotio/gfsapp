@@ -192,6 +192,74 @@ class Instance extends Component {
 		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
+	makeInstancesView(
+		title, 
+		description, 
+		namespace, 
+		typename, 
+		type, 
+		schema, 
+		dataurl, 
+		editable, 
+		showdeps
+	) {
+
+		var _this = this;
+
+		// const {
+		// 	api, 
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// } = this.props;
+
+		return <InstancesView 
+			title={title} 
+			description={description} 
+			namespace={namespace} 
+			typename={typename} 
+			type={type} 
+			schema={schema} 
+			dataurl={dataurl} 
+			editable={editable} 
+			showdeps={showdeps} />
+	}
+
+	makeInstanceView(
+		title, 
+		description, 
+		namespace, 
+		typename, 
+		type, 
+		schema, 
+		instanceid, 
+		instance, 
+		showdeps
+	) {
+
+		var _this = this;
+
+		// const {
+		// 	api, 
+		// 	namespace, 
+		// 	typename, 
+		// 	type, 
+		// 	schema
+		// } = this.props;
+
+		return <InstanceView 
+			title={title} 
+			description={description} 
+			namespace={namespace} 
+			typename={typename} 
+			type={type} 
+			schema={schema} 
+			instanceid={instanceid} 
+			instance={instance} 
+			showdeps={showdeps} />
+	}
+
 	render() {
 
 		var _this = this;
@@ -250,41 +318,69 @@ class Instance extends Component {
 						var deptype = schema["definitions"][deptypename];
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
-						return <>
-							<InstancesView 
-								title={ item && item["name"] } 
-							description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-							namespace={namespace} 
-								typename={ deptypename } 
-								type={ deptype } 
-								schema={ depschema } 
-								dataurl={_this.getDataURL(
-									namespace, 
-									typename, // deptypename, 
-									type, // deptype, 
-									schema, // depschema, 
-									instance, // item && item.value, 
-									item && item["name"]
-								)} 
-								showdeps={false} />
-							</>
+						// return <>
+						// 	<InstancesView 
+						// 		title={ item && item["name"] } 
+						// 		description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+						// 		namespace={namespace} 
+						// 		typename={ deptypename } 
+						// 		type={ deptype } 
+						// 		schema={ depschema } 
+						// 		dataurl={_this.getDataURL(
+						// 			namespace, 
+						// 			typename, // deptypename, 
+						// 			type, // deptype, 
+						// 			schema, // depschema, 
+						// 			instance, // item && item.value, 
+						// 			item && item["name"]
+						// 		)} 
+						// 		showdeps={false} />
+						// 	</>
+						return _this.makeInstancesView(
+							item && item["name"], 
+							item && item.type + " " + "(" + item.cardinality + ")",  
+							namespace, 
+							deptypename, 
+							deptype, 
+							depschema, 
+							_this.getDataURL(
+								namespace, 
+								typename, // deptypename, 
+								type, // deptype, 
+								schema, // depschema, 
+								instance, // item && item.value, 
+								item && item["name"]
+							), 
+							false
+						);
 					} else if(item && item.value) {
 						var deptypename = schema["properties"][item.name]["$ref"].replace("#/definitions/", "");
 						var deptype = schema["definitions"][deptypename];
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
-						return <> 
-							<InstanceView 
-								title={ item && item["name"] } 
-								description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-								namespace={namespace} 
-								typename={ deptypename } 
-								type={ deptype } 
-								schema={ depschema } 
-								instanceid={item && item.value && item.value["_id"]} 
-								instance={item && item.value} 
-								showdeps={false} />
-							</>
+						// return <> 
+						// 	<InstanceView 
+						// 		title={ item && item["name"] } 
+						// 		description={ item && item.type + " " + "(" + item.cardinality + ")" } 
+						// 		namespace={namespace} 
+						// 		typename={ deptypename } 
+						// 		type={ deptype } 
+						// 		schema={ depschema } 
+						// 		instanceid={item && item.value && item.value["_id"]} 
+						// 		instance={item && item.value} 
+						// 		showdeps={false} />
+						// 	</>
+						return _this.makeInstanceView(
+							item && item["name"], 
+							item && item.type + " " + "(" + item.cardinality + ")", 
+							namespace, 
+							deptypename, 
+							deptype, 
+							depschema, 
+							item && item.value && item.value["_id"], 
+							item && item.value, 
+							false
+						);
 					}
 				})}
 			</>
