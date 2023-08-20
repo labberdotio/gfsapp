@@ -133,12 +133,6 @@ class Instances extends Component {
 		return cols;
 	}
 
-	// getDataURL(namespace, typename, type, schema) {
-	// 	// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
-	// 	var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
-	// 	return dataurl;
-	// }
-
 	getActions(namespace, typename, type, schema) {
 
 		const {
@@ -259,12 +253,6 @@ class Instances extends Component {
 						type, 
 						schema
 					)}
-					// dataurl={this.getDataURL(
-					// 	namespace, 
-					// 	typename, 
-					// 	type, 
-					// 	schema
-					// )}
 					dataurl={dataurl}
 					actions={this.getActions(
 						namespace, 

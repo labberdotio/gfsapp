@@ -344,13 +344,6 @@ class RootInstances extends Component {
 		var open = true;
 		var direction = "up";
 
-		// var dataurl = this.getDataURL(
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// );
-
 		var actions = [
 			{
 				name: "Create new " + typename, 
@@ -391,21 +384,6 @@ class RootInstances extends Component {
 					xs={12} 
 					spacing={0} 
 				>
-					{/* <InstancesView 
-						title={typename} 
-						description={typename} 
-						namespace={namespace} 
-						typename={typename} 
-						type={type["entity"]} 
-						schema={schema["entity"]} 
-						dataurl={_this.getDataURL(
-							namespace, 
-							typename, 
-							type["entity"], 
-							schema["entity"]
-						)} 
-						editable={true} 
-						showdeps={true} />  */}
 						{_this.makeInstancesView(
 							typename, 
 							typename, 

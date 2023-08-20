@@ -493,13 +493,6 @@ class RootInstance extends Component {
 			instance = this.state.instance;
 		}
 
-		// var dataurl = this.getDataURL(
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// );
-
 		var showdeps = false;
 		var properties = undefined;
 		var dependencies = undefined;
@@ -568,21 +561,6 @@ class RootInstance extends Component {
 					xs={3} 
 					spacing={0} 
 				>
-					{/* <InstancesView 
-						title={typename} 
-						description={typename} 
-						namespace={namespace} 
-						typename={typename} 
-						type={type["entity"]} 
-						schema={schema["entity"]} 
-						dataurl={_this.getDataURL(
-							namespace, 
-							typename, 
-							type["entity"], 
-							schema["entity"]
-						)} 
-						editable={false} 
-						showdeps={true} /> */}
 						{_this.makeInstancesView(
 							typename, 
 							typename, 
@@ -608,16 +586,6 @@ class RootInstance extends Component {
 					xs={6} 
 					spacing={0} 
 				>
-					{/* <InstanceView 
-						title={ instance && ( instance["_name"] + " (" + instance["_id"] + ")") } 
-						description={typename} 
-						namespace={namespace} 
-						typename={typename} 
-						type={type["entity"]} 
-						schema={schema["entity"]} 
-						instanceid={instanceid} 
-						instance={instance} 
-						showdeps={true} /> */}
 						{_this.makeInstanceView(
 							instance && ( instance["name"] + " (" + instance["_id"] + ")"), 
 							typename, 
@@ -644,24 +612,6 @@ class RootInstance extends Component {
 							var deptype = schema["entity"]["definitions"][deptypename];
 							var depschema = schema["entity"]["definitions"][deptypename];
 							depschema["definitions"] = schema["entity"]["definitions"];
-							// return <>
-							// 	<InstancesView 
-							// 		title={ item && item["_name"] } 
-							// 		description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-							// 		namespace={namespace} 
-							// 		typename={ deptypename } 
-							// 		type={ deptype } 
-							// 		schema={ depschema } 
-							// 		dataurl={_this.getDataURL2(
-							// 			namespace, 
-							// 			typename, // deptypename, 
-							// 			type, // deptype, 
-							// 			schema, // depschema, 
-							// 			instance, // item && item.value, 
-							// 			item && item["_name"]
-							// 		)} 
-							// 		showdeps={false} />
-							// 	</>
 							return _this.makeInstancesView(
 								item && item["_name"], 
 								item && item.type + " " + "(" + item.cardinality + ")",  
@@ -684,18 +634,6 @@ class RootInstance extends Component {
 							var deptype = schema["entity"]["definitions"][deptypename];
 							var depschema = schema["entity"]["definitions"][deptypename];
 							depschema["definitions"] = schema["entity"]["definitions"];
-							// return <> 
-							// 	<InstanceView 
-							// 		title={ item && item["_name"] } 
-							// 		description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-							// 		namespace={namespace} 
-							// 		typename={ deptypename } 
-							// 		type={ deptype } 
-							// 		schema={ depschema } 
-							// 		instanceid={item && item.value && item.value["_id"]} 
-							// 		instance={item && item.value} 
-							// 		showdeps={false} />
-							// 	</>
 							return _this.makeInstanceView(
 								item && item["_name"], 
 								item && item.type + " " + "(" + item.cardinality + ")", 

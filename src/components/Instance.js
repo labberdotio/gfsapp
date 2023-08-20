@@ -293,13 +293,6 @@ class Instance extends Component {
 			instance
 		);
 
-		// var dataurl = this.getDataURL(
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// );
-
 		return (
 			<>
 				<DetailView 
@@ -318,24 +311,6 @@ class Instance extends Component {
 						var deptype = schema["definitions"][deptypename];
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
-						// return <>
-						// 	<InstancesView 
-						// 		title={ item && item["name"] } 
-						// 		description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-						// 		namespace={namespace} 
-						// 		typename={ deptypename } 
-						// 		type={ deptype } 
-						// 		schema={ depschema } 
-						// 		dataurl={_this.getDataURL(
-						// 			namespace, 
-						// 			typename, // deptypename, 
-						// 			type, // deptype, 
-						// 			schema, // depschema, 
-						// 			instance, // item && item.value, 
-						// 			item && item["name"]
-						// 		)} 
-						// 		showdeps={false} />
-						// 	</>
 						return _this.makeInstancesView(
 							item && item["name"], 
 							item && item.type + " " + "(" + item.cardinality + ")",  
@@ -358,18 +333,6 @@ class Instance extends Component {
 						var deptype = schema["definitions"][deptypename];
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
-						// return <> 
-						// 	<InstanceView 
-						// 		title={ item && item["name"] } 
-						// 		description={ item && item.type + " " + "(" + item.cardinality + ")" } 
-						// 		namespace={namespace} 
-						// 		typename={ deptypename } 
-						// 		type={ deptype } 
-						// 		schema={ depschema } 
-						// 		instanceid={item && item.value && item.value["_id"]} 
-						// 		instance={item && item.value} 
-						// 		showdeps={false} />
-						// 	</>
 						return _this.makeInstanceView(
 							item && item["name"], 
 							item && item.type + " " + "(" + item.cardinality + ")", 
