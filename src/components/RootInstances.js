@@ -188,9 +188,8 @@ class RootInstances extends Component {
 
 	}
 
-	getDataURL(namespace, typename, type, schema) {
-		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
-		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
+	getDataURL(api, namespace, typename, type, schema) {
+		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename;
 		return dataurl;
 	}
 
@@ -289,19 +288,14 @@ class RootInstances extends Component {
 		showdeps
 	) {
 
-		var _this = this;
-
-		// const {
-		// 	api, 
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// } = this.props;
+		const {
+			api, 
+		} = this.props;
 
 		return <InstancesView 
 			title={title} 
 			description={description} 
+			api={api} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -392,6 +386,7 @@ class RootInstances extends Component {
 							type["entity"], 
 							schema["entity"], 
 							_this.getDataURL(
+								api, 
 								namespace, 
 								typename, 
 								type["entity"], 
