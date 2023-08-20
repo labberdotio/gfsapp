@@ -57,10 +57,8 @@ class Instance extends Component {
 
 	}
 
-	getDataURL(namespace, typename, type, schema, instance, instancefield) {
-		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
-		// var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
-		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
+	getDataURL(api, namespace, typename, type, schema, instance, instancefield) {
+		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
 		return dataurl;
 	}
 
@@ -204,19 +202,14 @@ class Instance extends Component {
 		showdeps
 	) {
 
-		var _this = this;
-
-		// const {
-		// 	api, 
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// } = this.props;
+		const {
+			api, 
+		} = this.props;
 
 		return <InstancesView 
 			title={title} 
 			description={description} 
+			api={api} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -238,19 +231,14 @@ class Instance extends Component {
 		showdeps
 	) {
 
-		var _this = this;
-
-		// const {
-		// 	api, 
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// } = this.props;
+		const {
+			api, 
+		} = this.props;
 
 		return <InstanceView 
 			title={title} 
 			description={description} 
+			api={api} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -265,6 +253,7 @@ class Instance extends Component {
 		var _this = this;
 
 		const {
+			api, 
 			namespace, 
 			title, 
             description, 
@@ -319,6 +308,7 @@ class Instance extends Component {
 							deptype, 
 							depschema, 
 							_this.getDataURL(
+								api, 
 								namespace, 
 								typename, // deptypename, 
 								type, // deptype, 

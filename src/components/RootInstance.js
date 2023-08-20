@@ -207,16 +207,13 @@ class RootInstance extends Component {
 
 	}
 
-	getDataURL(namespace, typename, type, schema) {
-		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
-		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
+	getDataURL(api, namespace, typename, type, schema) {
+		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename;
 		return dataurl;
 	}
 
-	getDataURL2(namespace, typename, type, schema, instance, instancefield) {
-		// return "http://192.168.1.112:5000/api/v2.0/archives/Files";
-		// var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename;
-		var dataurl = "http://192.168.1.112:5000/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
+	getDataURL2(api, namespace, typename, type, schema, instance, instancefield) {
+		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
 		return dataurl;
 	}
 
@@ -409,19 +406,14 @@ class RootInstance extends Component {
 		showdeps
 	) {
 
-		var _this = this;
-
-		// const {
-		// 	api, 
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// } = this.props;
+		const {
+			api, 
+		} = this.props;
 
 		return <InstancesView 
 			title={title} 
 			description={description} 
+			api={api} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -443,19 +435,14 @@ class RootInstance extends Component {
 		showdeps
 	) {
 
-		var _this = this;
-
-		// const {
-		// 	api, 
-		// 	namespace, 
-		// 	typename, 
-		// 	type, 
-		// 	schema
-		// } = this.props;
+		const {
+			api, 
+		} = this.props;
 
 		return <InstanceView 
 			title={title} 
 			description={description} 
+			api={api} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -569,6 +556,7 @@ class RootInstance extends Component {
 							type["entity"], 
 							schema["entity"], 
 							_this.getDataURL(
+								api, 
 								namespace, 
 								typename, 
 								type["entity"], 
@@ -620,6 +608,7 @@ class RootInstance extends Component {
 								deptype, 
 								depschema, 
 								_this.getDataURL2(
+									api, 
 									namespace, 
 									typename, // deptypename, 
 									type, // deptype, 
