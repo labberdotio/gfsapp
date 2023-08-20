@@ -62,17 +62,17 @@ const List = (props) => {
 				data={query => 
 					new Promise((resolve, reject) => {
 						let offset = (query.page + 0) * query.pageSize;
-						let limit = query.pageSize; // (query.page + 1) * query.pageSize;
-						let url = dataurl + '?' // 'http://192.168.1.112:5000/api/v2.0/archives/Files?'
-						url += 'offset=' + offset // query.pageSize
-						url += '&limit=' + limit // (query.page + 1)
+						let limit = query.pageSize;
+						let url = dataurl + '?'
+						url += 'offset=' + offset
+						url += '&limit=' + limit
 						fetch(url)
 							.then(response => response.json())
 							.then(result => {
 								resolve({
 									data: result.data,
-									page: query.page, // result.page - 1,
-									totalCount: result.count,
+									page: query.page,
+									totalCount: result.count
 								})
 							})
 					})
