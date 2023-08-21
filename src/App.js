@@ -391,7 +391,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 					</div> */}
 
 					<div className={classes.search}>
-						{namespaces &&
+						{namespaces && namespaces.data &&
 							<>
 							{/* <div className={classes.searchIcon}>
 								<CodeIcon/>
@@ -414,7 +414,7 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 									className={classes.formSelect} >
 									<option aria-label="None" value=""/>
 									<>
-									{namespaces.map(function(namespace, idx) {
+									{namespaces.data.map(function(namespace, idx) {
 										return (
 											<option value={namespace}>{namespace}</option>	
 										)

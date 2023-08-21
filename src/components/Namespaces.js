@@ -162,10 +162,10 @@ class Namespaces extends Component {
 				spacing={0} 
 			>
 
-			{namespaces &&
+			{namespaces && namespaces.data &&
 				<>
 				<List>
-					{namespaces.map(function(namespace, idx) {
+					{namespaces.data.map(function(namespace, idx) {
 						return (
 							<ListItem 
 								button 
