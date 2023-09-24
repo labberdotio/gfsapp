@@ -2,18 +2,22 @@
 
 # pipenv shell
 
-# 10.88.88.174 zookeeper.gfsdev zookeeper.gfsdev.localdomain
-# 10.88.88.174 broker.gfsdev broker.gfsdev.localdomain
-# 10.88.88.174 gremlin.gfsdev gremlin.gfsdev.localdomain
-# 10.88.88.174 gfs.gfsdev gfs.gfsdev.localdomain
-# 10.88.88.174 gfsui.gfsdev gfsui.gfsdev.localdomain
+# 10.88.88.170 zookeeper.gfsdev zookeeper.gfsdev.localdomain
+# 10.88.88.170 broker.gfsdev broker.gfsdev.localdomain
+# 10.88.88.170 gremlin.gfsdev gremlin.gfsdev.localdomain
+# 10.88.88.170 gfs.gfsdev gfs.gfsdev.localdomain
+# 10.88.88.170 gfsui.gfsdev gfsui.gfsdev.localdomain
 
 export LISTEN_ADDR="0.0.0.0"
 export LISTEN_PORT="3000"
 
-export GREMLIN_API_HOST="10.88.88.174"
-export GREMLIN_API_PORT="5000"
-export GREMLIN_API_WS_PORT="5002"
+export GFS_URL="gfs.labber.io"
+export GFS_USERNAME=""
+export GFS_PASSWORD=""
+
+export GREMLIN_API_HOST="${GFS_URL}"
+export GREMLIN_API_PORT="80"
+export GREMLIN_API_WS_PORT="80"
 
 export GREMLIN_API_NAMESPACE="bootplane"
 
