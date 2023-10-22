@@ -122,23 +122,24 @@ const styles = theme => ({
 	},
 
 	appBar: {
-		transition: theme.transitions.create(['margin', 'width'], {
+		zIndex: theme.zIndex.drawer + 1,
+		transition: theme.transitions.create(['width', 'margin'], {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
 		}),
 	},
 
 	appBarShift: {
-		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: drawerWidth,
-		transition: theme.transitions.create(['margin', 'width'], {
-			easing: theme.transitions.easing.easeOut,
+		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create(['width', 'margin'], {
+			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.enteringScreen,
 		}),
 	},
 
 	menuButton: {
-		marginRight: theme.spacing(2),
+		marginRight: 36,
 	},
 
 	search: {
@@ -189,37 +190,41 @@ const styles = theme => ({
 	drawer: {
 		width: drawerWidth,
 		flexShrink: 0,
+		whiteSpace: 'nowrap',
 	},
 
-	drawerPaper: {
+	drawerOpen: {
 		width: drawerWidth,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 
-	drawerHeader: {
+	drawerClose: {
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+		overflowX: 'hidden',
+		width: theme.spacing(7) + 1,
+		[theme.breakpoints.up('sm')]: {
+			width: theme.spacing(9) + 1,
+		},
+	},
+
+	toolbar: {
 		display: 'flex',
 		alignItems: 'center',
+		justifyContent: 'flex-end',
 		padding: theme.spacing(0, 1),
 		// necessary for content to be below app bar
 		...theme.mixins.toolbar,
-		justifyContent: 'flex-end',
 	},
 
 	content: {
 		flexGrow: 1,
 		padding: theme.spacing(3),
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		marginLeft: -drawerWidth,
-	},
-
-	contentShift: {
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		marginLeft: 0,
 	  },
 
 	formControl: {
@@ -332,7 +337,9 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 						aria-label="open drawer"
 						edge="start"
 						onClick={handleDrawerToggle}
-						className={clsx(classes.menuButton, open && classes.hide)} >
+						className={clsx(classes.menuButton, {
+							[classes.hide]: open,
+						})} >
 						<MenuIcon />
 					</IconButton>
 					<MuiLink color="inherit" href="/namespaces">
@@ -523,17 +530,20 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	return (
 		<>
 		<Drawer 
-			className={classes.drawer}
-			variant="persistent"
-			anchor="left"
-			open={open}
-			onClose={handleDrawerToggle}
+				variant="permanent"
+				className={clsx(classes.drawer, {
+					[classes.drawerOpen]: open,
+					[classes.drawerClose]: !open,
+				})}
 			classes={{
-				paper: classes.drawerPaper,
+					paper: clsx({
+						[classes.drawerOpen]: open,
+						[classes.drawerClose]: !open,
+					}),
 			}} >
-			<div className={classes.drawerHeader}>
+				<div className={classes.toolbar}>
 				<IconButton onClick={handleDrawerClose}>
-					{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
 				</IconButton>
 			</div>
 				<Container 
@@ -660,10 +670,8 @@ function AppNavigation({ classes, variant, namespace, types, children }) {
 				types={types} />
 			</nav>
 			<main
-				className={clsx(classes.content, {
-					[classes.contentShift]: open,
-				})} >
-				<div className={classes.drawerHeader}>
+				className={classes.content} >
+				<div className={classes.toolbar}>
 					{children}
 				</div>
 			</main>
