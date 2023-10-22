@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
 // All rights reserved.
 // 
 
@@ -330,7 +330,9 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	return (
 		<Fragment>
 			<CssBaseline />
-			<AppBar position="fixed" className={classes.appBar}>
+			<AppBar
+				position="fixed"
+				className={classes.appBar} >
 				<Toolbar>
 					<IconButton
 						color="inherit"
@@ -453,6 +455,10 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	}
 
 	const handleDrawerToggle = () => {
+		onDrawerToggle();
+	}
+
+	const handleDrawerClose = () => {
 		onDrawerToggle();
 	}
 
@@ -690,36 +696,57 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 // function AppNavigation({ classes, variant }) {
 function AppNavigation({ classes, variant, namespace, types, children }) {
 
-	const [drawer, setDrawer] = useState(false);
-
 	const title = useSelector(state => state.api.title);
 
 	const dispatch = useDispatch();
 
+	// const [drawer, setDrawer] = useState(false);
+	// const toggleDrawer = () => {
+	// 	setDrawer(!drawer);
+	// };
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleDrawerOpen = () => {
+	  setOpen(true);
+	};
+  
+	const handleDrawerClose = () => {
+	  setOpen(false);
+	};
+
+	const closeDrawer = () => {
+		setOpen(false);
+	};
+
 	const toggleDrawer = () => {
-		setDrawer(!drawer);
+		setOpen(!open);
 	};
 
 	return (
 		<div className={classes.root}>
 			<AppToolbar 
 				title={title} 
+				open={open} 
 				onMenuClick={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
+				onCloseToggle={closeDrawer} 
 				namespace={namespace} 
 				types={types} />
 			<nav className={classes.drawer}>
 			<AppDrawer 
-				open={drawer} 
+				open={open} 
 				onClose={toggleDrawer} 
 				onDrawerToggle={toggleDrawer} 
+				onCloseToggle={closeDrawer} 
 				// onItemClick={onItemClick} 
 				variant={variant} 
 				namespace={namespace} 
 				types={types} />
 			</nav>
-			<main className={classes.content}>
-				<div>
+			<main
+				className={classes.content} >
+				<div className={classes.drawerHeader}>
 					{children}
 				</div>
 			</main>
