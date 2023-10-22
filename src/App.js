@@ -43,6 +43,8 @@ import ComputerIcon from '@material-ui/icons/Computer';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import CodeIcon from '@material-ui/icons/Code';
 import CloseIcon from '@material-ui/icons/Close';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -53,7 +55,7 @@ import MuiLink from '@material-ui/core/Link';
 
 // import { makeStyles, useTheme } from '@material-ui/core/styles';
 // import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
+import { fade, alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 
 // import { loadEntitiesIntoState } from './actions/Entity'
 // import { getEntitiesFromState } from './stores/Entity'
@@ -104,8 +106,9 @@ import Namespaces from './components/Namespaces'
 
 const ThemeContext = React.createContext();
 
-const drawerWidth1 = 48; // 73;
-const drawerWidth2 = 240;
+// const drawerWidth1 = 48; // 73;
+// const drawerWidth2 = 240;
+const drawerWidth = 240;
 
 const styles = theme => ({
 
@@ -118,62 +121,32 @@ const styles = theme => ({
 		flex: 1
 	},
 
-	drawer: {
-		[theme.breakpoints.up('sm')]: {
-			width: drawerWidth1,
-			flexShrink: 0,
-			overflow: 'hidden',
-		},
-		[theme.breakpoints.up('xl')]: {
-			width: drawerWidth2,
-			flexShrink: 0,
-			overflow: 'hidden',
-		},
-		position: 'relative',
-		top: '64px'
-	},
-
-	drawerFull: {
-		// [theme.breakpoints.up('sm')]: {
-		// 	width: drawerWidth1,
-		// 	flexShrink: 0,
-		// },
-		// [theme.breakpoints.up('xl')]: {
-		width: drawerWidth2,
-		flexShrink: 0,
-		// },
-	},
-
 	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
-		// [theme.breakpoints.up('sm')]: {
-		// 	width: `calc(100% - ${drawerWidth1}px)`,
-		// 	marginLeft: drawerWidth1,
-		// },
-		// [theme.breakpoints.up('xl')]: {
-		// 	width: `calc(100% - ${drawerWidth2}px)`,
-		// 	marginLeft: drawerWidth2,
-		// },
+		transition: theme.transitions.create(['margin', 'width'], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+	},
+
+	appBarShift: {
+		width: `calc(100% - ${drawerWidth}px)`,
+		marginLeft: drawerWidth,
+		transition: theme.transitions.create(['margin', 'width'], {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
 	},
 
 	menuButton: {
 		marginRight: theme.spacing(2),
-		[theme.breakpoints.up('sm')]: {
-			// display: 'none',
-		},
-		[theme.breakpoints.up('xl')]: {
-			// display: 'none',
-		},
 	},
 
 	search: {
 		position: 'relative',
 		borderRadius: theme.shape.borderRadius,
-		// backgroundColor: fade(theme.palette.common.white, 0.15),
-		backgroundColor: alpha(theme.palette.common.white, 0.15),
+		backgroundColor: fade(theme.palette.common.white, 0.15),
 		'&:hover': {
-			// backgroundColor: fade(theme.palette.common.white, 0.25),
-			backgroundColor: alpha(theme.palette.common.white, 0.25),
+			backgroundColor: fade(theme.palette.common.white, 0.25),
 		},
 		marginRight: theme.spacing(2),
 		marginLeft: 0,
@@ -209,27 +182,45 @@ const styles = theme => ({
 		},
 	},
 
-	// necessary for content to be below app bar
-	toolbar: theme.mixins.toolbar,
+	hide: {
+		display: 'none',
+	},
+
+	drawer: {
+		width: drawerWidth,
+		flexShrink: 0,
+	},
+
 	drawerPaper: {
-		position: "relative",
-		// // width: drawerWidth2,
-		// [theme.breakpoints.up('sm')]: {
-		// 	width: drawerWidth1,
-		// },
-		// [theme.breakpoints.up('xl')]: {
-		// 	width: drawerWidth2,
-		// },
-		width: drawerWidth1,
-		overflowX: "hidden"
+		width: drawerWidth,
+	},
+
+	drawerHeader: {
+		display: 'flex',
+		alignItems: 'center',
+		padding: theme.spacing(0, 1),
+		// necessary for content to be below app bar
+		...theme.mixins.toolbar,
+		justifyContent: 'flex-end',
 	},
 
 	content: {
 		flexGrow: 1,
-		padding: 0, // theme.spacing(3),
-		position: 'relative',
-		top: '64px'
+		padding: theme.spacing(3),
+		transition: theme.transitions.create('margin', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+		marginLeft: -drawerWidth,
 	},
+
+	contentShift: {
+		transition: theme.transitions.create('margin', {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+		marginLeft: 0,
+	  },
 
 	formControl: {
 		color: 'inherit',
@@ -332,14 +323,16 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 			<CssBaseline />
 			<AppBar
 				position="fixed"
-				className={classes.appBar} >
+				className={clsx(classes.appBar, {
+					[classes.appBarShift]: open,
+				})} >
 				<Toolbar>
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
 						edge="start"
 						onClick={handleDrawerToggle}
-						className={classes.menuButton} >
+						className={clsx(classes.menuButton, open && classes.hide)} >
 						<MenuIcon />
 					</IconButton>
 					<MuiLink color="inherit" href="/namespaces">
@@ -528,21 +521,22 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	var lowitems = [];
 
 	return (
-			<>
-			<Hidden smUp implementation="css">
-				<Drawer
-					container={container}
-					variant="temporary"
-					anchor='left'
-					open={open}
-					onClose={handleDrawerToggle}
-					classes={{
-						paper: classes.drawerFull,
-					}}
-					ModalProps={{
-						keepMounted: true, // Better open performance on mobile.
-					}} >
-					<Container 
+		<>
+		<Drawer 
+			className={classes.drawer}
+			variant="persistent"
+			anchor="left"
+			open={open}
+			onClose={handleDrawerToggle}
+			classes={{
+				paper: classes.drawerPaper,
+			}} >
+			<div className={classes.drawerHeader}>
+				<IconButton onClick={handleDrawerClose}>
+					{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+				</IconButton>
+			</div>
+				<Container 
 						style={{minHeight: 64}}
 						>
 					</Container>
@@ -607,88 +601,9 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 						))}
 
 					</List>
-				</Drawer>
-			</Hidden>
-			<Hidden xsDown implementation="css">
-				<Drawer
-					classes={{
-						paper: classes.drawerPaper,
-					}}
-					variant="permanent"
-					open >
-					<div
-						className={clsx({
-							[classes.toolbarMargin]: variant === 'persistent'
-						})}
-					/>
-					<Container 
-						style={{minHeight: 0 /* 64 */ }}
-						>
-					</Container>
-					<Container>
-						<h1 style={{display: 'none'}}>{name}</h1>
-						<h2 style={{display: 'none'}}>{title}</h2>
-						<p style={{display: 'none'}}>{description}</p>
-					</Container>
-					<Divider />
-					<List>
 
-						{topitems.map((item, index) => (
-						<>
-						<ListItem 
-							button 
-							selected={item.selected} 
-							component={Link} 
-							to={item.path} 
-							// onClick={onItemClick(title)} 
-							title={item.text} 
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{item.text}</ListItemText>
-						</ListItem>
-						</>
-						))}
-
-						<Divider />
-
-						{miditems.map((item, index) => (
-						<>
-						<ListItem 
-							button 
-							selected={item.selected} 
-							component={Link} 
-							to={item.path} 
-							// onClick={onItemClick(title)} 
-							title={item.text} 
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{item.text}</ListItemText>
-						</ListItem>
-						</>
-						))}
-
-						<Divider />
-
-						{lowitems.map((item, index) => (
-						<>
-						<ListItem 
-							button 
-							selected={item.selected} 
-							component={Link} 
-							to={item.path} 
-							// onClick={onItemClick(title)} 
-							title={item.text} 
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{item.text}</ListItemText>
-						</ListItem>
-						</>
-						))}
-
-					</List>
-				</Drawer>
-			</Hidden>
-			</>
+			</Drawer>
+		</>
 	);
 
 });
@@ -745,7 +660,9 @@ function AppNavigation({ classes, variant, namespace, types, children }) {
 				types={types} />
 			</nav>
 			<main
-				className={classes.content} >
+				className={clsx(classes.content, {
+					[classes.contentShift]: open,
+				})} >
 				<div className={classes.drawerHeader}>
 					{children}
 				</div>
