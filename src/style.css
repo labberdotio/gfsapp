@@ -137,7 +137,7 @@ body,
 }
 
 .MuiDrawer-root .MuiDrawer-paper {
-    width: 240px;
+    /* width: 240px; */
 }
 
 .MuiDrawer-modal .MuiDrawer-paper {
@@ -145,7 +145,7 @@ body,
 }
 
 .MuiDrawer-root .MuiList-root .MuiListItem-root.MuiListItem-gutters {
-    padding-left: 12px;
+    /* padding-left: 12px; */
 }
 
 .MuiDrawer-root .MuiListItemIcon-root {
