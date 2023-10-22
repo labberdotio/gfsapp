@@ -530,33 +530,33 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	return (
 		<>
 		<Drawer 
-				variant="permanent"
-				className={clsx(classes.drawer, {
+			variant="permanent"
+			className={clsx(classes.drawer, {
+				[classes.drawerOpen]: open,
+				[classes.drawerClose]: !open,
+			})}
+			classes={{
+				paper: clsx({
 					[classes.drawerOpen]: open,
 					[classes.drawerClose]: !open,
-				})}
-			classes={{
-					paper: clsx({
-						[classes.drawerOpen]: open,
-						[classes.drawerClose]: !open,
-					}),
+				}),
 			}} >
-				<div className={classes.toolbar}>
+			<div className={classes.toolbar}>
 				<IconButton onClick={handleDrawerClose}>
 						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
 				</IconButton>
 			</div>
 				<Container 
-						style={{minHeight: 64}}
-						>
-					</Container>
-					<Container>
-						<h1 style={{display: 'none'}}>{name}</h1>
-						<h2 style={{display: 'none'}}>{title}</h2>
-						<p style={{display: 'none'}}>{description}</p>
-					</Container>
-					<Divider />
-					<List>
+					style={{minHeight: 64}}
+					>
+				</Container>
+				<Container>
+					<h1 style={{display: 'none'}}>{name}</h1>
+					<h2 style={{display: 'none'}}>{title}</h2>
+					<p style={{display: 'none'}}>{description}</p>
+				</Container>
+				<Divider />
+				<List>
 
 						{topitems.map((item, index) => (
 						<>
@@ -610,9 +610,9 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 						</>
 						))}
 
-					</List>
+				</List>
 
-			</Drawer>
+		</Drawer>
 		</>
 	);
 
@@ -658,7 +658,17 @@ function AppNavigation({ classes, variant, namespace, types, children }) {
 				onCloseToggle={closeDrawer} 
 				namespace={namespace} 
 				types={types} />
-			<nav className={classes.drawer}>
+			<nav 
+				className={clsx(classes.drawer, {
+					[classes.drawerOpen]: open,
+					[classes.drawerClose]: !open,
+				})}
+				classes={{
+					paper: clsx({
+						[classes.drawerOpen]: open,
+						[classes.drawerClose]: !open,
+					}),
+				}} >
 			<AppDrawer 
 				open={open} 
 				onClose={toggleDrawer} 
@@ -671,9 +681,8 @@ function AppNavigation({ classes, variant, namespace, types, children }) {
 			</nav>
 			<main
 				className={classes.content} >
-				<div className={classes.toolbar}>
-					{children}
-				</div>
+				<div className={classes.toolbar} />
+				{children}
 			</main>
 		</div>
 	);
