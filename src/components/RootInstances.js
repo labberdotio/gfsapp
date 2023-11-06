@@ -193,21 +193,6 @@ class RootInstances extends Component {
 		return dataurl;
 	}
 
-	createInstance(type, data) {
-		const {api} = this.props;
-		this.props.createInstance(api, type, data);
-		this.createInstanceDialogElement.current.closeDialog();
-	}
-
-	deleteInstance() {
-	}
-
-	onCloseCreateInstanceDialog() {
-		this.setState({
-			createInstanceDialogOpen: false
-		});
-	}
-
 	getListCols(namespace, typename, type, schema) {
 
 		var cols = [];
@@ -216,6 +201,37 @@ class RootInstances extends Component {
 			field: "_name",
 			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</Link>
 		});
+
+		if( schema && schema["properties"] ) {
+			for( var propertyname in schema["properties"] ) {
+				var property = schema["properties"][propertyname];
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+					if( property["$ref"] ) {
+						// 
+					} else if( (property["type"] == "array") && 
+							   (property["items"]) ) {
+						// 
+					} else {
+						if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+
+							if( property["type"] == "integer" ) {
+								cols.push({
+									title: propertyname,
+									field: propertyname,
+									type: 'numeric'
+								});
+							} else {
+								cols.push({
+									title: propertyname,
+									field: propertyname
+								});
+							}
+
+						}
+					}
+				}
+			}
+		}
 
 		return cols;
 	}
@@ -268,6 +284,21 @@ class RootInstances extends Component {
 			return {}
 		}
 
+	}
+
+	createInstance(type, data) {
+		const {api} = this.props;
+		this.props.createInstance(api, type, data);
+		this.createInstanceDialogElement.current.closeDialog();
+	}
+
+	deleteInstance() {
+	}
+
+	onCloseCreateInstanceDialog() {
+		this.setState({
+			createInstanceDialogOpen: false
+		});
 	}
 
 	makeCreateInstanceLink(namespace, type) {

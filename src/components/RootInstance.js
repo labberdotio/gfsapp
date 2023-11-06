@@ -217,6 +217,99 @@ class RootInstance extends Component {
 		return dataurl;
 	}
 
+	getListCols(namespace, typename, type, schema) {
+
+		var cols = [];
+		cols.push({
+			title: "_name",
+			field: "_name",
+			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</Link>
+		});
+
+		if( schema && schema["properties"] ) {
+			for( var propertyname in schema["properties"] ) {
+				var property = schema["properties"][propertyname];
+				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+					if( property["$ref"] ) {
+						// 
+					} else if( (property["type"] == "array") && 
+							   (property["items"]) ) {
+						// 
+					} else {
+						if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+
+							if( property["type"] == "integer" ) {
+								cols.push({
+									title: propertyname,
+									field: propertyname,
+									type: 'numeric'
+								});
+							} else {
+								cols.push({
+									title: propertyname,
+									field: propertyname
+								});
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		return cols;
+	}
+
+	getActions(namespace, typename, type, schema) {
+
+		// const {
+		// 	editable
+		// } = this.props;
+		var editable = true;
+
+		if( editable ) {
+			return [
+				// {
+				// 	icon: 'save',
+				// 	tooltip: 'Save', // + ' ' + typename,
+				// 	onClick: (event, rowData) => window.alert("You saved " + rowData["name"])
+				// }, 
+				{
+					icon: 'delete',
+					tooltip: 'Delete', // + ' ' + typename,
+					onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["name"] + "?")
+				}, 
+				// {
+				// 	icon: 'add',
+				// 	tooltip: 'Add User',
+				// 	isFreeAction: true,
+				// 	onClick: (event) => window.alert("Please fill out row")
+				// }
+				]
+		} else {
+			return []
+		}
+
+	}
+
+	getEditable(namespace, typename, type, schema) {
+
+		// const {
+		// 	editable
+		// } = this.props;
+		var editable = true;
+
+		if( editable ) {
+			return {
+				onRowAdd: newData => window.alert(""),
+				onRowUpdate: (newData, oldData) => window.alert(""),
+			}
+		} else {
+			return {}
+		}
+
+	}
+
 	/*
 	 * Have to go back to commit cc6304f for this.
 	 * Sun Jul 26 20:54:32 2020 -0700
@@ -566,6 +659,24 @@ class RootInstance extends Component {
 							schema["entity"], 
 							_this.getDataURL(
 								api, 
+								namespace, 
+								typename, 
+								type["entity"], 
+								schema["entity"]
+							), 
+							_this.getListCols(
+								namespace, 
+								typename, 
+								type["entity"], 
+								schema["entity"]
+							), 
+							_this.getActions(
+								namespace, 
+								typename, 
+								type["entity"], 
+								schema["entity"]
+							), 
+							_this.getEditable(
 								namespace, 
 								typename, 
 								type["entity"], 
