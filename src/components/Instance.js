@@ -198,6 +198,8 @@ class Instance extends Component {
 		type, 
 		schema, 
 		dataurl, 
+		columns, 
+		actions,  
 		editable, 
 		showdeps
 	) {
@@ -215,6 +217,8 @@ class Instance extends Component {
 			type={type} 
 			schema={schema} 
 			dataurl={dataurl} 
+			columns={columns} 
+			actions={actions} 
 			editable={editable} 
 			showdeps={showdeps} />
 	}
@@ -356,7 +360,7 @@ function mapStateToProps(state, ownProps) {
 		type, 
 		schema, 
 		instanceid, 
-		instance 
+		instance, 
 	} = ownProps;	
 
 	const {
