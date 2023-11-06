@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -ex
 
 # LOCAL_REGISTRY="registry.dev.appgoto.com"
