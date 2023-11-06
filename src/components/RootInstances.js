@@ -222,9 +222,10 @@ class RootInstances extends Component {
 
 	getActions(namespace, typename, type, schema) {
 
-		const {
-			editable
-		} = this.props;
+		// const {
+		// 	editable
+		// } = this.props;
+		var editable = true;
 
 		if( editable ) {
 			return [
@@ -253,9 +254,10 @@ class RootInstances extends Component {
 
 	getEditable(namespace, typename, type, schema) {
 
-		const {
-			editable
-		} = this.props;
+		// const {
+		// 	editable
+		// } = this.props;
+		var editable = true;
 
 		if( editable ) {
 			return {
