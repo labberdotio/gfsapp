@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 cp ./.env.daim ./.env
 chmod +x ./env.sh
