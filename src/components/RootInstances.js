@@ -302,6 +302,10 @@ class RootInstances extends Component {
 			api, 
 		} = this.props;
 
+		if( !columns ) {
+			columns = []
+		}
+
 		return <InstancesView 
 			title={title} 
 			description={description} 
