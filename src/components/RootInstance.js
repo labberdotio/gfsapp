@@ -402,6 +402,8 @@ class RootInstance extends Component {
 		type, 
 		schema, 
 		dataurl, 
+		columns, 
+		actions, 
 		editable, 
 		showdeps
 	) {
@@ -419,6 +421,8 @@ class RootInstance extends Component {
 			type={type} 
 			schema={schema} 
 			dataurl={dataurl} 
+			columns={columns} 
+			actions={actions} 
 			editable={editable} 
 			showdeps={showdeps} />
 	}
@@ -467,6 +471,7 @@ class RootInstance extends Component {
 		} = this.props;
 
 		const { classes } = this.props;
+
 
 		var backdropOpen = false;
 
