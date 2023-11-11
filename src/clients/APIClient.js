@@ -55,7 +55,25 @@ class APIClient {
 	 * Sun Mar 29 16:20:36 2020 -0500
 	 */
 	getInstance(namespace, typename, instanceid, callback) {
-		fetch(this.url + '/' + namespace + '/' + typename +  '/' + instanceid, {
+		var url = this.url + '/' + namespace + '/' + typename;
+		if( instanceid ) {
+			url = this.url + '/' + namespace + '/' + typename +  '/' + instanceid;
+		}
+		fetch(url, {
+			method: 'GET',
+			headers: {
+				'Accept': this.jsontype // this.type
+			}
+		})
+		.then(res => res.json())
+		.then((data) => {
+			callback(data);
+		});
+	}
+
+	getInstanceField(namespace, typename, instanceid, field, callback) {
+		var url = this.url + '/' + namespace + '/' + typename +  '/' + instanceid + '/' + field + '?offset=0&limit=1000';
+		fetch(url, {
 			method: 'GET',
 			headers: {
 				'Accept': this.jsontype // this.type
