@@ -49,6 +49,7 @@ import App from './App.js';
 
 import RootInstancesView from './components/RootInstances'
 import RootInstanceView from './components/RootInstance'
+import RootView from './components/Root'
 
 // import SubInstancesView from './components/SubInstances'
 // import SubInstanceView from './components/SubInstance'
@@ -205,9 +206,11 @@ ReactDOM.render(
 						<>
 						<App 
 							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
 						>
-						<Namespaces 
+						<RootView 
 							namespace={props.match.params.namespace} 
+							typename={props.match.params.typename} 
 						/>
 						</App>
 						</>
