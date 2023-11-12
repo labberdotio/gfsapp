@@ -25,13 +25,35 @@ class ThreeDeeGraph extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
-			highlighted: undefined, 
-			exploded: undefined, 
-			selected: undefined, 
-			refreshed: undefined, 
-			zoomFit: true,
-			runLayout: true
+		// this.state = {
+		// 	highlighted: undefined, 
+		// 	exploded: undefined, 
+		// 	selected: undefined, 
+		// 	refreshed: undefined, 
+		// 	zoomFit: true,
+		// 	runLayout: true
+		// }
+		var id = props.selected;
+		if(id) {
+			// this.setState({
+			this.state = {
+				exploded: id,
+				highlighted: id,
+				selected: id,
+				refreshed: undefined,
+				runLayout: true,
+				zoomFit: true
+			};
+		} else {
+			// this.setState({
+			this.state = {
+				exploded: undefined,
+				highlighted: undefined,
+				selected: undefined,
+				refreshed: undefined,
+				runLayout: true,
+				zoomFit: true
+			};
 		}
 
 		var _this = this;
@@ -43,17 +65,85 @@ class ThreeDeeGraph extends Component {
 	}
 
 	state = {
+		highlighted: undefined, 
+		exploded: undefined, 
+		selected: undefined, 
+		refreshed: undefined, 
+		zoomFit: true,
+		runLayout: true
 	};
 
-	// componentWillUpdate(nextProps, nextState) {
-	// }
+	componentWillUpdate(nextProps, nextState) {
+
+		const {
+			api, 
+			namespace, 
+			graph, 
+			width, 
+			height, 
+			selected
+		} = this.props;
+
+		if( this.props.selected != nextProps.selected ) {
+			var id = nextProps.selected; // selected;
+			if(id) {
+				this.setState({
+					exploded: id,
+					highlighted: id,
+					selected: id,
+					refreshed: undefined,
+					runLayout: true,
+					zoomFit: true
+				});
+			} else {
+				this.setState({
+					exploded: undefined,
+					highlighted: undefined,
+					selected: undefined,
+					refreshed: undefined,
+					runLayout: true,
+					zoomFit: true
+				});
+			}
+		}
+	}
 
 	componentDidUpdate(prevProps, prevState) {
 
 		const {
 			api, 
-			namespace
+			namespace, 
+			graph, 
+			width, 
+			height, 
+			selected
 		} = this.props;
+
+		// if(
+		// 	selected && 
+		// 	this.state.selected != selected
+		// ) {
+		// 	var id = selected;
+		// 	if(id) {
+		// 		this.setState({
+		// 			exploded: id,
+		// 			highlighted: id,
+		// 			selected: id,
+		// 			refreshed: undefined,
+		// 			runLayout: true,
+		// 			zoomFit: true
+		// 		});
+		// 	} else {
+		// 		this.setState({
+		// 			exploded: undefined,
+		// 			highlighted: undefined,
+		// 			selected: undefined,
+		// 			refreshed: undefined,
+		// 			runLayout: true,
+		// 			zoomFit: true
+		// 		});
+		// 	}
+		// }
 
 	}
 
@@ -61,8 +151,38 @@ class ThreeDeeGraph extends Component {
 
 		const {
 			api, 
-			namespace
+			namespace, 
+			graph, 
+			width, 
+			height, 
+			selected
 		} = this.props;
+
+		// if(
+		// 	selected && 
+		// 	this.state.selected != selected
+		// ) {
+		// 	var id = selected;
+		// 	if(id) {
+		// 		this.setState({
+		// 			exploded: id,
+		// 			highlighted: id,
+		// 			selected: id,
+		// 			refreshed: undefined,
+		// 			runLayout: true,
+		// 			zoomFit: true
+		// 		});
+		// 	} else {
+		// 		this.setState({
+		// 			exploded: undefined,
+		// 			highlighted: undefined,
+		// 			selected: undefined,
+		// 			refreshed: undefined,
+		// 			runLayout: true,
+		// 			zoomFit: true
+		// 		});
+		// 	}
+		// }
 
 	}
 
@@ -285,8 +405,48 @@ class ThreeDeeGraph extends Component {
 		};
 	}
 
+	// selectItem(id) {
+	// 	// 
+	// }
+
 	selectItem(id) {
-		// 
+		// // if( (id) && (this.state.highlighted == id) ) {
+		// // 	this.setState({
+		// // 		exploded: id,
+		// // 		highlighted: undefined,
+		// // 		selected: undefined
+		// // 	});
+		// // } else 
+		if(id) {
+			/*
+			 * Cannot do this
+			 */
+			// this.props.selected = id;
+			this.setState({
+				exploded: id,
+				highlighted: id,
+				selected: id,
+				refreshed: undefined,
+				runLayout: true,
+				zoomFit: true
+			});
+		} else {
+			/*
+			 * Cannot do this
+			 */
+			// this.props.selected = undefined;
+			this.setState({
+				exploded: undefined,
+				highlighted: undefined,
+				selected: undefined,
+				refreshed: undefined,
+				runLayout: true,
+				zoomFit: true
+			});
+		}
+		if( this.props.selectItem ) {
+			this.props.selectItem(id);
+		}
 	}
 
 	render() {
@@ -343,6 +503,7 @@ class ThreeDeeGraph extends Component {
 		var highlighted = this.state.highlighted;
 		var exploded = this.state.exploded;
 		var selected = this.state.selected;
+		// var refreshed = this.state.refreshed;
 		var pulsed = this.state.refreshed;
 		var runLayout = this.state.runLayout;
 		var zoomFit = this.state.zoomFit;
@@ -368,7 +529,9 @@ class ThreeDeeGraph extends Component {
 				ref={this.graphRef} 
 				graphData={graphData} 
 				width={setwidth} 
-				height={setheight}
+				height={setheight} 
+				selected={selected} 
+				onSelectItem={this.selectItem} 
 			/>
 			{/* </Container> */}
 			</>
@@ -387,8 +550,8 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		namespace, 
-		graph, 
-		selected
+		// graph, 
+		// selected
 	} = ownProps;
 
 	const {
@@ -399,8 +562,8 @@ function mapStateToProps(state, ownProps) {
 	return {
 		api, 
 		namespace: namespace, 
-		graph: graph, 
-		selected: selected
+		// graph: graph, 
+		// selected: selected
 	}
 
 }

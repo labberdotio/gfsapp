@@ -21,7 +21,8 @@ class CustomForceGraphComponent extends Component {
 
 		var _this = this;
 
-		this.handleClick = this.handleClick.bind(this);
+		this.onNodeClick = this.onNodeClick.bind(this);
+		this.onBackgroundClick = this.onBackgroundClick.bind(this);	
 
 		this.fgRef = React.createRef();
 
@@ -37,23 +38,78 @@ class CustomForceGraphComponent extends Component {
 	// }
 
 	componentDidUpdate(prevProps) {
-        // 
+        this.updateForceGraph(prevProps, this.props);
 	}
 
 	componentDidMount() {
         // 
 	}
 
-	handleClick(node) {
-		// Aim at node from outside it
-		const distance = 40;
-		const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+	updateForceGraph(prevProps, newProps) {
+		// if( newProps && newProps.layout ) {
+		if( newProps ) {
 
-		this.fgRef.current.cameraPosition(
-			{ x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-			node, // lookAt ({ x, y, z })
-			300  // ms transition duration
-		);
+			// if( newProps.selected && this.props.graphData && this.props.graphData.nodes ) {
+			if( newProps.selected && prevProps.graphData && prevProps.graphData.nodes ) {
+				var selected = newProps.selected;
+				// for( var nodeidx in this.props.graphData.nodes ) {
+				for( var nodeidx in prevProps.graphData.nodes ) {
+					// if( this.props.graphData.nodes[nodeidx]["id"] == selected ) {
+					if( prevProps.graphData.nodes[nodeidx]["id"] == selected ) {
+						// var node = this.props.graphData.nodes[nodeidx];
+						var node = prevProps.graphData.nodes[nodeidx];
+						if( node && node.x && node.y && node.z ) {
+
+							// Aim at node from outside it
+							const distance = 40;
+							const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+						
+							this.fgRef.current.cameraPosition(
+								{ x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+								node, // lookAt ({ x, y, z })
+								300  // ms transition duration
+							);
+
+						}
+					}
+				}
+			} else {
+
+				// this.fgRef.current.cameraPosition(
+				// 	{ x: 0, y: 0, z: 0 }, 
+				// 	undefined, 
+				// 	300  // ms transition duration
+				// );
+
+			}
+
+		}
+	}
+
+	onSelectItem(id, tab) {
+		if( this.props.onSelectItem ) {
+			this.props.onSelectItem(id, tab);
+		}
+	}
+
+	// handleClick(node) {
+	// 	// Aim at node from outside it
+	// 	const distance = 40;
+	// 	const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
+	// 
+	// 	this.fgRef.current.cameraPosition(
+	// 		{ x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+	// 		node, // lookAt ({ x, y, z })
+	// 		300  // ms transition duration
+	// 	);
+	// }
+
+	onNodeClick(node) {
+		this.onSelectItem(node.id, 0);
+	}
+
+	onBackgroundClick() {
+		this.onSelectItem(undefined, 0);
 	}
 
 	render() {
@@ -96,6 +152,8 @@ class CustomForceGraphComponent extends Component {
 		var width = this.props.width;
 		var height = this.props.height;
 
+		var selected = this.props.selected;
+
 		return (
 			<>
 			{/* <ForceGraph2D 
@@ -128,7 +186,8 @@ class CustomForceGraphComponent extends Component {
 				linkCurvature="curvature" 
 				linkCurveRotation="rotation" 
 				linkDirectionalParticles={2} 
-				onNodeClick={this.handleClick} 
+				onNodeClick={this.onNodeClick} 
+				onBackgroundClick={this.onBackgroundClick} 
 				width={width} // {1000} 
 				height={height} // {600} 
 				backgroundColor="white"
