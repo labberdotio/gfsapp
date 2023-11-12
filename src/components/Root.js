@@ -590,21 +590,20 @@ class Root extends Component {
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>
-			<Breadcrumbs aria-label="breadcrumb">
+			{/* <Breadcrumbs aria-label="breadcrumb">
 				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
 					Namespaces
 				</Link>
 				<Typography color="textPrimary">{namespace}</Typography>
 				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs>
+			</Breadcrumbs> */}
 			<Grid 
 				className="" 
 				container 
 				xs={12} 
 				spacing={0} 
 			>
-
 				<Grid 
 					className={classes.treeGrid} 
 					className="treeGrid" 
@@ -626,7 +625,6 @@ class Root extends Component {
 							items={treestruc}
 						/>
 					</TreeView>
-
 				</Grid>
 				<Grid 
 					className={classes.mainGrid} 
@@ -636,7 +634,6 @@ class Root extends Component {
 					xs={9} 
 					spacing={0} 
 				>
-
 					<Grid 
 						ref={this.gridRef}
 						className="leftGrid" 
@@ -645,22 +642,29 @@ class Root extends Component {
 						xs={12} 
 						spacing={0} 
 					>
-						{/* <Graph
-							graph={graph}
-							width={graphwidth} 
-							height={graphheight} 
-							selected={selected} 
-							selectItem={this.selectItem} 
-							contextCommand={this.contextCommand}/> */}
-						<ThreeDeeGraph
+						<Breadcrumbs aria-label="breadcrumb">
+							<BackNavButton></BackNavButton>
+							<Link color="inherit" to="/namespaces">
+								Namespaces
+							</Link>
+							<Typography color="textPrimary">{namespace}</Typography>
+							<ForwardNavButton></ForwardNavButton>
+						</Breadcrumbs>
+						<Graph
 							graph={graph}
 							width={graphwidth} 
 							height={graphheight} 
 							selected={selected} 
 							selectItem={this.selectItem} 
 							contextCommand={this.contextCommand}/>
+						{/* <ThreeDeeGraph
+							graph={graph}
+							width={graphwidth} 
+							height={graphheight} 
+							selected={selected} 
+							selectItem={this.selectItem} 
+							contextCommand={this.contextCommand}/> */}
 					</Grid>
-
 				</Grid>
 			</Grid>
 			<SpeedDial
