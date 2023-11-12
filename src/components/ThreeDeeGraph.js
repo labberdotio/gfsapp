@@ -34,11 +34,11 @@ class ThreeDeeGraph extends Component {
 			runLayout: true
 		}
 
+		var _this = this;
+
 		this.graphRef = React.createRef();
 
-		this.onSelectItem = this.onSelectItem.bind(this);
-
-		var _this = this;
+		this.selectItem = this.selectItem.bind(this);
 
 	}
 
@@ -285,10 +285,6 @@ class ThreeDeeGraph extends Component {
 		};
 	}
 
-	onSelectItem(id) {
-		this.selectItem(id);
-	}
-
 	selectItem(id) {
 		// 
 	}
@@ -391,7 +387,8 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		namespace, 
-		graph
+		graph, 
+		selected
 	} = ownProps;
 
 	const {
@@ -402,7 +399,8 @@ function mapStateToProps(state, ownProps) {
 	return {
 		api, 
 		namespace: namespace, 
-		graph: graph
+		graph: graph, 
+		selected: selected
 	}
 
 }
