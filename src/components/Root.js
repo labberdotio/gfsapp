@@ -645,20 +645,20 @@ class Root extends Component {
 						xs={12} 
 						spacing={0} 
 					>
-						<Graph
-							graph={graph}
-							width={graphwidth} 
-							height={graphheight} 
-							selected={selected} 
-							selectItem={this.selectItem} 
-							contextCommand={this.contextCommand}/>
-						{/* <ThreeDeeGraph
+						{/* <Graph
 							graph={graph}
 							width={graphwidth} 
 							height={graphheight} 
 							selected={selected} 
 							selectItem={this.selectItem} 
 							contextCommand={this.contextCommand}/> */}
+						<ThreeDeeGraph
+							graph={graph}
+							width={graphwidth} 
+							height={graphheight} 
+							selected={selected} 
+							selectItem={this.selectItem} 
+							contextCommand={this.contextCommand}/>
 					</Grid>
 
 				</Grid>
