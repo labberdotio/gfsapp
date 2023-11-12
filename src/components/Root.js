@@ -277,7 +277,7 @@ class Root extends Component {
 				var vertex = vertexes[i]["@value"];
 				if( (vertex) && (vertex["_id"]) ) {
 					vs[String(vertex["_id"])] = vertex; // true;
-					var sval = vertex["_label"] + " " + vertex["_name"];
+					var sval = vertex["_label"] + " " + vertex["properties"]["_name"];
 					var included = false;
 					var excluded = false;
 					if( (sval) && (this.state.search) ) {
@@ -296,11 +296,11 @@ class Root extends Component {
 							}
 						};
 					}
-					// treestruc[vertex["_label"]]["tree"][vertex["_name"]] = {
+					// treestruc[vertex["_label"]]["tree"][vertex["properties"]["_name"]] = {
 					treestruc[vertex["_label"]]["tree"][vertex["_id"]] = {
 						id: vertex["_id"], 
-						name: vertex["_name"], 
-						label: vertex["_name"], // + "." + vertex["_label"], 
+						name: vertex["properties"]["_name"], 
+						label: vertex["properties"]["_name"], // + "." + vertex["_label"], 
 						vertex: vertex, 
 						tree: {
 						}
@@ -340,8 +340,8 @@ class Root extends Component {
 							}
 							treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]]["tree"][target["_id"]] = {
 								id: target["_id"], 
-								name: target["_name"], 
-								label: target["_name"], // + "." + target["_label"], 
+								name: target["properties"]["_name"], 
+								label: target["properties"]["_name"], // + "." + target["_label"], 
 								vertex: target, 
 								edge: edge, 
 								tree: {

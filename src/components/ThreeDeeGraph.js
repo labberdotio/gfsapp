@@ -288,7 +288,7 @@ class ThreeDeeGraph extends Component {
 				if( (vertex) && (vertex["_id"]) ) {
 				// if( (vertex) && (vertex["_id"]) && 
 				// 	( (vertex["_label"] != "Compose") && (vertex["_label"] != "type") && (vertex["_label"] != "interface") && (vertex["_label"] != "enum") ) ) {
-					var sval = vertex["_label"] + " " + vertex["_name"];
+					var sval = vertex["_label"] + " " + vertex["properties"]["_name"];
 					var included = false;
 					var excluded = false;
 					// if( (sval) && (this.state.search) ) {
@@ -303,13 +303,13 @@ class ThreeDeeGraph extends Component {
 					 */
 
 					var createdflag = false;
-					// var createddelta = (Date.now()) - (vertex["_created"] * 1000);
+					// var createddelta = (Date.now()) - (vertex["properties"]["_created"] * 1000);
 					// if( createddelta <= ( 1 * 60 * 60 * 1000 ) ) {
 					// 	createdflag = true;
 					// }
 
 					var modifiedflag = false;
-					// var modifieddelta = (Date.now()) - (vertex["_modified"] * 1000);
+					// var modifieddelta = (Date.now()) - (vertex["properties"]["_modified"] * 1000);
 					// if( modifieddelta <= ( 1 * 60 * 60 * 1000 ) ) {
 					// 	modifiedflag = true;
 					// }
@@ -318,15 +318,15 @@ class ThreeDeeGraph extends Component {
 					// var element = {
 					// 	data: {
 					// 		id: vidpfx + String(vertex["_id"]), 
-					// 		name: vertex["_name"], // + "\n" + "[" + vertex["_label"] + "]",
-					// 		label: vertex["_name"] + "\n" + "[" + vertex["_label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
+					// 		name: vertex["properties"]["_name"], // + "\n" + "[" + vertex["_label"] + "]",
+					// 		label: vertex["properties"]["_name"] + "\n" + "[" + vertex["_label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
 					// 		selected: false,
 					// 		cytoscape_alias_list: [
-					// 			vertex["_name"]
+					// 			vertex["properties"]["_name"]
 					// 		],
-					// 		canonicalName: vertex["_name"],
+					// 		canonicalName: vertex["properties"]["_name"],
 					// 		NodeType: vertex["_label"],
-					// 		shared_name: vertex["_name"],
+					// 		shared_name: vertex["properties"]["_name"],
 					// 	}, 
 					// 	selected: false, 
 					// 	classes: vertex["_label"] + ' ' + (included ? 'included' : '') + ' ' + (excluded ? 'excluded' : '') + ' ' + (createdflag ? 'created' : '') + ' ' + (modifiedflag ? 'modified' : '')
@@ -334,8 +334,8 @@ class ThreeDeeGraph extends Component {
 					var element = {
 						id: vidpfx + String(vertex["_id"]), 
 						label: vertex["_label"], 
-						name: vertex["_name"], // + "\n" + "[" + vertex["_label"] + "]",
-						description: vertex["_name"] + "\n" + "[" + vertex["_label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
+						name: vertex["properties"]["_name"], // + "\n" + "[" + vertex["_label"] + "]",
+						description: vertex["properties"]["_name"] + "\n" + "[" + vertex["_label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
 					};
 					// elements.push(element);
 					nodes.push(element);
