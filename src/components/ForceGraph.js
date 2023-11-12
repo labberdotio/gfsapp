@@ -131,6 +131,7 @@ class CustomForceGraphComponent extends Component {
 				onNodeClick={this.handleClick} 
 				width={width} // {1000} 
 				height={height} // {600} 
+				backgroundColor="white"
 			/>
 			</>
 		);
