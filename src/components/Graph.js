@@ -661,6 +661,7 @@ class Graph extends Component {
 					// minWidth: minwidth, 
 					height: setheight, 
 					// minHeight: minheight, 
+					backgroundColor: "white"
 				}}
 			/>
 			{/* </Container> */}

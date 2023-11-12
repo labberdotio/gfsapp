@@ -5,6 +5,8 @@
 // 
 
 import React, {Component} from 'react';
+// import {useLayoutEffect, useRef, useState} from 'react';
+// import { useLayoutEffect } from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
 import { useHistory } from "react-router-dom";
@@ -99,6 +101,8 @@ class Root extends Component {
 		}
 
 		var _this = this;
+
+		this.gridRef = React.createRef();
 
 	}
 
@@ -305,9 +309,6 @@ class Root extends Component {
 
 		var backdropOpen = false;
 
-		var graphwidht = 640;
-		var graphheight = 640;
-
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
@@ -326,6 +327,21 @@ class Root extends Component {
 		var actions = [
 			
 		];
+
+		var graphwidth = 640;
+		var graphheight = 640;
+		if( this.gridRef.current ) {
+			graphwidth = this.gridRef.current.offsetWidth;
+			graphheight = this.gridRef.current.offsetHeight;
+		}
+
+		if( graphwidth > 1280 ) {
+			graphwidth = 1280;
+		}
+
+		if( graphheight > 640 ) {
+			graphheight = 640;
+		}
 
 		return (
 			<>
@@ -350,6 +366,7 @@ class Root extends Component {
 				spacing={0} 
 			>
 				<Grid 
+					ref={this.gridRef}
 					className="leftGrid" 
 					container 
 					item 
@@ -358,12 +375,12 @@ class Root extends Component {
 				>
 					<Graph
 						graph={graph}
-						width={graphwidht} 
+						width={graphwidth} 
 						height={graphheight}/>
-					<ThreeDeeGraph
+					{/* <ThreeDeeGraph
 						graph={graph}
-						width={graphwidht} 
-						height={graphheight}/>
+						width={graphwidth} 
+						height={graphheight}/> */}
 				</Grid>
 			</Grid>
 			<SpeedDial
