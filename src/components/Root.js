@@ -25,6 +25,12 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
+import TreeView from '@material-ui/lab/TreeView';
+import TreeItem from '@material-ui/lab/TreeItem';
+
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
 import Button from '@material-ui/core/Button';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -92,6 +98,35 @@ export const ForwardNavButton = () => {
     );
 };
 
+function TreeViewItems(props) {
+	var items = props.items;
+	var onSelectFn = props.onSelect;
+	return (
+		<>
+		{Object.keys(items).map((key, index) => ( 
+			<TreeItem 
+				nodeId={ "" + items[key]["id"] }
+				label={ "" + items[key]["label"] }
+				onClick={event => {
+					event.stopPropagation();
+					event.preventDefault();
+					if( items[key]["vertex"] ) {
+						onSelectFn(items[key]["vertex"]);
+					}
+				}}>
+				{items[key]["tree"] && 
+				Object.keys(items[key]["tree"]).length > 0 &&
+					<TreeViewItems 
+						onSelect={onSelectFn} 
+						items={items[key]["tree"]}
+					/>
+				}
+			</TreeItem>
+		))}
+		</>
+	)
+}
+
 class Root extends Component {
 
 	constructor(props) {
@@ -143,6 +178,169 @@ class Root extends Component {
 		 */
 		this.loadInstance(api, namespace, "graph")
 
+	}
+
+	getTreeData(graph) {
+
+		/*
+		 * I am converting the redux store to a dict, 
+		 * but this expects an array.
+		 */
+		// if( graph ) {
+		// 	graph = Object.values(graph);
+		// }
+
+		var treestruc = {
+			Compose: {
+				id: "Compose", 
+				name: "Compose", 
+				label: "Compose", 
+				tree: {
+				}
+			}, 
+			ComposeState: {
+				id: "ComposeState", 
+				name: "ComposeState", 
+				label: "ComposeState", 
+				tree: {
+				}
+			}, 
+			type: {
+				id: "type", 
+				name: "type", 
+				label: "Type", 
+				tree: {
+				}
+			}, 
+			interface: {
+				id: "interface", 
+				name: "interface", 
+				label: "Interface", 
+				tree: {
+				}
+			}, 
+			enum: {
+				id: "enum", 
+				name: "enum", 
+				label: "Enum", 
+				tree: {
+				}
+			}, 
+			// query: {
+			// 	id: "query", 
+			// 	name: "query", 
+			// 	label: "Query", 
+			// 	tree: {
+			// 	}
+			// }, 
+			// template: {
+			// 	id: "template", 
+			// 	name: "template", 
+			// 	label: "Template", 
+			// 	tree: {
+			// 	}
+			// }, 
+		};
+
+		var vs = {}
+
+		if( !graph ) {
+			return treestruc;
+		}
+
+		var vertexes = graph["@value"]["vertices"];
+		var edges = graph["@value"]["edges"];
+
+		if( !vertexes ) {
+			vertexes = [];
+		}
+
+		if( !edges ) {
+			edges = [];
+		}
+
+		if( vertexes ) {
+			for( var i=0; i<vertexes.length; i++ ) {
+				var vertex = vertexes[i]["@value"];
+				if( (vertex) && (vertex["_id"]) ) {
+					vs[String(vertex["_id"])] = vertex; // true;
+					var sval = vertex["_label"] + " " + vertex["_name"];
+					var included = false;
+					var excluded = false;
+					if( (sval) && (this.state.search) ) {
+						if( sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							included = true;
+						} else if( !sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							excluded = true;
+						}
+					}
+					if( !(vertex["_label"] in treestruc) ) {
+						treestruc[vertex["_label"]] = {
+							id: vertex["_label"], 
+							name: vertex["_label"], 
+							label: vertex["_label"], 
+							tree: {
+							}
+						};
+					}
+					// treestruc[vertex["_label"]]["tree"][vertex["_name"]] = {
+					treestruc[vertex["_label"]]["tree"][vertex["_id"]] = {
+						id: vertex["_id"], 
+						name: vertex["_name"], 
+						label: vertex["_name"], // + "." + vertex["_label"], 
+						vertex: vertex, 
+						tree: {
+						}
+					};
+				}
+			}
+		}
+
+		if( edges ) {
+			for( var i=0; i<edges.length; i++ ) {
+				var edge = edges[i]["@value"];
+				if( (edge) && (edge["_id"]) ) {
+					var sval = edge["_label"];
+					var included = false;
+					var excluded = false;
+					if( (sval) && (this.state.search) ) {
+						if( sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							included = true;
+						} else if( !sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							excluded = true;
+						}
+					}
+					var _outV = String(edge["_outV"]);
+					var _inV = String(edge["_inV"]);
+					if( (_outV) && (_inV) ) {
+						if( (vs[_outV]) && (vs[_inV]) ) {
+							var source = vs[_outV];
+							var target = vs[_inV];
+							if( !(edge["_label"] in treestruc[source["_label"]]["tree"][source["_id"]]["tree"]) ) {
+								treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]] = {
+									id: edge["_id"], 
+									name: edge["_label"], 
+									label: edge["_label"], 
+									tree: {
+									}
+								};
+							}
+							treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]]["tree"][target["_id"]] = {
+								id: target["_id"], 
+								name: target["_name"], 
+								label: target["_name"], // + "." + target["_label"], 
+								vertex: target, 
+								edge: edge, 
+								tree: {
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return treestruc;
 	}
 
 	getDataURL(api, namespace, typename, type, schema) {
@@ -328,6 +526,9 @@ class Root extends Component {
 			
 		];
 
+		// var graph = {}
+		var treestruc = this.getTreeData(graph);
+
 		var graphwidth = 640;
 		var graphheight = 640;
 		if( this.gridRef.current ) {
@@ -365,22 +566,57 @@ class Root extends Component {
 				xs={12} 
 				spacing={0} 
 			>
+
 				<Grid 
-					ref={this.gridRef}
-					className="leftGrid" 
-					container 
+					className={classes.treeGrid} 
+					className="treeGrid" 
 					item 
-					xs={12} 
+					xs={3} 
 					spacing={0} 
 				>
-					<Graph
-						graph={graph}
-						width={graphwidth} 
-						height={graphheight}/>
-					{/* <ThreeDeeGraph
-						graph={graph}
-						width={graphwidth} 
-						height={graphheight}/> */}
+
+					<TreeView
+						className={classes.tree} 
+						className="tree" 
+						defaultCollapseIcon={<ExpandMoreIcon />}
+						defaultExpandIcon={<ChevronRightIcon />}
+					>
+						<TreeViewItems 
+							onSelect={item => {
+								this.selectItem( "v" + String( item["_id"] ) );
+							}}
+							items={treestruc}
+						/>
+					</TreeView>
+
+				</Grid>
+				<Grid 
+					className={classes.mainGrid} 
+					className="mainGrid" 
+					container 
+					item 
+					xs={9} 
+					spacing={0} 
+				>
+
+					<Grid 
+						ref={this.gridRef}
+						className="leftGrid" 
+						container 
+						item 
+						xs={12} 
+						spacing={0} 
+					>
+						<Graph
+							graph={graph}
+							width={graphwidth} 
+							height={graphheight}/>
+						{/* <ThreeDeeGraph
+							graph={graph}
+							width={graphwidth} 
+							height={graphheight}/> */}
+					</Grid>
+
 				</Grid>
 			</Grid>
 			<SpeedDial
