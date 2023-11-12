@@ -132,17 +132,30 @@ class Root extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			
+			insloading: false, 
+			insloaded: false, 
+			insfailed: false, 
+			instanceid: undefined, 
+			instance: undefined, 
+			selected: undefined
 		}
 
 		var _this = this;
 
 		this.gridRef = React.createRef();
 
+		this.selectItem = this.selectItem.bind(this);
+		this.contextCommand = this.contextCommand.bind(this);
+
 	}
 
 	state = {
-		
+		insloading: false, 
+		insloaded: false, 
+		insfailed: false, 
+		instanceid: undefined, 
+		instance: undefined, 
+		selected: undefined
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -494,6 +507,26 @@ class Root extends Component {
 	// ) {
 	// }
 
+	/*
+	 * 
+	 */
+
+	contextCommand(type, command, selected, allselected) {
+
+	};
+
+	selectItem(id) {
+		if(id) {
+			this.setState({
+				selected: id,
+			});
+		} else {
+			this.setState({
+				selected: undefined,
+			});
+		}
+	}
+
 	render() {
 
 		var _this = this;
@@ -517,6 +550,11 @@ class Root extends Component {
 			instance = this.state.instance;
 		}
 		var graph = instance;
+
+		var selected = undefined;
+		if( this.state.selected ) {
+			selected = this.state.selected;
+		}
 
 		var hidden = false;
 		var open = true;
@@ -610,11 +648,17 @@ class Root extends Component {
 						<Graph
 							graph={graph}
 							width={graphwidth} 
-							height={graphheight}/>
+							height={graphheight} 
+							selected={selected} 
+							selectItem={this.selectItem} 
+							contextCommand={this.contextCommand}/>
 						{/* <ThreeDeeGraph
 							graph={graph}
 							width={graphwidth} 
-							height={graphheight}/> */}
+							height={graphheight} 
+							selected={selected} 
+							selectItem={this.selectItem} 
+							contextCommand={this.contextCommand}/> */}
 					</Grid>
 
 				</Grid>
