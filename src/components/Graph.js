@@ -372,16 +372,23 @@ class Graph extends Component {
 			var id = nextProps.selected; // selected;
 			if(id) {
 				this.setState({
-					exploded: this.state.exploded, 
+					exploded: false, // this.state.exploded, 
 					selected: id
 				});
 			} else {
 				this.setState({
-					exploded: this.state.exploded, 
+					exploded: false, // this.state.exploded, 
 					selected: undefined
 				});
 			}
-		}
+		} 
+		// else if( this.props.selected == nextProps.selected ) {
+		// 	var id = nextProps.selected; // selected;
+		// 	this.setState({
+		// 		exploded: true, 
+		// 		selected: id
+		// 	});
+		// }
 
 	}
 
@@ -403,12 +410,12 @@ class Graph extends Component {
 		// 	var id = selected;
 		// 	if(id) {
 		// 		this.setState({
-		// 			exploded: this.state.exploded, 
+		// 			exploded: false, // this.state.exploded, 
 		// 			selected: id
 		// 		});
 		// 	} else {
 		// 		this.setState({
-		// 			exploded: this.state.exploded, 
+		// 			exploded: false, // this.state.exploded, 
 		// 			selected: undefined
 		// 		});
 		// 	}
@@ -434,12 +441,12 @@ class Graph extends Component {
 		// 	var id = selected;
 		// 	if(id) {
 		// 		this.setState({
-		// 			exploded: this.state.exploded, 
+		// 			exploded: false, // this.state.exploded, 
 		// 			selected: id
 		// 		});
 		// 	} else {
 		// 		this.setState({
-		// 			exploded: this.state.exploded, 
+		// 			exploded: false, // this.state.exploded, 
 		// 			selected: undefined
 		// 		});
 		// 	}
@@ -630,13 +637,13 @@ class Graph extends Component {
 			this.setState({
 				exploded: !this.state.exploded
 			});
-		} else if( this.props.selectItem ) {
-			if( !id ) {
-				this.setState({
-					exploded: false
-				});
+		} else {
+			this.setState({
+				exploded: false
+			});
+			if( this.props.selectItem ) {
+				this.props.selectItem(id);
 			}
-			this.props.selectItem(id);
 		}
 	}
 
