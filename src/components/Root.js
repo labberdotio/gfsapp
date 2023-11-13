@@ -127,7 +127,8 @@ function TreeViewItems(props) {
 	)
 }
 
-class Root extends Component {
+// class Root extends Component {
+const Root = class extends Component {
 
 	constructor(props) {
 		super(props);
@@ -833,4 +834,11 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Root));
+function makeRootView() {
+	return connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Root));
+}
+
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Root));
+export {
+	makeRootView
+};
