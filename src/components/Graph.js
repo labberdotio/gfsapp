@@ -325,33 +325,21 @@ class Graph extends Component {
 	constructor(props) {
 		super(props);
 		// this.state = {
-		// 	highlighted: undefined, 
-		// 	exploded: undefined, 
-		// 	selected: undefined, 
-		// 	refreshed: undefined, 
-		// 	zoomFit: true,
-		// 	runLayout: true
+		// 	exploded: false, 
+		// 	selected: undefined
 		// }
 		var id = props.selected;
 		if(id) {
 			// this.setState({
 			this.state = {
-				exploded: id,
-				highlighted: id,
+				exploded: false, 
 				selected: id,
-				refreshed: undefined,
-				runLayout: true,
-				zoomFit: true
 			};
 		} else {
 			// this.setState({
 			this.state = {
-				exploded: undefined,
-				highlighted: undefined,
-				selected: undefined,
-				refreshed: undefined,
-				runLayout: true,
-				zoomFit: true
+				exploded: false, 
+				selected: undefined
 			};
 		}
 
@@ -365,12 +353,8 @@ class Graph extends Component {
 	}
 
 	state = {
-		highlighted: undefined, 
-		exploded: undefined, 
-		selected: undefined, 
-		refreshed: undefined, 
-		zoomFit: true,
-		runLayout: true
+		exploded: false, 
+		selected: undefined
 	};
 
 	componentWillUpdate(nextProps, nextState) {
@@ -388,24 +372,17 @@ class Graph extends Component {
 			var id = nextProps.selected; // selected;
 			if(id) {
 				this.setState({
-					exploded: id,
-					highlighted: id,
-					selected: id,
-					refreshed: undefined,
-					runLayout: true,
-					zoomFit: true
+					exploded: this.state.exploded, 
+					selected: id
 				});
 			} else {
 				this.setState({
-					exploded: undefined,
-					highlighted: undefined,
-					selected: undefined,
-					refreshed: undefined,
-					runLayout: true,
-					zoomFit: true
+					exploded: this.state.exploded, 
+					selected: undefined
 				});
 			}
 		}
+
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -426,21 +403,13 @@ class Graph extends Component {
 		// 	var id = selected;
 		// 	if(id) {
 		// 		this.setState({
-		// 			exploded: id,
-		// 			highlighted: id,
-		// 			selected: id,
-		// 			refreshed: undefined,
-		// 			runLayout: true,
-		// 			zoomFit: true
+		// 			exploded: this.state.exploded, 
+		// 			selected: id
 		// 		});
 		// 	} else {
 		// 		this.setState({
-		// 			exploded: undefined,
-		// 			highlighted: undefined,
-		// 			selected: undefined,
-		// 			refreshed: undefined,
-		// 			runLayout: true,
-		// 			zoomFit: true
+		// 			exploded: this.state.exploded, 
+		// 			selected: undefined
 		// 		});
 		// 	}
 		// }
@@ -465,21 +434,13 @@ class Graph extends Component {
 		// 	var id = selected;
 		// 	if(id) {
 		// 		this.setState({
-		// 			exploded: id,
-		// 			highlighted: id,
-		// 			selected: id,
-		// 			refreshed: undefined,
-		// 			runLayout: true,
-		// 			zoomFit: true
+		// 			exploded: this.state.exploded, 
+		// 			selected: id
 		// 		});
 		// 	} else {
 		// 		this.setState({
-		// 			exploded: undefined,
-		// 			highlighted: undefined,
-		// 			selected: undefined,
-		// 			refreshed: undefined,
-		// 			runLayout: true,
-		// 			zoomFit: true
+		// 			exploded: this.state.exploded, 
+		// 			selected: undefined
 		// 		});
 		// 	}
 		// }
@@ -665,41 +626,16 @@ class Graph extends Component {
 	};
 
 	selectItem(id) {
-		// // if( (id) && (this.state.highlighted == id) ) {
-		// // 	this.setState({
-		// // 		exploded: id,
-		// // 		highlighted: undefined,
-		// // 		selected: undefined
-		// // 	});
-		// // } else 
-		if(id) {
-			/*
-			 * Cannot do this
-			 */
-			// this.props.selected = id;
+		if( id && id == this.props.selected ) {
 			this.setState({
-				exploded: id,
-				highlighted: id,
-				selected: id,
-				refreshed: undefined,
-				runLayout: true,
-				zoomFit: true
+				exploded: !this.state.exploded
 			});
-		} else {
-			/*
-			 * Cannot do this
-			 */
-			// this.props.selected = undefined;
-			this.setState({
-				exploded: undefined,
-				highlighted: undefined,
-				selected: undefined,
-				refreshed: undefined,
-				runLayout: true,
-				zoomFit: true
-			});
-		}
-		if( this.props.selectItem ) {
+		} else if( this.props.selectItem ) {
+			if( !id ) {
+				this.setState({
+					exploded: false
+				});
+			}
 			this.props.selectItem(id);
 		}
 	}
@@ -757,13 +693,25 @@ class Graph extends Component {
 		// 	backdropOpen = true;
 		// }
 
-		var highlighted = this.state.highlighted;
-		var exploded = this.state.exploded;
+		// var highlighted = this.state.highlighted;
+		// var exploded = this.state.exploded;
 		var selected = this.state.selected;
 		// var refreshed = this.state.refreshed;
-		var pulsed = this.state.refreshed;
-		var runLayout = this.state.runLayout;
-		var zoomFit = this.state.zoomFit;
+		// var pulsed = this.state.refreshed;
+		// var runLayout = this.state.runLayout;
+		// var zoomFit = this.state.zoomFit;
+
+		var highlighted = selected; // this.state.highlighted;
+		var exploded = undefined; // this.state.exploded;
+		if( this.state.exploded ) {
+			highlighted = undefined; // this.state.highlighted;
+			exploded = selected; // this.state.exploded;
+		}
+		// var selected = this.state.selected;
+		// var refreshed = this.state.refreshed;
+		var pulsed = true; // this.state.refreshed;
+		var runLayout = true; // this.state.runLayout;
+		var zoomFit = true; // this.state.zoomFit;
 
 		return (
 			<>

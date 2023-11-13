@@ -401,6 +401,7 @@ class Root extends Component {
 		// if( (!this.state.insloading) && 
 		// 	(!this.state.insloaded) && 
 		// 	(!this.state.insfailed) ) {
+		try {
 			this.setState({
 				insloading: true, 
 				insloaded: false, 
@@ -425,6 +426,16 @@ class Root extends Component {
 						instance: data
 					});
 				});
+
+		} catch {
+			this.setState({
+				insloading: false, 
+				insloaded: false, 
+				insfailed: true, 
+				instanceid: undefined, 
+				instance: this.state.instance, // false
+			});
+		}
 		// }
 	}
 
