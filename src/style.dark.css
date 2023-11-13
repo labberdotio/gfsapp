@@ -163,9 +163,9 @@ a:hover {
 }
 
 #root > div > main .treeGrid {
-    /* min-height: calc( 100vh - 62px ); */
-    /* height: calc( 100vh - 62px ); */
-    /* overflow-y: scroll; */
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
 }
 
 #root > div > main .mainGrid,
@@ -348,4 +348,8 @@ a:hover {
 		transparent 77%,
 		transparent
 	); */
+}
+
+.graph {
+    background-color: rgb(30, 30, 30);
 }
