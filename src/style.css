@@ -124,9 +124,9 @@ body,
 }
 
 #root > div > main .treeGrid {
-    /* min-height: calc( 100vh - 62px ); */
-    /* height: calc( 100vh - 62px ); */
-    /* overflow-y: scroll; */
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
 }
 
 #root > div > main .mainGrid,
@@ -284,4 +284,8 @@ body,
 		transparent 77%,
 		transparent
 	); */
+}
+
+.graph {
+    /* background-color: white; */
 }
