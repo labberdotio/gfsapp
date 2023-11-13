@@ -137,6 +137,7 @@ class Root extends Component {
 			insfailed: false, 
 			instanceid: undefined, 
 			instance: undefined, 
+			graph: undefined, 
 			selected: undefined
 		}
 
@@ -155,6 +156,7 @@ class Root extends Component {
 		insfailed: false, 
 		instanceid: undefined, 
 		instance: undefined, 
+		graph: undefined, 
 		selected: undefined
 	};
 
@@ -209,6 +211,76 @@ class Root extends Component {
 			)
 		}
 
+	}
+
+	getGraph() {
+		var fullgraph = this.state.graph;
+		if( !fullgraph ) {
+			fullgraph = {
+				"@type": "tinker:graph", 
+				"@value": {
+					"vertices": [], 
+					"edges": []
+				}
+			};
+		}
+		return fullgraph;
+	}
+
+	// buildGraph(subgraph) {
+	// 	var fullgraph = this.state.graph;
+	// 	if( !fullgraph ) {
+	// 		fullgraph = {
+	// 			"@type": "tinker:graph", 
+	// 			"@value": {
+	// 				"vertices": [], 
+	// 				"edges": []
+	// 			}
+	// 		};
+	// 	}
+	// 	if( subgraph && subgraph["@value"] ) {
+	// 		if( subgraph["@value"]["vertices"] ) {
+	// 			var fullgraphvertices = Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
+	// 			fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
+	// 		}
+	// 		if( subgraph["@value"]["edges"] ) {
+	// 			var fullgraphvedges = Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
+	// 			fullgraph["@value"]["edges"] = Object.values(newgraphedges);
+	// 		}
+	// 	}
+	// 	return fullgraph;
+	// }
+
+	buildGraph(subgraph) {
+		var fullgraph = this.state.graph;
+		if( !fullgraph ) {
+			fullgraph = {
+				"@type": "tinker:graph", 
+				"@value": {
+					"vertices": [], 
+					"edges": []
+				}
+			};
+		}
+		if( subgraph && subgraph["@value"] ) {
+			if( subgraph["@value"]["vertices"] ) {
+				var fullgraphvertices = {}; // Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
+				fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
+			}
+			if( subgraph["@value"]["edges"] ) {
+				var fullgraphvedges = {}; // Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
+				fullgraph["@value"]["edges"] = Object.values(newgraphedges);
+			}
+		}
+		return fullgraph;
 	}
 
 	getTreeData(graph) {
@@ -407,7 +479,8 @@ class Root extends Component {
 				insloaded: false, 
 				insfailed: false, 
 				instanceid: instanceid, 
-				instance: this.state.instance, // false
+				instance: this.state.instance, 
+				graph: this.state.graph
 			});
 			this.apiClient = new APIClient(
 				api.api.host, 
@@ -423,7 +496,8 @@ class Root extends Component {
 						insloaded: true, 
 						insfailed: false, 
 						instanceid: instanceid, 
-						instance: data
+						instance: data, 
+						graph: this.buildGraph(data), 
 					});
 				});
 
@@ -433,7 +507,8 @@ class Root extends Component {
 				insloaded: false, 
 				insfailed: true, 
 				instanceid: undefined, 
-				instance: this.state.instance, // false
+				instance: this.state.instance, 
+				graph: this.state.graph
 			});
 		}
 		// }
@@ -588,11 +663,12 @@ class Root extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		var instance = undefined;
-		if( this.state.instance ) {
-			instance = this.state.instance;
-		}
-		var graph = instance;
+		// var instance = undefined;
+		// if( this.state.instance ) {
+		// 	instance = this.state.instance;
+		// }
+		// var graph = instance;
+		var graph = this.getGraph();
 
 		var selected = undefined;
 		if( this.state.selected ) {
