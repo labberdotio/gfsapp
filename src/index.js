@@ -47,9 +47,13 @@ import App from './App.js';
 // import InstancesView from './components/Instances'
 // import InstanceView from './components/Instance'
 
-import RootInstancesView from './components/RootInstances'
+// import RootInstancesView from './components/RootInstances'
+import { makeRootInstancesView } from './components/RootInstances'
+
 import RootInstanceView from './components/RootInstance'
-import RootView from './components/Root'
+
+// import RootView from './components/Root'
+import { makeRootView } from './components/Root'
 
 // import SubInstancesView from './components/SubInstances'
 // import SubInstanceView from './components/SubInstance'
@@ -202,8 +206,9 @@ ReactDOM.render(
 				exact 
 				path="/namespaces/:namespace" 
 				render={
-					(props) => 
-						<>
+					(props) => {
+						const RootView = makeRootView();
+						return(<>
 						<App 
 							namespace={props.match.params.namespace} 
 							typename={props.match.params.typename} 
@@ -213,8 +218,9 @@ ReactDOM.render(
 							typename={props.match.params.typename} 
 						/>
 						</App>
-						</>
-				} />
+						</>);
+					}
+				}/>
 			{/* <Route 
 				exact 
 				path="/dashboard" 
@@ -232,8 +238,9 @@ ReactDOM.render(
 				exact 
 				path="/namespaces/:namespace/:typename" 
 				render={
-					(props) => 
-						<>
+					(props) => {
+						const RootInstancesView = makeRootInstancesView();
+						return(<>
 						<App 
 							namespace={props.match.params.namespace} 
 							typename={props.match.params.typename} 
@@ -243,8 +250,9 @@ ReactDOM.render(
 							typename={props.match.params.typename} 
 						/>
 						</App>
-						</>
-				} />
+						</>);
+					}
+				}
 			<Route 
 				exact 
 				path="/namespaces/:namespace/create/:typename" 

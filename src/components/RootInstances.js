@@ -137,7 +137,8 @@ function TreeViewItems(props) {
 	)
 }
 
-class RootInstances extends Component {
+// class RootInstances extends Component {
+const RootInstances = class extends Component {
 
 	constructor(props) {
 		super(props);
@@ -920,4 +921,11 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances));
+function makeRootInstancesView() {
+	return connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances));
+}
+
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances));
+export {
+	makeRootInstancesView
+};
