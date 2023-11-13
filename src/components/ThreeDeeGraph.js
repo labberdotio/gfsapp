@@ -236,6 +236,17 @@ class ThreeDeeGraph extends Component {
 			};
 		}
 
+		if( !graph["@value"] ) {
+			return {
+				"nodes":[
+					
+				],
+				"links":[
+					
+				]
+			};
+		}
+
 		var vertexes = graph["@value"]["vertices"];
 		var edges = graph["@value"]["edges"];
 

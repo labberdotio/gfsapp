@@ -173,7 +173,16 @@ class Root extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		this.loadInstance(api, namespace, "graph")
+		if( (!this.state.insloading) && 
+			(!this.state.insloaded) && 
+			(!this.state.insfailed) ) {
+			this.loadInstance(
+				api, 
+				namespace, 
+				"graph", 
+				this.state.instanceid
+			)
+		}
 
 	}
 
@@ -189,7 +198,16 @@ class Root extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		this.loadInstance(api, namespace, "graph")
+		if( (!this.state.insloading) && 
+			(!this.state.insloaded) && 
+			(!this.state.insfailed) ) {
+			this.loadInstance(
+				api, 
+				namespace, 
+				"graph", 
+				this.state.instanceid
+			)
+		}
 
 	}
 
@@ -258,6 +276,10 @@ class Root extends Component {
 		var vs = {}
 
 		if( !graph ) {
+			return treestruc;
+		}
+
+		if( !graph["@value"] ) {
 			return treestruc;
 		}
 
@@ -376,15 +398,15 @@ class Root extends Component {
 		// 	instance: false
 		// });
 		// }
-		if( (!this.state.insloading) && 
-			(!this.state.insloaded) && 
-			(!this.state.insfailed) ) {
+		// if( (!this.state.insloading) && 
+		// 	(!this.state.insloaded) && 
+		// 	(!this.state.insfailed) ) {
 			this.setState({
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
 				instanceid: instanceid, 
-				instance: false
+				instance: this.state.instance, // false
 			});
 			this.apiClient = new APIClient(
 				api.api.host, 
@@ -403,7 +425,7 @@ class Root extends Component {
 						instance: data
 					});
 				});
-		}
+		// }
 	}
 
 	// loadInstances(api, namespace, typename, instanceid, field) {
@@ -518,10 +540,20 @@ class Root extends Component {
 	selectItem(id) {
 		if(id) {
 			this.setState({
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false, 
+				instanceid: id.replace('v', ''), 
+				instance: this.state.instance, // undefined
 				selected: id,
 			});
 		} else {
 			this.setState({
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false, 
+				instanceid: undefined, 
+				instance: this.state.instance, // undefined
 				selected: undefined,
 			});
 		}

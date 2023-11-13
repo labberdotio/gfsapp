@@ -517,6 +517,10 @@ class Graph extends Component {
 			return [];
 		}
 
+		if( !graph["@value"] ) {
+			return [];
+		}
+
 		var vertexes = graph["@value"]["vertices"];
 		var edges = graph["@value"]["edges"];
 
