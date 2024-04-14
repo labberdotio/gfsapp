@@ -110,17 +110,17 @@ body,
 }
 
 #root > div > nav {
-    /* position: relative; */
-    /* top: 64px; */
-    /* min-height: calc( 100vh - 62px ); */
-    /* height: calc( 100vh - 62px ); */
-    /* overflow-y: scroll; */
+    position: relative;
+    top: 64px;
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
 }
 
 #root > div > main {
-    /* min-height: calc( 100vh - 62px ); */
-    /* height: calc( 100vh - 62px ); */
-    /* overflow-y: scroll; */
+    min-height: calc( 100vh );
+    height: calc( 100vh );
+    overflow-y: scroll;
 }
 
 #root > div > main .treeGrid {
@@ -131,9 +131,9 @@ body,
 
 #root > div > main .mainGrid,
 #root > div > main .composeGrid {
-    /* min-height: calc( 100vh - 62px ); */
-    /* height: calc( 100vh - 62px ); */
-    /* overflow-y: scroll; */
+    min-height: calc( 100vh - 62px );
+    height: calc( 100vh - 62px );
+    overflow-y: scroll;
 }
 
 .MuiDrawer-root .MuiDrawer-paper {
