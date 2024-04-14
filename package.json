@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@dineug/erd-editor": "^3.2.3",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.3.0",
     "@jsonforms/core": "^2.5.2",
@@ -53,7 +54,6 @@
     "socket.io-client": "^4.7.2",
     "storm-react-diagrams": "^5.2.1",
     "typescript": "^4.3.5",
-    "erd-editor": "^3.2.2",
     "worker-loader": "^3.0.8"
   },
   "scripts": {
