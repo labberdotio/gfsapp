@@ -164,7 +164,7 @@ store.dispatch(selectApi(defaultEndpoint));
 // 		for( var typeid in types ) {
 // 			if( typeid ) {
 // 				var type = types[typeid];
-// 				if( (type) && (type["name"] == typename) ) {
+// 				if( (type) && (type["_name"] == typename) ) {
 // 					return type;
 // 				}
 // 			}

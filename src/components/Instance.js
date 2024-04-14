@@ -309,7 +309,7 @@ class Instance extends Component {
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
 						return _this.makeInstancesView(
-							item && item["name"], 
+							item && item["_name"], 
 							item && item.type + " " + "(" + item.cardinality + ")",  
 							namespace, 
 							deptypename, 
@@ -322,7 +322,7 @@ class Instance extends Component {
 								type, // deptype, 
 								schema, // depschema, 
 								instance, // item && item.value, 
-								item && item["name"]
+								item && item["_name"]
 							), 
 							false
 						);
@@ -332,7 +332,7 @@ class Instance extends Component {
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
 						return _this.makeInstanceView(
-							item && item["name"], 
+							item && item["_name"], 
 							item && item.type + " " + "(" + item.cardinality + ")", 
 							namespace, 
 							deptypename, 

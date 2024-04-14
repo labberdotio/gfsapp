@@ -233,7 +233,7 @@ class RelInstance extends Component {
 					{typename}
 				</Link>
 				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
-					{ instance && instance["entity"] && instance["entity"]["name"] }
+					{ instance && instance["entity"] && instance["entity"]["_name"] }
 				</Link>
 				<Typography color="textPrimary">{ relname }</Typography>
 				<ForwardNavButton></ForwardNavButton>
