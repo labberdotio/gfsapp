@@ -272,12 +272,12 @@ class RootInstance extends Component {
 				// {
 				// 	icon: 'save',
 				// 	tooltip: 'Save', // + ' ' + typename,
-				// 	onClick: (event, rowData) => window.alert("You saved " + rowData["name"])
+				// 	onClick: (event, rowData) => window.alert("You saved " + rowData["_name"])
 				// }, 
 				{
 					icon: 'delete',
 					tooltip: 'Delete', // + ' ' + typename,
-					onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["name"] + "?")
+					onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["_name"] + "?")
 				}, 
 				// {
 				// 	icon: 'add',
@@ -695,7 +695,7 @@ class RootInstance extends Component {
 					spacing={0} 
 				>
 						{_this.makeInstanceView(
-							instance && ( instance["name"] + " (" + instance["_id"] + ")"), 
+							instance && ( instance["_name"] + " (" + instance["_id"] + ")"), 
 							typename, 
 							namespace, 
 							typename, 

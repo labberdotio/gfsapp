@@ -284,7 +284,7 @@ function getType(props, types) {
 		for( var typeid in types["data"] ) {
 			if( typeid ) {
 				var type = types["data"][typeid];
-				if( (type) && (type["name"] == typename) ) {
+				if( (type) && (type["_name"] == typename) ) {
 					return type;
 				}
 			}
@@ -515,8 +515,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 				var type = types["data"][typeid];
 				if( type ) {
 					miditems.push({
-						"text": type["name"], 
-						"path": "/namespaces/" + currentns + "/" + type["name"], 
+						"text": type["_name"], 
+						"path": "/namespaces/" + currentns + "/" + type["_name"], 
 						"icon": <ExtensionIcon/>, 
 						"selected": false
 					});
