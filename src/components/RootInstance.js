@@ -7,7 +7,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import {
 	BrowserRouter as Router,
@@ -66,12 +66,13 @@ function handleClick(event) {
 }
 
 export const BackNavButton = () => {
-    let history = useHistory();
+    // let history = useHistory();
     return (
         <>
 			<Button
 				startIcon={<ArrowBackIcon />} 
-				onClick={() => history.goBack()}>
+				// onClick={() => history.goBack()}
+			>
 				Back
 			</Button>
         </>
@@ -79,12 +80,13 @@ export const BackNavButton = () => {
 };
 
 export const ForwardNavButton = () => {
-    let history = useHistory();
+    // let history = useHistory();
     return (
 		<>
 			<Button
 				endIcon={<ArrowForwardIcon />} 
-				onClick={() => history.goForward()}>
+				// onClick={() => history.goForward()}
+			>
 					Forward
 			</Button>
         </>

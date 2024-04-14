@@ -8,17 +8,18 @@ import React, { useState, Fragment, Component } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-// import { createBrowserHistory } from 'history';
 
 import clsx from 'clsx';
 
-// import { Router, Switch, Route, Link } from "react-router-dom";
 import {
+	Routes, 
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Link,
-	useRouteMatch
+	useRouteMatch, 
+	useParams, 
+	useNavigate
 } from "react-router-dom";
 
 import { withStyles } from '@material-ui/core/styles';
@@ -101,8 +102,6 @@ import RootInstanceView from './components/RootInstance'
 import RelInstanceView from './components/RelInstance'
 
 import Namespaces from './components/Namespaces'
-
-// const history = createBrowserHistory();
 
 const ThemeContext = React.createContext();
 
@@ -293,7 +292,10 @@ function getType(props, types) {
 	return undefined;
 }
 
-const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, namespace }) {
+// const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, namespace }) {
+const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle }) {
+
+	const {namespace} = useParams();
 
 	const apiHostname = useSelector(state => state.api.api.host);
 	const apiPort = useSelector(state => state.api.api.port);
@@ -435,8 +437,10 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 	);
 });
 
-// const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle }) {
-const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, namespace, types }) {
+// const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, namespace, types }) {
+const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types }) {
+
+	const {namespace} = useParams();
 
 	const name = useSelector(state => state.api.name);
 	const title = useSelector(state => state.api.title);
@@ -618,8 +622,10 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 
 });
 
-// function AppNavigation({ classes, variant }) {
-function AppNavigation({ classes, variant, namespace, types, children }) {
+// function AppNavigation({ classes, variant, namespace, types, children }) {
+function AppNavigation({ classes, variant, types, children }) {
+
+	const {namespace} = useParams();
 
 	const title = useSelector(state => state.api.title);
 
@@ -756,8 +762,23 @@ class AppNotification extends Component {
 
 }
 
-const Navigation = withStyles(styles)(AppNavigation)
-const Notification = withStyles(styles)(AppNotification)
+/*
+ * https://github.com/remix-run/react-router/issues/8146
+ */
+
+function withNavigation(Component) {
+	return props => <Component {...props} navigate={useNavigate()} />;
+}
+
+function withParams(Component) {
+	return props => <Component {...props} params={useParams()} />;
+}
+
+// const Navigation = withParams(withStyles(styles)(AppNavigation));
+// const Notification = withParams(withStyles(styles)(AppNotification));
+
+const Navigation = withStyles(styles)(AppNavigation);
+const Notification = withStyles(styles)(AppNotification);
 
 class App extends Component {
 
@@ -904,12 +925,15 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, ownProps) {
 
-	const { namespace } = ownProps;
-
 	const {
 		api, 
 		// namespace,
 	} = state;
+
+	var namespace = undefined;
+	if( ownProps && ownProps.params ) {
+		namespace = ownProps.params.namespace;
+	}
 
 	const {
 		loading: nsloading, 
@@ -946,4 +970,5 @@ function mapStateToProps(state, ownProps) {
 
 // export default withStyles(styles)(App);
 // export default connect(mapStateToProps, mapDispatchToProps)(App);
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App)));

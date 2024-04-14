@@ -7,16 +7,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-// import { Router, Switch, Route, Link } from "react-router-dom";
 import {
+	Routes, 
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Link,
-	useRouteMatch
+	useRouteMatch, 
+	useParams, 
+	useNavigate
 } from "react-router-dom";
-
-// import { createBrowserHistory } from 'history';
 
 // import { createStore, applyMiddleware } from 'redux'
 // import { combineReducers } from 'redux'
@@ -47,13 +47,9 @@ import App from './App.js';
 // import InstancesView from './components/Instances'
 // import InstanceView from './components/Instance'
 
-// import RootInstancesView from './components/RootInstances'
-import { makeRootInstancesView } from './components/RootInstances'
-
+import RootView from './components/Root'
 import RootInstanceView from './components/RootInstance'
-
-// import RootView from './components/Root'
-import { makeRootView } from './components/Root'
+import RootInstancesView from './components/RootInstances'
 
 // import SubInstancesView from './components/SubInstances'
 // import SubInstanceView from './components/SubInstance'
@@ -70,8 +66,6 @@ require('./style.light.css');
 // require('./style.dark.css');
 
 require('./index.css');
-
-// const history = createBrowserHistory();
 
 /*
  * Defaults
@@ -177,140 +171,132 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
 	<Provider store={store}>
 	<Router history={history}>
-		<Switch>
+		<Routes>
 			<Route 
-				exact 
+				// exact 
 				path="/" 
-				render={
-					(props) => 
-						<>
-						<App >
-						<Namespaces 
-							 />
-						</App>
-						</>
+				element={
+					<>
+					<App >
+					<Namespaces 
+						 />
+					</App>
+					</>
 				} />
 			<Route 
-				exact 
+				// exact 
 				path="/namespaces" 
-				render={
-					(props) => 
-						<>
-						<App >
-						<Namespaces 
-							 />
-						</App>
-						</>
+				element={
+					<>
+					<App >
+					<Namespaces 
+						 />
+					</App>
+					</>
 				} />
 			<Route 
-				exact 
+				// exact 
 				path="/namespaces/:namespace" 
-				render={
-					(props) => {
-						const RootView = makeRootView();
-						return(<>
-						<App 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-						>
-						<RootView 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-						/>
-						</App>
-						</>);
-					}
+				element={
+					<>
+					<App 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+					>
+					<RootView 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+					/>
+					</App>
+					</>
 				}/>
 			{/* <Route 
-				exact 
+				// exact 
 				path="/dashboard" 
-				render={
-					(props) => 
-						<>
-						<App 
-						>
-						<DashboardView 
-						/>
-						</App>
-						</>
+				element={
+					<>
+					<App 
+					>
+					<DashboardView 
+					/>
+					</App>
+					</>
 				} /> */}
 			<Route 
-				exact 
+				// exact 
 				path="/namespaces/:namespace/:typename" 
-				render={
-					(props) => {
-						const RootInstancesView = makeRootInstancesView();
-						return(<>
-						<App 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-						>
-						<RootInstancesView 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-						/>
-						</App>
-						</>);
-					}
+				element={
+					<>
+					<App 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+					>
+					<RootInstancesView 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+					/>
+					</App>
+					</>
 				}
+			/>
 			<Route 
-				exact 
+				// exact 
 				path="/namespaces/:namespace/create/:typename" 
-				render={
-					(props) => 
-						<>
-						<App 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-						>
-						<CreateInstanceDialog 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-						/>
-						</App>
-						</>
-				} />
+				element={
+					<>
+					<App 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+					>
+					<CreateInstanceDialog 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+					/>
+					</App>
+					</>
+				}
+			/>
 			<Route 
-				exact 
+				// exact 
 				path="/namespaces/:namespace/:typename/:instanceid" 
-				render={
-					(props) => 
-						<>
-						<App 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-							instanceid={props.match.params.instanceid} 
-						>
-						<RootInstanceView 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-							instanceid={props.match.params.instanceid} 
-						/>
-						</App>
-						</>
-				} />
+				element={
+					<>
+					<App 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+						// instanceid={props.match.params.instanceid} 
+					>
+					<RootInstanceView 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+						// instanceid={props.match.params.instanceid} 
+					/>
+					</App>
+					</>
+				}
+			/>
 			<Route 
-				exact 
+				// exact 
 				path="/namespaces/:namespace/:typename/:instanceid/:relname" 
-				render={
-					(props) => 
-						<>
-						<App 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-							instanceid={props.match.params.instanceid} 
-							relname={props.match.params.relname} 
-						>
-						<RelInstanceView 
-							namespace={props.match.params.namespace} 
-							typename={props.match.params.typename} 
-							instanceid={props.match.params.instanceid} 
-							relname={props.match.params.relname} 
-						/>
-						</App>
-						</>
-				} />
-		</Switch>
+				element={
+					<>
+					<App 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+						// instanceid={props.match.params.instanceid} 
+						// relname={props.match.params.relname} 
+					>
+					<RelInstanceView 
+						// namespace={props.match.params.namespace} 
+						// typename={props.match.params.typename} 
+						// instanceid={props.match.params.instanceid} 
+						// relname={props.match.params.relname} 
+					/>
+					</App>
+					</>
+				}
+			/>
+		</Routes>
 	</Router>
 	</Provider>, 
 	rootElement
