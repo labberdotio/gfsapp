@@ -5,7 +5,7 @@
 // 
 
 import React, {Component} from 'react';
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import Paper from '@material-ui/core/Paper';
 
@@ -37,10 +37,10 @@ const List = (props) => {
 	const detailLink = ownProps["detailLink"];
 	// const onRowClick = ownProps["onRowClick"];
 
-	const history = useHistory();
+	// const history = useHistory();
 	const onRowClick = (event, rowData, togglePanel) => {
-		// history.push("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
-		history.push(detailLink(rowData));
+		// // history.push("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
+		// history.push(detailLink(rowData));
 	}
 
 	return (

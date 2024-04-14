@@ -9,7 +9,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import createStyles from "@material-ui/core/styles/createStyles";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import Container from '@material-ui/core/Container';
 
@@ -46,12 +46,13 @@ function handleClick(event) {
 }
 
 export const BackNavButton = () => {
-    let history = useHistory();
+    // let history = useHistory();
     return (
         <>
 			<Button
 				startIcon={<ArrowBackIcon />} 
-				onClick={() => history.goBack()}>
+				// onClick={() => history.goBack()}
+			>
 				Back
 			</Button>
         </>
@@ -59,12 +60,13 @@ export const BackNavButton = () => {
 };
 
 export const ForwardNavButton = () => {
-    let history = useHistory();
+    // let history = useHistory();
     return (
 		<>
 			<Button
 				endIcon={<ArrowForwardIcon />} 
-				onClick={() => history.goForward()}>
+				// onClick={() => history.goForward()}
+			>
 					Forward
 			</Button>
         </>
@@ -72,11 +74,12 @@ export const ForwardNavButton = () => {
 };
 
 export const CancelButton = () => {
-    let history = useHistory();
+    // let history = useHistory();
     return (
         <>
 			<Button
-				onClick={() => history.goBack()}>
+				// onClick={() => history.goBack()}
+			>
 				Cancel
 			</Button>
         </>
