@@ -324,24 +324,25 @@ class Graph extends Component {
 
 	constructor(props) {
 		super(props);
-		// this.state = {
-		// 	exploded: false, 
-		// 	selected: undefined
-		// }
-		var id = props.selected;
-		if(id) {
-			// this.setState({
-			this.state = {
-				exploded: false, 
-				selected: id,
-			};
-		} else {
-			// this.setState({
-			this.state = {
-				exploded: false, 
-				selected: undefined
-			};
+		this.state = {
+			// exploded: false, 
+			// selected: undefined
+			dummy: false
 		}
+		// var id = props.selected;
+		// if(id) {
+		// 	// this.setState({
+		// 	this.state = {
+		// 		exploded: false, 
+		// 		selected: id,
+		// 	};
+		// } else {
+		// 	// this.setState({
+		// 	this.state = {
+		// 		exploded: false, 
+		// 		selected: undefined
+		// 	};
+		// }
 
 		var _this = this;
 
@@ -353,35 +354,36 @@ class Graph extends Component {
 	}
 
 	state = {
-		exploded: false, 
-		selected: undefined
+		// exploded: false, 
+		// selected: undefined
+		dummy: false
 	};
 
 	componentWillUpdate(nextProps, nextState) {
 
 		const {
-			api, 
-			namespace, 
-			graph, 
-			width, 
-			height, 
-			selected
+			// api, 
+			// namespace, 
+			// graph, 
+			// width, 
+			// height, 
+			// selected
 		} = this.props;
 
-		if( this.props.selected != nextProps.selected ) {
-			var id = nextProps.selected; // selected;
-			if(id) {
-				this.setState({
-					exploded: false, // this.state.exploded, 
-					selected: id
-				});
-			} else {
-				this.setState({
-					exploded: false, // this.state.exploded, 
-					selected: undefined
-				});
-			}
-		} 
+		// if( this.props.selected != nextProps.selected ) {
+		// 	var id = nextProps.selected; // selected;
+		// 	if(id) {
+		// 		this.setState({
+		// 			exploded: false, // this.state.exploded, 
+		// 			selected: id
+		// 		});
+		// 	} else {
+		// 		this.setState({
+		// 			exploded: false, // this.state.exploded, 
+		// 			selected: undefined
+		// 		});
+		// 	}
+		// } 
 		// else if( this.props.selected == nextProps.selected ) {
 		// 	var id = nextProps.selected; // selected;
 		// 	this.setState({
@@ -395,12 +397,12 @@ class Graph extends Component {
 	componentDidUpdate(prevProps, prevState) {
 
 		const {
-			api, 
-			namespace, 
-			graph, 
-			width, 
-			height, 
-			selected
+			// api, 
+			// namespace, 
+			// graph, 
+			// width, 
+			// height, 
+			// selected
 		} = this.props;
 
 		// if(
@@ -426,12 +428,12 @@ class Graph extends Component {
 	componentDidMount() {
 
 		const {
-			api, 
-			namespace, 
-			graph, 
-			width, 
-			height, 
-			selected
+			// api, 
+			// namespace, 
+			// graph, 
+			// width, 
+			// height, 
+			// selected
 		} = this.props;
 
 		// if(
@@ -633,21 +635,35 @@ class Graph extends Component {
 	};
 
 	selectItem(id) {
-		if( id && id == this.props.selected ) {
-			this.setState({
-				exploded: !this.state.exploded
-			});
-		} else {
-			this.setState({
-				exploded: false
-			});
-			if( this.props.selectItem ) {
-				this.props.selectItem(id);
+
+		var vidpfx = "v"; // "#";
+		var eidpfx = "e"; // "";
+
+		// if( id && id == this.props.selected ) {
+		// 	this.setState({
+		// 		exploded: false // !this.state.exploded
+		// 	});
+		// } else {
+		// 	this.setState({
+		// 		exploded: false
+		// 	});
+		if( this.props.selectItem ) {
+			if( id ) {
+				this.props.selectItem(id.replace(vidpfx, ''));
+			} else {
+				this.props.selectItem(undefined);
 			}
 		}
+		this.setState({
+			dummy: false
+		});
+		// }
 	}
 
 	render() {
+
+		var vidpfx = "v"; // "#";
+		var eidpfx = "e"; // "";
 
 		const {
 			api, 
@@ -702,23 +718,44 @@ class Graph extends Component {
 
 		// var highlighted = this.state.highlighted;
 		// var exploded = this.state.exploded;
-		var selected = this.state.selected;
+		// var selected = this.state.selected;
 		// var refreshed = this.state.refreshed;
 		// var pulsed = this.state.refreshed;
 		// var runLayout = this.state.runLayout;
 		// var zoomFit = this.state.zoomFit;
 
-		var highlighted = selected; // this.state.highlighted;
-		var exploded = undefined; // this.state.exploded;
-		if( this.state.exploded ) {
-			highlighted = undefined; // this.state.highlighted;
-			exploded = selected; // this.state.exploded;
+		// var highlighted = selected; // this.state.highlighted;
+		// var exploded = undefined; // this.state.exploded;
+		// if( this.state.exploded ) {
+		// 	highlighted = undefined; // this.state.highlighted;
+		// 	exploded = selected; // this.state.exploded;
+		// }
+
+		var selected = undefined;
+		var highlighted = undefined;
+		var exploded = undefined;
+
+		if( this.props.selected ) {
+			selected = vidpfx + this.props.selected;
 		}
+
+		if( this.props.highlighted ) {
+			highlighted = vidpfx + this.props.highlighted;
+		}
+
+		if( this.props.exploded ) {
+			exploded = vidpfx + this.props.exploded;
+		}
+
 		// var selected = this.state.selected;
 		// var refreshed = this.state.refreshed;
-		var pulsed = true; // this.state.refreshed;
-		var runLayout = true; // this.state.runLayout;
-		var zoomFit = true; // this.state.zoomFit;
+		// var pulsed = true; // this.state.refreshed;
+		// var runLayout = true; // this.state.runLayout;
+		// var zoomFit = true; // this.state.zoomFit;
+
+		var pulsed = this.props.pulsed;
+		var runLayout = this.props.runLayout;
+		var zoomFit = this.props.zoomFit;
 
 		return (
 			<>
