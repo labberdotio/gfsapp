@@ -13,14 +13,14 @@ import { withStyles } from '@material-ui/styles';
 
 import {
 	Routes, 
-		BrowserRouter as Router,
-		Switch,
-		Route,
-		Link,
-		useRouteMatch, 
-		useParams, 
-		useNavigate
-	} from "react-router-dom";
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch, 
+	useParams, 
+	useNavigate
+} from "react-router-dom";
 
 import Typography from '@material-ui/core/Typography';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
@@ -60,6 +60,10 @@ import {
 
 import Graph from './Graph';
 import ThreeDeeGraph from './ThreeDeeGraph';
+
+import history from '../history'
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
 
 const styles = theme => ({
 
@@ -154,13 +158,12 @@ const RootInstances = class extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			intendedcenter: undefined, 
+			actualcenter: undefined, 
 			insloading: false, 
 			insloaded: false, 
 			insfailed: false, 
-			instanceid: undefined, 
-			instance: undefined, 
-			graph: undefined, 
-			selected: undefined
+			graph: undefined
 		}
 
 		var _this = this;
@@ -173,13 +176,12 @@ const RootInstances = class extends Component {
 	}
 
 	state = {
+		intendedcenter: undefined, 
+		actualcenter: undefined, 
 		insloading: false, 
 		insloaded: false, 
 		insfailed: false, 
-		instanceid: undefined, 
-		instance: undefined, 
-		graph: undefined, 
-		selected: undefined
+		graph: undefined
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -215,27 +217,41 @@ const RootInstances = class extends Component {
 			// }
 		}
 
+		var center = undefined;
+		if( !center ) {
+			if( type && type["entity"] && type["entity"]["_id"] ) {
+				center = type["entity"]["_id"];
+			}
+		}
+
+		if( center != this.state.intendedcenter ) {
+			this.setState({
+				intendedcenter: center, 
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false
+			});
+		}
+
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		if( (!this.props.type["loading"]) && 
-			(this.props.type["loaded"]) && 
-			(!this.props.type["failed"]) ) {
-			if( type && type["entity"] && type["entity"]["_id"] ) {
-				if( (!this.state.insloading) && 
-					(!this.state.insloaded) && 
-					(!this.state.insfailed) ) {
-					this.loadInstance(
-						api, 
-						namespace, 
-						"graph", 
-						type["entity"]["_id"] // this.state.instanceid
-					)
-				}
+		// if( (!this.props.type["loading"]) && 
+		// 	(this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+			if( (!this.state.insloading) && 
+				(!this.state.insloaded) && 
+				(!this.state.insfailed) ) {
+				this.loadInstance(
+					api, 
+					namespace, 
+					"graph", 
+					center
+				)
 			}
-		}
+		// }
 
 	}
 
@@ -267,27 +283,41 @@ const RootInstances = class extends Component {
 			// }
 		}
 
+		var center = undefined;
+		if( !center ) {
+			if( type && type["entity"] && type["entity"]["_id"] ) {
+				center = type["entity"]["_id"];
+			}
+		}
+
+		if( center != this.state.intendedcenter ) {
+			this.setState({
+				intendedcenter: center, 
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false
+			});
+		}
+
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		if( (!this.props.type["loading"]) && 
-			(this.props.type["loaded"]) && 
-			(!this.props.type["failed"]) ) {
-			if( type && type["entity"] && type["entity"]["_id"] ) {
-				if( (!this.state.insloading) && 
-					(!this.state.insloaded) && 
-					(!this.state.insfailed) ) {
-					this.loadInstance(
-						api, 
-						namespace, 
-						"graph", 
-						type["entity"]["_id"] // this.state.instanceid
-					)
-				}
+		// if( (!this.props.type["loading"]) && 
+		// 	(this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+			if( (!this.state.insloading) && 
+				(!this.state.insloaded) && 
+				(!this.state.insfailed) ) {
+				this.loadInstance(
+					api, 
+					namespace, 
+					"graph", 
+					center
+				)
 			}
-		}
+		// }
 
 	}
 
@@ -550,8 +580,6 @@ const RootInstances = class extends Component {
 		// 	insloading: false, 
 		// 	insloaded: false, 
 		// 	insfailed: false, 
-		// 	instanceid: instanceid, 
-		// 	instance: false
 		// });
 		// }
 		// if( (!this.state.insloading) && 
@@ -559,11 +587,10 @@ const RootInstances = class extends Component {
 		// 	(!this.state.insfailed) ) {
 		try {
 			this.setState({
+				intendedcenter: instanceid, 
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
-				instanceid: instanceid, 
-				instance: this.state.instance, 
 				graph: this.state.graph
 			});
 			this.apiClient = new APIClient(
@@ -576,22 +603,21 @@ const RootInstances = class extends Component {
 				instanceid, 
 				(data) => {
 					this.setState({
+						intendedcenter: instanceid, 
+						actualcenter: instanceid, 
 						insloading: false, 
 						insloaded: true, 
 						insfailed: false, 
-						instanceid: instanceid, 
-						instance: data, 
-						graph: this.buildGraph(data), 
+						graph: this.buildGraph(data)
 					});
 				});
 
 		} catch {
 			this.setState({
+				intendedcenter: instanceid, 
 				insloading: false, 
 				insloaded: false, 
 				insfailed: true, 
-				instanceid: undefined, 
-				instance: this.state.instance, 
 				graph: this.state.graph
 			});
 		}
@@ -604,8 +630,6 @@ const RootInstances = class extends Component {
 	// 			insloading: false, 
 	// 			insloaded: false, 
 	// 			insfailed: false, 
-	// 			instanceid: instanceid, 
-	// 			instance: false
 	// 		});
 	// 	}
 	// 	if( (!this.state.inssloading) && 
@@ -615,7 +639,6 @@ const RootInstances = class extends Component {
 	// 			inssloading: true, 
 	// 			inssloaded: false, 
 	// 			inssfailed: false, 
-	// 			instances: false
 	// 		});
 	// 		this.apiClient = new APIClient(
 	// 			api.api.host, 
@@ -631,7 +654,6 @@ const RootInstances = class extends Component {
 	// 					inssloading: false, 
 	// 					inssloaded: true, 
 	// 					inssfailed: false, 
-	// 					instances: data
 	// 				});
 	// 			});
 	// 	}
@@ -708,24 +730,31 @@ const RootInstances = class extends Component {
 	};
 
 	selectItem(id) {
+		// let history = useHistory();
 		if(id) {
-			this.setState({
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false, 
-				instanceid: id.replace('v', ''), 
-				instance: this.state.instance, // undefined
-				selected: id,
-			});
+			var iid = id; // .replace('v', '');
+			if( iid != this.state.instanceid ) {
+				// window.location = "/namespaces/" + "archives" + "/" + id;
+				// history.push("/namespaces/" + "archives" + "/" + id);
+				// navigate("/namespaces/" + "archives" + "/" + id);
+				// this.setState({
+				// 	insloading: false, 
+				// 	insloaded: false, 
+				// 	insfailed: false, 
+				// });
+			}
 		} else {
-			this.setState({
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false, 
-				instanceid: undefined, 
-				instance: this.state.instance, // undefined
-				selected: undefined,
-			});
+			var iid = undefined;
+			if( this.state.instanceid ) {
+				// window.location = "/namespaces/" + "archives";
+				// history.push("/namespaces/" + "archives");
+				// navigate("/namespaces/" + "archives");
+				// this.setState({
+				// 	insloading: false, 
+				// 	insloaded: false, 
+				// 	insfailed: false, 
+				// });
+			}
 		}
 	}
 
@@ -757,11 +786,28 @@ const RootInstances = class extends Component {
 		// var graph = instance;
 		var graph = this.getGraph();
 
-		// var selected = undefined;
-		// if( this.state.selected ) {
-		// 	selected = this.state.selected;
-		// }
+		var highlighted = undefined;
+		var exploded = undefined;
 		var selected = undefined;
+
+		var pulsed = undefined;
+		var runLayout = true;
+		var zoomFit = true;
+
+		if( this.state.instanceid && 
+			!this.state.insloading && 
+			this.state.insloaded && 
+			!this.state.insfailed ) {
+
+			highlighted = this.state.instanceid;
+			exploded = this.state.instanceid;
+			selected = this.state.instanceid;
+
+			pulsed = undefined;
+			runLayout = true;
+			zoomFit = true;
+
+		}
 
 		var hidden = false;
 		var open = true;
@@ -827,7 +873,7 @@ const RootInstances = class extends Component {
 					>
 						<TreeViewItems 
 							// onSelect={item => {
-							// 	this.selectItem( "v" + String( item["_id"] ) );
+							// 	this.selectItem( String( item["_id"] ) );
 							// }}
 							items={treestruc}
 						/>
@@ -864,14 +910,24 @@ const RootInstances = class extends Component {
 							graph={graph}
 							width={graphwidth} 
 							height={graphheight} 
+							highlighted={highlighted} 
+							exploded={exploded} 
 							selected={selected} 
+							pulsed={pulsed} 
+							runLayout={runLayout} 
+							zoomFit={zoomFit} 
 							selectItem={this.selectItem} 
 							contextCommand={this.contextCommand}/>
 						{/* <ThreeDeeGraph
 							graph={graph}
 							width={graphwidth} 
 							height={graphheight} 
+							highlighted={highlighted} 
+							exploded={exploded} 
 							selected={selected} 
+							pulsed={pulsed} 
+							runLayout={runLayout} 
+							zoomFit={zoomFit} 
 							selectItem={this.selectItem} 
 							contextCommand={this.contextCommand}/> */}
 					</Grid>
@@ -915,7 +971,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
-		// namespace
+		// namespace,
 	} = state;
 
 	var namespace = undefined;

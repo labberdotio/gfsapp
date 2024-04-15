@@ -611,14 +611,6 @@ class RootInstance extends Component {
 
 		}
 
-		console.log(" !!! ");
-		console.log(" --- ");
-		console.log(schema["entity"]);
-		console.log(instance);
-		console.log(properties);
-		console.log(dependencies);
-		console.log(" --- ");
-
 		return (
 			<>
 			<Container 

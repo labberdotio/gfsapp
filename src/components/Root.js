@@ -51,6 +51,10 @@ import APIClient from '../clients/APIClient';
 import Graph from './Graph';
 import ThreeDeeGraph from './ThreeDeeGraph';
 
+import history from '../history'
+// import { useNavigate } from "react-router-dom";
+// const navigate = useNavigate();
+
 const styles = theme => ({
 
 	mainContainer: {
@@ -144,13 +148,12 @@ const Root = class extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			// intendedcenter: undefined, 
+			// actualcenter: undefined, 
 			insloading: false, 
 			insloaded: false, 
 			insfailed: false, 
-			instanceid: undefined, 
-			instance: undefined, 
-			graph: undefined, 
-			selected: undefined
+			graph: undefined
 		}
 
 		var _this = this;
@@ -163,13 +166,12 @@ const Root = class extends Component {
 	}
 
 	state = {
+		// intendedcenter: undefined, 
+		// actualcenter: undefined, 
 		insloading: false, 
 		insloaded: false, 
 		insfailed: false, 
-		instanceid: undefined, 
-		instance: undefined, 
-		graph: undefined, 
-		selected: undefined
+		graph: undefined
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -179,24 +181,67 @@ const Root = class extends Component {
 
 		const {
 			api, 
-			namespace
+			namespace, 
+			typename, 
+			type, 
+			schema
 		} = this.props;
+
+		// if( (!this.props.type["loading"]) && 
+		// 	(!this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+		// 	// if( typename ) {
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadType(api, namespace, typename);
+		// 	}
+		// 	// }
+		// }
+
+		// if( (!this.props.schema["loading"]) && 
+		// 	(!this.props.schema["loaded"]) && 
+		// 	(!this.props.schema["failed"]) ) {
+		// 	// if( typename ) {
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadSchema(api, namespace, typename);
+		// 	}
+		// 	// }
+		// }
+
+		// var center = undefined;
+		// if( !center ) {
+		// 	if( type && type["entity"] && type["entity"]["_id"] ) {
+		// 		center = type["entity"]["_id"];
+		// 	}
+		// }
+
+		// if( center != this.state.intendedcenter ) {
+		// 	this.setState({
+		// 		intendedcenter: center, 
+		// 		insloading: false, 
+		// 		insloaded: false, 
+		// 		insfailed: false
+		// 	});
+		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		if( (!this.state.insloading) && 
-			(!this.state.insloaded) && 
-			(!this.state.insfailed) ) {
-			this.loadInstance(
-				api, 
-				namespace, 
-				"graph", 
-				this.state.instanceid
-			)
-		}
+		// if( (!this.props.type["loading"]) && 
+		// 	(this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+			if( (!this.state.insloading) && 
+				(!this.state.insloaded) && 
+				(!this.state.insfailed) ) {
+				this.loadInstance(
+					api, 
+					namespace, 
+					"graph", 
+					undefined
+				)
+			}
+		// }
 
 	}
 
@@ -204,24 +249,65 @@ const Root = class extends Component {
 
 		const {
 			api, 
-			namespace
+			namespace, 
+			typename, 
+			type, 
+			schema
 		} = this.props;		
+
+		// if( (!this.props.type["loading"]) && 
+		// 	(!this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+		// 	// if( typename ) {
+		// 	if( api && namespace && typename ) {
+		// 		this.props.loadType(api, namespace, typename);
+		// 	}
+		// 	// }
+		// }
+
+		// if( (!this.props.schema["loading"]) && 
+		// 	(!this.props.schema["loaded"]) && 
+		// 	(!this.props.schema["failed"]) ) {
+		// 	// if( typename ) {
+		// 	this.props.loadSchema(api, namespace, typename);
+		// 	// }
+		// }
+
+		// var center = undefined;
+		// if( !center ) {
+		// 	if( type && type["entity"] && type["entity"]["_id"] ) {
+		// 		center = type["entity"]["_id"];
+		// 	}
+		// }
+
+		// if( center != this.state.intendedcenter ) {
+		// 	this.setState({
+		// 		intendedcenter: center, 
+		// 		insloading: false, 
+		// 		insloaded: false, 
+		// 		insfailed: false
+		// 	});
+		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		if( (!this.state.insloading) && 
-			(!this.state.insloaded) && 
-			(!this.state.insfailed) ) {
-			this.loadInstance(
-				api, 
-				namespace, 
-				"graph", 
-				this.state.instanceid
-			)
-		}
+		// if( (!this.props.type["loading"]) && 
+		// 	(this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+			if( (!this.state.insloading) && 
+				(!this.state.insloaded) && 
+				(!this.state.insfailed) ) {
+				this.loadInstance(
+					api, 
+					namespace, 
+					"graph", 
+					undefined
+				)
+			}
+		// }
 
 	}
 
@@ -443,7 +529,7 @@ const Root = class extends Component {
 									id: edge["_id"], 
 									name: edge["_label"], 
 									label: edge["_label"], 
-									link: undefined, 
+									link: undefined,  
 									tree: {
 									}
 								};
@@ -484,8 +570,6 @@ const Root = class extends Component {
 		// 	insloading: false, 
 		// 	insloaded: false, 
 		// 	insfailed: false, 
-		// 	instanceid: instanceid, 
-		// 	instance: false
 		// });
 		// }
 		// if( (!this.state.insloading) && 
@@ -493,11 +577,10 @@ const Root = class extends Component {
 		// 	(!this.state.insfailed) ) {
 		try {
 			this.setState({
+				// intendedcenter: instanceid, 
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
-				instanceid: instanceid, 
-				instance: this.state.instance, 
 				graph: this.state.graph
 			});
 			this.apiClient = new APIClient(
@@ -510,22 +593,21 @@ const Root = class extends Component {
 				instanceid, 
 				(data) => {
 					this.setState({
+						// intendedcenter: instanceid, 
+						// actualcenter: instanceid, 
 						insloading: false, 
 						insloaded: true, 
 						insfailed: false, 
-						instanceid: instanceid, 
-						instance: data, 
-						graph: this.buildGraph(data), 
+						graph: this.buildGraph(data)
 					});
 				});
 
 		} catch {
 			this.setState({
+				// intendedcenter: instanceid, 
 				insloading: false, 
 				insloaded: false, 
 				insfailed: true, 
-				instanceid: undefined, 
-				instance: this.state.instance, 
 				graph: this.state.graph
 			});
 		}
@@ -538,8 +620,6 @@ const Root = class extends Component {
 	// 			insloading: false, 
 	// 			insloaded: false, 
 	// 			insfailed: false, 
-	// 			instanceid: instanceid, 
-	// 			instance: false
 	// 		});
 	// 	}
 	// 	if( (!this.state.inssloading) && 
@@ -549,7 +629,6 @@ const Root = class extends Component {
 	// 			inssloading: true, 
 	// 			inssloaded: false, 
 	// 			inssfailed: false, 
-	// 			instances: false
 	// 		});
 	// 		this.apiClient = new APIClient(
 	// 			api.api.host, 
@@ -565,7 +644,6 @@ const Root = class extends Component {
 	// 					inssloading: false, 
 	// 					inssloaded: true, 
 	// 					inssfailed: false, 
-	// 					instances: data
 	// 				});
 	// 			});
 	// 	}
@@ -642,24 +720,31 @@ const Root = class extends Component {
 	};
 
 	selectItem(id) {
+		// let history = useHistory();
 		if(id) {
-			this.setState({
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false, 
-				instanceid: id.replace('v', ''), 
-				instance: this.state.instance, // undefined
-				selected: id,
-			});
+			var iid = id; // .replace('v', '');
+			if( iid != this.state.instanceid ) {
+				// window.location = "/namespaces/" + "archives" + "/" + id;
+				// history.push("/namespaces/" + "archives" + "/" + id);
+				// navigate("/namespaces/" + "archives" + "/" + id);
+				// this.setState({
+				// 	insloading: false, 
+				// 	insloaded: false, 
+				// 	insfailed: false, 
+				// });
+			}
 		} else {
-			this.setState({
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false, 
-				instanceid: undefined, 
-				instance: this.state.instance, // undefined
-				selected: undefined,
-			});
+			var iid = undefined;
+			if( this.state.instanceid ) {
+				// window.location = "/namespaces/" + "archives";
+				// history.push("/namespaces/" + "archives");
+				// navigate("/namespaces/" + "archives");
+				// this.setState({
+				// 	insloading: false, 
+				// 	insloaded: false, 
+				// 	insfailed: false, 
+				// });
+			}
 		}
 	}
 
@@ -669,7 +754,10 @@ const Root = class extends Component {
 
 		const {
 			api, 
-			namespace
+			namespace, 
+			typename, 
+			type, 
+			schema
 		} = this.props;
 
 		const { classes } = this.props;
@@ -688,10 +776,28 @@ const Root = class extends Component {
 		// var graph = instance;
 		var graph = this.getGraph();
 
+		var highlighted = undefined;
+		var exploded = undefined;
 		var selected = undefined;
-		if( this.state.selected ) {
-			selected = this.state.selected;
-		}
+
+		var pulsed = undefined;
+		var runLayout = true;
+		var zoomFit = true;
+
+		// if( this.state.instanceid && 
+		// 	!this.state.insloading && 
+		// 	this.state.insloaded && 
+		// 	!this.state.insfailed ) {
+
+		// 	highlighted = this.state.instanceid;
+		// 	exploded = this.state.instanceid;
+		// 	selected = this.state.instanceid;
+
+		// 	pulsed = undefined;
+		// 	runLayout = true;
+		// 	zoomFit = true;
+
+		// }
 
 		var hidden = false;
 		var open = true;
@@ -757,7 +863,7 @@ const Root = class extends Component {
 					>
 						<TreeViewItems 
 							// onSelect={item => {
-							// 	this.selectItem( "v" + String( item["_id"] ) );
+							// 	this.selectItem( String( item["_id"] ) );
 							// }}
 							items={treestruc}
 						/>
@@ -791,14 +897,24 @@ const Root = class extends Component {
 							graph={graph}
 							width={graphwidth} 
 							height={graphheight} 
+							highlighted={highlighted} 
+							exploded={exploded} 
 							selected={selected} 
+							pulsed={pulsed} 
+							runLayout={runLayout} 
+							zoomFit={zoomFit} 
 							selectItem={this.selectItem} 
 							contextCommand={this.contextCommand}/>
 						{/* <ThreeDeeGraph
 							graph={graph}
 							width={graphwidth} 
 							height={graphheight} 
+							highlighted={highlighted} 
+							exploded={exploded} 
 							selected={selected} 
+							pulsed={pulsed} 
+							runLayout={runLayout} 
+							zoomFit={zoomFit} 
 							selectItem={this.selectItem} 
 							contextCommand={this.contextCommand}/> */}
 					</Grid>
@@ -837,7 +953,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
-		// namespace
+		// namespace,
 	} = state;
 
 	var namespace = undefined;
