@@ -223,7 +223,7 @@ const styles = theme => ({
 
 	content: {
 		flexGrow: 1,
-		padding: theme.spacing(3),
+		padding: theme.spacing(0),
 	  },
 
 	formControl: {
@@ -551,7 +551,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 				</IconButton>
 			</div>
 				<Container 
-					style={{minHeight: 64}}
+					style={{minHeight: 0}}
 					>
 				</Container>
 				<Container>
