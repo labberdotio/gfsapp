@@ -14,7 +14,9 @@ import {
 	Switch,
 	Route,
 	Link,
-	useRouteMatch
+	useRouteMatch, 
+	useParams, 
+	useNavigate
 } from "react-router-dom";
 
 import Typography from '@material-ui/core/Typography';
@@ -781,14 +783,24 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 
 	const {
-		namespace, 
-		typename, 
-		instanceid
-	} = ownProps;
-
-	const {
-		api
+		api, 
+		// namespace
 	} = state;
+
+	var namespace = undefined;
+	if( ownProps && ownProps.params ) {
+		namespace = ownProps.params.namespace;
+	}
+
+	var typename = undefined;
+	if( ownProps && ownProps.params ) {
+		typename = ownProps.params.typename;
+	}
+
+	var instanceid = undefined;
+	if( ownProps && ownProps.params ) {
+		instanceid = ownProps.params.instanceid;
+	}
 
 	const type = getEntityFromState(state, api, namespace, "type", typename);
 
@@ -805,4 +817,16 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstance));
+/*
+ * https://github.com/remix-run/react-router/issues/8146
+ */
+
+function withNavigation(Component) {
+	return props => <Component {...props} navigate={useNavigate()} />;
+}
+
+function withParams(Component) {
+	return props => <Component {...props} params={useParams()} />;
+}
+
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstance)));
