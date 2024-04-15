@@ -110,7 +110,7 @@ class Namespaces extends Component {
 
 	};
 
-	getTreeData(graph) {
+	getTreeData(api, namespace, graph) {
 
 		var treestruc = {
 			

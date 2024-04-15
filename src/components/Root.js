@@ -105,24 +105,30 @@ export const ForwardNavButton = () => {
 
 function TreeViewItems(props) {
 	var items = props.items;
-	var onSelectFn = props.onSelect;
+	// var onSelectFn = props.onSelect;
 	return (
 		<>
 		{Object.keys(items).map((key, index) => ( 
 			<TreeItem 
 				nodeId={ "" + items[key]["id"] }
-				label={ "" + items[key]["label"] }
-				onClick={event => {
-					event.stopPropagation();
-					event.preventDefault();
-					if( items[key]["vertex"] ) {
-						onSelectFn(items[key]["vertex"]);
-					}
-				}}>
+				// label={ "" + items[key]["label"] }
+				label={items[key]["link"]
+					? <Link 
+						color="inherit" 
+						to={ "" + items[key]["link"] }
+						// style={{color: "white"}}
+						>
+						{ "" + items[key]["label"] }
+					</Link>
+					: "" + items[key]["label"]
+				}
+				// onClick={event => {
+				// }}
+				>
 				{items[key]["tree"] && 
 				Object.keys(items[key]["tree"]).length > 0 &&
 					<TreeViewItems 
-						onSelect={onSelectFn} 
+						// onSelect={onSelectFn} 
 						items={items[key]["tree"]}
 					/>
 				}
@@ -289,7 +295,7 @@ const Root = class extends Component {
 		return fullgraph;
 	}
 
-	getTreeData(graph) {
+	getTreeData(api, namespace, graph) {
 
 		/*
 		 * I am converting the redux store to a dict, 
@@ -392,6 +398,7 @@ const Root = class extends Component {
 							id: vertex["_label"], 
 							name: vertex["_label"], 
 							label: vertex["_label"], 
+							link: undefined, 
 							tree: {
 							}
 						};
@@ -401,6 +408,8 @@ const Root = class extends Component {
 						id: vertex["_id"], 
 						name: vertex["properties"]["_name"], 
 						label: vertex["properties"]["_name"], // + "." + vertex["_label"], 
+						// link: "/namespaces/" + namespace + "/" + vertex["_label"] + "/" + vertex["_id"], 
+						link: "/namespaces/" + namespace + "/" + vertex["_id"], 
 						vertex: vertex, 
 						tree: {
 						}
@@ -434,6 +443,7 @@ const Root = class extends Component {
 									id: edge["_id"], 
 									name: edge["_label"], 
 									label: edge["_label"], 
+									link: undefined, 
 									tree: {
 									}
 								};
@@ -442,6 +452,8 @@ const Root = class extends Component {
 								id: target["_id"], 
 								name: target["properties"]["_name"], 
 								label: target["properties"]["_name"], // + "." + target["_label"], 
+								// link: "/namespaces/" + namespace + "/" + target["_label"] + "/" + target["_id"], 
+								link: "/namespaces/" + namespace + "/" + target["_id"], 
 								vertex: target, 
 								edge: edge, 
 								tree: {
@@ -690,7 +702,7 @@ const Root = class extends Component {
 		];
 
 		// var graph = {}
-		var treestruc = this.getTreeData(graph);
+		var treestruc = this.getTreeData(api, namespace, graph);
 
 		var graphwidth = 640;
 		var graphheight = 640;
@@ -744,9 +756,9 @@ const Root = class extends Component {
 						defaultExpandIcon={<ChevronRightIcon />}
 					>
 						<TreeViewItems 
-							onSelect={item => {
-								this.selectItem( "v" + String( item["_id"] ) );
-							}}
+							// onSelect={item => {
+							// 	this.selectItem( "v" + String( item["_id"] ) );
+							// }}
 							items={treestruc}
 						/>
 					</TreeView>
