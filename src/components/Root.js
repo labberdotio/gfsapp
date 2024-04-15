@@ -12,11 +12,14 @@ import { withStyles } from '@material-ui/styles';
 // import { useHistory } from "react-router-dom";
 
 import {
+	Routes, 
 	BrowserRouter as Router,
 	Switch,
 	Route,
 	Link,
-	useRouteMatch
+	useRouteMatch, 
+	useParams, 
+	useNavigate
 } from "react-router-dom";
 
 import Typography from '@material-ui/core/Typography';
@@ -821,13 +824,14 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 
 	const {
-		namespace
-	} = ownProps;
-
-	const {
 		api, 
 		// namespace
 	} = state;
+
+	var namespace = undefined;
+	if( ownProps && ownProps.params ) {
+		namespace = ownProps.params.namespace;
+	}
 
 	return {
 		api, 
@@ -836,4 +840,16 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Root));
+/*
+ * https://github.com/remix-run/react-router/issues/8146
+ */
+
+function withNavigation(Component) {
+	return props => <Component {...props} navigate={useNavigate()} />;
+}
+
+function withParams(Component) {
+	return props => <Component {...props} params={useParams()} />;
+}
+
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Root)));
