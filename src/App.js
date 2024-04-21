@@ -774,8 +774,8 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-// const Navigation = withParams(withStyles(styles)(AppNavigation));
-// const Notification = withParams(withStyles(styles)(AppNotification));
+// const Navigation = withNavigation(withParams(withStyles(styles)(AppNavigation)));
+// const Notification = withNavigation(withParams(withStyles(styles)(AppNotification)));
 
 const Navigation = withStyles(styles)(AppNavigation);
 const Notification = withStyles(styles)(AppNotification);
@@ -971,4 +971,4 @@ function mapStateToProps(state, ownProps) {
 // export default withStyles(styles)(App);
 // export default connect(mapStateToProps, mapDispatchToProps)(App);
 // export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App)));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))));
