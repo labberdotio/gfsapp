@@ -320,6 +320,23 @@ const Root = class extends Component {
 		return fullgraph;
 	}
 
+	getGraphNode(id) {
+		var graph = this.getGraph();
+		if( graph ) {
+			var vertexes = graph["@value"]["vertices"];
+			if( vertexes ) {
+				for( var i=0; i<vertexes.length; i++ ) {
+					var vertex = vertexes[i]["@value"];
+					if( (vertex) && (vertex["_id"]) ) {
+						if( vertex["_id"] == id ) {
+							return vertex;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	// buildGraph(subgraph) {
 	// 	var fullgraph = this.state.graph;
 	// 	if( !fullgraph ) {
@@ -716,19 +733,26 @@ const Root = class extends Component {
 
 	selectItem(id) {
 		if(id) {
-			var iid = id; // .replace('v', '');
+			var iid = id;
 			if( iid != this.state.instanceid ) {
-				// navigate("/namespaces/" + "archives" + "/" + id);
-				// this.setState({
-				// 	insloading: false, 
-				// 	insloaded: false, 
-				// 	insfailed: false, 
-				// });
+				// var graph = this.getGraph();
+				var node = this.getGraphNode(id);
+				if( node ) {
+					var namespace = this.props.namespace;
+					var typename = node["_label"];
+					this.props.navigate("/namespaces/" + namespace + "/" + typename + "/" + id);
+					// this.setState({
+					// 	insloading: false, 
+					// 	insloaded: false, 
+					// 	insfailed: false, 
+					// });
+				}
 			}
 		} else {
 			var iid = undefined;
 			if( this.state.instanceid ) {
-				// navigate("/namespaces/" + "archives");
+				var namespace = this.props.namespace;
+				this.props.navigate("/namespaces/" + namespace);
 				// this.setState({
 				// 	insloading: false, 
 				// 	insloaded: false, 
