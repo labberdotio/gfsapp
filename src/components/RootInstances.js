@@ -760,15 +760,15 @@ const RootInstances = class extends Component {
 			}
 		} else {
 			var iid = undefined;
-			if( this.state.instanceid ) {
-				var namespace = this.props.namespace;
-				this.props.navigate("/namespaces/" + namespace);
-				// this.setState({
-				// 	insloading: false, 
-				// 	insloaded: false, 
-				// 	insfailed: false, 
-				// });
-			}
+			// if( this.state.instanceid ) {
+			var namespace = this.props.namespace;
+			this.props.navigate("/namespaces/" + namespace);
+			// this.setState({
+			// 	insloading: false, 
+			// 	insloaded: false, 
+			// 	insfailed: false, 
+			// });
+			// }
 		}
 	}
 
