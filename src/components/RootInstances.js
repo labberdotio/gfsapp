@@ -516,8 +516,7 @@ const RootInstances = class extends Component {
 						id: vertex["_id"], 
 						name: vertex["properties"]["_name"], 
 						label: vertex["properties"]["_name"], // + "." + vertex["_label"], 
-						// link: "/namespaces/" + namespace + "/" + vertex["_label"] + "/" + vertex["_id"], 
-						link: "/namespaces/" + namespace + "/" + vertex["_id"], 
+						link: "/namespaces/" + namespace + "/" + vertex["_label"] + "/" + vertex["_id"], 
 						vertex: vertex, 
 						tree: {
 						}
@@ -560,8 +559,7 @@ const RootInstances = class extends Component {
 								id: target["_id"], 
 								name: target["properties"]["_name"], 
 								label: target["properties"]["_name"], // + "." + target["_label"], 
-								// link: "/namespaces/" + namespace + "/" + target["_label"] + "/" + target["_id"], 
-								link: "/namespaces/" + namespace + "/" + target["_id"], 
+								link: "/namespaces/" + namespace + "/" + target["_label"] + "/" + target["_id"], 
 								vertex: target, 
 								edge: edge, 
 								tree: {
