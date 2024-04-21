@@ -9,7 +9,6 @@ import React, {Component} from 'react';
 // import { useLayoutEffect } from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { useHistory } from "react-router-dom";
 
 import {
 	Routes, 
@@ -50,10 +49,6 @@ import APIClient from '../clients/APIClient';
 
 import Graph from './Graph';
 import ThreeDeeGraph from './ThreeDeeGraph';
-
-import history from '../history'
-// import { useNavigate } from "react-router-dom";
-// const navigate = useNavigate();
 
 const styles = theme => ({
 
@@ -720,12 +715,9 @@ const Root = class extends Component {
 	};
 
 	selectItem(id) {
-		// let history = useHistory();
 		if(id) {
 			var iid = id; // .replace('v', '');
 			if( iid != this.state.instanceid ) {
-				// window.location = "/namespaces/" + "archives" + "/" + id;
-				// history.push("/namespaces/" + "archives" + "/" + id);
 				// navigate("/namespaces/" + "archives" + "/" + id);
 				// this.setState({
 				// 	insloading: false, 
@@ -736,8 +728,6 @@ const Root = class extends Component {
 		} else {
 			var iid = undefined;
 			if( this.state.instanceid ) {
-				// window.location = "/namespaces/" + "archives";
-				// history.push("/namespaces/" + "archives");
 				// navigate("/namespaces/" + "archives");
 				// this.setState({
 				// 	insloading: false, 
