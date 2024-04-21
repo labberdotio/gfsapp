@@ -88,7 +88,7 @@ export const ForwardNavButton = () => {
 				endIcon={<ArrowForwardIcon />} 
 				// onClick={() => history.goForward()}
 			>
-					Forward
+				Forward
 			</Button>
         </>
     );
