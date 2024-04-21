@@ -889,7 +889,8 @@ class App extends Component {
 			<Notification 
 				ref={this.notificationRef} 
 				namespace={namespace} 
-				types={types} />
+				types={types} 
+			/>
 			</React.Fragment>
 			</ThemeProvider>
 			</>
