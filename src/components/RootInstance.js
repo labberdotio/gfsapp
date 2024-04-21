@@ -5,10 +5,13 @@
 // 
 
 import React, {Component} from 'react';
+// import {useLayoutEffect, useRef, useState} from 'react';
+// import { useLayoutEffect } from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
 
 import {
+	Routes, 
 	BrowserRouter as Router,
 	Switch,
 	Route,
@@ -24,6 +27,12 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
+import TreeView from '@material-ui/lab/TreeView';
+import TreeItem from '@material-ui/lab/TreeItem';
+
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
 import Button from '@material-ui/core/Button';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -32,8 +41,11 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import InstancesView from './Instances'
-import InstanceView from './Instance'
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+
+import APIClient from '../clients/APIClient';
 
 import { 
 	loadEntityIntoState, 
@@ -45,7 +57,8 @@ import {
 	getEntitiesFromState 
 } from '../stores/Entity'
 
-import APIClient from '../clients/APIClient';
+import Graph from './Graph';
+import ThreeDeeGraph from './ThreeDeeGraph';
 
 const styles = theme => ({
 
@@ -60,10 +73,15 @@ const styles = theme => ({
 		marginBottom: '0px', 
 	},
 
+	speedDial: {
+		position: 'fixed',
+		right: 10,
+		bottom: 10
+	},
+
 });
 
 function handleClick(event) {
-	// event.preventDefault();
 }
 
 export const BackNavButton = () => {
@@ -94,34 +112,72 @@ export const ForwardNavButton = () => {
     );
 };
 
-class RootInstance extends Component {
+function TreeViewItems(props) {
+	var items = props.items;
+	// var onSelectFn = props.onSelect;
+	return (
+		<>
+		{Object.keys(items).map((key, index) => ( 
+			<TreeItem 
+				nodeId={ "" + items[key]["id"] }
+				// label={ "" + items[key]["label"] }
+				label={items[key]["link"]
+					? <Link 
+						color="inherit" 
+						to={ "" + items[key]["link"] }
+						// style={{color: "white"}}
+						>
+						{ "" + items[key]["label"] }
+					</Link>
+					: "" + items[key]["label"]
+				}
+				// onClick={event => {	
+				// }}
+				>
+				{items[key]["tree"] && 
+				Object.keys(items[key]["tree"]).length > 0 &&
+					<TreeViewItems 
+						// onSelect={onSelectFn} 
+						items={items[key]["tree"]}
+					/>
+				}
+			</TreeItem>
+		))}
+		</>
+	)
+}
+
+// class RootInstance extends Component {
+const RootInstance = class extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = this.calcState({
+		this.state = {
+			intendedcenter: undefined, 
+			actualcenter: undefined, 
 			insloading: false, 
 			insloaded: false, 
 			insfailed: false, 
-			instanceid: false, 
-			instance: false
-		});
-		// this.apiClient = new APIClient();
+			graph: undefined
+		}
+
+		var _this = this;
+
+		this.gridRef = React.createRef();
+
+		this.selectItem = this.selectItem.bind(this);
+		this.contextCommand = this.contextCommand.bind(this);
+
 	}
 
 	state = {
+		intendedcenter: undefined, 
+		actualcenter: undefined, 
 		insloading: false, 
 		insloaded: false, 
 		insfailed: false, 
-		instanceid: false, 
-		instance: false
+		graph: undefined
 	};
-
-	calcState(state) {
-
-		state = Object.assign({}, this.state, state)
-
-		return state;
-	}
 
 	// componentWillUpdate(nextProps, nextState) {
 	// }
@@ -157,14 +213,41 @@ class RootInstance extends Component {
 			// }
 		}
 
+		var center = instanceid; // undefined;
+		if( !center ) {
+			if( type && type["entity"] && type["entity"]["_id"] ) {
+				center = type["entity"]["_id"];
+			}
+		}
+
+		if( center != this.state.intendedcenter ) {
+			this.setState({
+				intendedcenter: center, 
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false
+			});
+		}
+
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		if( instanceid ) {
-			this.loadInstance(api, namespace, typename, instanceid)
-		}
+		// if( (!this.props.type["loading"]) && 
+		// 	(this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+			if( (!this.state.insloading) && 
+				(!this.state.insloaded) && 
+				(!this.state.insfailed) ) {
+				this.loadInstance(
+					api, 
+					namespace, 
+					"graph", 
+					center
+				)
+			}
+		// }
 
 	}
 
@@ -177,7 +260,7 @@ class RootInstance extends Component {
 			instanceid, 
 			type, 
 			schema
-		} = this.props;
+		} = this.props;	
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -193,10 +276,24 @@ class RootInstance extends Component {
 			(!this.props.schema["loaded"]) && 
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
-			if( api && namespace && typename ) {
-				this.props.loadSchema(api, namespace, typename);
-			}
+			this.props.loadSchema(api, namespace, typename);
 			// }
+		}
+
+		var center = instanceid; // undefined;
+		if( !center ) {
+			if( type && type["entity"] && type["entity"]["_id"] ) {
+				center = type["entity"]["_id"];
+			}
+		}
+
+		if( center != this.state.intendedcenter ) {
+			this.setState({
+				intendedcenter: center, 
+				insloading: false, 
+				insloaded: false, 
+				insfailed: false
+			});
 		}
 
 		/*
@@ -204,113 +301,286 @@ class RootInstance extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		if( instanceid ) {
-			this.loadInstance(api, namespace, typename, instanceid)
+		// if( (!this.props.type["loading"]) && 
+		// 	(this.props.type["loaded"]) && 
+		// 	(!this.props.type["failed"]) ) {
+			if( (!this.state.insloading) && 
+				(!this.state.insloaded) && 
+				(!this.state.insfailed) ) {
+				this.loadInstance(
+					api, 
+					namespace, 
+					"graph", 
+					center
+				)
+			}
+		// }
+
+	}
+
+	getGraph() {
+		var fullgraph = this.state.graph;
+		if( !fullgraph ) {
+			fullgraph = {
+				"@type": "tinker:graph", 
+				"@value": {
+					"vertices": [], 
+					"edges": []
+				}
+			};
+		}
+		return fullgraph;
+	}
+
+	getGraphNode(id) {
+		var graph = this.getGraph();
+		if( graph ) {
+			var vertexes = graph["@value"]["vertices"];
+			if( vertexes ) {
+				for( var i=0; i<vertexes.length; i++ ) {
+					var vertex = vertexes[i]["@value"];
+					if( (vertex) && (vertex["_id"]) ) {
+						if( vertex["_id"] == id ) {
+							return vertex;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// buildGraph(subgraph) {
+	// 	var fullgraph = this.state.graph;
+	// 	if( !fullgraph ) {
+	// 		fullgraph = {
+	// 			"@type": "tinker:graph", 
+	// 			"@value": {
+	// 				"vertices": [], 
+	// 				"edges": []
+	// 			}
+	// 		};
+	// 	}
+	// 	if( subgraph && subgraph["@value"] ) {
+	// 		if( subgraph["@value"]["vertices"] ) {
+	// 			var fullgraphvertices = Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
+	// 			fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
+	// 		}
+	// 		if( subgraph["@value"]["edges"] ) {
+	// 			var fullgraphvedges = Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+	// 			var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
+	// 			fullgraph["@value"]["edges"] = Object.values(newgraphedges);
+	// 		}
+	// 	}
+	// 	return fullgraph;
+	// }
+
+	buildGraph(subgraph) {
+		var fullgraph = this.state.graph;
+		if( !fullgraph ) {
+			fullgraph = {
+				"@type": "tinker:graph", 
+				"@value": {
+					"vertices": [], 
+					"edges": []
+				}
+			};
+		}
+		if( subgraph && subgraph["@value"] ) {
+			if( subgraph["@value"]["vertices"] ) {
+				var fullgraphvertices = {}; // Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
+				fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
+			}
+			if( subgraph["@value"]["edges"] ) {
+				var fullgraphvedges = {}; // Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
+				fullgraph["@value"]["edges"] = Object.values(newgraphedges);
+			}
+		}
+		return fullgraph;
+	}
+
+	getTreeData(api, namespace, graph) {
+
+		/*
+		 * I am converting the redux store to a dict, 
+		 * but this expects an array.
+		 */
+		// if( graph ) {
+		// 	graph = Object.values(graph);
+		// }
+
+		var treestruc = {
+			Compose: {
+				id: "Compose", 
+				name: "Compose", 
+				label: "Compose", 
+				tree: {
+				}
+			}, 
+			ComposeState: {
+				id: "ComposeState", 
+				name: "ComposeState", 
+				label: "ComposeState", 
+				tree: {
+				}
+			}, 
+			type: {
+				id: "type", 
+				name: "type", 
+				label: "Type", 
+				tree: {
+				}
+			}, 
+			interface: {
+				id: "interface", 
+				name: "interface", 
+				label: "Interface", 
+				tree: {
+				}
+			}, 
+			enum: {
+				id: "enum", 
+				name: "enum", 
+				label: "Enum", 
+				tree: {
+				}
+			}, 
+			// query: {
+			// 	id: "query", 
+			// 	name: "query", 
+			// 	label: "Query", 
+			// 	tree: {
+			// 	}
+			// }, 
+			// template: {
+			// 	id: "template", 
+			// 	name: "template", 
+			// 	label: "Template", 
+			// 	tree: {
+			// 	}
+			// }, 
+		};
+
+		var vs = {}
+
+		if( !graph ) {
+			return treestruc;
 		}
 
-	}
+		if( !graph["@value"] ) {
+			return treestruc;
+		}
 
-	getDataURL(api, namespace, typename, type, schema) {
-		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename;
-		return dataurl;
-	}
+		var vertexes = graph["@value"]["vertices"];
+		var edges = graph["@value"]["edges"];
 
-	getDataURL2(api, namespace, typename, type, schema, instance, instancefield) {
-		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
-		return dataurl;
-	}
+		if( !vertexes ) {
+			vertexes = [];
+		}
 
-	getListCols(namespace, typename, type, schema) {
+		if( !edges ) {
+			edges = [];
+		}
 
-		var cols = [];
-		cols.push({
-			title: "_name",
-			field: "_name",
-			render: rowData => <Link to={this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} style={{width: 50, borderRadius: '50%'}}>{rowData["_name"]}</Link>
-		});
-
-		if( schema && schema["properties"] ) {
-			for( var propertyname in schema["properties"] ) {
-				var property = schema["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-					if( property["$ref"] ) {
-						// 
-					} else if( (property["type"] == "array") && 
-							   (property["items"]) ) {
-						// 
-					} else {
-						if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-
-							if( property["type"] == "integer" ) {
-								cols.push({
-									title: propertyname,
-									field: propertyname,
-									type: 'numeric'
-								});
-							} else {
-								cols.push({
-									title: propertyname,
-									field: propertyname
-								});
+		if( vertexes ) {
+			for( var i=0; i<vertexes.length; i++ ) {
+				var vertex = vertexes[i]["@value"];
+				if( (vertex) && (vertex["_id"]) ) {
+					vs[String(vertex["_id"])] = vertex; // true;
+					var sval = vertex["_label"] + " " + vertex["properties"]["_name"];
+					var included = false;
+					var excluded = false;
+					if( (sval) && (this.state.search) ) {
+						if( sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							included = true;
+						} else if( !sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							excluded = true;
+						}
+					}
+					if( !(vertex["_label"] in treestruc) ) {
+						treestruc[vertex["_label"]] = {
+							id: vertex["_label"], 
+							name: vertex["_label"], 
+							label: vertex["_label"], 
+							link: undefined, 
+							tree: {
 							}
+						};
+					}
+					// treestruc[vertex["_label"]]["tree"][vertex["properties"]["_name"]] = {
+					treestruc[vertex["_label"]]["tree"][vertex["_id"]] = {
+						id: vertex["_id"], 
+						name: vertex["properties"]["_name"], 
+						label: vertex["properties"]["_name"], // + "." + vertex["_label"], 
+						// link: "/namespaces/" + namespace + "/" + vertex["_label"] + "/" + vertex["_id"], 
+						link: "/namespaces/" + namespace + "/" + vertex["_id"], 
+						vertex: vertex, 
+						tree: {
+						}
+					};
+				}
+			}
+		}
 
+		if( edges ) {
+			for( var i=0; i<edges.length; i++ ) {
+				var edge = edges[i]["@value"];
+				if( (edge) && (edge["_id"]) ) {
+					var sval = edge["_label"];
+					var included = false;
+					var excluded = false;
+					if( (sval) && (this.state.search) ) {
+						if( sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							included = true;
+						} else if( !sval.toLocaleLowerCase().includes(this.state.search.toLocaleLowerCase()) ) {
+							excluded = true;
+						}
+					}
+					var _outV = String(edge["_outV"]);
+					var _inV = String(edge["_inV"]);
+					if( (_outV) && (_inV) ) {
+						if( (vs[_outV]) && (vs[_inV]) ) {
+							var source = vs[_outV];
+							var target = vs[_inV];
+							if( !(edge["_label"] in treestruc[source["_label"]]["tree"][source["_id"]]["tree"]) ) {
+								treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]] = {
+									id: edge["_id"], 
+									name: edge["_label"], 
+									label: edge["_label"], 
+									link: undefined, 
+									tree: {
+									}
+								};
+							}
+							treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]]["tree"][target["_id"]] = {
+								id: target["_id"], 
+								name: target["properties"]["_name"], 
+								label: target["properties"]["_name"], // + "." + target["_label"], 
+								// link: "/namespaces/" + namespace + "/" + target["_label"] + "/" + target["_id"], 
+								link: "/namespaces/" + namespace + "/" + target["_id"], 
+								vertex: target, 
+								edge: edge, 
+								tree: {
+								}
+							}
 						}
 					}
 				}
 			}
 		}
 
-		return cols;
+		return treestruc;
 	}
 
-	getActions(namespace, typename, type, schema) {
-
-		// const {
-		// 	editable
-		// } = this.props;
-		var editable = true;
-
-		if( editable ) {
-			return [
-				// {
-				// 	icon: 'save',
-				// 	tooltip: 'Save', // + ' ' + typename,
-				// 	onClick: (event, rowData) => window.alert("You saved " + rowData["_name"])
-				// }, 
-				{
-					icon: 'delete',
-					tooltip: 'Delete', // + ' ' + typename,
-					onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["_name"] + "?")
-				}, 
-				// {
-				// 	icon: 'add',
-				// 	tooltip: 'Add User',
-				// 	isFreeAction: true,
-				// 	onClick: (event) => window.alert("Please fill out row")
-				// }
-				]
-		} else {
-			return []
-		}
-
-	}
-
-	getEditable(namespace, typename, type, schema) {
-
-		// const {
-		// 	editable
-		// } = this.props;
-		var editable = true;
-
-		if( editable ) {
-			return {
-				onRowAdd: newData => window.alert(""),
-				onRowUpdate: (newData, oldData) => window.alert(""),
-			}
-		} else {
-			return {}
-		}
-
+	getDataURL(api, namespace, typename, type, schema) {
+		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename;
+		return dataurl;
 	}
 
 	/*
@@ -319,24 +589,23 @@ class RootInstance extends Component {
 	 * Sun Mar 29 16:20:36 2020 -0500
 	 */
 	loadInstance(api, namespace, typename, instanceid) {
-		if( this.state.instanceid != instanceid ) {
+		// if( this.state.instanceid != instanceid ) {
+		// this.setState({
+		// 	insloading: false, 
+		// 	insloaded: false, 
+		// 	insfailed: false, 
+		// });
+		// }
+		// if( (!this.state.insloading) && 
+		// 	(!this.state.insloaded) && 
+		// 	(!this.state.insfailed) ) {
+		try {
 			this.setState({
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false, 
-				instanceid: instanceid, 
-				instance: false
-			});
-		}
-		if( (!this.state.insloading) && 
-			(!this.state.insloaded) && 
-			(!this.state.insfailed) ) {
-			this.setState({
+				intendedcenter: instanceid, 
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
-				instanceid: instanceid, 
-				instance: false
+				graph: this.state.graph
 			});
 			this.apiClient = new APIClient(
 				api.api.host, 
@@ -348,213 +617,161 @@ class RootInstance extends Component {
 				instanceid, 
 				(data) => {
 					this.setState({
+						intendedcenter: instanceid, 
+						actualcenter: instanceid, 
 						insloading: false, 
 						insloaded: true, 
 						insfailed: false, 
-						instanceid: instanceid, 
-						instance: data
+						graph: this.buildGraph(data)
 					});
 				});
+
+		} catch {
+			this.setState({
+				intendedcenter: instanceid, 
+				insloading: false, 
+				insloaded: false, 
+				insfailed: true, 
+				graph: this.state.graph
+			});
 		}
+		// }
 	}
 
-	getProperties(namespace, typename, type, schema, instance) {
+	// loadInstances(api, namespace, typename, instanceid, field) {
+	// 	if( this.state.instanceid != instanceid ) {
+	// 		this.setState({
+	// 			insloading: false, 
+	// 			insloaded: false, 
+	// 			insfailed: false, 
+	// 		});
+	// 	}
+	// 	if( (!this.state.inssloading) && 
+	// 		(!this.state.inssloaded) && 
+	// 		(!this.state.inssfailed) ) {
+	// 		this.setState({
+	// 			inssloading: true, 
+	// 			inssloaded: false, 
+	// 			inssfailed: false, 
+	// 		});
+	// 		this.apiClient = new APIClient(
+	// 			api.api.host, 
+	// 			api.api.port
+	// 		);
+	// 		this.apiClient.getInstanceField(
+	// 			namespace, 
+	// 			typename, 
+	// 			instanceid, 
+	// 			field, 
+	// 			(data) => {
+	// 				this.setState({
+	// 					inssloading: false, 
+	// 					inssloaded: true, 
+	// 					inssfailed: false, 
+	// 				});
+	// 			});
+	// 	}
+	// }
 
-		var properties = [];
+	// createInstance(type, data) {
+	// 	const {api} = this.props;
+	// 	this.props.createInstance(api, type, data);
+	// 	this.createInstanceDialogElement.current.closeDialog();
+	// }
 
-		// var propertyname = "_id";
-		// if( instance && instance[propertyname] ) {
-		// 	properties.push({
-		// 		"name": propertyname, 
-		// 		"value": <Link to={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_id"]}</Link>
-		// 	});
-		// }
+	// deleteInstance() {
+	// }
 
-		// propertyname = "_uuid";
-		// if( instance && instance[propertyname] ) {
-		// 	properties.push({
-		// 		"name": propertyname, 
-		// 		"value": instance[propertyname]
-		// 	});
-		// }
+	// onCloseCreateInstanceDialog() {
+	// 	this.setState({
+	// 		createInstanceDialogOpen: false
+	// 	});
+	// }
 
-		// propertyname = "_name";
-		// if( instance && instance[propertyname] ) {
-		// 	properties.push({
-		// 		"name": propertyname, 
-		// 		"value": <Link to={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</Link>
-		// 	});
-		// }
+	// getListCols(namespace, typename, type, schema) {
+	// 	var cols = [];
+	// 	return cols;
+	// }
 
-		// propertyname = "_created";
-		// if( instance && instance[propertyname] ) {
-		// 	properties.push({
-		// 		"name": propertyname, 
-		// 		"value": instance[propertyname]
-		// 	});
-		// }
+	// makeCreateInstanceLink(namespace, type) {
+	// 	return "/namespaces/" + namespace + "/create/" + type;
+	// }
 
-		// propertyname = "_modified";
-		// if( instance && instance[propertyname] ) {
-		// 	properties.push({
-		// 		"name": propertyname, 
-		// 		"value": instance[propertyname]
-		// 	});
-		// }
+	// makeInstanceLink(namespace, type, id) {
+	// 	return "/namespaces/" + namespace + "/" + type + "/" + id;
+	// }
 
-		if( schema && schema["properties"] ) {
-			for( var propertyname in schema["properties"] ) {
-				var property = schema["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-					if( property ) {
-						if( property["$ref"] ) {
-						} else if( (property["type"]) && 
-								   (property["type"] == "array") && 
-								   (property["items"]) ) {
-						} else if( property["type"] ) {
-							var prop = {
-								"name": propertyname, 
-								"type": property["type"], 
-								"value": undefined
-							};
-							if( instance && instance[propertyname] ) {
-								prop["value"] = instance[propertyname];
-							} else {
-								prop["value"] = undefined;
-							}
-							properties.push(prop);
-						}
-					}
+	// makeRelInstanceLink(namespace, type, id, relname) {
+	// 	return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
+	// }
+
+	// makeInstance(instance) {
+	// 	return instance;
+	// }
+
+	// makeInstancesView(
+	// 	title, 
+	// 	description, 
+	// 	namespace, 
+	// 	typename, 
+	// 	type, 
+	// 	schema, 
+	// 	dataurl, 
+	// 	editable, 
+	// 	showdeps
+	// ) {	
+	// }
+
+	// makeInstanceView(
+	// 	title, 
+	// 	description, 
+	// 	namespace, 
+	// 	typename, 
+	// 	type, 
+	// 	schema, 
+	// 	instanceid, 
+	// 	instance, 
+	// 	showdeps
+	// ) {
+	// }
+
+	/*
+	 * 
+	 */
+
+	contextCommand(type, command, selected, allselected) {
+
+	};
+
+	selectItem(id) {
+		if(id) {
+			var iid = id;
+			if( iid != this.state.instanceid ) {
+				// var graph = this.getGraph();
+				var node = this.getGraphNode(id);
+				if( node ) {
+					var namespace = this.props.namespace;
+					var typename = node["_label"];
+					this.props.navigate("/namespaces/" + namespace + "/" + typename + "/" + id);
+					// this.setState({
+					// 	insloading: false, 
+					// 	insloaded: false, 
+					// 	insfailed: false, 
+					// });
 				}
 			}
-		}
-
-		return properties;
-	}
-
-	getDependencies(namespace, typename, type, schema, instance) {
-
-		var dependencies = [];
-
-		if( schema && schema["properties"] ) {
-			for( var propertyname in schema["properties"] ) {
-				var property = schema["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
-					if( property ) {
-						if( property["$ref"] ) {
-							var dep = {
-								"name": propertyname, 
-								"type": property["$ref"].replace("#/definitions/", ""), 
-								"cardinality": "single", 
-								"value": undefined
-							};
-							if( instance && instance[propertyname] ) {
-								dep["value"] = instance[propertyname];
-							} else {
-								dep["value"] = undefined;
-							}
-							dependencies.push(dep);
-						} else if( (property["type"]) && 
-								   (property["type"] == "array") && 
-								   (property["items"]) ) {
-							var dep = {
-								"name": propertyname, 
-								"type": property["items"]["$ref"].replace("#/definitions/", ""), 
-								"cardinality": "multiple", 
-								"value": undefined
-							};
-							if( instance && instance[propertyname] ) {
-								dep["value"] = instance[propertyname];
-							} else {
-								dep["value"] = undefined;
-							}
-							dependencies.push(dep);
-						} 
-					}
-				}
+		} else {
+			var iid = undefined;
+			if( this.state.instanceid ) {
+				var namespace = this.props.namespace;
+				this.props.navigate("/namespaces/" + namespace);
+				// this.setState({
+				// 	insloading: false, 
+				// 	insloaded: false, 
+				// 	insfailed: false, 
+				// });
 			}
 		}
-
-		return dependencies;
-	}
-
-	makeInstanceLink(namespace, type, id) {
-		return "/namespaces/" + namespace + "/" + type + "/" + id;
-	}
-
-	makeRelInstanceLink(namespace, type, id, relname) {
-		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
-	}
-
-	makeInstance(instance) {
-		return instance;
-	}
-
-	makeInstancesView(
-		title, 
-		description, 
-		namespace, 
-		typename, 
-		type, 
-		schema, 
-		dataurl, 
-		columns, 
-		actions, 
-		editable, 
-		showdeps
-	) {
-
-		const {
-			api, 
-		} = this.props;
-
-		if( !columns ) {
-			columns = []
-		}
-
-		return <InstancesView 
-			title={title} 
-			description={description} 
-			api={api} 
-			namespace={namespace} 
-			typename={typename} 
-			type={type} 
-			schema={schema} 
-			dataurl={dataurl} 
-			columns={columns} 
-			actions={actions} 
-			editable={editable} 
-			showdeps={showdeps} />
-	}
-
-	makeInstanceView(
-		title, 
-		description, 
-		namespace, 
-		typename, 
-		type, 
-		schema, 
-		instanceid, 
-		instance, 
-		showdeps
-	) {
-
-		const {
-			api, 
-		} = this.props;
-
-		return <InstanceView 
-			title={title} 
-			description={description} 
-			api={api} 
-			namespace={namespace} 
-			typename={typename} 
-			type={type} 
-			schema={schema} 
-			instanceid={instanceid} 
-			instance={instance} 
-			showdeps={showdeps} />
-
 	}
 
 	render() {
@@ -572,7 +789,6 @@ class RootInstance extends Component {
 
 		const { classes } = this.props;
 
-
 		var backdropOpen = false;
 
 		/*
@@ -584,54 +800,74 @@ class RootInstance extends Component {
 		if( this.state.instance ) {
 			instance = this.state.instance;
 		}
+		// var graph = instance;
+		var graph = this.getGraph();
 
-		var showdeps = false;
-		var properties = undefined;
-		var dependencies = undefined;
-		if( schema && schema["entity"] && instance ) {
+		var highlighted = undefined;
+		var exploded = undefined;
+		var selected = undefined;
 
-			showdeps = true;
+		var pulsed = undefined;
+		var runLayout = true;
+		var zoomFit = true;
 
-			properties = this.getProperties(
-				namespace, 
-				typename, 
-				type, 
-				schema["entity"], // schema, 
-				instance
-			);
+		if( this.state.instanceid && 
+			!this.state.insloading && 
+			this.state.insloaded && 
+			!this.state.insfailed ) {
 
-			dependencies = this.getDependencies(
-				namespace, 
-				typename, 
-				type, 
-				schema["entity"], // schema, 
-				instance
-			);
+			highlighted = this.state.instanceid;
+			exploded = this.state.instanceid;
+			selected = this.state.instanceid;
 
+			pulsed = undefined;
+			runLayout = true;
+			zoomFit = true;
+
+		}
+
+		var hidden = false;
+		var open = true;
+		var direction = "up";
+
+		var actions = [
+			
+		];
+
+		// var graph = {}
+		var treestruc = this.getTreeData(api, namespace, graph);
+
+		var graphwidth = 640;
+		var graphheight = 640;
+		if( this.gridRef.current ) {
+			graphwidth = this.gridRef.current.offsetWidth;
+			graphheight = this.gridRef.current.offsetHeight;
+		}
+
+		if( graphwidth > 1280 ) {
+			graphwidth = 1280;
+		}
+
+		if( graphheight > 640 ) {
+			graphheight = 640;
 		}
 
 		return (
 			<>
 			<Container 
 				className={classes.mainContainer} 
-				>
+				>	
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>
-			<Breadcrumbs aria-label="breadcrumb">
+			{/* <Breadcrumbs aria-label="breadcrumb">
 				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
 					Namespaces
 				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace}>
-					{namespace}
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
-					{typename}
-				</Link>
-				<Typography color="textPrimary">{ instance && ( instance["_name"] + " (" + instance["_id"] + ")") }</Typography>
+				<Typography color="textPrimary">{namespace}</Typography>
 				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs>
+			</Breadcrumbs> */}
 			<Grid 
 				className="" 
 				container 
@@ -639,121 +875,101 @@ class RootInstance extends Component {
 				spacing={0} 
 			>
 				<Grid 
-					className="leftGrid" 
-					container 
+					className={classes.treeGrid} 
+					className="treeGrid" 
 					item 
 					xs={3} 
 					spacing={0} 
 				>
-						{_this.makeInstancesView(
-							typename, 
-							typename, 
-							namespace, 
-							typename, 
-							type["entity"], 
-							schema["entity"], 
-							_this.getDataURL(
-								api, 
-								namespace, 
-								typename, 
-								type["entity"], 
-								schema["entity"]
-							), 
-							_this.getListCols(
-								namespace, 
-								typename, 
-								type["entity"], 
-								schema["entity"]
-							), 
-							_this.getActions(
-								namespace, 
-								typename, 
-								type["entity"], 
-								schema["entity"]
-							), 
-							_this.getEditable(
-								namespace, 
-								typename, 
-								type["entity"], 
-								schema["entity"]
-							), 
-							false, 
-							true
-						)}
-				</Grid>
 
+					<TreeView
+						className={classes.tree} 
+						className="tree" 
+						defaultCollapseIcon={<ExpandMoreIcon />}
+						defaultExpandIcon={<ChevronRightIcon />}
+					>
+						<TreeViewItems 
+							// onSelect={item => {
+							// 	this.selectItem( String( item["_id"] ) );
+							// }}
+							items={treestruc}
+						/>
+					</TreeView>
+				</Grid>
 				<Grid 
-					className="centerGrid" 
+					className={classes.mainGrid} 
+					className="mainGrid" 
 					container 
 					item 
-					xs={6} 
+					xs={9} 
 					spacing={0} 
 				>
-						{_this.makeInstanceView(
-							instance && ( instance["_name"] + " (" + instance["_id"] + ")"), 
-							typename, 
-							namespace, 
-							typename, 
-							type["entity"], 
-							schema["entity"], 
-							instanceid, 
-							instance, 
-							true
-						)}
+					<Grid 
+						ref={this.gridRef}
+						className="leftGrid" 
+						container 
+						item 
+						xs={12} 
+						spacing={0} 
+					>
+						<Breadcrumbs aria-label="breadcrumb">
+							<BackNavButton></BackNavButton>
+							<Link color="inherit" to="/namespaces">
+								Namespaces
+							</Link>
+							<Link color="inherit" to={"/namespaces/" + namespace}>
+								{namespace}
+							</Link>
+							<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
+								{typename}
+							</Link>
+							<Typography color="textPrimary">{ instance && ( instance["name"] + " (" + instance["_id"] + ")") }</Typography>
+							<ForwardNavButton></ForwardNavButton>
+						</Breadcrumbs>
+						<Graph
+							graph={graph}
+							width={graphwidth} 
+							height={graphheight} 
+							highlighted={highlighted} 
+							exploded={exploded} 
+							selected={selected} 
+							pulsed={pulsed} 
+							runLayout={runLayout} 
+							zoomFit={zoomFit} 
+							selectItem={this.selectItem} 
+							contextCommand={this.contextCommand}/>
+						{/* <ThreeDeeGraph
+							graph={graph}
+							width={graphwidth} 
+							height={graphheight} 
+							highlighted={highlighted} 
+							exploded={exploded} 
+							selected={selected} 
+							pulsed={pulsed} 
+							runLayout={runLayout} 
+							zoomFit={zoomFit} 
+							selectItem={this.selectItem} 
+							contextCommand={this.contextCommand}/> */}
+					</Grid>
 				</Grid>
-
-				<Grid 
-					className="rightGrid" 
-					container 
-					item 
-					xs={3} 
-					spacing={0} 
-				>
-					{ showdeps && instance && dependencies && dependencies.map(function(item) {
-						if(item && item.cardinality == "multiple") {
-							var deptypename = schema["entity"]["properties"][item.name]["items"]["$ref"].replace("#/definitions/", "");
-							var deptype = schema["entity"]["definitions"][deptypename];
-							var depschema = schema["entity"]["definitions"][deptypename];
-							depschema["definitions"] = schema["entity"]["definitions"];
-							return _this.makeInstancesView(
-								item && item["_name"], 
-								item && item.type + " " + "(" + item.cardinality + ")",  
-								namespace, 
-								deptypename, 
-								deptype, 
-								depschema, 
-								_this.getDataURL2(
-									api, 
-									namespace, 
-									typename, // deptypename, 
-									type, // deptype, 
-									schema, // depschema, 
-									instance, // item && item.value, 
-									item && item["_name"]
-								), 
-								false
-							);
-						} else if(item && item.value) {
-							var deptypename = schema["entity"]["properties"][item.name]["$ref"].replace("#/definitions/", "");
-							var deptype = schema["entity"]["definitions"][deptypename];
-							var depschema = schema["entity"]["definitions"][deptypename];
-							depschema["definitions"] = schema["entity"]["definitions"];
-							return _this.makeInstanceView(
-								item && item["_name"], 
-								item && item.type + " " + "(" + item.cardinality + ")", 
-								namespace, 
-								deptypename, 
-								deptype, 
-								depschema, 
-								item && item.value && item.value["_id"], 
-								item && item.value, 
-								false
-							);
-						}
-					})}
-				</Grid>
-
 			</Grid>
+			<SpeedDial
+				ariaLabel="GraphActions"
+				className={classes.speedDial}
+				hidden={hidden}
+				icon={<SpeedDialIcon/>}
+				onClose={this.onCloseDial}
+				onOpen={this.onOpenDial}
+				open={open}
+				direction={direction}>
+				{actions.map(action => (
+					<SpeedDialAction
+						key={action.name}
+						icon=<Link to={action.link}>{action.icon}</Link>
+						tooltipTitle={action.name}
+						onClick={this.onCloseDial}/>
+				))}
+			</SpeedDial>
 			</Container>
 			</>
 		);
@@ -775,7 +991,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
-		// namespace
+		// namespace,
 	} = state;
 
 	var namespace = undefined;
@@ -820,4 +1036,4 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstance)));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstance))));
