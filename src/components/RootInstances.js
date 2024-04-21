@@ -1010,4 +1010,4 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances)));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances))));
