@@ -7,7 +7,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/styles';
-// import { useHistory } from "react-router-dom";
 
 import {
 	BrowserRouter as Router,
