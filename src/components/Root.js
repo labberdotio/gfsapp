@@ -644,11 +644,6 @@ const Root = class extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		// var instance = undefined;
-		// if( this.state.instance ) {
-		// 	instance = this.state.instance;
-		// }
-		// var graph = instance;
 		var graph = this.getGraph();
 
 		var highlighted = undefined;
