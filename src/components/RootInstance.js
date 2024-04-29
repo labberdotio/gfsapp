@@ -158,7 +158,8 @@ const RootInstance = class extends Component {
 			insloading: false, 
 			insloaded: false, 
 			insfailed: false, 
-			graph: undefined
+			graph: undefined, 
+			pgraph: undefined
 		}
 
 		var _this = this;
@@ -176,7 +177,8 @@ const RootInstance = class extends Component {
 		insloading: false, 
 		insloaded: false, 
 		insfailed: false, 
-		graph: undefined
+		graph: undefined, 
+		pgraph: undefined
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -603,7 +605,8 @@ const RootInstance = class extends Component {
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
-				graph: this.state.graph
+				graph: this.state.graph, 
+				pgraph: this.state.pgraph
 			});
 			this.apiClient = new APIClient(
 				api.api.host, 
@@ -620,7 +623,8 @@ const RootInstance = class extends Component {
 						insloading: false, 
 						insloaded: true, 
 						insfailed: false, 
-						graph: this.buildGraph(data)
+						graph: this.buildGraph(data), 
+						pgraph: this.state.graph
 					});
 				});
 
@@ -630,7 +634,8 @@ const RootInstance = class extends Component {
 				insloading: false, 
 				insloaded: false, 
 				insfailed: true, 
-				graph: this.state.graph
+				graph: this.state.graph, 
+				pgraph: this.state.pgraph
 			});
 		}
 		// }
