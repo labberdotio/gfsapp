@@ -724,11 +724,6 @@ const RootInstances = class extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		// var instance = undefined;
-		// if( this.state.instance ) {
-		// 	instance = this.state.instance;
-		// }
-		// var graph = instance;
 		var graph = this.getGraph();
 
 		var highlighted = undefined;
@@ -738,15 +733,6 @@ const RootInstances = class extends Component {
 		var pulsed = undefined;
 		var runLayout = true;
 		var zoomFit = true;
-
-		// if( this.state.instanceid && 
-		// 	!this.state.insloading && 
-		// 	this.state.insloaded && 
-		// 	!this.state.insfailed ) {
-		// 	highlighted = this.state.instanceid;
-		// 	exploded = this.state.instanceid;
-		// 	selected = this.state.instanceid;
-		// }
 
 		if( this.state.actualcenter ) {
 			highlighted = this.state.actualcenter;

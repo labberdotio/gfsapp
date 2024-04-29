@@ -727,12 +727,8 @@ const RootInstance = class extends Component {
 		 * Sun Jul 26 20:54:32 2020 -0700
 		 * Sun Mar 29 16:20:36 2020 -0500
 		 */
-		var instance = undefined;
-		if( this.state.instance ) {
-			instance = this.state.instance;
-		}
-		// var graph = instance;
 		var graph = this.getGraph();
+		var instance = this.getGraphNode(this.state.actualcenter);
 
 		var highlighted = undefined;
 		var exploded = undefined;
@@ -741,15 +737,6 @@ const RootInstance = class extends Component {
 		var pulsed = undefined;
 		var runLayout = true;
 		var zoomFit = true;
-
-		// if( this.state.intendedcenter && 
-		// 	!this.state.insloading && 
-		// 	this.state.insloaded && 
-		// 	!this.state.insfailed ) {
-		// 	highlighted = this.state.intendedcenter;
-		// 	exploded = this.state.intendedcenter;
-		// 	selected = this.state.intendedcenter;
-		// }
 
 		if( this.state.actualcenter ) {
 			highlighted = this.state.actualcenter;
@@ -854,7 +841,7 @@ const RootInstance = class extends Component {
 							<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
 								{typename}
 							</Link>
-							<Typography color="textPrimary">{ instance && ( instance["name"] + " (" + instance["_id"] + ")") }</Typography>
+							<Typography color="textPrimary">{ instance && ( instance["_label"] + " (" + instance["_id"] + ")") }</Typography>
 							<ForwardNavButton></ForwardNavButton>
 						</Breadcrumbs>
 						<Graph
