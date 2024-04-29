@@ -319,16 +319,67 @@ const RootInstances = class extends Component {
 	}
 
 	getGraph() {
-		var fullgraph = this.state.graph;
-		if( !fullgraph ) {
-			fullgraph = {
-				"@type": "tinker:graph", 
-				"@value": {
-					"vertices": [], 
-					"edges": []
+		var allvertexes = {};
+		var alledges = {};
+		if( this.state.pgraph ) {
+			var vertexes = this.state.pgraph["@value"]["vertices"];
+			if( vertexes ) {
+				for( var i=0; i<vertexes.length; i++ ) {
+					var vertex = vertexes[i]["@value"];
+					if( (vertex) && (vertex["_id"]) ) {
+						allvertexes[vertex["_id"]] = {
+							"@type": "g:Vertex", 
+							"@value": vertex
+						};
+					}
 				}
-			};
+			}
+			var edges = this.state.pgraph["@value"]["edges"];
+			if( edges ) {
+				for( var i=0; i<edges.length; i++ ) {
+					var edge = edges[i]["@value"];
+					if( (edge) && (edge["_id"]) ) {
+						alledges[edge["_id"]] = {
+							"@type": "g:Edge", 
+							"@value": edge
+						};
+					}
+				}
+			}
 		}
+		if( this.state.graph ) {
+			var vertexes = this.state.graph["@value"]["vertices"];
+			if( vertexes ) {
+				for( var i=0; i<vertexes.length; i++ ) {
+					var vertex = vertexes[i]["@value"];
+					if( (vertex) && (vertex["_id"]) ) {
+						allvertexes[vertex["_id"]] = {
+							"@type": "g:Vertex", 
+							"@value": vertex
+						};
+					}
+				}
+			}
+			var edges = this.state.graph["@value"]["edges"];
+			if( edges ) {
+				for( var i=0; i<edges.length; i++ ) {
+					var edge = edges[i]["@value"];
+					if( (edge) && (edge["_id"]) ) {
+						alledges[edge["_id"]] = {
+							"@type": "g:Edge", 
+							"@value": edge
+						};
+					}
+				}
+			}
+		}
+		var fullgraph = {
+			"@type": "tinker:graph", 
+			"@value": {
+				"vertices": Object.values(allvertexes), // [], 
+				"edges": Object.values(alledges), // []
+			}
+		};
 		return fullgraph;
 	}
 
