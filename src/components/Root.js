@@ -184,42 +184,6 @@ const Root = class extends Component {
 			schema
 		} = this.props;
 
-		// if( (!this.props.type["loading"]) && 
-		// 	(!this.props.type["loaded"]) && 
-		// 	(!this.props.type["failed"]) ) {
-		// 	// if( typename ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadType(api, namespace, typename);
-		// 	}
-		// 	// }
-		// }
-
-		// if( (!this.props.schema["loading"]) && 
-		// 	(!this.props.schema["loaded"]) && 
-		// 	(!this.props.schema["failed"]) ) {
-		// 	// if( typename ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadSchema(api, namespace, typename);
-		// 	}
-		// 	// }
-		// }
-
-		// var center = undefined;
-		// if( !center ) {
-		// 	if( type && type["entity"] && type["entity"]["_id"] ) {
-		// 		center = type["entity"]["_id"];
-		// 	}
-		// }
-
-		// if( center != this.state.intendedcenter ) {
-		// 	this.setState({
-		// 		intendedcenter: center, 
-		// 		insloading: false, 
-		// 		insloaded: false, 
-		// 		insfailed: false
-		// 	});
-		// }
-
 		/*
 		 * Have to go back to commit cc6304f for this.
 		 * Sun Jul 26 20:54:32 2020 -0700
@@ -251,40 +215,6 @@ const Root = class extends Component {
 			type, 
 			schema
 		} = this.props;		
-
-		// if( (!this.props.type["loading"]) && 
-		// 	(!this.props.type["loaded"]) && 
-		// 	(!this.props.type["failed"]) ) {
-		// 	// if( typename ) {
-		// 	if( api && namespace && typename ) {
-		// 		this.props.loadType(api, namespace, typename);
-		// 	}
-		// 	// }
-		// }
-
-		// if( (!this.props.schema["loading"]) && 
-		// 	(!this.props.schema["loaded"]) && 
-		// 	(!this.props.schema["failed"]) ) {
-		// 	// if( typename ) {
-		// 	this.props.loadSchema(api, namespace, typename);
-		// 	// }
-		// }
-
-		// var center = undefined;
-		// if( !center ) {
-		// 	if( type && type["entity"] && type["entity"]["_id"] ) {
-		// 		center = type["entity"]["_id"];
-		// 	}
-		// }
-
-		// if( center != this.state.intendedcenter ) {
-		// 	this.setState({
-		// 		intendedcenter: center, 
-		// 		insloading: false, 
-		// 		insloaded: false, 
-		// 		insfailed: false
-		// 	});
-		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
@@ -389,34 +319,6 @@ const Root = class extends Component {
 			}
 		}
 	}
-
-	// buildGraph(subgraph) {
-	// 	var fullgraph = this.state.graph;
-	// 	if( !fullgraph ) {
-	// 		fullgraph = {
-	// 			"@type": "tinker:graph", 
-	// 			"@value": {
-	// 				"vertices": [], 
-	// 				"edges": []
-	// 			}
-	// 		};
-	// 	}
-	// 	if( subgraph && subgraph["@value"] ) {
-	// 		if( subgraph["@value"]["vertices"] ) {
-	// 			var fullgraphvertices = Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
-	// 			fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
-	// 		}
-	// 		if( subgraph["@value"]["edges"] ) {
-	// 			var fullgraphvedges = Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
-	// 			fullgraph["@value"]["edges"] = Object.values(newgraphedges);
-	// 		}
-	// 	}
-	// 	return fullgraph;
-	// }
 
 	buildGraph(subgraph) {
 		var fullgraph = this.state.graph;
@@ -641,6 +543,7 @@ const Root = class extends Component {
 		try {
 			this.setState({
 				// intendedcenter: instanceid, 
+				// actualcenter: this.state.actualcenter, 
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
@@ -670,6 +573,7 @@ const Root = class extends Component {
 		} catch {
 			this.setState({
 				// intendedcenter: instanceid, 
+				// actualcenter: this.state.actualcenter, 
 				insloading: false, 
 				insloaded: false, 
 				insfailed: true, 
@@ -679,103 +583,6 @@ const Root = class extends Component {
 		}
 		// }
 	}
-
-	// loadInstances(api, namespace, typename, instanceid, field) {
-	// 	if( this.state.instanceid != instanceid ) {
-	// 		this.setState({
-	// 			insloading: false, 
-	// 			insloaded: false, 
-	// 			insfailed: false, 
-	// 		});
-	// 	}
-	// 	if( (!this.state.inssloading) && 
-	// 		(!this.state.inssloaded) && 
-	// 		(!this.state.inssfailed) ) {
-	// 		this.setState({
-	// 			inssloading: true, 
-	// 			inssloaded: false, 
-	// 			inssfailed: false, 
-	// 		});
-	// 		this.apiClient = new APIClient(
-	// 			api.api.host, 
-	// 			api.api.port
-	// 		);
-	// 		this.apiClient.getInstanceField(
-	// 			namespace, 
-	// 			typename, 
-	// 			instanceid, 
-	// 			field, 
-	// 			(data) => {
-	// 				this.setState({
-	// 					inssloading: false, 
-	// 					inssloaded: true, 
-	// 					inssfailed: false, 
-	// 				});
-	// 			});
-	// 	}
-	// }
-
-	// createInstance(type, data) {
-	// 	const {api} = this.props;
-	// 	this.props.createInstance(api, type, data);
-	// 	this.createInstanceDialogElement.current.closeDialog();
-	// }
-
-	// deleteInstance() {
-	// }
-
-	// onCloseCreateInstanceDialog() {
-	// 	this.setState({
-	// 		createInstanceDialogOpen: false
-	// 	});
-	// }
-
-	// getListCols(namespace, typename, type, schema) {
-	// 	var cols = [];
-	// 	return cols;
-	// }
-
-	// makeCreateInstanceLink(namespace, type) {
-	// 	return "/namespaces/" + namespace + "/create/" + type;
-	// }
-
-	// makeInstanceLink(namespace, type, id) {
-	// 	return "/namespaces/" + namespace + "/" + type + "/" + id;
-	// }
-
-	// makeRelInstanceLink(namespace, type, id, relname) {
-	// 	return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
-	// }
-
-	// makeInstance(instance) {
-	// 	return instance;
-	// }
-
-	// makeInstancesView(
-	// 	title, 
-	// 	description, 
-	// 	namespace, 
-	// 	typename, 
-	// 	type, 
-	// 	schema, 
-	// 	dataurl, 
-	// 	editable, 
-	// 	showdeps
-	// ) {	
-	// }
-
-	// makeInstanceView(
-	// 	title, 
-	// 	description, 
-	// 	namespace, 
-	// 	typename, 
-	// 	type, 
-	// 	schema, 
-	// 	instanceid, 
-	// 	instance, 
-	// 	showdeps
-	// ) {
-	// }
 
 	/*
 	 * 
@@ -851,21 +658,6 @@ const Root = class extends Component {
 		var pulsed = undefined;
 		var runLayout = true;
 		var zoomFit = true;
-
-		// if( this.state.instanceid && 
-		// 	!this.state.insloading && 
-		// 	this.state.insloaded && 
-		// 	!this.state.insfailed ) {
-
-		// 	highlighted = this.state.instanceid;
-		// 	exploded = this.state.instanceid;
-		// 	selected = this.state.instanceid;
-
-		// 	pulsed = undefined;
-		// 	runLayout = true;
-		// 	zoomFit = true;
-
-		// }
 
 		var hidden = false;
 		var open = true;
