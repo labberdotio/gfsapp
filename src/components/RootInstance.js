@@ -402,34 +402,6 @@ const RootInstance = class extends Component {
 		}
 	}
 
-	// buildGraph(subgraph) {
-	// 	var fullgraph = this.state.graph;
-	// 	if( !fullgraph ) {
-	// 		fullgraph = {
-	// 			"@type": "tinker:graph", 
-	// 			"@value": {
-	// 				"vertices": [], 
-	// 				"edges": []
-	// 			}
-	// 		};
-	// 	}
-	// 	if( subgraph && subgraph["@value"] ) {
-	// 		if( subgraph["@value"]["vertices"] ) {
-	// 			var fullgraphvertices = Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
-	// 			fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
-	// 		}
-	// 		if( subgraph["@value"]["edges"] ) {
-	// 			var fullgraphvedges = Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
-	// 			var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
-	// 			fullgraph["@value"]["edges"] = Object.values(newgraphedges);
-	// 		}
-	// 	}
-	// 	return fullgraph;
-	// }
-
 	buildGraph(subgraph) {
 		var fullgraph = this.state.graph;
 		if( !fullgraph ) {
@@ -653,6 +625,7 @@ const RootInstance = class extends Component {
 		try {
 			this.setState({
 				intendedcenter: instanceid, 
+				actualcenter: this.state.actualcenter, 
 				insloading: true, 
 				insloaded: false, 
 				insfailed: false, 
@@ -682,6 +655,7 @@ const RootInstance = class extends Component {
 		} catch {
 			this.setState({
 				intendedcenter: instanceid, 
+				actualcenter: this.state.actualcenter, 
 				insloading: false, 
 				insloaded: false, 
 				insfailed: true, 
@@ -691,103 +665,6 @@ const RootInstance = class extends Component {
 		}
 		// }
 	}
-
-	// loadInstances(api, namespace, typename, instanceid, field) {
-	// 	if( this.state.instanceid != instanceid ) {
-	// 		this.setState({
-	// 			insloading: false, 
-	// 			insloaded: false, 
-	// 			insfailed: false, 
-	// 		});
-	// 	}
-	// 	if( (!this.state.inssloading) && 
-	// 		(!this.state.inssloaded) && 
-	// 		(!this.state.inssfailed) ) {
-	// 		this.setState({
-	// 			inssloading: true, 
-	// 			inssloaded: false, 
-	// 			inssfailed: false, 
-	// 		});
-	// 		this.apiClient = new APIClient(
-	// 			api.api.host, 
-	// 			api.api.port
-	// 		);
-	// 		this.apiClient.getInstanceField(
-	// 			namespace, 
-	// 			typename, 
-	// 			instanceid, 
-	// 			field, 
-	// 			(data) => {
-	// 				this.setState({
-	// 					inssloading: false, 
-	// 					inssloaded: true, 
-	// 					inssfailed: false, 
-	// 				});
-	// 			});
-	// 	}
-	// }
-
-	// createInstance(type, data) {
-	// 	const {api} = this.props;
-	// 	this.props.createInstance(api, type, data);
-	// 	this.createInstanceDialogElement.current.closeDialog();
-	// }
-
-	// deleteInstance() {
-	// }
-
-	// onCloseCreateInstanceDialog() {
-	// 	this.setState({
-	// 		createInstanceDialogOpen: false
-	// 	});
-	// }
-
-	// getListCols(namespace, typename, type, schema) {
-	// 	var cols = [];
-	// 	return cols;
-	// }
-
-	// makeCreateInstanceLink(namespace, type) {
-	// 	return "/namespaces/" + namespace + "/create/" + type;
-	// }
-
-	// makeInstanceLink(namespace, type, id) {
-	// 	return "/namespaces/" + namespace + "/" + type + "/" + id;
-	// }
-
-	// makeRelInstanceLink(namespace, type, id, relname) {
-	// 	return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
-	// }
-
-	// makeInstance(instance) {
-	// 	return instance;
-	// }
-
-	// makeInstancesView(
-	// 	title, 
-	// 	description, 
-	// 	namespace, 
-	// 	typename, 
-	// 	type, 
-	// 	schema, 
-	// 	dataurl, 
-	// 	editable, 
-	// 	showdeps
-	// ) {	
-	// }
-
-	// makeInstanceView(
-	// 	title, 
-	// 	description, 
-	// 	namespace, 
-	// 	typename, 
-	// 	type, 
-	// 	schema, 
-	// 	instanceid, 
-	// 	instance, 
-	// 	showdeps
-	// ) {
-	// }
 
 	/*
 	 * 
@@ -865,19 +742,19 @@ const RootInstance = class extends Component {
 		var runLayout = true;
 		var zoomFit = true;
 
-		if( this.state.instanceid && 
-			!this.state.insloading && 
-			this.state.insloaded && 
-			!this.state.insfailed ) {
+		// if( this.state.intendedcenter && 
+		// 	!this.state.insloading && 
+		// 	this.state.insloaded && 
+		// 	!this.state.insfailed ) {
+		// 	highlighted = this.state.intendedcenter;
+		// 	exploded = this.state.intendedcenter;
+		// 	selected = this.state.intendedcenter;
+		// }
 
-			highlighted = this.state.instanceid;
-			exploded = this.state.instanceid;
-			selected = this.state.instanceid;
-
-			pulsed = undefined;
-			runLayout = true;
-			zoomFit = true;
-
+		if( this.state.actualcenter ) {
+			highlighted = this.state.actualcenter;
+			exploded = this.state.actualcenter;
+			selected = this.state.actualcenter;
 		}
 
 		var hidden = false;

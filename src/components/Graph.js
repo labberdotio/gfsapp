@@ -327,7 +327,7 @@ class Graph extends Component {
 		this.state = {
 			// exploded: false, 
 			// selected: undefined
-			dummy: false
+			// dummy: false
 		}
 		// var id = props.selected;
 		// if(id) {
@@ -356,7 +356,7 @@ class Graph extends Component {
 	state = {
 		// exploded: false, 
 		// selected: undefined
-		dummy: false
+		// dummy: false
 	};
 
 	componentWillUpdate(nextProps, nextState) {
@@ -654,9 +654,9 @@ class Graph extends Component {
 				this.props.selectItem(undefined);
 			}
 		}
-		this.setState({
-			dummy: false
-		});
+		// this.setState({
+		// 	dummy: false
+		// });
 		// }
 	}
 
@@ -756,6 +756,15 @@ class Graph extends Component {
 		var pulsed = this.props.pulsed;
 		var runLayout = this.props.runLayout;
 		var zoomFit = this.props.zoomFit;
+
+		// console.log("???? GRAPH ???? ");
+		// // console.log();
+		// console.log(selected);
+		// console.log(highlighted);
+		// console.log(exploded);
+		// console.log(pulsed);
+		// console.log(runLayout);
+		// console.log(zoomFit);
 
 		return (
 			<>
