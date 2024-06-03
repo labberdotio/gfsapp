@@ -10,7 +10,9 @@
 # pull official base image
 # FROM node:13.12.0-alpine
 # FROM node:14.18.2-alpine
-FROM node:16.14.2-alpine
+# FROM node:16.14.2-alpine
+# FROM node:16.20.2-alpine
+FROM node:18.20.3-alpine
 
 ENV REACT_APP_GFS_FS_NAME="gfs1"
 ENV REACT_APP_GFS_API_HOST="server"
