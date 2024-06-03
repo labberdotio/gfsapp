@@ -516,9 +516,9 @@ class Graph extends Component {
 		 * Fix this by loading vertices and edges at once via the graph API call, instead
 		 * of loading vertices and edges separate.
 		 */
-		if( edges.length <= 0 ) {
-			return [];
-		}
+		// if( edges.length <= 0 ) {
+		// 	return [];
+		// }
 
 		if( vertexes ) {
 			for( var i=0; i<vertexes.length; i++ ) {

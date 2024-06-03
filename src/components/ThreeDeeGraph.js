@@ -279,16 +279,16 @@ class ThreeDeeGraph extends Component {
 		 * Fix this by loading vertices and edges at once via the graph API call, instead
 		 * of loading vertices and edges separate.
 		 */
-		if( edges.length <= 0 ) {
-			return {
-				"nodes":[
-					
-				],
-				"links":[
-					
-				]
-			};
-		}
+		// if( edges.length <= 0 ) {
+		// 	return {
+		// 		"nodes":[
+		// 			
+		// 		],
+		// 		"links":[
+		// 			
+		// 		]
+		// 	};
+		// }
 
 		var nodes = [];
 		var links = [];
