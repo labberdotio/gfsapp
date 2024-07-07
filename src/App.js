@@ -520,7 +520,8 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 				if( type ) {
 					miditems.push({
 						"text": type["_name"], 
-						"path": "/namespaces/" + currentns + "/" + type["_name"], 
+						// "path": "/namespaces/" + currentns + "/" + type["_name"], 
+						"path": "/namespaces/" + currentns + "/" + type["_label"] + "/" + type["_id"], 
 						"icon": <ExtensionIcon/>, 
 						"selected": false
 					});
