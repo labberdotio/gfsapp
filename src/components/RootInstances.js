@@ -155,9 +155,9 @@ const RootInstances = class extends Component {
 		this.state = {
 			intendedcenter: undefined, 
 			actualcenter: undefined, 
-			insloading: false, 
-			insloaded: false, 
-			insfailed: false, 
+			grfloading: false, 
+			grfloaded: false, 
+			grffailed: false, 
 			graph: undefined, 
 			pgraph: undefined
 		}
@@ -174,9 +174,9 @@ const RootInstances = class extends Component {
 	state = {
 		intendedcenter: undefined, 
 		actualcenter: undefined, 
-		insloading: false, 
-		insloaded: false, 
-		insfailed: false, 
+		grfloading: false, 
+		grfloaded: false, 
+		grffailed: false, 
 		graph: undefined, 
 		pgraph: undefined
 	};
@@ -224,9 +224,9 @@ const RootInstances = class extends Component {
 		if( center != this.state.intendedcenter ) {
 			this.setState({
 				intendedcenter: center, 
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false
+				grfloading: false, 
+				grfloaded: false, 
+				grffailed: false
 			});
 		}
 
@@ -238,9 +238,9 @@ const RootInstances = class extends Component {
 		// if( (!this.props.type["loading"]) && 
 		// 	(this.props.type["loaded"]) && 
 		// 	(!this.props.type["failed"]) ) {
-			if( (!this.state.insloading) && 
-				(!this.state.insloaded) && 
-				(!this.state.insfailed) ) {
+			if( (!this.state.grfloading) && 
+				(!this.state.grfloaded) && 
+				(!this.state.grffailed) ) {
 				this.loadInstance(
 					api, 
 					namespace, 
@@ -290,9 +290,9 @@ const RootInstances = class extends Component {
 		if( center != this.state.intendedcenter ) {
 			this.setState({
 				intendedcenter: center, 
-				insloading: false, 
-				insloaded: false, 
-				insfailed: false
+				grfloading: false, 
+				grfloaded: false, 
+				grffailed: false
 			});
 		}
 
@@ -304,9 +304,9 @@ const RootInstances = class extends Component {
 		// if( (!this.props.type["loading"]) && 
 		// 	(this.props.type["loaded"]) && 
 		// 	(!this.props.type["failed"]) ) {
-			if( (!this.state.insloading) && 
-				(!this.state.insloaded) && 
-				(!this.state.insfailed) ) {
+			if( (!this.state.grfloading) && 
+				(!this.state.grfloaded) && 
+				(!this.state.grffailed) ) {
 				this.loadInstance(
 					api, 
 					namespace, 
@@ -612,21 +612,21 @@ const RootInstances = class extends Component {
 	loadInstance(api, namespace, typename, instanceid) {
 		// if( this.state.instanceid != instanceid ) {
 		// this.setState({
-		// 	insloading: false, 
-		// 	insloaded: false, 
-		// 	insfailed: false, 
+		// 	grfloading: false, 
+		// 	grfloaded: false, 
+		// 	grffailed: false, 
 		// });
 		// }
-		// if( (!this.state.insloading) && 
-		// 	(!this.state.insloaded) && 
-		// 	(!this.state.insfailed) ) {
+		// if( (!this.state.grfloading) && 
+		// 	(!this.state.grfloaded) && 
+		// 	(!this.state.grffailed) ) {
 		try {
 			this.setState({
 				intendedcenter: instanceid, 
 				actualcenter: this.state.actualcenter, 
-				insloading: true, 
-				insloaded: false, 
-				insfailed: false, 
+				grfloading: true, 
+				grfloaded: false, 
+				grffailed: false, 
 				graph: this.state.graph, 
 				pgraph: this.state.pgraph
 			});
@@ -642,9 +642,9 @@ const RootInstances = class extends Component {
 					this.setState({
 						intendedcenter: instanceid, 
 						actualcenter: instanceid, 
-						insloading: false, 
-						insloaded: true, 
-						insfailed: false, 
+						grfloading: false, 
+						grfloaded: true, 
+						grffailed: false, 
 						graph: this.buildGraph(data), 
 						pgraph: this.state.graph
 					});
@@ -654,9 +654,9 @@ const RootInstances = class extends Component {
 			this.setState({
 				intendedcenter: instanceid, 
 				actualcenter: this.state.actualcenter, 
-				insloading: false, 
-				insloaded: false, 
-				insfailed: true, 
+				grfloading: false, 
+				grfloaded: false, 
+				grffailed: true, 
 				graph: this.state.graph, 
 				pgraph: this.state.pgraph
 			});
@@ -683,9 +683,9 @@ const RootInstances = class extends Component {
 					var typename = node["_label"];
 					this.props.navigate("/namespaces/" + namespace + "/" + typename + "/" + id);
 					// this.setState({
-					// 	insloading: false, 
-					// 	insloaded: false, 
-					// 	insfailed: false, 
+					// 	grfloading: false, 
+					// 	grfloaded: false, 
+					// 	grffailed: false, 
 					// });
 				}
 			}
@@ -695,9 +695,9 @@ const RootInstances = class extends Component {
 			var namespace = this.props.namespace;
 			this.props.navigate("/namespaces/" + namespace);
 			// this.setState({
-			// 	insloading: false, 
-			// 	insloaded: false, 
-			// 	insfailed: false, 
+			// 	grfloading: false, 
+			// 	grfloaded: false, 
+			// 	grffailed: false, 
 			// });
 			// }
 		}
