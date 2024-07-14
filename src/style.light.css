@@ -20,6 +20,22 @@ a:hover {
     color: rgb(126, 68, 168) !important;
 }
 
+.treeGrid a {
+    color: rgb(97, 97, 97);
+}
+
+.treeGrid a:hover {
+    color: rgb(97, 97, 97) !important;
+}
+
+.treeGrid .Mui-selected a {
+    color: rgb(255, 255, 255)
+}
+
+.treeGrid .Mui-selected a:hover {
+    color: rgb(255, 255, 255) !important;
+}
+
 /* */
 
 .MuiAlert-standardError, 
