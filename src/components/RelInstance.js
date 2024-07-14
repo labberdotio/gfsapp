@@ -66,12 +66,12 @@ function handleClick(event) {
 }
 
 export const BackNavButton = () => {
-    // let history = useHistory();
+    let navigate = useNavigate();
     return (
         <>
 			<Button
 				startIcon={<ArrowBackIcon />} 
-				// onClick={() => history.goBack()}
+				onClick={() => navigate(-1)}
 			>
 				Back
 			</Button>
@@ -80,12 +80,12 @@ export const BackNavButton = () => {
 };
 
 export const ForwardNavButton = () => {
-    // let history = useHistory();
+    let navigate = useNavigate();
     return (
 		<>
 			<Button
 				endIcon={<ArrowForwardIcon />} 
-				// onClick={() => history.goForward()}
+				onClick={() => navigate(+1)}
 			>
 				Forward
 			</Button>
