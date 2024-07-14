@@ -10,6 +10,17 @@ import { connect } from 'react-redux';
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import createStyles from "@material-ui/core/styles/createStyles";
 
+import {
+	Routes, 
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch, 
+	useParams, 
+	useNavigate
+} from "react-router-dom";
+
 import Container from '@material-ui/core/Container';
 
 import Button from '@material-ui/core/Button';
@@ -45,12 +56,12 @@ function handleClick(event) {
 }
 
 export const BackNavButton = () => {
-    // let history = useHistory();
+    let navigate = useNavigate();
     return (
         <>
 			<Button
 				startIcon={<ArrowBackIcon />} 
-				// onClick={() => history.goBack()}
+				onClick={() => navigate(-1)}
 			>
 				Back
 			</Button>
@@ -59,12 +70,12 @@ export const BackNavButton = () => {
 };
 
 export const ForwardNavButton = () => {
-    // let history = useHistory();
+    let navigate = useNavigate();
     return (
 		<>
 			<Button
 				endIcon={<ArrowForwardIcon />} 
-				// onClick={() => history.goForward()}
+				onClick={() => navigate(+1)}
 			>
 				Forward
 			</Button>
@@ -73,11 +84,11 @@ export const ForwardNavButton = () => {
 };
 
 export const CancelButton = () => {
-    // let history = useHistory();
+    let navigate = useNavigate();
     return (
         <>
 			<Button
-				// onClick={() => history.goBack()}
+				onClick={() => navigate(-1)}
 			>
 				Cancel
 			</Button>
