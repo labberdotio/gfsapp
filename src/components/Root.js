@@ -491,7 +491,7 @@ const Root = class extends Component {
 							var source = vs[_outV];
 							var target = vs[_inV];
 							if( !(edge["_label"] in treestruc[source["_label"]]["tree"][source["_id"]]["tree"]) ) {
-								treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]] = {
+								treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_label"]] = {
 									id: edge["_id"], 
 									name: edge["_label"], 
 									label: edge["_label"], 
@@ -500,7 +500,7 @@ const Root = class extends Component {
 									}
 								};
 							}
-							treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_id"]]["tree"][target["_id"]] = {
+							treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_label"]]["tree"][target["_id"]] = {
 								id: target["_id"], 
 								name: target["properties"]["_name"], 
 								label: target["properties"]["_name"], // + "." + target["_label"], 
