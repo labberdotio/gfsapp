@@ -770,6 +770,7 @@ const RootInstances = class extends Component {
 			<>
 			<Container 
 				className={classes.mainContainer} 
+				maxWidth="xl" 
 				>	
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>

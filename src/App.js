@@ -552,6 +552,7 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 				</IconButton>
 			</div>
 				<Container 
+					maxWidth="xl" 
 					style={{minHeight: 0}}
 					>
 				</Container>

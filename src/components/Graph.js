@@ -771,7 +771,7 @@ class Graph extends Component {
 			{/* <Container 
 				className={classes.graphContainer} 
 				className="graphContainer" 
-				maxWidth="false"> */}
+				maxWidth="xl"> */}
 			{/* <Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>						 */}
