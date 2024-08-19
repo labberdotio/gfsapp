@@ -7,7 +7,10 @@ body,
 #root {
 	margin: 0;
     /* height: 100vh; */
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    min-height: 100%;
+    height: 100%;
+    overflow: hidden;
     color: rgb(97, 97, 97) !important;
 	background-color: rgb(255, 255, 255) !important;
 }
@@ -217,9 +220,12 @@ a:hover {
 }
 
 #root > div > main {
-    min-height: calc( 100vh );
-    height: calc( 100vh );
+    /* min-height: calc( 100vh ); */
+    /* height: calc( 100vh ); */
+    min-height: 100%;
+    height: 100%;
     overflow-y: scroll;
+    /* margin-right: -15px; */
 }
 
 #root > div > main .treeGrid {
