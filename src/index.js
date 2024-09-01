@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, 2024, John Grundback
 // All rights reserved.
 // 
 
@@ -56,6 +56,7 @@ import RootInstancesView from './components/RootInstances'
 import RelInstanceView from './components/RelInstance'
 
 import Login from './components/Login'
+import Logout from './components/Logout'
 
 import Namespaces from './components/Namespaces'
 
@@ -192,6 +193,17 @@ ReactDOM.render(
 					<>
 					<App >
 					<Login 
+						 />
+					</App>
+					</>
+				} />
+			<Route 
+				// exact 
+				path="/logout" 
+				element={
+					<>
+					<App >
+					<Logout 
 						 />
 					</App>
 					</>
