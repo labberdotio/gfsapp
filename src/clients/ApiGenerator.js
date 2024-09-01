@@ -112,7 +112,8 @@ class ApiGenerator {
 		fetch(url, {
 			method: 'GET',
 			headers: {
-				'Accept': this.accept
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		}).then((res) => {
 			// Unfortunately, fetch doesn't send (404 error) into the cache itself
@@ -133,6 +134,10 @@ class ApiGenerator {
 					accept: this.accept,
 					timestamp: Date.now()
 				});
+				// if( window.location.href != "/login" ) {
+				if( !window.location.href.endsWith("/login") ) {
+					window.location.href = "/login";
+				}
 			}
 		}).then((data) => {
 			this.next({
@@ -155,6 +160,10 @@ class ApiGenerator {
 				accept: this.accept,
 				timestamp: Date.now()
 			});
+			// if( window.location.href != "/login" ) {
+			if( !window.location.href.endsWith("/login") ) {
+				window.location.href = "/login";
+			}
 		});
 		// } catch {
 		// 	this.next({
@@ -195,7 +204,8 @@ class ApiGenerator {
 		fetch(url, {
 			method: 'GET',
 			headers: {
-				'Accept': this.accept
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		})
 		.then((res) => {
@@ -218,6 +228,10 @@ class ApiGenerator {
 					namespace: namespace,
 					timestamp: Date.now()
 				});
+				// if( window.location.href != "/login" ) {
+				if( !window.location.href.endsWith("/login") ) {
+					window.location.href = "/login";
+				}
 			}
 		})
 		.then((data) => {
@@ -243,6 +257,10 @@ class ApiGenerator {
 				namespace: namespace,
 				timestamp: Date.now()
 			});
+			// if( window.location.href != "/login" ) {
+			if( !window.location.href.endsWith("/login") ) {
+				window.location.href = "/login";
+			}
 		});
 		// } catch {
 		// 	this.next({
@@ -288,7 +306,8 @@ class ApiGenerator {
 		fetch(url, {
 			method: 'GET',
 			headers: {
-				'Accept': this.accept
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		}).then((res) => {
 			// Unfortunately, fetch doesn't send (404 error) into the cache itself
@@ -377,7 +396,8 @@ class ApiGenerator {
 		fetch(url, {
 			method: 'GET',
 			headers: {
-				'Accept': this.accept
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		})
 		.then((res) => {
@@ -483,7 +503,8 @@ class ApiGenerator {
 			method: 'POST',
 			body: data, // JSON.stringify(entity),
 			headers: {
-				'Accept': this.accept,
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token"), 
 				'Content-Type': this.contenttype
 			}
 		})
@@ -571,7 +592,8 @@ class ApiGenerator {
 			method: 'PUT',
 			body: data, // JSON.stringify(entity),
 			headers: {
-				'Accept': this.accept,
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token"), 
 				'Content-Type': this.contenttype
 			}
 		})
@@ -650,7 +672,8 @@ class ApiGenerator {
 		fetch(url, {
 			method: 'DELETE',
 			headers: {
-				'Accept': this.accept
+				'Accept': this.accept, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		})
 		// .then(res => res.json())

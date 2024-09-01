@@ -62,7 +62,8 @@ class APIClient {
 		fetch(url, {
 			method: 'GET',
 			headers: {
-				'Accept': this.jsontype // this.type
+				'Accept': this.jsontype, // this.type, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		})
 		.then(res => res.json())
@@ -76,7 +77,8 @@ class APIClient {
 		fetch(url, {
 			method: 'GET',
 			headers: {
-				'Accept': this.jsontype // this.type
+				'Accept': this.jsontype, // this.type, 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
 			}
 		})
 		.then(res => res.json())
