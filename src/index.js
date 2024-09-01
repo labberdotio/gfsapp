@@ -55,6 +55,8 @@ import RootInstancesView from './components/RootInstances'
 // import SubInstanceView from './components/SubInstance'
 import RelInstanceView from './components/RelInstance'
 
+import Login from './components/Login'
+
 import Namespaces from './components/Namespaces'
 
 import CreateInstanceDialog from './components/Create'
@@ -179,6 +181,17 @@ ReactDOM.render(
 					<>
 					<App >
 					<Namespaces 
+						 />
+					</App>
+					</>
+				} />
+			<Route 
+				// exact 
+				path="/login" 
+				element={
+					<>
+					<App >
+					<Login 
 						 />
 					</App>
 					</>
