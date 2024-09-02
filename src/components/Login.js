@@ -35,6 +35,24 @@ const styles = theme => ({
 
 });
 
+/*
+ * Defaults
+ */
+var authHostname = process.env.REACT_APP_GFS_AUTH_HOST || 'gfsauth';
+var authPort = process.env.REACT_APP_GFS_AUTH_PORT || 8182;
+var authClient = process.env.REACT_APP_GFS_AUTH_CLIENT || 'client';
+var authSecret = process.env.REACT_APP_GFS_AUTH_SECRET || 'secret';
+
+/*
+ * Overrides
+ */
+if( window._env_ ) {
+	authHostname = window._env_.REACT_APP_GFS_WS_HOST;
+	authPort = window._env_.REACT_APP_GFS_WS_PORT;
+	authClient = window._env_.REACT_APP_GFS_AUTH_CLIENT;
+	authSecret = window._env_.REACT_APP_GFS_AUTH_SECRET;
+}
+
 function handleClick(event) {
 	// event.preventDefault();
 }
@@ -86,12 +104,12 @@ class Login extends Component {
 		data.append("password", password);
 		data.append("grant_type", "password");
 		data.append("scope", "read write");
-		fetch("http://10.88.88.112:8081/gfsauth/oauth/token", {
-		// fetch("http://10.88.88.112:8081/gfsauth/login", {
+		fetch("http://" + authHostname + ":" + authPort + "/gfsauth/oauth/token", {
+		// fetch("http://" + authHostname + ":" + authPort + "/gfsauth/login", {
 			method: "POST",
 			headers: {
 				// "content-type": ..., 
-				"Authorization": "Basic " + window.btoa("org.name.client1" + ":" + "secret")
+				"Authorization": "Basic " + window.btoa(authClient + ":" + authSecret)
 			},
 			body: data
 		})
