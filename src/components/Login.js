@@ -22,6 +22,7 @@ import {
 	Link,
 	useRouteMatch, 
 	useParams, 
+	useSearchParams, 
 	useNavigate
 } from "react-router-dom";
 
@@ -30,6 +31,16 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+import TextField from '@material-ui/core/TextField';
+import FormField from './FormField';
+import FormButton from './FormButton';
 
 const styles = theme => ({
 
@@ -38,8 +49,8 @@ const styles = theme => ({
 /*
  * Defaults
  */
-var authHostname = process.env.REACT_APP_GFS_AUTH_HOST || 'gfsauth';
-var authPort = process.env.REACT_APP_GFS_AUTH_PORT || 8182;
+var authHostname = process.env.REACT_APP_GFS_AUTH_HOST || 'gfs-auth';
+var authPort = process.env.REACT_APP_GFS_AUTH_PORT || 8081;
 var authClient = process.env.REACT_APP_GFS_AUTH_CLIENT || 'client';
 var authSecret = process.env.REACT_APP_GFS_AUTH_SECRET || 'secret';
 
@@ -47,8 +58,8 @@ var authSecret = process.env.REACT_APP_GFS_AUTH_SECRET || 'secret';
  * Overrides
  */
 if( window._env_ ) {
-	authHostname = window._env_.REACT_APP_GFS_WS_HOST;
-	authPort = window._env_.REACT_APP_GFS_WS_PORT;
+	authHostname = window._env_.REACT_APP_GFS_AUTH_HOST;
+	authPort = window._env_.REACT_APP_GFS_AUTH_PORT;
 	authClient = window._env_.REACT_APP_GFS_AUTH_CLIENT;
 	authSecret = window._env_.REACT_APP_GFS_AUTH_SECRET;
 }
@@ -62,8 +73,16 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			namespace: undefined, 
+			namespaceError: undefined, 
 			username: undefined, 
-			password: undefined
+			usernameError: undefined, 
+			password: undefined, 
+			passwordError: undefined, 
+			active: false, 
+			status: undefined, 
+			snackbarMessage: undefined, 
+			snackbarOpen: false
 		}
 
 		var _this = this;
@@ -71,8 +90,16 @@ class Login extends Component {
 	}
 
 	state = {
+		namespace: undefined, 
+		namespaceError: undefined, 
 		username: undefined, 
-		password: undefined
+		usernameError: undefined, 
+		password: undefined, 
+		passwordError: undefined, 
+		active: false, 
+		status: undefined, 
+		snackbarMessage: undefined, 
+		snackbarOpen: false
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -92,20 +119,35 @@ class Login extends Component {
 			api
 		} = this.props;
 
+		var scnamespace = this.props.searchParams[0].get("namespace");
+		if( scnamespace ) {
+			this.setNamespace(scnamespace);
+		}
+
+		var cnamespace = localStorage.getItem("jwt-namespace");
+		if( cnamespace ) {
+			this.setNamespace(cnamespace);
+		}
+
 	}
 
 	submitUser(event) {
 		var _this = this;
+		_this.setActive(true);
 		event.preventDefault();
+		var namespace = _this.state.namespace;
 		var username = _this.state.username;
 		var password = _this.state.password;
 		const data = new FormData();
-		data.append("username", username);
+		var email = username + "@" + namespace; 
+		data.append("namespace", namespace);
+		// data.append("username", username);
+		data.append("username", email);
 		data.append("password", password);
 		data.append("grant_type", "password");
 		data.append("scope", "read write");
-		fetch("http://" + authHostname + ":" + authPort + "/gfsauth/oauth/token", {
-		// fetch("http://" + authHostname + ":" + authPort + "/gfsauth/login", {
+		fetch("http://" + authHostname + ":" + authPort + "/auth/oauth/token", {
+		// fetch("http://" + authHostname + ":" + authPort + "/auth/login", {
 			method: "POST",
 			headers: {
 				// "content-type": ..., 
@@ -119,31 +161,94 @@ class Login extends Component {
 				console.log("Login successfull");
 				console.log("JWT token: ");
 				console.log(data.access_token);
-				localStorage.setItem("jwt-token", data.access_token)
-				_this.setUsername("")
-				_this.setPassword("")
+				localStorage.setItem("jwt-namespace", namespace);
+				localStorage.setItem("jwt-token", data.access_token);
+				localStorage.setItem("jwt-user", username);
+				localStorage.setItem("jwt-email", email);
+				// _this.setUsername("");
+				// _this.setPassword("");
+				_this.setStatus("Logged in");
+				_this.showInSnackbar("Logged in");
+				_this.setActive(false);
 				// Redirect here
 				// router.push(...)
+				window.location.href = "/namespaces/" + namespace;
 			} else {
-				console.log("Login failed");
-				console.log(data.error);
-				console.log(data.error_description);
-				alert(data.error + data.error_description)
+				console.log("Login failed: " + data.error + " " + data.error_description);	
+				_this.setStatus("Login failed: " + data.error_description);
+				_this.showInSnackbar("Login failed: " + data.error_description);
+				this.setActive(false);
 			}
 		});
 	}
 
-	setUsername(username) {
+	showInSnackbar(message) {
 		var _this = this;
+		if( !_this.state.snackbarOpen ) {
+			_this.setState({
+				snackbarMessage: message,
+				snackbarOpen: true
+			});
+		} else {
+		}
+	}
+
+	onCloseSnackbar() {
+		this.setState({
+			snackbarMessage: undefined,
+			snackbarOpen: false
+		});
+	}
+
+	setNamespace(namespace) {
+		// console.log(" setNamespace " + namespace);
+		var _this = this;
+		var error = undefined;
+		if( !namespace ) {
+			error = "Please give a valid namespace.";
+		}
 		_this.setState({
-			username: username
+			namespace: namespace, 
+			namespaceError: error
+		});
+	}
+
+	setUsername(username) {
+		// console.log(" setUsername " + username);
+		var _this = this;
+		var error = undefined;
+		if( !username ) {
+			error = "Please give a valid user in the above namespace.";
+		}
+		_this.setState({
+			username: username, 
+			usernameError: error
 		});
 	}
 
 	setPassword(password) {
 		var _this = this;
+		var error = undefined;
+		if( !password ) {
+			error = "Please give a valid password for the above user.";
+		}
 		_this.setState({
-			password: password
+			password: password, 
+			passwordError: error
+		});
+	}
+
+	setActive(active) {
+		var _this = this;
+		_this.setState({
+			active: active
+		});
+	}
+
+	setStatus(status) {
+		var _this = this;
+		_this.setState({
+			status: status
 		});
 	}
 
@@ -159,8 +264,22 @@ class Login extends Component {
 
 		var backdropOpen = false;
 
+		// var scnamespace = this.props.searchParams[0].get("namespace");
+		var namespace = _this.state.namespace;
+		var namespaceError = _this.state.namespaceError;
 		var username = _this.state.username;
+		var usernameError = _this.state.usernameError;
 		var password = _this.state.password;
+		var passwordError = _this.state.passwordError;
+		var active = _this.state.active;
+		var status = _this.state.status;
+
+		var cnamespace = namespace;
+		// if( !namespace ) {
+		// 	if( scnamespace ) {
+		// 		cnamespace = scnamespace;
+		// 	}
+		// }
 
 		return (
 			<>
@@ -184,35 +303,104 @@ class Login extends Component {
 				spacing={0} 
 			>
 
-<main style={{ padding: '50px' }}>
-        <h1>Login </h1>
-        <br />
+			<main style={{ padding: '50px' }}>
+			<h1>Login</h1>
+			<form onSubmit={(e) => this.submitUser(e)}>
+			<TextField 
+				id="namespace" 
+				type="text" 
+				value={cnamespace} 
+				label="Namespace" 
+				labelText="Namespace" 
+				placeholder="Namespace" 
+				helperText={namespaceError} 
+				error={namespaceError} 
+				variant="filled" 
+				fullWidth 
+				formControlProps={{
+					fullWidth: true
+				}} 
+				onChange={(e) => this.setNamespace(e.target.value)} 
+				handleChange={(e) => this.setNamespace(e.target.value)} 
+			/>
+			<TextField 
+				id="username" 
+				type="text" 
+				value={username} 
+				label="Username" 
+				labelText="Username" 
+				placeholder="Username" 
+				helperText={usernameError} 
+				error={usernameError} 
+				fullWidth 
+				formControlProps={{
+					fullWidth: true
+				}}
+				onChange={(e) => this.setUsername(e.target.value)} 
+				handleChange={(e) => this.setUsername(e.target.value)} 
+			/>
+			<TextField 
+				id="password" 
+				value={password} 
+				type="password" 
+				label="Password" 
+				labelText="Password" 
+				placeholder="" 
+				helperText={passwordError} 
+				error={passwordError}  
+				fullWidth 
+				formControlProps={{
+					fullWidth: true
+				}}
+				onChange={(e) => this.setPassword(e.target.value)}
+				handleChange={this.handleChange}        
+			/>
 
-        <form onSubmit={(e) => this.submitUser(e)}>
-          <input
-            value={username}
-            type="text"
-            placeholder="Username"
-            onChange={(e) => this.setUsername(e.target.value)}
-          />
-          <br />
-          <br />
+			{ active ? (
+				<>
+				<CircularProgress />
+				</>
+			) : (
+				<>
+				</>
+				)
+			}
 
-          <input
-            value={password}
-            type="password"
-            placeholder="Password"
-            onChange={(e) => this.setPassword(e.target.value)}
-          />
-          <br />
-          <br />
+			{/* <Button variant="contained" type="submit">Login</Button> */}
+			<Button 
+				type="submit" 
+				color="primary" 
+				variant="contained" 
+				// className="form__custom-button"
+			>
+				Login
+			</Button>
 
-          <button type="submit">Login</button>
-        </form>
-      </main>
+			</form>
+
+			</main>
 
 			</Grid>
 			</Container>
+			<Snackbar
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				open={this.state.snackbarOpen}
+				autoHideDuration={6000}
+				onClose={() => this.onCloseSnackbar()}
+				message={this.state.snackbarMessage}
+				action={
+					<React.Fragment>
+					<Button color="secondary" size="small" onClick={() => this.onCloseSnackbar()}>
+						Close
+					</Button>
+					<IconButton size="small" aria-label="close" color="inherit" onClick={() => this.onCloseSnackbar()}>
+						<CloseIcon fontSize="small" />
+					</IconButton>
+					</React.Fragment>
+				}/>
 			</>
 		);
 	}
@@ -249,7 +437,11 @@ function withNavigation(Component) {
 }
 
 function withParams(Component) {
-	return props => <Component {...props} params={useParams()} />;
+	return params => <Component {...params} params={useParams()} />;
 }
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login)));
+function withSearchParams(Component) {
+	return searchParams => <Component {...searchParams} searchParams={useSearchParams()} />;
+}
+
+export default withSearchParams(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login))));
