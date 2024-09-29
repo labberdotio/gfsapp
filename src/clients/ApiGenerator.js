@@ -135,8 +135,13 @@ class ApiGenerator {
 					timestamp: Date.now()
 				});
 				// if( window.location.href != "/login" ) {
-				if( !window.location.href.endsWith("/login") ) {
-					window.location.href = "/login";
+				// if( !window.location.href.endsWith("/login") ) {
+				if( !window.location.href.includes("/login") ) {
+					if( this.namespace ) {
+						window.location.href = "/login?" + this.namespace;
+					} else {
+						window.location.href = "/login";
+					}
 				}
 			}
 		}).then((data) => {
@@ -161,8 +166,13 @@ class ApiGenerator {
 				timestamp: Date.now()
 			});
 			// if( window.location.href != "/login" ) {
-			if( !window.location.href.endsWith("/login") ) {
-				window.location.href = "/login";
+			// if( !window.location.href.endsWith("/login") ) {
+			if( !window.location.href.includes("/login") ) {
+				if( this.namespace ) {
+					window.location.href = "/login?" + this.namespace;
+				} else {
+					window.location.href = "/login";
+				}
 			}
 		});
 		// } catch {
@@ -229,8 +239,13 @@ class ApiGenerator {
 					timestamp: Date.now()
 				});
 				// if( window.location.href != "/login" ) {
-				if( !window.location.href.endsWith("/login") ) {
-					window.location.href = "/login";
+				// if( !window.location.href.endsWith("/login") ) {
+				if( !window.location.href.includes("/login") ) {
+					if( this.namespace ) {
+						window.location.href = "/login?" + this.namespace;
+					} else {
+						window.location.href = "/login";
+					}
 				}
 			}
 		})
@@ -258,8 +273,13 @@ class ApiGenerator {
 				timestamp: Date.now()
 			});
 			// if( window.location.href != "/login" ) {
-			if( !window.location.href.endsWith("/login") ) {
-				window.location.href = "/login";
+			// if( !window.location.href.endsWith("/login") ) {
+			if( !window.location.href.includes("/login") ) {
+				if( this.namespace ) {
+					window.location.href = "/login?" + this.namespace;
+				} else {
+					window.location.href = "/login";
+				}
 			}
 		});
 		// } catch {
