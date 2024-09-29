@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, 2024, John Grundback
 // All rights reserved.
 // 
 
@@ -279,7 +279,8 @@ class ThemeProvider extends React.Component {
 
 function getType(props, types) {
 	var typename = props["match"]["params"]["typename"];
-	if( types["data"] ) {
+	// if( (types) && (types["data"]) ) {
+	if( (types) && ("data" in types) && (types["data"]) ) {
 		for( var typeid in types["data"] ) {
 			if( typeid ) {
 				var type = types["data"][typeid];
@@ -524,14 +525,16 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 	 * I have this idea of showing per type specifics here
 	 */
 	var miditems = [];
-	if( types["data"] ) {
+	// if( (types) && (types["data"]) ) {
+	if( (types) && ("data" in types) && (types["data"]) ) {
 		for( var typeid in types["data"] ) {
 			if( typeid ) {
 				var type = types["data"][typeid];
 				if( type ) {
 					miditems.push({
 						"text": type["_name"], 
-						"path": "/namespaces/" + currentns + "/" + type["_name"], 
+						// "path": "/namespaces/" + currentns + "/" + type["_name"], 
+						"path": "/namespaces/" + currentns + "/" + type["_label"] + "/" + type["_id"], 
 						"icon": <ExtensionIcon/>, 
 						"selected": false
 					});
