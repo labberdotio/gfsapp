@@ -316,6 +316,11 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 		namespaces = snamespaces[apiHostname]["namespaces"];
 	}	
 
+	var logouturl = "/logout";
+	if( namespace ) {
+		logouturl = "/logout?" + namespace;
+	}
+
 	const handleDrawerToggle = () => {
 		onDrawerToggle();
 	}
@@ -429,6 +434,12 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 							</>
 						}
 					</div>
+
+					<MuiLink color="inherit" href={logouturl}>
+					<Typography variant="h6" noWrap>
+						Logout
+					</Typography>
+					</MuiLink>
 
 				</Toolbar>
 			</AppBar>
