@@ -44,7 +44,9 @@ import EntityService from './services/Entity';
 // import { addNamespace, selectNamespace } from './actions/Namespace';
 import { addApi, selectApi } from './actions/Api'
 
-import App from './App.js';
+// import App from './App.js';
+import App from './App.jsx';
+// import App from './App.tsx';
 
 // import InstancesView from './components/Instances'
 // import InstanceView from './components/Instance'
@@ -66,11 +68,14 @@ import CreateInstanceDialog from './components/Create'
 
 import history from './history'
 
-require('./style.css');
-require('./style.light.css');
-// require('./style.dark.css');
-
-require('./index.css');
+/*
+ * Legacy Mui 4, pre Joy UI styling
+ */
+// require('./style.css');
+// require('./style.light.css');
+// // require('./style.dark.css');
+// 
+// require('./index.css');
 
 /*
  * Defaults

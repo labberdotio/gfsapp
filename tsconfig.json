@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2016",
     "allowJs": true,
     "lib": ["es2015", "dom"],
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "strictNullChecks": false,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "react"
   },
   "include": [
     "src"
