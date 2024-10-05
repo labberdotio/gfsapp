@@ -12,7 +12,8 @@
 # FROM node:14.18.2-alpine
 # FROM node:16.14.2-alpine
 # FROM node:16.20.2-alpine
-FROM node:18.20.3-alpine
+# FROM node:18.20.3-alpine
+FROM node:20.16.0-alpine
 
 ENV REACT_APP_GFS_FS_NAME="gfs1"
 ENV REACT_APP_GFS_API_HOST="server"
