@@ -6,23 +6,12 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
 
 import Paper from '@mui/material/Paper';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
-const styles = theme => ({
-
-	mainPaper: {
-		width: '100%', 
-		marginTop: '20px', 
-		marginBottom: '0px', 
-	},
-
-});
 
 class Detail extends Component {
 
@@ -59,8 +48,6 @@ class Detail extends Component {
             description, 
 			properties
 		} = this.props;
-
-		// const { classes } = this.props;
 
 		return (
 			<>

@@ -6,22 +6,11 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
 
 import ListView from './List'
 import {
 	Link,
 } from "react-router-dom";
-
-const styles = theme => ({
-
-	mainPaper: {
-		width: '100%', 
-		marginTop: '20px', 
-		marginBottom: '0px', 
-	},
-
-});
 
 class Instances extends Component {
 
@@ -139,8 +128,6 @@ class Instances extends Component {
 			actions, 
 			editable
 		} = this.props;
-
-		// const { classes } = this.props;
 
 		return (
 			<>

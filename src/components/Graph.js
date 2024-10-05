@@ -6,24 +6,10 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
-
-// import Container from '@mui/material/Container';
-// import Grid from '@mui/material/Grid';
-
-// import Backdrop from '@mui/material/Backdrop';
-// import CircularProgress from '@mui/material/CircularProgress';
 
 import CustomCytoscapeComponent from './Cytoscape';
 
 import { main, highlight, zoom } from '../config/layout/graph';
-
-
-
-const styles = theme => ({
-});
-
-
 
 const graphstyles = [ 
 	{
@@ -674,8 +660,6 @@ class Graph extends Component {
 			// selected
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		var setwidth = width;
 		// var minwidth = width;
 
@@ -772,9 +756,6 @@ class Graph extends Component {
 				// className={classes.graphContainer} 
 				className="graphContainer" 
 				maxWidth="xl"> */}
-			{/* <Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>						 */}
 			<CustomCytoscapeComponent
 				ref={this.graphRef}
 				className="graph"
