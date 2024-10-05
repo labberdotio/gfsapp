@@ -44,7 +44,9 @@ import EntityService from './services/Entity';
 // import { addNamespace, selectNamespace } from './actions/Namespace';
 import { addApi, selectApi } from './actions/Api'
 
-import App from './App.js';
+// import App from './App.js';
+import App from './App.jsx';
+// import App from './App.tsx';
 
 // import InstancesView from './components/Instances'
 // import InstanceView from './components/Instance'
