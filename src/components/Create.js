@@ -7,8 +7,8 @@
 import React, {Component} from 'react';
 
 import { connect } from 'react-redux';
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import createStyles from "@material-ui/core/styles/createStyles";
+import withStyles, { WithStyles } from "@mui/material/styles/withStyles";
+import createStyles from "@mui/material/styles/createStyles";
 
 import {
 	Routes, 
@@ -21,22 +21,17 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Container from '@material-ui/core/Container';
+import Container from '@mui/material/Container';
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
-import Form from '@rjsf/material-ui';
-
-import validator from '@rjsf/validator-ajv6';
-// import validator from '@rjsf/validator-ajv8';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { 
 	loadEntityIntoState, 
@@ -47,9 +42,6 @@ import {
 	getEntityFromState, 
 	getEntitiesFromState 
 } from '../stores/Entity'
-
-const styles = createStyles({
-});
 
 function handleClick(event) {
 	// event.preventDefault();
@@ -221,15 +213,7 @@ class CreateInstanceDialog extends Component {
 
 		const renderForm = function() {
 			if( nschema ) {
-				return <Form 
-					schema={nschema} 
-					validator={validator}
-					uiSchema={uiSchema}
-					formData={data} 
-					onChange={e => {}} 
-					onSubmit={e => {}} 
-					onError={e => {}} 
-					children={<br/>} />
+				return <></>
 			}
 		}
 
@@ -306,4 +290,5 @@ function mapStateToProps(state, ownProps) {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(withStyles(styles)(CreateInstanceDialog));
+// export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(withStyles(styles)(CreateInstanceDialog));
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(CreateInstanceDialog);

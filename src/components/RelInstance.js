@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
 import {
 	Routes, 
@@ -19,19 +19,19 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import InstancesView from './Instances'
 import InstanceView from './Instance'
@@ -213,15 +213,16 @@ class RelInstance extends Component {
 			relinstance
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		var backdropOpen = false;
 
 		return (
 			<>
 			<Container 
-				className={classes.mainContainer} 
-				>
+				// className={classes.mainContainer} 
+				className="mainContainer" 
+			>
 			<Backdrop open={backdropOpen}>
 				<CircularProgress color="inherit"/>
 			</Backdrop>
@@ -359,4 +360,5 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RelInstance)));
+// export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RelInstance)));
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(RelInstance));

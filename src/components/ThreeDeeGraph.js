@@ -6,13 +6,13 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
-// import Container from '@material-ui/core/Container';
-// import Grid from '@material-ui/core/Grid';
+// import Container from '@mui/material/Container';
+// import Grid from '@mui/material/Grid';
 
-// import Backdrop from '@material-ui/core/Backdrop';
-// import CircularProgress from '@material-ui/core/CircularProgress';
+// import Backdrop from '@mui/material/Backdrop';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 import CustomForceGraphComponent from './ForceGraph';
 
@@ -470,7 +470,7 @@ class ThreeDeeGraph extends Component {
 			height
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		var setwidth = width;
 		// var minwidth = width;
@@ -530,7 +530,7 @@ class ThreeDeeGraph extends Component {
 		return (
 			<>
 			{/* <Container 
-				className={classes.graphContainer} 
+				// className={classes.graphContainer} 
 				className="graphContainer" 
 				maxWidth="xl"> */}
 			{/* <Backdrop open={backdropOpen}>
@@ -579,4 +579,5 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ThreeDeeGraph));
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ThreeDeeGraph));
+export default connect(mapStateToProps, mapDispatchToProps)(ThreeDeeGraph);
