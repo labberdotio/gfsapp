@@ -6,7 +6,6 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
 
 import {
 	Routes, 
@@ -19,9 +18,6 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
@@ -29,9 +25,6 @@ import Button from '@mui/material/Button';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 
 import InstancesView from './Instances'
 import InstanceView from './Instance'
@@ -45,25 +38,6 @@ import {
 	getEntityFromState, 
 	getEntitiesFromState 
 } from '../stores/Entity'
-
-const styles = theme => ({
-
-	mainContainer: {
-		padding: 0, 
-		margin: 0, 
-	},
-
-	mainPaper: {
-		width: '100%', 
-		marginTop: '20px', 
-		marginBottom: '0px', 
-	},
-
-});
-
-function handleClick(event) {
-	// event.preventDefault();
-}
 
 export const BackNavButton = () => {
     let navigate = useNavigate();
@@ -213,8 +187,6 @@ class RelInstance extends Component {
 			relinstance
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		var backdropOpen = false;
 
 		return (
@@ -223,10 +195,7 @@ class RelInstance extends Component {
 				// className={classes.mainContainer} 
 				className="mainContainer" 
 			>
-			<Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>
-			<Breadcrumbs aria-label="breadcrumb">
+			{/* <Breadcrumbs aria-label="breadcrumb">
 				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
 					Namespaces
@@ -242,7 +211,7 @@ class RelInstance extends Component {
 				</Link>
 				<Typography color="textPrimary">{ relname }</Typography>
 				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs>
+			</Breadcrumbs> */}
 			<Grid 
 				className="" 
 				container 

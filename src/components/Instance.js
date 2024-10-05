@@ -6,7 +6,6 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
 
 import {
 	Link,
@@ -15,16 +14,6 @@ import {
 import InstanceView from './Instance'
 import InstancesView from './Instances'
 import DetailView from './Detail'
-
-const styles = theme => ({
-
-	mainPaper: {
-		width: '100%', 
-		marginTop: '20px', 
-		marginBottom: '0px', 
-	},
-
-});
 
 class Instance extends Component {
 
@@ -199,7 +188,7 @@ class Instance extends Component {
 		schema, 
 		dataurl, 
 		columns, 
-		actions,  
+		actions, 
 		editable, 
 		showdeps
 	) {
@@ -271,8 +260,6 @@ class Instance extends Component {
 			schema, 
 			showdeps
 		} = this.props;
-
-		// const { classes } = this.props;
 
 		var properties = this.getProperties(
 			namespace, 

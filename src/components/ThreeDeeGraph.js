@@ -6,20 +6,13 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
 
 // import Container from '@mui/material/Container';
 // import Grid from '@mui/material/Grid';
 
-// import Backdrop from '@mui/material/Backdrop';
-// import CircularProgress from '@mui/material/CircularProgress';
-
 import CustomForceGraphComponent from './ForceGraph';
 
 
-
-const styles = theme => ({
-});
 
 class ThreeDeeGraph extends Component {
 
@@ -470,8 +463,6 @@ class ThreeDeeGraph extends Component {
 			height
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		var setwidth = width;
 		// var minwidth = width;
 
@@ -533,9 +524,6 @@ class ThreeDeeGraph extends Component {
 				// className={classes.graphContainer} 
 				className="graphContainer" 
 				maxWidth="xl"> */}
-			{/* <Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>			 */}
 			<CustomForceGraphComponent 
 				ref={this.graphRef} 
 				graphData={graphData} 

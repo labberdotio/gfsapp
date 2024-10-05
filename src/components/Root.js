@@ -5,10 +5,7 @@
 // 
 
 import React, {Component} from 'react';
-// import {useLayoutEffect, useRef, useState} from 'react';
-// import { useLayoutEffect } from 'react';
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
 
 import {
 	Routes, 
@@ -21,55 +18,18 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import Button from '@mui/material/Button';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-
 import APIClient from '../clients/APIClient';
 
 import Graph from './Graph';
 import ThreeDeeGraph from './ThreeDeeGraph';
-
-const styles = theme => ({
-
-	mainContainer: {
-		padding: 0, 
-		margin: 0, 
-	},
-
-	mainPaper: {
-		width: '100%', 
-		marginTop: '20px', 
-		marginBottom: '0px', 
-	},
-
-	speedDial: {
-		position: 'fixed',
-		right: 10,
-		bottom: 10
-	},
-
-});
-
-function handleClick(event) {
-}
 
 export const BackNavButton = () => {
     let navigate = useNavigate();
@@ -662,9 +622,6 @@ const Root = class extends Component {
 				className="mainContainer" 
 				maxWidth="xl" 
 				>	
-			<Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>
 			{/* <Breadcrumbs aria-label="breadcrumb">
 				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
@@ -705,14 +662,14 @@ const Root = class extends Component {
 						xs={12} 
 						spacing={0} 
 					>
-						<Breadcrumbs aria-label="breadcrumb">
+						{/* <Breadcrumbs aria-label="breadcrumb">
 							<BackNavButton></BackNavButton>
 							<Link color="inherit" to="/namespaces">
 								Namespaces
 							</Link>
 							<Typography color="textPrimary">{namespace}</Typography>
 							<ForwardNavButton></ForwardNavButton>
-						</Breadcrumbs>
+						</Breadcrumbs> */}
 						<Graph
 							graph={graph}
 							width={graphwidth} 
@@ -740,7 +697,7 @@ const Root = class extends Component {
 					</Grid>
 				</Grid>
 			</Grid>
-			<SpeedDial
+			{/* <SpeedDial
 				ariaLabel="GraphActions"
 				// className={classes.speedDial}
 				className="speedDial"
@@ -757,7 +714,7 @@ const Root = class extends Component {
 						tooltipTitle={action.name}
 						onClick={this.onCloseDial}/>
 				))}
-			</SpeedDial>
+			</SpeedDial> */}
 			</Container>
 			</>
 		);

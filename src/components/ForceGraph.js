@@ -120,8 +120,6 @@ class CustomForceGraphComponent extends Component {
 			
 		// } = this.props;
 
-		// const { classes } = this.props;
-
 		// var data = {
 		// 	"nodes":[
 		// 		{"id":"4062045","user":"mbostock","description":"Force-Directed Graph"}, 

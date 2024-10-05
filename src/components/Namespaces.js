@@ -7,9 +7,6 @@
 import React, {Component} from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
-
-import debounce from 'lodash.debounce';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -25,19 +22,6 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-
-import ExtensionIcon from '@mui/icons-material/Extension';
-
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-
 import { 
 	loadNamespacesIntoState 
 } from '../actions/Namespace'
@@ -49,14 +33,6 @@ import {
 import { 
 	getNamespacesFromState 
 } from '../stores/Namespace'
-
-const styles = theme => ({
-
-});
-
-function handleClick(event) {
-	// event.preventDefault();
-}
 
 class Namespaces extends Component {
 
@@ -129,8 +105,6 @@ class Namespaces extends Component {
 			namespaces 
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		if( !this.props.nsloading ) {
 			// if( (this.props.nsloaded) && (this.props.nsfailed) ) {
 			if( this.props.nsfailed ) {
@@ -154,13 +128,9 @@ class Namespaces extends Component {
 				className="graphContainer" 
 				maxWidth="false">
 
-			<Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>
-
-			<Breadcrumbs aria-label="breadcrumb">
+			{/* <Breadcrumbs aria-label="breadcrumb">
 				<Typography color="textPrimary">Namespaces</Typography>
-			</Breadcrumbs>
+			</Breadcrumbs> */}
 
 			<Grid 
 				className="" 
@@ -171,22 +141,23 @@ class Namespaces extends Component {
 
 			{namespaces && namespaces.data &&
 				<>
-				<List>
+				{/* <List> */}
 					{namespaces.data.map(function(namespace, idx) {
 						return (
-							<ListItem 
-								button 
-								selected={false} 
-								component={Link} 
-								to={"/namespaces/" + namespace} 
-								// onClick={() => _this.selectNamespace(namespace)}
-								>
-								<ListItemIcon><ExtensionIcon/></ListItemIcon>
-								<ListItemText>{namespace}</ListItemText>
-							</ListItem>
+							// <ListItem 
+							// 	button 
+							// 	selected={false} 
+							// 	component={Link} 
+							// 	to={"/namespaces/" + namespace} 
+							// 	// onClick={() => _this.selectNamespace(namespace)}
+							// 	>
+							// 	<ListItemIcon><ExtensionIcon/></ListItemIcon>
+							// 	<ListItemText>{namespace}</ListItemText>
+							// </ListItem>
+							<div>{namespace}</div>
 						)
 					})}
-				</List>
+				{/* </List> */}
 				</>
 			}
 

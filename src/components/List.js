@@ -10,16 +10,6 @@ import Paper from '@mui/material/Paper';
 
 // import MaterialTable from 'material-table';
 
-const styles = theme => ({
-
-	mainPaper: {
-		width: '100%', 
-		marginTop: '20px', 
-		marginBottom: '0px', 
-	},
-
-});
-
 const List = (props) => {
 
 	const ownProps = props;
