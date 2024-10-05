@@ -4,13 +4,11 @@
 // All rights reserved.
 // 
 
-import React, {Component} from 'react';
+// import * as React from 'react';
+// import React, {Component} from 'react';
+import React, { useState, Fragment, Component } from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
-
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 
 import {
 	useParams, 
@@ -18,18 +16,15 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-
-import TextField from '@mui/material/TextField';
+import Sheet from '@mui/joy/Sheet';
+import CssBaseline from '@mui/joy/CssBaseline';
+import Typography from '@mui/joy/Typography';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import FormHelperText from '@mui/joy/FormHelperText';
+import Input from '@mui/joy/Input';
+import Button from '@mui/joy/Button';
+import Snackbar from '@mui/joy/Snackbar';
 
 /*
  * Defaults
@@ -47,10 +42,6 @@ if( window._env_ ) {
 	authPort = window._env_.REACT_APP_GFS_AUTH_PORT;
 	authClient = window._env_.REACT_APP_GFS_AUTH_CLIENT;
 	authSecret = window._env_.REACT_APP_GFS_AUTH_SECRET;
-}
-
-function handleClick(event) {
-	// event.preventDefault();
 }
 
 class Login extends Component {
@@ -245,17 +236,27 @@ class Login extends Component {
 			
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		var backdropOpen = false;
 
 		// var scnamespace = this.props.searchParams[0].get("namespace");
 		var namespace = _this.state.namespace;
 		var namespaceError = _this.state.namespaceError;
+		var namespaceColor = "primary";
+		if( namespaceError ) {
+			namespaceColor = "danger";
+		}
 		var username = _this.state.username;
 		var usernameError = _this.state.usernameError;
+		var usernameColor = "primary";
+		if( usernameError ) {
+			usernameColor = "danger";
+		}
 		var password = _this.state.password;
 		var passwordError = _this.state.passwordError;
+		var passwordColor = "primary";
+		if( passwordError ) {
+			passwordColor = "danger";
+		}
 		var active = _this.state.active;
 		var status = _this.state.status;
 
@@ -267,107 +268,125 @@ class Login extends Component {
 		// }
 
 		return (
-			<>
-			<Container 
-				// className={classes.loginContainer} 
-				className="loginContainer" 
-				maxWidth="false">
-
-			<Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>
-
-			<Breadcrumbs aria-label="breadcrumb">
-				<Typography color="textPrimary">Login</Typography>
-			</Breadcrumbs>
-
-			<Grid 
-				className="" 
-				container 
-				xs={12} 
-				spacing={0} 
-			>
-
-			<main style={{ padding: '50px' }}>
-			<h1>Login</h1>
-			<form onSubmit={(e) => this.submitUser(e)}>
-			<TextField 
-				id="namespace" 
-				type="text" 
-				value={cnamespace} 
-				label="Namespace" 
-				labelText="Namespace" 
-				placeholder="Namespace" 
-				helperText={namespaceError} 
-				error={namespaceError} 
-				variant="filled" 
-				fullWidth 
-				formControlProps={{
-					fullWidth: true
-				}} 
-				onChange={(e) => this.setNamespace(e.target.value)} 
-				handleChange={(e) => this.setNamespace(e.target.value)} 
-			/>
-			<TextField 
-				id="username" 
-				type="text" 
-				value={username} 
-				label="Username" 
-				labelText="Username" 
-				placeholder="Username" 
-				helperText={usernameError} 
-				error={usernameError} 
-				fullWidth 
-				formControlProps={{
-					fullWidth: true
+			<main>
+			<CssBaseline />
+			<Sheet
+				sx={{
+					width: 300,
+					mx: 'auto', // margin left & right
+					my: 4, // margin top & bottom
+					py: 3, // padding top & bottom
+					px: 2, // padding left & right
+					display: 'flex',
+					flexDirection: 'column',
+					gap: 2,
+					borderRadius: 'sm',
+					boxShadow: 'md',
 				}}
-				onChange={(e) => this.setUsername(e.target.value)} 
-				handleChange={(e) => this.setUsername(e.target.value)} 
-			/>
-			<TextField 
-				id="password" 
-				value={password} 
-				type="password" 
-				label="Password" 
-				labelText="Password" 
-				placeholder="" 
-				helperText={passwordError} 
-				error={passwordError}  
-				fullWidth 
-				formControlProps={{
-					fullWidth: true
-				}}
-				onChange={(e) => this.setPassword(e.target.value)}
-				handleChange={this.handleChange}        
-			/>
-
-			{ active ? (
-				<>
-				<CircularProgress />
-				</>
-			) : (
-				<>
-				</>
-				)
-			}
-
-			{/* <Button variant="contained" type="submit">Login</Button> */}
-			<Button 
-				type="submit" 
-				color="primary" 
-				variant="contained" 
-				// className="form__custom-button"
+				variant="outlined"
 			>
-				Login
-			</Button>
-
-			</form>
-
-			</main>
-
-			</Grid>
-			</Container>
-			<Snackbar
+				<form onSubmit={(e) => this.submitUser(e)}>
+				<div>
+					<Typography level="h4" component="h1">
+						<b>Welcome!</b>
+					</Typography>
+					<Typography level="body-sm">Sign in to continue.</Typography>
+				</div>
+				<FormControl>
+					<FormLabel>Namespace</FormLabel>
+					<Input
+						// name="email"
+						// type="email"
+						// placeholder="johndoe@email.com"
+						id="namespace" 
+						type="text" 
+						value={cnamespace} 
+						label="Namespace" 
+						labelText="Namespace" 
+						placeholder="Namespace" 
+						helperText={namespaceError} 
+						error={namespaceError} 
+						color={namespaceColor} 
+						// variant=...
+						// fullWidth 
+						// formControlProps={{
+						// 	fullWidth: true
+						// }} 
+						onChange={(e) => this.setNamespace(e.target.value)} 
+						handleChange={(e) => this.setNamespace(e.target.value)} 
+					/>
+					<FormHelperText>{namespaceError}</FormHelperText>
+				</FormControl>
+				<FormControl>
+					<FormLabel>Email</FormLabel>
+					<Input
+						// name="email"
+						// type="email"
+						// placeholder="johndoe@email.com"
+						id="username" 
+						type="text" 
+						value={username} 
+						label="Username" 
+						labelText="Username" 
+						placeholder="Username" 
+						helperText={usernameError} 
+						error={usernameError} 
+						color={usernameColor} 
+						// variant=...
+						// fullWidth 
+						// formControlProps={{
+						// 	fullWidth: true
+						// }}
+						onChange={(e) => this.setUsername(e.target.value)} 
+						handleChange={(e) => this.setUsername(e.target.value)} 
+					/>
+					<FormHelperText>{usernameError}</FormHelperText>
+				</FormControl>
+				<FormControl>
+					<FormLabel>Password</FormLabel>
+					<Input
+						// name="password"
+						// type="password"
+						// placeholder="password"
+						id="password" 
+						value={password} 
+						type="password" 
+						label="Password" 
+						labelText="Password" 
+						placeholder="" 
+						helperText={passwordError} 
+						error={passwordError} 
+						color={passwordColor} 
+						// variant=... 
+						// fullWidth 
+						// formControlProps={{
+						// 	fullWidth: true
+						// }}
+						onChange={(e) => this.setPassword(e.target.value)}
+						handleChange={this.handleChange}    
+					/>
+					<FormHelperText>{passwordError}</FormHelperText>
+				</FormControl>
+				<Button 
+					type="submit" 
+					// color="primary" 
+					// variant="contained" 
+					// className="form__custom-button"
+					sx={{
+						mt: 1 /* margin top */
+					}}
+				>
+					Log in
+				</Button>
+				{/* <Typography
+					endDecorator={<Link href="/sign-up">Sign up</Link>}
+					sx={{ fontSize: 'sm', alignSelf: 'center' }}
+				>
+					Don&apos;t have an account?
+				</Typography> */}
+				</form>
+			</Sheet>
+			{/* <Snackbar
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'center',
@@ -386,8 +405,23 @@ class Login extends Component {
 					</IconButton>
 					</React.Fragment>
 				}/>
-			</>
+			</> */}
+			<Snackbar 
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				open={this.state.snackbarOpen}
+				autoHideDuration={3000}
+				message={this.state.snackbarMessage}
+				variant="solid"
+				onClose={() => this.onCloseSnackbar()}
+			>
+				{this.state.snackbarMessage}
+			</Snackbar>
+			</main>
 		);
+
 	}
 
 }

@@ -7,31 +7,12 @@
 import React, {Component} from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
-import { styled } from "@mui/material/styles";
-
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 
 import {
 	useParams, 
 	useSearchParams, 
 	useNavigate
 } from "react-router-dom";
-
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-
-function handleClick(event) {
-	// event.preventDefault();
-}
 
 class Logout extends Component {
 
@@ -148,8 +129,6 @@ class Logout extends Component {
 			
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		var backdropOpen = false;
 
 		// var scnamespace = this.props.searchParams[0].get("namespace");
@@ -170,49 +149,10 @@ class Logout extends Component {
 
 		return (
 			<>
-			<Container 
-				// className={classes.logoutContainer} 
-				className="logoutContainer" 
-				maxWidth="false">
-
-			<Backdrop open={backdropOpen}>
-				<CircularProgress color="inherit"/>
-			</Backdrop>
-
-			<Breadcrumbs aria-label="breadcrumb">
+			{/* <Breadcrumbs aria-label="breadcrumb">
 				<Typography color="textPrimary">Logout</Typography>
-			</Breadcrumbs>
-
-			<Grid 
-				className="" 
-				container 
-				xs={12} 
-				spacing={0} 
-			>
-
+			</Breadcrumbs> */}
 			STATUS: {status}
-
-			</Grid>
-			</Container>
-			<Snackbar
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'center',
-				}}
-				open={this.state.snackbarOpen}
-				autoHideDuration={6000}
-				onClose={() => this.onCloseSnackbar()}
-				message={this.state.snackbarMessage}
-				action={
-					<React.Fragment>
-					<Button color="secondary" size="small" onClick={() => this.onCloseSnackbar()}>
-						Close
-					</Button>
-					<IconButton size="small" aria-label="close" color="inherit" onClick={() => this.onCloseSnackbar()}>
-						<CloseIcon fontSize="small" />
-					</IconButton>
-					</React.Fragment>
-				}/>
 			</>
 		);
 	}
