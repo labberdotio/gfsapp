@@ -6,37 +6,34 @@
 
 import React, { useState, Fragment, Component } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { CssVarsProvider } from '@mui/joy/styles';
+import CssBaseline from '@mui/joy/CssBaseline';
+import Sheet from '@mui/joy/Sheet';
+import Snackbar from '@mui/joy/Snackbar';
+
+import Layout from './components/Layout';
+// import Navigation from './components/Navigation';
+import Sidebar from './components/Sidebar';
+import Header from './components/Header';
+
+import { extendTheme } from '@mui/joy/styles';
+
 import {
-	Link, 
+	Routes, 
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch, 
 	useParams, 
 	useNavigate
 } from "react-router-dom";
 
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import MuiLink from '@mui/material/Link';
-import AppsIcon from '@mui/icons-material/Apps';
-import ExtensionIcon from '@mui/icons-material/Extension';
-
-import ComputerIcon from '@mui/icons-material/Computer';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import InputBase from '@mui/material/InputBase';
-
-import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import NativeSelect from '@mui/material/NativeSelect';
-// import MuiLink from '@mui/material/Link';
-
-import Drawer from './Drawer';
+// import { loadEntitiesIntoState } from './actions/Entity'
+// import { getEntitiesFromState } from './stores/Entity'
 
 import {
 	loadNamespacesIntoState
@@ -55,27 +52,6 @@ import {
 	getEntitiesFromState
 } from './stores/Entity'
 
-const ThemeContext = React.createContext();
-
-// const drawerWidth1 = 48; // 73;
-// const drawerWidth2 = 240;
-const drawerWidth = 240;
-
-
-// theme.js - Our core theme
-const theme = {
-}
-
-class ThemeProvider extends React.Component {
-	render() {
-		return (
-			<ThemeContext.Provider value={this.props.theme}>
-				{this.props.children}
-			</ThemeContext.Provider>
-		);
-	}
-}
-
 function getType(props, types) {
 	var typename = props["match"]["params"]["typename"];
 	// if( (types) && (types["data"]) ) {
@@ -90,327 +66,6 @@ function getType(props, types) {
 		}
 	}
 	return undefined;
-}
-
-// function AppNavigation({ classes, variant, types, children }) {
-function AppNavigation({ classes, variant, types, children }) {
-
-	const {namespace} = useParams();
-
-	const name = useSelector(state => state.api.name);
-	const title = useSelector(state => state.api.title);
-	const description = useSelector(state => state.api.description);
-
-	// const apiHostname = useSelector(state => state.api.api.host);
-	// const apiPort = useSelector(state => state.api.api.port);
-	// const wsHostname = useSelector(state => state.api.ws.host);
-	// const wsPort = useSelector(state => state.api.ws.port);
-
-	// const namespace = useSelector(state => state.namespace);
-
-	// const {namespace} = useParams();
-
-	const apiHostname = useSelector(state => state.api.api.host);
-	const apiPort = useSelector(state => state.api.api.port);
-	const wsHostname = useSelector(state => state.api.ws.host);
-	const wsPort = useSelector(state => state.api.ws.port);
-
-	/*
-	 * host:port
-	 */
-	const apiHostnamePort = String(apiHostname) + ":" + String(apiPort);
-	const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
-
-	const snamespaces = useSelector(state => state.namespaces);
-
-	var namespaces = undefined;
-
-	if( snamespaces && snamespaces[apiHostname] && snamespaces[apiHostname]["namespaces"] ) {
-		namespaces = snamespaces[apiHostname]["namespaces"];
-	}	
-
-	var logouturl = "/logout";
-	if( namespace ) {
-		logouturl = "/logout?" + namespace;
-	}
-
-	var currentns = "Namespaces";
-	if( namespace ) {
-		currentns = namespace;
-	}
-
-	const handleDrawerToggle = () => {
-		// onDrawerToggle();
-	}
-
-	const handleDrawerClose = () => {
-		// onDrawerToggle();
-	}
-
-	const selectNamespace = () => {
-		// onDrawerToggle();
-	}
-
-	const container = undefined;
-
-	var topitems = [{
-		"text": currentns, // "Namespaces", 
-		"path": "/namespaces", 
-		"icon": <AppsIcon/>, 
-		"selected": true
-	}
-	// , 
-	// {
-	// 	"text": "Dashboard", 
-	// 	"path": "/dashboard", 
-	// 	"icon": <DashboardIcon/>, 
-	// 	"selected": true
-	// }
-	// , 
-	// {
-	// 	"text": "Queries", 
-	// 	"path": "/namespaces/" + currentns + "/queries", 
-	// 	"icon": <QueryBuilderIcon/>, 
-	// 	"selected": false
-	// }, {
-	// 	"text": "Templates", 
-	// 	"path": "/namespaces/" + currentns + "/templates", 
-	// 	"icon": <InsertDriveFileIcon/>, 
-	// 	"selected": false
-	// }, {
-	// 	"text": "Views", 
-	// 	"path": "/namespaces/"+ currentns + "/views", 
-	// 	"icon": <DescriptionIcon/>, 
-	// 	"selected": false
-	// }
-	];
-
-	if( namespace ) {
-		var topitems = [{
-			"text": currentns, // "Namespaces", 
-			"path": "/namespaces/" + currentns, // "/namespaces", 
-			"icon": <AppsIcon/>, 
-			"selected": true
-		}];
-	}
-
-	/*
-	 * I have this idea of showing per type specifics here
-	 */
-	var miditems = [];
-	// if( (types) && (types["data"]) ) {
-	if( (types) && ("data" in types) && (types["data"]) ) {
-		for( var typeid in types["data"] ) {
-			if( typeid ) {
-				var type = types["data"][typeid];
-				if( type ) {
-					miditems.push({
-						"text": type["_name"], 
-						// "path": "/namespaces/" + currentns + "/" + type["_name"], 
-						"path": "/namespaces/" + currentns + "/" + type["_label"] + "/" + type["_id"], 
-						"icon": <ExtensionIcon/>, 
-						"selected": false
-					});
-				}
-			}
-		}
-	}
-
-	var lowitems = [];
-
-	var navitems = [];
-
-	if( topitems ) {
-		for( var idx in topitems ) {
-			var item = topitems[idx];
-			navitems.push(
-				<>
-				<ListItem 
-					button 
-					selected={item.selected} 
-					component={Link} 
-					to={item.path} 
-					// onClick={onItemClick(title)} 
-					title={item.text} 
-				>
-					<ListItemIcon>{item.icon}</ListItemIcon>
-					<ListItemText>{item.text}</ListItemText>
-				</ListItem>
-				</>
-			);
-		}
-	}
-
-	navitems.push(
-		<>
-		<Divider />
-		</>
-	);
-
-	if( miditems ) {
-		for( var idx in miditems ) {
-			var item = miditems[idx];
-			navitems.push(
-				<>
-				<ListItem 
-					button 
-					selected={item.selected} 
-					component={Link} 
-					to={item.path} 
-					// onClick={onItemClick(title)} 
-					title={item.text} 
-				>
-					<ListItemIcon>{item.icon}</ListItemIcon>
-					<ListItemText>{item.text}</ListItemText>
-				</ListItem>
-				</>
-			);
-		}
-	}
-
-	navitems.push(
-		<>
-		<Divider />
-		</>
-	);
-
-	if( lowitems ) {
-		for( var idx in lowitems ) {
-			var item = lowitems[idx];
-			navitems.push(
-				<>
-				<ListItem 
-					button 
-					selected={item.selected} 
-					component={Link} 
-					to={item.path} 
-					// onClick={onItemClick(title)} 
-					title={item.text} 
-				>
-					<ListItemIcon>{item.icon}</ListItemIcon>
-					<ListItemText>{item.text}</ListItemText>
-				</ListItem>
-				</>
-			);
-		}
-	}
-
-	navitems.push(
-		<>
-		<Divider />
-		</>
-	);
-
-	var toolbaritems = [];
-
-	toolbaritems.push(
-		<>
-		<MuiLink color="inherit" href="/namespaces">
-		<Typography variant="h6" noWrap>
-			{title}			
-		</Typography>
-		</MuiLink>
-		</>
-	);
-
-	toolbaritems.push(
-		<>
-		<div className="">
-			<div className="">
-				<ComputerIcon/>
-			</div>
-			<InputBase
-				placeholder="API"
-				value={apiHostnamePort}
-				// classes={{
-				// 	root: classes.inputRoot,
-				// 	input: classes.inputInput,
-				// }}
-				inputProps={{ 'aria-label': 'search' }}
-			/>
-		</div>
-		</>
-	);
-
-	toolbaritems.push(
-		<>
-		<div className="">
-			<div className="">
-				<NotificationsIcon/>
-			</div>
-			<InputBase
-				placeholder="WS"
-				value={wsHostnamePort}
-				// classes={{
-				// 	root: classes.inputRoot,
-				// 	input: classes.inputInput,
-				// }}
-				inputProps={{ 'aria-label': 'search' }}
-			/>
-		</div>
-		</>
-	);
-
-	toolbaritems.push(
-		<>
-		<div className="">
-						{namespaces && namespaces.data &&
-							<>
-							{/* <div className={classes.searchIcon}>
-								<CodeIcon/>
-							</div> */}
-							<FormControl 
-								variant="filled" 
-								// className={classes.formControl}
-							>
-								<InputLabel 
-									htmlFor="filled-namespace-native-simple" 
-									// className={classes.formControlLabel}
-								>
-									Namespace
-								</InputLabel>
-								<Select
-									native
-									value={namespace}
-									// onClick={() => selectNamespace(namespace)}
-									onChange={(event) => selectNamespace(event.target.value)}
-									inputProps={{
-										
-									}} 
-									InputLabelProps={{
-										// className: classes.floatingLabelFocusStyle,
-									}} 
-									// className={classes.formSelect} 
-								>
-									<option aria-label="None" value=""/>
-									<>
-									{namespaces.data.map(function(namespace, idx) {
-										return (
-											<option value={namespace}>{namespace}</option>	
-										)
-									})}
-									</>
-								</Select>
-							</FormControl>
-							</>
-						}
-					</div>
-		</>
-	);
-
-	return (
-		<>
-		<Drawer 
-			variant="permanent" 
-			title={title} 
-			toolbaritems={toolbaritems} 
-			navitems={navitems} 
-		>
-			{children}
-		</Drawer>
-		</>
-	);
-
 }
 
 class AppNotification extends Component {
@@ -455,7 +110,39 @@ class AppNotification extends Component {
 	render() {
 		return (
 			<>
-			
+			{/* <Snackbar
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				open={this.state.snackbarOpen}
+				autoHideDuration={6000}
+				onClose={() => this.onCloseSnackbar()}
+				message={this.state.snackbarMessage}
+				action={
+					<React.Fragment>
+					<Button color="secondary" size="small" onClick={() => this.onCloseSnackbar()}>
+						Close
+					</Button>
+					<IconButton size="small" aria-label="close" color="inherit" onClick={() => this.onCloseSnackbar()}>
+						<CloseIcon fontSize="small" />
+					</IconButton>
+					</React.Fragment>
+				}
+			/> */}
+			<Snackbar 
+				anchorOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+				open={this.state.snackbarOpen}
+				autoHideDuration={3000}
+				message={this.state.snackbarMessage}
+				variant="solid"
+				onClose={() => this.onCloseSnackbar()}
+			>
+				{this.state.snackbarMessage}
+			</Snackbar>
 			</>
 		);
 	}
@@ -474,9 +161,7 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-// const Navigation = withStyles(styles)(AppNavigation);
-const Navigation = AppNavigation;
-
+// const Notification = withNavigation(withParams(withStyles(styles)(AppNotification)));
 // const Notification = withStyles(styles)(AppNotification);
 const Notification = AppNotification;
 
@@ -568,44 +253,132 @@ class App extends Component {
 
 		var _this = this;
 
-		// const { classes } = this.props;
 		const {
 			api, 
 			namespace, 
 			types
 		} = this.props;
 
+		const drawerOpen = false; // true;
+
+		const theme = extendTheme({
+			colorSchemes: {
+				light: {
+					palette: {
+						neutral: {
+							// plainColor: ..., 
+							// plainActiveBg: ..., 
+							solidColor: 'rgb(125, 125, 125)', 
+							solidBg: '#333333', 
+							solidActiveColor: 'white', 
+							solidActiveBg: '#333333', 
+							// solidHoverColor: ..., 
+							solidHoverBg: '#333333'
+						},
+						primary: {
+							// plainColor: ..., 
+							// plainActiveBg: ..., 
+							solidColor: 'white', 
+							solidBg: '#333333', 
+							solidActiveColor: 'white', 
+							solidActiveBg: '#333333', 
+							// solidHoverColor: ..., 
+							solidHoverBg: '#333333'
+						},
+						background: {
+							body: '#ffffff', 
+							level1: '#f3f3f3', 
+							level3: '#333333', 
+							// active: ...
+						},
+						text: {
+							primary: '#ffffff', 
+							icon: '#ffffff'
+						}
+					},
+				},
+				dark: {
+					palette: {
+						neutral: {
+							// plainColor: ..., 
+							// plainActiveBg: ..., 
+							solidColor: 'rgb(125, 125, 125)', 
+							solidBg: '#333333', 
+							solidActiveColor: 'white', 
+							solidActiveBg: '#333333', 
+							// solidHoverColor: ..., 
+							solidHoverBg: '#333333'
+						},
+						primary: {
+							// plainColor: ..., 
+							// plainActiveBg: ..., 
+							solidColor: 'white', 
+							solidBg: '#333333', 
+							solidActiveColor: 'white', 
+							solidActiveBg: '#333333', 
+							// solidHoverColor: ..., 
+							solidHoverBg: '#333333'
+						},
+						background: {
+							body: '#ffffff', 
+							level1: '#f3f3f3', 
+							level3: '#333333', 
+							// active: ...
+						},
+						text: {
+							primary: '#ffffff', 
+							icon: '#ffffff'
+						}
+					},
+				},
+			},
+		});
+
 		return (
-			<>
-			<ThemeProvider theme={theme}>
-			<React.Fragment>
-			<CssBaseline />
-			<Navigation 
-				ref={this.navigationRef} 
-				namespace={namespace} 
-				types={types}>
-				{this.props.children}
-			</Navigation>
-			<Notification 
-				ref={this.notificationRef} 
-				namespace={namespace} 
-				types={types} 
-			/>
-			</React.Fragment>
-			</ThemeProvider>
-			</>
+			// <CssVarsProvider disableTransitionOnChange>
+			<CssVarsProvider theme={theme} disableTransitionOnChange>
+				<CssBaseline />
+				<Layout.Root
+					sx={[
+						// {
+						// 	gridTemplateColumns: {
+						// 	},
+						// },
+						drawerOpen && {
+							height: '100vh',
+							overflow: 'hidden',
+						},
+					]}
+				>
+					<Layout.Header>
+						<Header 
+							namespace={namespace} 
+							types={types} 
+						/>
+					</Layout.Header>
+					<Layout.Sidebar>
+						<Sidebar 
+							namespace={namespace} 
+							types={types} 
+						/>
+					</Layout.Sidebar>
+					<Layout.Main>
+						{this.props.children}
+					</Layout.Main>
+					<Layout.Side>
+					</Layout.Side>
+				</Layout.Root>
+				<Notification 
+					ref={this.notificationRef} 
+					namespace={namespace} 
+					types={types} 
+				/>
+			</CssVarsProvider>
 		);
+
 	}
 
 }
-
-// AppNavigation.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
-
-// AppNotification.propTypes = {
-// 	dispatch: PropTypes.func.isRequired
-// }
 
 // App.propTypes = {
 // 	dispatch: PropTypes.func.isRequired
@@ -669,5 +442,4 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-// export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))));
 export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(App)));
