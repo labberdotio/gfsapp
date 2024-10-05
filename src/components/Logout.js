@@ -7,39 +7,27 @@
 import React, {Component} from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
-import debounce from 'lodash.debounce';
-
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 import {
-	Routes, 
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	useRouteMatch, 
 	useParams, 
 	useSearchParams, 
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-
-const styles = theme => ({
-
-});
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 function handleClick(event) {
 	// event.preventDefault();
@@ -160,7 +148,7 @@ class Logout extends Component {
 			
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		var backdropOpen = false;
 
@@ -183,7 +171,7 @@ class Logout extends Component {
 		return (
 			<>
 			<Container 
-				className={classes.logoutContainer} 
+				// className={classes.logoutContainer} 
 				className="logoutContainer" 
 				maxWidth="false">
 
@@ -268,4 +256,5 @@ function withSearchParams(Component) {
 	return searchParams => <Component {...searchParams} searchParams={useSearchParams()} />;
 }
 
-export default withSearchParams(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Logout))));
+// export default withSearchParams(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Logout))));
+export default withSearchParams(withParams(connect(mapStateToProps, mapDispatchToProps)(Logout)));

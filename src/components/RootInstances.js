@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 // import {useLayoutEffect, useRef, useState} from 'react';
 // import { useLayoutEffect } from 'react';
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
 import {
 	Routes, 
@@ -21,29 +21,26 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
-import TreeView from '@material-ui/lab/TreeView';
-import TreeItem from '@material-ui/lab/TreeItem';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Button from '@mui/material/Button';
 
-import Button from '@material-ui/core/Button';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 import APIClient from '../clients/APIClient';
 
@@ -118,30 +115,8 @@ function TreeViewItems(props) {
 	return (
 		<>
 		{Object.keys(items).map((key, index) => ( 
-			<TreeItem 
-				nodeId={ "" + items[key]["id"] }
-				// label={ "" + items[key]["label"] }
-				label={items[key]["link"]
-					? <Link 
-						color="inherit" 
-						to={ "" + items[key]["link"] }
-						// style={{color: "white"}}
-						>
-						{ "" + items[key]["label"] }
-					</Link>
-					: "" + items[key]["label"]
-				}
-				// onClick={event => {	
-				// }}
-				>
-				{items[key]["tree"] && 
-				Object.keys(items[key]["tree"]).length > 0 &&
-					<TreeViewItems 
-						// onSelect={onSelectFn} 
-						items={items[key]["tree"]}
-					/>
-				}
-			</TreeItem>
+			<>
+			</>
 		))}
 		</>
 	)
@@ -715,7 +690,7 @@ const RootInstances = class extends Component {
 			schema
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		var backdropOpen = false;
 
@@ -769,7 +744,8 @@ const RootInstances = class extends Component {
 		return (
 			<>
 			<Container 
-				className={classes.mainContainer} 
+				// className={classes.mainContainer} 
+				className="mainContainer" 
 				maxWidth="xl" 
 				>	
 			<Backdrop open={backdropOpen}>
@@ -790,29 +766,17 @@ const RootInstances = class extends Component {
 				spacing={0} 
 			>
 				<Grid 
-					className={classes.treeGrid} 
+					// className={classes.treeGrid} 
 					className="treeGrid" 
 					item 
 					xs={3} 
 					spacing={0} 
 				>
 
-					<TreeView
-						className={classes.tree} 
-						className="tree" 
-						defaultCollapseIcon={<ExpandMoreIcon />}
-						defaultExpandIcon={<ChevronRightIcon />}
-					>
-						<TreeViewItems 
-							// onSelect={item => {
-							// 	this.selectItem( String( item["_id"] ) );
-							// }}
-							items={treestruc}
-						/>
-					</TreeView>
+					
 				</Grid>
 				<Grid 
-					className={classes.mainGrid} 
+					// className={classes.mainGrid} 
 					className="mainGrid" 
 					container 
 					item 
@@ -867,7 +831,8 @@ const RootInstances = class extends Component {
 			</Grid>
 			<SpeedDial
 				ariaLabel="GraphActions"
-				className={classes.speedDial}
+				// className={classes.speedDial}
+				className="speedDial"
 				hidden={hidden}
 				icon={<SpeedDialIcon/>}
 				onClose={this.onCloseDial}
@@ -942,4 +907,5 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances))));
+// export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootInstances))));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(RootInstances)));

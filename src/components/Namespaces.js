@@ -7,12 +7,12 @@
 import React, {Component} from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
 import debounce from 'lodash.debounce';
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 import {
 	Routes, 
@@ -25,18 +25,18 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Typography from '@material-ui/core/Typography';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
-import ExtensionIcon from '@material-ui/icons/Extension';
+import ExtensionIcon from '@mui/icons-material/Extension';
 
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { 
 	loadNamespacesIntoState 
@@ -129,7 +129,7 @@ class Namespaces extends Component {
 			namespaces 
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		if( !this.props.nsloading ) {
 			// if( (this.props.nsloaded) && (this.props.nsfailed) ) {
@@ -150,7 +150,7 @@ class Namespaces extends Component {
 		return (
 			<>
 			<Container 
-				className={classes.graphContainer} 
+				// className={classes.graphContainer} 
 				className="graphContainer" 
 				maxWidth="false">
 
@@ -256,4 +256,5 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Namespaces)));
+// export default withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Namespaces)));
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(Namespaces));

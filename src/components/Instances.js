@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
 import ListView from './List'
 import {
@@ -140,7 +140,7 @@ class Instances extends Component {
 			editable
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		return (
 			<>
@@ -213,4 +213,5 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Instances));
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Instances));
+export default connect(mapStateToProps, mapDispatchToProps)(Instances);

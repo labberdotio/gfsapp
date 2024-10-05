@@ -6,13 +6,13 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
-import Paper from '@material-ui/core/Paper';
+import Paper from '@mui/material/Paper';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 
 const styles = theme => ({
 
@@ -60,18 +60,23 @@ class Detail extends Component {
 			properties
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		return (
 			<>
 			<Paper
-				className={classes.mainPaper} 
+				// className={classes.mainPaper} 
+				className="mainPaper" 
 			>
 
 				<h1>{title}</h1>
 				<h5>{description}</h5>
 
-				<List component="nav" className={classes.root} aria-label="Properties">
+				<List component="nav" 
+					// className={classes.root} 
+					className="root" 
+					aria-label="Properties"
+				>
 					{ properties && properties.map((item, i) => (
 					<ListItem>
 						<ListItemText  
@@ -107,4 +112,5 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Detail));
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Detail));
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);

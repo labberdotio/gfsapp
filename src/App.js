@@ -6,60 +6,37 @@
 
 import React, { useState, Fragment, Component } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import clsx from 'clsx';
-
 import {
-	Routes, 
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link,
-	useRouteMatch, 
+	Link, 
 	useParams, 
 	useNavigate
 } from "react-router-dom";
 
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import Divider from '@material-ui/core/Divider';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import ComputerIcon from '@material-ui/icons/Computer';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import CodeIcon from '@material-ui/icons/Code';
-import CloseIcon from '@material-ui/icons/Close';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import MuiLink from '@mui/material/Link';
+import AppsIcon from '@mui/icons-material/Apps';
+import ExtensionIcon from '@mui/icons-material/Extension';
 
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import MuiLink from '@material-ui/core/Link';
+import ComputerIcon from '@mui/icons-material/Computer';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import InputBase from '@mui/material/InputBase';
 
-// import { makeStyles, useTheme } from '@material-ui/core/styles';
-// import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { fade, alpha, makeStyles, useTheme } from '@material-ui/core/styles';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import NativeSelect from '@mui/material/NativeSelect';
+// import MuiLink from '@mui/material/Link';
 
-// import { loadEntitiesIntoState } from './actions/Entity'
-// import { getEntitiesFromState } from './stores/Entity'
+import Drawer from './Drawer';
 
 import {
 	loadNamespacesIntoState
@@ -78,190 +55,12 @@ import {
 	getEntitiesFromState
 } from './stores/Entity'
 
-// import DashboardIcon from '@material-ui/icons/Dashboard';
-// import DashboardView from './components/Dashboard'
-
-// import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
-
-// import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-// import DescriptionIcon from '@material-ui/icons/Description';
-
-import CreateInstanceDialog from './components/Create'
-
-import ExtensionIcon from '@material-ui/icons/Extension';
-import AppsIcon from '@material-ui/icons/Apps';
-
-// import InstancesView from './components/Instances'
-// import InstanceView from './components/Instance'
-
-import RootInstancesView from './components/RootInstances'
-import RootInstanceView from './components/RootInstance'
-
-// import SubInstancesView from './components/SubInstances'
-// import SubInstanceView from './components/SubInstance'
-import RelInstanceView from './components/RelInstance'
-
-import Namespaces from './components/Namespaces'
-
 const ThemeContext = React.createContext();
 
 // const drawerWidth1 = 48; // 73;
 // const drawerWidth2 = 240;
 const drawerWidth = 240;
 
-const styles = theme => ({
-
-	root: {
-		display: 'flex',
-		flexGrow: 1
-	},
-
-	flex: {
-		flex: 1
-	},
-
-	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-
-	appBarShift: {
-		marginLeft: drawerWidth,
-		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-
-	menuButton: {
-		marginRight: 36,
-	},
-
-	search: {
-		position: 'relative',
-		borderRadius: theme.shape.borderRadius,
-		backgroundColor: fade(theme.palette.common.white, 0.15),
-		'&:hover': {
-			backgroundColor: fade(theme.palette.common.white, 0.25),
-		},
-		marginRight: theme.spacing(2),
-		marginLeft: 0,
-		width: '100%',
-		[theme.breakpoints.up('sm')]: {
-			marginLeft: theme.spacing(3),
-			width: 'auto',
-		},
-	},
-
-	searchIcon: {
-		padding: theme.spacing(0, 2),
-		height: '100%',
-		position: 'absolute',
-		pointerEvents: 'none',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-
-	inputRoot: {
-		color: 'inherit',
-	},
-
-	inputInput: {
-		padding: theme.spacing(1, 1, 1, 0),
-		// vertical padding + font size from searchIcon
-		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-		transition: theme.transitions.create('width'),
-		width: '100%',
-			[theme.breakpoints.up('xl')]: {
-			width: '20ch',
-		},
-	},
-
-	hide: {
-		display: 'none',
-	},
-
-	drawer: {
-		width: drawerWidth,
-		flexShrink: 0,
-		whiteSpace: 'nowrap',
-	},
-
-	drawerOpen: {
-		width: drawerWidth,
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-
-	drawerClose: {
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		overflowX: 'hidden',
-		width: theme.spacing(7) + 1,
-		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing(9) + 1,
-		},
-	},
-
-	toolbar: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		padding: theme.spacing(0, 1),
-		// necessary for content to be below app bar
-		...theme.mixins.toolbar,
-	},
-
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing(0),
-	  },
-
-	formControl: {
-		color: 'inherit',
-		minWidth: '20ch',
-	},
-
-	formControlLabel: {
-		color: 'inherit',
-	},
-
-	formSelect: {
-		color: 'inherit',
-		minWidth: '20ch',
-	},
-
-	formControl: {
-		// '.MuiFormLabel-root': {
-		// 	color: 'inherit',
-		// },
-		'& .MuiFormLabel-root': {
-			color: 'inherit',
-		},
-		// '.MuiFilledInput-root': {
-		// 	backgroundColor: 'transparent',
-		// },
-		'& .MuiFilledInput-root': {
-			backgroundColor: 'transparent',
-		},
-		// '.MuiSvgIcon-root': {
-		// 	color: 'inherit',
-		// },
-		'& .MuiSvgIcon-root': {
-			color: 'inherit',
-		},
-	},
-
-});
 
 // theme.js - Our core theme
 const theme = {
@@ -293,10 +92,23 @@ function getType(props, types) {
 	return undefined;
 }
 
-// const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle, namespace }) {
-const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuClick, onDrawerToggle }) {
+// function AppNavigation({ classes, variant, types, children }) {
+function AppNavigation({ classes, variant, types, children }) {
 
 	const {namespace} = useParams();
+
+	const name = useSelector(state => state.api.name);
+	const title = useSelector(state => state.api.title);
+	const description = useSelector(state => state.api.description);
+
+	// const apiHostname = useSelector(state => state.api.api.host);
+	// const apiPort = useSelector(state => state.api.api.port);
+	// const wsHostname = useSelector(state => state.api.ws.host);
+	// const wsPort = useSelector(state => state.api.ws.port);
+
+	// const namespace = useSelector(state => state.namespace);
+
+	// const {namespace} = useParams();
 
 	const apiHostname = useSelector(state => state.api.api.host);
 	const apiPort = useSelector(state => state.api.api.port);
@@ -322,160 +134,21 @@ const AppToolbar = withStyles(styles)(function({ classes, title, open, onMenuCli
 		logouturl = "/logout?" + namespace;
 	}
 
-	const handleDrawerToggle = () => {
-		onDrawerToggle();
-	}
-
-	const selectNamespace = (namespace) => {
-		// history.push("/namespaces/" + namespace);
-		window.location.href = "/namespaces/" + namespace;
-	}
-
-	return (
-		<Fragment>
-			<CssBaseline />
-			<AppBar
-				position="fixed"
-				className={clsx(classes.appBar, {
-					[classes.appBarShift]: open,
-				})} >
-				<Toolbar>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
-						onClick={handleDrawerToggle}
-						className={clsx(classes.menuButton, {
-							[classes.hide]: open,
-						})} >
-						<MenuIcon />
-					</IconButton>
-					<MuiLink color="inherit" href="/namespaces">
-					<Typography variant="h6" noWrap>
-						{title}			
-					</Typography>
-					</MuiLink>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<ComputerIcon/>
-						</div>
-						<InputBase
-							placeholder="API"
-							value={apiHostnamePort}
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ 'aria-label': 'search' }}
-						/>
-					</div>
-
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<NotificationsIcon/>
-						</div>
-						<InputBase
-							placeholder="WS"
-							value={wsHostnamePort}
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ 'aria-label': 'search' }}
-						/>
-					</div>
-
-					{/* <div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<CodeIcon/>
-						</div>
-						<InputBase
-							placeholder="Namespace"
-							value={namespace}
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{ 'aria-label': 'search' }}
-						/>
-					</div> */}
-
-					<div className={classes.search}>
-						{namespaces && namespaces.data &&
-							<>
-							{/* <div className={classes.searchIcon}>
-								<CodeIcon/>
-							</div> */}
-							<FormControl variant="filled" className={classes.formControl}>
-								<InputLabel htmlFor="filled-namespace-native-simple" className={classes.formControlLabel}>
-									Namespace
-								</InputLabel>
-								<Select
-									native
-									value={namespace}
-									// onClick={() => selectNamespace(namespace)}
-									onChange={(event) => selectNamespace(event.target.value)}
-									inputProps={{
-										
-									}} 
-									InputLabelProps={{
-										className: classes.floatingLabelFocusStyle,
-									}} 
-									className={classes.formSelect} >
-									<option aria-label="None" value=""/>
-									<>
-									{namespaces.data.map(function(namespace, idx) {
-										return (
-											<option value={namespace}>{namespace}</option>	
-										)
-									})}
-									</>
-								</Select>
-							</FormControl>
-							</>
-						}
-					</div>
-
-					<MuiLink color="inherit" href={logouturl}>
-					<Typography variant="h6" noWrap>
-						Logout
-					</Typography>
-					</MuiLink>
-
-				</Toolbar>
-			</AppBar>
-			<div className={classes.toolbarMargin} />
-		</Fragment>
-	);
-});
-
-// const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, namespace, types }) {
-const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose, onItemClick, onDrawerToggle, types }) {
-
-	const {namespace} = useParams();
-
-	const name = useSelector(state => state.api.name);
-	const title = useSelector(state => state.api.title);
-	const description = useSelector(state => state.api.description);
-
-	// const apiHostname = useSelector(state => state.api.api.host);
-	// const apiPort = useSelector(state => state.api.api.port);
-	// const wsHostname = useSelector(state => state.api.ws.host);
-	// const wsPort = useSelector(state => state.api.ws.port);
-
-	// const namespace = useSelector(state => state.namespace);
-
 	var currentns = "Namespaces";
 	if( namespace ) {
 		currentns = namespace;
 	}
 
 	const handleDrawerToggle = () => {
-		onDrawerToggle();
+		// onDrawerToggle();
 	}
 
 	const handleDrawerClose = () => {
-		onDrawerToggle();
+		// onDrawerToggle();
+	}
+
+	const selectNamespace = () => {
+		// onDrawerToggle();
 	}
 
 	const container = undefined;
@@ -545,167 +218,197 @@ const AppDrawer = withStyles(styles)(function({ classes, variant, open, onClose,
 
 	var lowitems = [];
 
-	return (
+	var navitems = [];
+
+	if( topitems ) {
+		for( var idx in topitems ) {
+			var item = topitems[idx];
+			navitems.push(
+				<>
+				<ListItem 
+					button 
+					selected={item.selected} 
+					component={Link} 
+					to={item.path} 
+					// onClick={onItemClick(title)} 
+					title={item.text} 
+				>
+					<ListItemIcon>{item.icon}</ListItemIcon>
+					<ListItemText>{item.text}</ListItemText>
+				</ListItem>
+				</>
+			);
+		}
+	}
+
+	navitems.push(
 		<>
-		<Drawer 
-			variant="permanent"
-			className={clsx(classes.drawer, {
-				[classes.drawerOpen]: open,
-				[classes.drawerClose]: !open,
-			})}
-			classes={{
-				paper: clsx({
-					[classes.drawerOpen]: open,
-					[classes.drawerClose]: !open,
-				}),
-			}} >
-			<div className={classes.toolbar}>
-				<IconButton onClick={handleDrawerClose}>
-						{theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-				</IconButton>
-			</div>
-				<Container 
-					maxWidth="xl" 
-					style={{minHeight: 0}}
-					>
-				</Container>
-				<Container>
-					<h1 style={{display: 'none'}}>{name}</h1>
-					<h2 style={{display: 'none'}}>{title}</h2>
-					<p style={{display: 'none'}}>{description}</p>
-				</Container>
-				<Divider />
-				<List>
-
-						{topitems.map((item, index) => (
-						<>
-						<ListItem 
-							button 
-							selected={item.selected} 
-							component={Link} 
-							to={item.path} 
-							// onClick={onItemClick(title)} 
-							title={item.text} 
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{item.text}</ListItemText>
-						</ListItem>
-						</>
-						))}
-
-						<Divider />
-
-						{miditems.map((item, index) => (
-						<>
-						<ListItem 
-							button 
-							selected={item.selected} 
-							component={Link} 
-							to={item.path} 
-							// onClick={onItemClick(title)} 
-							title={item.text} 
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{item.text}</ListItemText>
-						</ListItem>
-						</>
-						))}
-
-						<Divider />
-
-						{lowitems.map((item, index) => (
-						<>
-						<ListItem 
-							button 
-							selected={item.selected} 
-							component={Link} 
-							to={item.path} 
-							// onClick={onItemClick(title)} 
-							title={item.text} 
-							>
-							<ListItemIcon>{item.icon}</ListItemIcon>
-							<ListItemText>{item.text}</ListItemText>
-						</ListItem>
-						</>
-						))}
-
-				</List>
-
-		</Drawer>
+		<Divider />
 		</>
 	);
 
-});
+	if( miditems ) {
+		for( var idx in miditems ) {
+			var item = miditems[idx];
+			navitems.push(
+				<>
+				<ListItem 
+					button 
+					selected={item.selected} 
+					component={Link} 
+					to={item.path} 
+					// onClick={onItemClick(title)} 
+					title={item.text} 
+				>
+					<ListItemIcon>{item.icon}</ListItemIcon>
+					<ListItemText>{item.text}</ListItemText>
+				</ListItem>
+				</>
+			);
+		}
+	}
 
-// function AppNavigation({ classes, variant, namespace, types, children }) {
-function AppNavigation({ classes, variant, types, children }) {
+	navitems.push(
+		<>
+		<Divider />
+		</>
+	);
 
-	const {namespace} = useParams();
+	if( lowitems ) {
+		for( var idx in lowitems ) {
+			var item = lowitems[idx];
+			navitems.push(
+				<>
+				<ListItem 
+					button 
+					selected={item.selected} 
+					component={Link} 
+					to={item.path} 
+					// onClick={onItemClick(title)} 
+					title={item.text} 
+				>
+					<ListItemIcon>{item.icon}</ListItemIcon>
+					<ListItemText>{item.text}</ListItemText>
+				</ListItem>
+				</>
+			);
+		}
+	}
 
-	const title = useSelector(state => state.api.title);
+	navitems.push(
+		<>
+		<Divider />
+		</>
+	);
 
-	const dispatch = useDispatch();
+	var toolbaritems = [];
 
-	// const [drawer, setDrawer] = useState(false);
-	// const toggleDrawer = () => {
-	// 	setDrawer(!drawer);
-	// };
+	toolbaritems.push(
+		<>
+		<MuiLink color="inherit" href="/namespaces">
+		<Typography variant="h6" noWrap>
+			{title}			
+		</Typography>
+		</MuiLink>
+		</>
+	);
 
-	const [open, setOpen] = React.useState(false);
+	toolbaritems.push(
+		<>
+		<div className="">
+			<div className="">
+				<ComputerIcon/>
+			</div>
+			<InputBase
+				placeholder="API"
+				value={apiHostnamePort}
+				// classes={{
+				// 	root: classes.inputRoot,
+				// 	input: classes.inputInput,
+				// }}
+				inputProps={{ 'aria-label': 'search' }}
+			/>
+		</div>
+		</>
+	);
 
-	const handleDrawerOpen = () => {
-	  setOpen(true);
-	};
-  
-	const handleDrawerClose = () => {
-	  setOpen(false);
-	};
+	toolbaritems.push(
+		<>
+		<div className="">
+			<div className="">
+				<NotificationsIcon/>
+			</div>
+			<InputBase
+				placeholder="WS"
+				value={wsHostnamePort}
+				// classes={{
+				// 	root: classes.inputRoot,
+				// 	input: classes.inputInput,
+				// }}
+				inputProps={{ 'aria-label': 'search' }}
+			/>
+		</div>
+		</>
+	);
 
-	const closeDrawer = () => {
-		setOpen(false);
-	};
-
-	const toggleDrawer = () => {
-		setOpen(!open);
-	};
+	toolbaritems.push(
+		<>
+		<div className="">
+						{namespaces && namespaces.data &&
+							<>
+							{/* <div className={classes.searchIcon}>
+								<CodeIcon/>
+							</div> */}
+							<FormControl 
+								variant="filled" 
+								// className={classes.formControl}
+							>
+								<InputLabel 
+									htmlFor="filled-namespace-native-simple" 
+									// className={classes.formControlLabel}
+								>
+									Namespace
+								</InputLabel>
+								<Select
+									native
+									value={namespace}
+									// onClick={() => selectNamespace(namespace)}
+									onChange={(event) => selectNamespace(event.target.value)}
+									inputProps={{
+										
+									}} 
+									InputLabelProps={{
+										// className: classes.floatingLabelFocusStyle,
+									}} 
+									// className={classes.formSelect} 
+								>
+									<option aria-label="None" value=""/>
+									<>
+									{namespaces.data.map(function(namespace, idx) {
+										return (
+											<option value={namespace}>{namespace}</option>	
+										)
+									})}
+									</>
+								</Select>
+							</FormControl>
+							</>
+						}
+					</div>
+		</>
+	);
 
 	return (
-		<div className={classes.root}>
-			<AppToolbar 
-				title={title} 
-				open={open} 
-				onMenuClick={toggleDrawer} 
-				onDrawerToggle={toggleDrawer} 
-				onCloseToggle={closeDrawer} 
-				namespace={namespace} 
-				types={types} />
-			<nav 
-				className={clsx(classes.drawer, {
-					[classes.drawerOpen]: open,
-					[classes.drawerClose]: !open,
-				})}
-				classes={{
-					paper: clsx({
-						[classes.drawerOpen]: open,
-						[classes.drawerClose]: !open,
-					}),
-				}} >
-			<AppDrawer 
-				open={open} 
-				onClose={toggleDrawer} 
-				onDrawerToggle={toggleDrawer} 
-				onCloseToggle={closeDrawer} 
-				// onItemClick={onItemClick} 
-				variant={variant} 
-				namespace={namespace} 
-				types={types} />
-			</nav>
-			<main
-				className={classes.content} >
-				<div className={classes.toolbar} />
-				{children}
-			</main>
-		</div>
+		<>
+		<Drawer 
+			variant="permanent" 
+			title={title} 
+			toolbaritems={toolbaritems} 
+			navitems={navitems} 
+		>
+			{children}
+		</Drawer>
+		</>
 	);
 
 }
@@ -752,25 +455,7 @@ class AppNotification extends Component {
 	render() {
 		return (
 			<>
-			<Snackbar
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'center',
-				}}
-				open={this.state.snackbarOpen}
-				autoHideDuration={6000}
-				onClose={() => this.onCloseSnackbar()}
-				message={this.state.snackbarMessage}
-				action={
-					<React.Fragment>
-					<Button color="secondary" size="small" onClick={() => this.onCloseSnackbar()}>
-						Close
-					</Button>
-					<IconButton size="small" aria-label="close" color="inherit" onClick={() => this.onCloseSnackbar()}>
-						<CloseIcon fontSize="small" />
-					</IconButton>
-					</React.Fragment>
-				}/>
+			
 			</>
 		);
 	}
@@ -789,11 +474,11 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-// const Navigation = withNavigation(withParams(withStyles(styles)(AppNavigation)));
-// const Notification = withNavigation(withParams(withStyles(styles)(AppNotification)));
+// const Navigation = withStyles(styles)(AppNavigation);
+const Navigation = AppNavigation;
 
-const Navigation = withStyles(styles)(AppNavigation);
-const Notification = withStyles(styles)(AppNotification);
+// const Notification = withStyles(styles)(AppNotification);
+const Notification = AppNotification;
 
 class App extends Component {
 
@@ -984,7 +669,5 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-// export default withStyles(styles)(App);
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
-// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
-export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))));
+// export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(App)));

@@ -6,7 +6,7 @@
 
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/styles';
+import { styled } from "@mui/material/styles";
 
 import {
 	Link,
@@ -272,7 +272,7 @@ class Instance extends Component {
 			showdeps
 		} = this.props;
 
-		const { classes } = this.props;
+		// const { classes } = this.props;
 
 		var properties = this.getProperties(
 			namespace, 
@@ -382,4 +382,5 @@ function mapStateToProps(state, ownProps) {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Instance));
+// export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Instance));
+export default connect(mapStateToProps, mapDispatchToProps)(Instance);

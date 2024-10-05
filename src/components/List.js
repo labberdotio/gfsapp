@@ -6,9 +6,9 @@
 
 import React, {Component} from 'react';
 
-import Paper from '@material-ui/core/Paper';
+import Paper from '@mui/material/Paper';
 
-import MaterialTable from 'material-table';
+// import MaterialTable from 'material-table';
 
 const styles = theme => ({
 
@@ -52,8 +52,11 @@ const List = (props) => {
 			}}
 		>
 
-			<MaterialTable
-				title={description}
+			<h1>{title}</h1>
+			<h5>{description}</h5>
+
+			{/* <MaterialTable
+				title={title + ', ' +  description}
 				tableRef={tableRef}
 				columns={cols}
 				// data={rows}
@@ -119,7 +122,7 @@ const List = (props) => {
 				onRowClick={(event, rowData, togglePanel) => onRowClick(event, rowData, togglePanel)}
 				style={{
 					width: "100%"
-				}}/>
+				}}/> */}
 
 		</Paper>
 		</>
