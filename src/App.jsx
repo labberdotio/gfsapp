@@ -362,11 +362,12 @@ class App extends Component {
 							types={types} 
 						/>
 					</Layout.Sidebar>
-					<Layout.Main>
+					{/* <Layout.Main>
 						{this.props.children}
 					</Layout.Main>
 					<Layout.Side>
-					</Layout.Side>
+					</Layout.Side> */}
+					{this.props.children}
 				</Layout.Root>
 				<Notification 
 					ref={this.notificationRef} 

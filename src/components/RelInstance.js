@@ -18,16 +18,10 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-
-import Button from '@mui/material/Button';
+import Button from '@mui/joy/Button';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-import InstancesView from './Instances'
-import InstanceView from './Instance'
 
 import { 
 	loadEntityIntoState, 
@@ -39,33 +33,9 @@ import {
 	getEntitiesFromState 
 } from '../stores/Entity'
 
-export const BackNavButton = () => {
-    let navigate = useNavigate();
-    return (
-        <>
-			<Button
-				startIcon={<ArrowBackIcon />} 
-				onClick={() => navigate(-1)}
-			>
-				Back
-			</Button>
-        </>
-    );
-};
-
-export const ForwardNavButton = () => {
-    let navigate = useNavigate();
-    return (
-		<>
-			<Button
-				endIcon={<ArrowForwardIcon />} 
-				onClick={() => navigate(+1)}
-			>
-				Forward
-			</Button>
-        </>
-    );
-};
+import Layout from './Layout';
+import InstancesView from './Instances'
+import InstanceView from './Instance'
 
 class RelInstance extends Component {
 
@@ -191,10 +161,6 @@ class RelInstance extends Component {
 
 		return (
 			<>
-			<Container 
-				// className={classes.mainContainer} 
-				className="mainContainer" 
-			>
 			{/* <Breadcrumbs aria-label="breadcrumb">
 				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
@@ -212,44 +178,30 @@ class RelInstance extends Component {
 				<Typography color="textPrimary">{ relname }</Typography>
 				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs> */}
-			<Grid 
-				className="" 
-				container 
-				xs={12} 
-				spacing={0} 
-			>
-				<Grid 
-					className="leftGrid" 
-					container 
-					item 
-					xs={12} 
-					spacing={0} 
-				>
-					{ relname && reltype && relschema && relinstance && 
-						<InstanceView 
-						title={ relname } 
-						description={reltype} 
-						namespace={namespace} 
-						typename={reltype} 
-						type={relschema} 
-						schema={relschema} 
-						instanceid={instance.id} 
-						instance={instance} 
-						/>
-					}
-					{ relname && reltype && relschema && 
-					<InstancesView 
-						title={relname} 
-						description={reltype} 
-						namespace={namespace} 
-						typename={reltype} 
-						type={relschema} 
-						schema={relschema} 
-						/>
-					}
-				</Grid>
-			</Grid>
-			</Container>
+			<Layout.Main>
+			{ relname && reltype && relschema && relinstance && 
+				<InstanceView 
+					title={ relname } 
+					description={reltype} 
+					namespace={namespace} 
+					typename={reltype} 
+					type={relschema} 
+					schema={relschema} 
+					instanceid={instance.id} 
+					instance={instance} 
+				/>
+			}
+			{ relname && reltype && relschema && 
+				<InstancesView 
+					title={relname} 
+					description={reltype} 
+					namespace={namespace} 
+					typename={reltype} 
+					type={relschema} 
+					schema={relschema} 
+				/>
+			}
+			</Layout.Main>
 			</>
 		);
 	}
