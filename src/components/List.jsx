@@ -1,123 +1,202 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, 2024, John Grundback
 // All rights reserved.
 // 
 
 import React, {Component} from 'react';
+import PropNamespaces from 'prop-types'
+import { connect } from 'react-redux'
 
-import Paper from '@mui/material/Paper';
+import {
+	Routes, 
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch, 
+	useParams, 
+	useNavigate
+} from "react-router-dom";
 
-// import MaterialTable from 'material-table';
+import Sheet from '@mui/joy/Sheet';
+import Stack from '@mui/joy/Stack';
+import Box from '@mui/joy/Box';
+import Typography from '@mui/joy/Typography';
 
-const List = (props) => {
+import List from '@mui/joy/List';
+import ListItem from '@mui/joy/ListItem';
+import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
+import ListDivider from '@mui/joy/ListDivider';
 
-	const ownProps = props;
+class ListView extends Component {
 
-    const title = ownProps["title"];
-    const description = ownProps["description"];
-	const tableRef = ownProps["tableRef"];
-	const cols = ownProps["cols"];
-    // const rows = ownProps["rows"];
-	// const data = ownProps["data"];
-	const dataurl = ownProps["dataurl"];
-	const actions = ownProps["actions"];
-	const editable = ownProps["editable"];
-	const detailLink = ownProps["detailLink"];
-	// const onRowClick = ownProps["onRowClick"];
+	constructor(props) {
+		super(props);
+		this.state = {
+			
+		}
 
-	// const history = useHistory();
-	const onRowClick = (event, rowData, togglePanel) => {
-		// // history.push("/namespaces/" + namespace + "/" + rowData["_label"] + "/" + rowData["_id"]);
-		// history.push(detailLink(rowData));
+		var _this = this;
+
 	}
 
-	return (
-		<>
-		<Paper
-			style={{
-				width: '100%', 
-				marginTop: '20px', 
-				marginBottom: '0px', 
-			}}
-		>
+	state = {
+		
+	};
 
-			<h1>{title}</h1>
-			<h5>{description}</h5>
+	// componentWillUpdate(nextProps, nextState) {
+	// }
 
-			{/* <MaterialTable
-				title={title + ', ' +  description}
-				tableRef={tableRef}
-				columns={cols}
-				// data={rows}
-				// data={data}
-				data={query => 
-					new Promise((resolve, reject) => {
-						let offset = (query.page + 0) * query.pageSize;
-						let limit = query.pageSize;
-						let url = dataurl + '?'
-						url += 'offset=' + offset
-						url += '&limit=' + limit
-						fetch(url)
-							.then(response => response.json())
-							.then(result => {
-								resolve({
-									data: result.data,
-									page: query.page,
-									totalCount: result.count
-								})
-							})
-					})
-				}
-				// actions={[{
-				// 	icon: 'save',
-				// 	tooltip: 'Save User',
-				// 	onClick: (event, rowData) => window.alert("You saved " + rowData.name)
-				// }, {
-				// 	icon: 'delete',
-				// 	tooltip: 'Delete User',
-				// 	onClick: (event, rowData) => window.confirm("You want to delete " + rowData.name)
-				// }, {
-				// 	icon: 'add',
-				// 	tooltip: 'Add User',
-				// 	isFreeAction: true,
-				// 	onClick: (event) => window.alert("You want to add a new row")
-				// }]}
-				// actions={actions}
-				actions={[
-					{
-					  icon: 'refresh',
-					  tooltip: 'Refresh Data',
-					  isFreeAction: true,
-					  onClick: () => tableRef.current && tableRef.current.onQueryChange(),
-					}
-				  ]}
-				options={{
-					// pageSize: ...
-					// pageSizeOptions: [],
-					initialPage: 0,
-					toolbar: true,
-					paging: true,
-					actionsColumnIndex: -1
+	// componentDidUpdate(prevProps, prevState) {
+	// }
+
+	// componentDidMount() {
+	// }
+
+	render() {
+
+		var _this = this;
+
+		const {
+			namespace, 
+			selected, 
+			graph
+		} = this.props;	
+
+		var vertices = [];
+		if( graph && graph["@value"]["vertices"] ) {
+			vertices = graph["@value"]["vertices"];
+		}
+
+		var edges = [];
+		if( graph && graph["@value"]["edges"] ) {
+			edges = graph["@value"]["edges"];
+		}
+
+		return (
+			<>
+			<Sheet
+				sx={{
+					borderRight: '1px solid',
+					borderColor: 'divider',
+					// height: { sm: 'calc(100dvh - var(--Header-height))', md: '100dvh' },
+					height: 'calc(100dvh - 64px)',
+					overflowY: 'auto',
 				}}
-				// editable={{
-				// }}
-				// editable={{
-				// 	onRowAdd: newData => window.alert(""),
-				// 	onRowUpdate: (newData, oldData) => window.alert(""),
-				// }}
-				editable={editable}
-				// onRowClick={onRowClick}
-				// onRowClick={(event, rowData, togglePanel) => redirect() }
-				onRowClick={(event, rowData, togglePanel) => onRowClick(event, rowData, togglePanel)}
-				style={{
-					width: "100%"
-				}}/> */}
-
-		</Paper>
-		</>
-	);
+			>
+				<List
+					sx={{
+						py: 0,
+						'--ListItem-paddingY': '0.75rem',
+						'--ListItem-paddingX': '1rem',
+					}}
+				>
+					{Object.keys(vertices).map((key, index) => ( 
+						<>
+						<ListItem>
+						<ListItemButton
+							// onClick={() => {
+							// }}
+							component={Link} 
+							to={"/namespaces/" + namespace + "/" + vertices[key]["@value"]["_label"] + "/" + vertices[key]["@value"]["_id"]} 
+							selected={selected} 
+							color="neutral" 
+							sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
+						>
+							<Stack direction="row" spacing={1.5}>
+							<Box sx={{ flex: 1 }}>
+								{/* <Typography level="title-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography> */}
+								<Typography level="body-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography>
+							</Box>
+							<Box sx={{ lineHeight: 1.5, textAlign: 'right' }}>
+								<Typography
+									level="body-xs"
+									noWrap
+									sx={{ display: { xs: 'none', md: 'block' } }}
+								>
+									{ "" + vertices[key]["@value"]["_id"] }
+								</Typography>
+							</Box>
+							</Stack>
+							<Typography
+								level="body-sm"
+								sx={{
+									display: '-webkit-box',
+									WebkitLineClamp: '2',
+									WebkitBoxOrient: 'vertical',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis',
+								}}
+							>
+								{ "" + vertices[key]["@value"]["_label"] }
+							</Typography>
+						</ListItemButton>
+						</ListItem>
+						<ListDivider sx={{ margin: 0 }} />
+						</>
+					))}
+				</List>
+			</Sheet>	
+			</>
+		);
+	}
 
 }
 
-export default List;
+List.propNamespaces = {
+	dispatch: PropNamespaces.func.isRequired
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+	}
+}
+
+function mapStateToProps(state, ownProps) {
+
+	const {
+		api, 
+		// namespace, 
+		// selected, 
+		// graph
+	} = state;
+
+	var namespace = undefined;
+	var selected = undefined;
+	var graph = undefined;
+
+	// if( ownProps && ownProps.params ) {
+	if( ownProps ) {
+		namespace = ownProps.namespace;
+		selected = ownProps.selected;
+		graph = ownProps.graph;
+	}
+
+	return {
+		api, 
+		namespace, 
+		selected, 
+		graph
+	}
+
+}
+
+/*
+ * https://github.com/remix-run/react-router/issues/8146
+ */
+
+function withNavigation(Component) {
+	return props => <Component {...props} navigate={useNavigate()} />;
+}
+
+function withParams(Component) {
+	return params => <Component {...params} params={useParams()} />;
+}
+
+// function withSearchParams(Component) {
+// 	return searchParams => <Component {...searchParams} searchParams={useSearchParams()} />;
+// }
+
+// export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ListView))));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(ListView)));
