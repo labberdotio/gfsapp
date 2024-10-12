@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, 2024, John Grundback
 // All rights reserved.
 // 
 
@@ -18,10 +18,7 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-
-import Button from '@mui/material/Button';
+import Button from '@mui/joy/Button';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -38,8 +35,12 @@ import {
 	getEntitiesFromState 
 } from '../stores/Entity'
 
+import Layout from './Layout';
 import Graph from './Graph';
-import ThreeDeeGraph from './ThreeDeeGraph';
+// import ThreeDeeGraph from './ThreeDeeGraph';
+
+// 
+// Instances views?
 
 export const BackNavButton = () => {
     let navigate = useNavigate();
@@ -68,19 +69,6 @@ export const ForwardNavButton = () => {
         </>
     );
 };
-
-function TreeViewItems(props) {
-	var items = props.items;
-	// var onSelectFn = props.onSelect;
-	return (
-		<>
-		{Object.keys(items).map((key, index) => ( 
-			<>
-			</>
-		))}
-		</>
-	)
-}
 
 // class RootInstance extends Component {
 const RootInstance = class extends Component {
@@ -653,8 +641,6 @@ const RootInstance = class extends Component {
 			schema
 		} = this.props;
 
-		// const { classes } = this.props;
-
 		var backdropOpen = false;
 
 		/*
@@ -688,7 +674,7 @@ const RootInstance = class extends Component {
 		];
 
 		// var graph = {}
-		var treestruc = this.getTreeData(api, namespace, graph);
+		// var treestruc = this.getTreeData(api, namespace, graph);
 
 		var graphwidth = 640;
 		var graphheight = 640;
@@ -707,11 +693,6 @@ const RootInstance = class extends Component {
 
 		return (
 			<>
-			<Container 
-				// className={classes.mainContainer} 
-				className="mainContainer" 
-				maxWidth="xl" 
-				>	
 			{/* <Breadcrumbs aria-label="breadcrumb">
 				<BackNavButton></BackNavButton>
 				<Link color="inherit" to="/namespaces">
@@ -720,97 +701,63 @@ const RootInstance = class extends Component {
 				<Typography color="textPrimary">{namespace}</Typography>
 				<ForwardNavButton></ForwardNavButton>
 			</Breadcrumbs> */}
-			<Grid 
-				className="" 
-				container 
-				xs={12} 
-				spacing={0} 
-			>
-				<Grid 
-					// className={classes.treeGrid} 
-					className="treeGrid" 
-					item 
-					xs={3} 
-					spacing={0} 
-				>
-					
-				</Grid>
-				<Grid 
-					// className={classes.mainGrid} 
-					className="mainGrid" 
-					container 
-					item 
-					xs={9} 
-					spacing={0} 
-				>
-					<Grid 
-						ref={this.gridRef}
-						className="leftGrid" 
-						container 
-						item 
-						xs={12} 
-						spacing={0} 
-					>
-						{/* <Breadcrumbs aria-label="breadcrumb">
-							<BackNavButton></BackNavButton>
-							<Link color="inherit" to="/namespaces">
-								Namespaces
-							</Link>
-							<Link color="inherit" to={"/namespaces/" + namespace}>
-								{namespace}
-							</Link>
-							<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
-								{typename}
-							</Link>
-							<Typography color="textPrimary">{ instance && ( instance["_label"] + " (" + instance["_id"] + ")") }</Typography>
-							<ForwardNavButton></ForwardNavButton>
-						</Breadcrumbs> */}
-						<Graph
-							graph={graph}
-							width={graphwidth} 
-							height={graphheight} 
-							highlighted={highlighted} 
-							exploded={exploded} 
-							selected={selected} 
-							pulsed={pulsed} 
-							runLayout={runLayout} 
-							zoomFit={zoomFit} 
-							selectItem={this.selectItem} 
-							contextCommand={this.contextCommand}/>
-						{/* <ThreeDeeGraph
-							graph={graph}
-							width={graphwidth} 
-							height={graphheight} 
-							highlighted={highlighted} 
-							exploded={exploded} 
-							selected={selected} 
-							pulsed={pulsed} 
-							runLayout={runLayout} 
-							zoomFit={zoomFit} 
-							selectItem={this.selectItem} 
-							contextCommand={this.contextCommand}/> */}
-					</Grid>
-				</Grid>
-			</Grid>
-			{/* <SpeedDial
-				ariaLabel="GraphActions"
-				// className={classes.speedDial}
-				className="speedDial"
-				hidden={hidden}
-				icon={<SpeedDialIcon/>}
-				onClose={this.onCloseDial}
-				onOpen={this.onOpenDial}
-				open={open}
-				direction={direction}>
-				{actions.map(action => (
-					<SpeedDialAction
-						key={action.name}
-						icon=<Link to={action.link}>{action.icon}</Link>
-						tooltipTitle={action.name}
-						onClick={this.onCloseDial}/>
-				))}
-			</SpeedDial> */}
-			</Container>
+			{/* <Breadcrumbs aria-label="breadcrumb">
+				<BackNavButton></BackNavButton>
+				<Link color="inherit" to="/namespaces">
+					Namespaces
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace}>
+					{namespace}
+				</Link>
+				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
+					{typename}
+				</Link>
+				<Typography color="textPrimary">{ instance && ( instance["_label"] + " (" + instance["_id"] + ")") }</Typography>
+				<ForwardNavButton></ForwardNavButton>
+			</Breadcrumbs> */}
+			<Layout.Main>
+				<Graph 
+					graph={graph} 
+					width={graphwidth} 
+					height={graphheight} 
+					highlighted={highlighted} 
+					exploded={exploded} 
+					selected={selected} 
+					pulsed={pulsed} 
+					runLayout={runLayout} 
+					zoomFit={zoomFit} 
+					selectItem={this.selectItem} 
+					contextCommand={this.contextCommand}
+				/>
+				{/* <ThreeDeeGraph
+					graph={graph}
+					width={graphwidth} 
+					height={graphheight} 
+					highlighted={highlighted} 
+					exploded={exploded} 
+					selected={selected} 
+					pulsed={pulsed} 
+					runLayout={runLayout} 
+					zoomFit={zoomFit} 
+					selectItem={this.selectItem} 
+					contextCommand={this.contextCommand}
+				/> */}
+			</Layout.Main>
+			<Layout.Side>
+				<Graph
+					graph={graph}
+					width={300} 
+					height={300} 
+					highlighted={highlighted} 
+					exploded={exploded} 
+					selected={selected} 
+					pulsed={pulsed} 
+					runLayout={runLayout} 
+					zoomFit={zoomFit} 
+					selectItem={this.selectItem} 
+					contextCommand={this.contextCommand}
+				/>
+			</Layout.Side>
 			</>
 		);
 	}
