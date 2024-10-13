@@ -283,6 +283,7 @@ export default {
 	Header, 
 	Sidebar, 
 	Breadcrumb, 
+	List, 
 	Main, 
 	Side
 };
