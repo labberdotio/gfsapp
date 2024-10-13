@@ -221,6 +221,24 @@ function Breadcrumb(props) {
 	);
 }
 
+// function List(props: BoxProps) {
+function List(props) {
+	return (
+		<>
+		<Box 
+			component="list" 
+			className="List" 
+			{...props}
+			sx={{
+				
+			}}
+		>
+			{props.children} 
+		</Box>
+		</>
+	);
+}
+
 // function Main(props: BoxProps) {
 function Main(props) {
 	return (

@@ -37,6 +37,7 @@ import {
 } from '../stores/Entity'
 
 import Layout from './Layout';
+// import List from './List';
 import InstancesView from './Instances'
 import InstanceView from './Instance'
 
@@ -192,6 +193,13 @@ class RelInstance extends Component {
 
 		return (
 			<>
+			{/* <Layout.List>
+				<List
+					namespace={namespace} 
+					graph={graph} 
+					selected={false}
+				/>
+			</Layout.List> */}
 			<Layout.Breadcrumb>
 				<Breadcrumbs aria-label="breadcrumb">
 					<BackNavButton></BackNavButton>
