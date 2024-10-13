@@ -14,6 +14,8 @@ import {
 	useNavigate
 } from "react-router-dom";
 
+import Layout from './Layout';
+
 class Logout extends Component {
 
 	constructor(props) {
@@ -152,7 +154,9 @@ class Logout extends Component {
 			{/* <Breadcrumbs aria-label="breadcrumb">
 				<Typography color="textPrimary">Logout</Typography>
 			</Breadcrumbs> */}
+			<Layout.Main>
 			STATUS: {status}
+			</Layout.Main>
 			</>
 		);
 	}
