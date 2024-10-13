@@ -693,28 +693,30 @@ const RootInstance = class extends Component {
 
 		return (
 			<>
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<BackNavButton></BackNavButton>
-				<Link color="inherit" to="/namespaces">
-					Namespaces
-				</Link>
-				<Typography color="textPrimary">{namespace}</Typography>
-				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs> */}
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<BackNavButton></BackNavButton>
-				<Link color="inherit" to="/namespaces">
-					Namespaces
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace}>
-					{namespace}
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
-					{typename}
-				</Link>
-				<Typography color="textPrimary">{ instance && ( instance["_label"] + " (" + instance["_id"] + ")") }</Typography>
-				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs> */}
+			<Layout.Breadcrumb>
+				{/* <Breadcrumbs aria-label="breadcrumb">
+					<BackNavButton></BackNavButton>
+					<Link color="inherit" to="/namespaces">
+						Namespaces
+					</Link>
+					<Typography color="textPrimary">{namespace}</Typography>
+					<ForwardNavButton></ForwardNavButton>
+				</Breadcrumbs> */}
+				<Breadcrumbs aria-label="breadcrumb">
+					<BackNavButton></BackNavButton>
+					<Link color="inherit" to="/namespaces">
+						Namespaces
+					</Link>
+					<Link color="inherit" to={"/namespaces/" + namespace}>
+						{namespace}
+					</Link>
+					<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
+						{typename}
+					</Link>
+					<Typography color="textPrimary">{ instance && ( instance["_label"] + " (" + instance["_id"] + ")") }</Typography>
+					<ForwardNavButton></ForwardNavButton>
+				</Breadcrumbs>
+			</Layout.Breadcrumb>
 			<Layout.Main>
 				<Graph 
 					graph={graph} 

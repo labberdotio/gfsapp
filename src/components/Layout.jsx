@@ -203,6 +203,24 @@ function Sidebar(props) {
 	);
 }
 
+// function Breadcrumb(props: BoxProps) {
+function Breadcrumb(props) {
+	return (
+		<>
+		<Box 
+			component="breadcrumb" 
+			className="Breadcrumb" 
+			{...props}
+			sx={{
+				
+			}}
+		>
+			{props.children} 
+		</Box>
+		</>
+	);
+}
+
 // function Main(props: BoxProps) {
 function Main(props) {
 	return (
@@ -246,6 +264,7 @@ export default {
 	Root, 
 	Header, 
 	Sidebar, 
+	Breadcrumb, 
 	Main, 
 	Side
 };
