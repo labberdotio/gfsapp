@@ -21,12 +21,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 class Header extends Component {
 
-	// setOpen = function(some: boolean) {
-    setOpen = function(some) {
-		return some;
-	}
-
 	render() {
+
+		var _this = this;
+
+		function toggleDrawerOpen() {
+			_this.props.toggleDrawerOpen();
+		}
 
 		function ModeToggle() {
 			const { mode, setMode } = useColorScheme();
@@ -74,8 +75,6 @@ class Header extends Component {
 			);
 		}
 
-		var open = true;
-
 		return (
 			<Box 
 				// variant="highlight" 
@@ -97,28 +96,29 @@ class Header extends Component {
 					}}
 				>
 					<IconButton 
-							// color="inherit" 
-							// aria-label="open drawer" 
-							// onClick={handleDrawerOpen} 
-							// edge="start" 
-							// variant="highlight" 
-							color="neutral" 
-							variant="plain" 
-							sx={[
-								{
-									marginRight: 5, 
-									color: 'rgb(97, 97, 97)'
-								},
-								// open && { display: 'none' }
-							]}
-						>
-							<MenuIcon 
-								// color="neutral" 
-								// variant="plain" 
-								sx={{
-									color: 'rgb(97, 97, 97)'
-								}}
-							/>
+						// color="inherit" 
+						// aria-label="open drawer" 
+						// onClick={toggleDrawerOpen} 
+						onClick={() => toggleDrawerOpen()} 
+						// edge="start" 
+						// variant="highlight" 
+						color="neutral" 
+						variant="plain" 
+						sx={[
+							{
+								marginRight: 5, 
+								color: 'rgb(97, 97, 97)'
+							},
+							// open && { display: 'none' }
+						]}
+					>
+						<MenuIcon 
+							// color="neutral" 
+							// variant="plain" 
+							sx={{
+								color: 'rgb(97, 97, 97)'
+							}}
+						/>
 					</IconButton>
 					<Button 
 						component="a" 
