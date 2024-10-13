@@ -1,15 +1,12 @@
 
 // 
-// Copyright (c) 2022, 2023, John Grundback
+// Copyright (c) 2022, 2023, 2024, John Grundback
 // All rights reserved.
 // 
 
 import React, {Component} from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
-
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 
 import {
 	Routes, 
@@ -33,6 +30,8 @@ import {
 import { 
 	getNamespacesFromState 
 } from '../stores/Namespace'
+
+import Layout from './Layout';
 
 class Namespaces extends Component {
 
@@ -123,22 +122,10 @@ class Namespaces extends Component {
 
 		return (
 			<>
-			<Container 
-				// className={classes.graphContainer} 
-				className="graphContainer" 
-				maxWidth="false">
-
 			{/* <Breadcrumbs aria-label="breadcrumb">
 				<Typography color="textPrimary">Namespaces</Typography>
 			</Breadcrumbs> */}
-
-			<Grid 
-				className="" 
-				container 
-				xs={12} 
-				spacing={0} 
-			>
-
+			<Layout.Main>
 			{namespaces && namespaces.data &&
 				<>
 				{/* <List> */}
@@ -160,9 +147,7 @@ class Namespaces extends Component {
 				{/* </List> */}
 				</>
 			}
-
-			</Grid>
-			</Container>
+			</Layout.Main>
 			</>
 		);
 	}
