@@ -19,6 +19,14 @@ import {
 	useNavigate
 } from "react-router-dom";
 
+import Button from '@mui/joy/Button';
+
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import { 
 	loadNamespacesIntoState 
 } from '../actions/Namespace'
@@ -32,6 +40,34 @@ import {
 } from '../stores/Namespace'
 
 import Layout from './Layout';
+
+export const BackNavButton = () => {
+    let navigate = useNavigate();
+    return (
+        <>
+			<Button
+				startIcon={<ArrowBackIcon />} 
+				onClick={() => navigate(-1)}
+			>
+				Back
+			</Button>
+        </>
+    );
+};
+
+export const ForwardNavButton = () => {
+    let navigate = useNavigate();
+    return (
+		<>
+			<Button
+				endIcon={<ArrowForwardIcon />} 
+				onClick={() => navigate(+1)}
+			>
+				Forward
+			</Button>
+        </>
+    );
+};
 
 class Namespaces extends Component {
 
@@ -122,9 +158,11 @@ class Namespaces extends Component {
 
 		return (
 			<>
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<Typography color="textPrimary">Namespaces</Typography>
-			</Breadcrumbs> */}
+			<Layout.Breadcrumb>
+				<Breadcrumbs aria-label="breadcrumb">
+					<Typography color="textPrimary">Namespaces</Typography>
+				</Breadcrumbs>
+			</Layout.Breadcrumb>
 			<Layout.Main>
 			{namespaces && namespaces.data &&
 				<>
