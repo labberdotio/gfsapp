@@ -55,7 +55,7 @@ function Header(props) {
 					color: '#616161', 
 					// display: 'flex', 
 					display: {
-						xs: 'none',  
+						xs: 'none', 
 						md: 'flex'
 					},
 					flexDirection: 'row', 
@@ -63,7 +63,7 @@ function Header(props) {
 					alignItems: 'center', 
 					// gridColumn: '1', 
 					gridColumn: {
-						xs: '0',  
+						xs: '0', 
 						md: '1'
 					},
 					borderBottom: '1px solid', 
@@ -105,7 +105,7 @@ function Header(props) {
 					alignItems: 'center',
 					// gridColumn: '2 / span 2',
 					gridColumn: {
-						xs: '1 / span 3',  
+						xs: '1 / span 3', 
 						md: '2 / span 2'
 					},
 					borderBottom: '1px solid',
@@ -203,6 +203,42 @@ function Sidebar(props) {
 	);
 }
 
+// function SideDrawer(props: BoxProps & { onClose: React.MouseEventHandler<HTMLDivElement> },) {
+function SideDrawer(props) {
+	const { onClose, ...other } = props;
+	return (
+		<Box
+		{...other}
+		sx={[
+			{ position: 'fixed', zIndex: 1200, width: '100%', height: '100%' },
+			...(Array.isArray(other.sx) ? other.sx : [other.sx]),
+		]}
+		>
+		<Box
+			role="button"
+			onClick={onClose}
+			sx={(theme) => ({
+			position: 'absolute',
+			inset: 0,
+			bgcolor: `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
+			})}
+		/>
+		<Sheet
+			sx={{
+			minWidth: 256,
+			width: 'max-content',
+			height: '100%',
+			p: 2,
+			boxShadow: 'lg',
+			bgcolor: 'background.surface',
+			}}
+		>
+			{props.children}
+		</Sheet>
+		</Box>
+	);
+}
+
 // function Breadcrumb(props: BoxProps) {
 function Breadcrumb(props) {
 	return (
@@ -268,7 +304,7 @@ function Side(props) {
 				display: { xs: 'none', sm: 'initial' }, 
 				borderLeft: '1px solid', 
 				borderColor: 'divider', 
-				// position: 'relative',  
+				// position: 'relative', 
 				// marginTop: '64px'
 			}}
 		>
@@ -282,6 +318,7 @@ export default {
 	Root, 
 	Header, 
 	Sidebar, 
+	SideDrawer, 
 	Breadcrumb, 
 	List, 
 	Main, 

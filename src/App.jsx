@@ -174,7 +174,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// 
+			drawerOpen: false
 		}
 
 		var _this = this;
@@ -185,7 +185,7 @@ class App extends Component {
 	}
 
 	state = {
-		// 
+		drawerOpen: false
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -259,7 +259,19 @@ class App extends Component {
 			types
 		} = this.props;
 
-		const drawerOpen = false; // true;
+		const drawerOpen = this.state.drawerOpen;
+
+		function setDrawerOpen(setting) {
+			_this.setState({
+				drawerOpen: setting
+			});
+		}
+
+		function toggleDrawerOpen() {
+			_this.setState({
+				drawerOpen: !_this.state.drawerOpen
+			});
+		}
 
 		const theme = extendTheme({
 			colorSchemes: {
@@ -338,6 +350,14 @@ class App extends Component {
 			// <CssVarsProvider disableTransitionOnChange>
 			<CssVarsProvider theme={theme} disableTransitionOnChange>
 				<CssBaseline />
+				{drawerOpen && (
+					<Layout.SideDrawer onClose={() => setDrawerOpen(false)}>
+						<Sidebar 
+							namespace={namespace} 
+							types={types} 
+						/>
+					</Layout.SideDrawer>
+				)}
 				<Layout.Root
 					sx={[
 						// {
@@ -352,6 +372,7 @@ class App extends Component {
 				>
 					<Layout.Header>
 						<Header 
+							toggleDrawerOpen={toggleDrawerOpen}
 							namespace={namespace} 
 							types={types} 
 						/>
