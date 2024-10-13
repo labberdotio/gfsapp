@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, 2023, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, 2024, John Grundback
 // All rights reserved.
 // 
 
@@ -20,6 +20,9 @@ import {
 
 import Button from '@mui/joy/Button';
 
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -36,6 +39,34 @@ import {
 import Layout from './Layout';
 import InstancesView from './Instances'
 import InstanceView from './Instance'
+
+export const BackNavButton = () => {
+    let navigate = useNavigate();
+    return (
+        <>
+			<Button
+				startIcon={<ArrowBackIcon />} 
+				onClick={() => navigate(-1)}
+			>
+				Back
+			</Button>
+        </>
+    );
+};
+
+export const ForwardNavButton = () => {
+    let navigate = useNavigate();
+    return (
+		<>
+			<Button
+				endIcon={<ArrowForwardIcon />} 
+				onClick={() => navigate(+1)}
+			>
+				Forward
+			</Button>
+        </>
+    );
+};
 
 class RelInstance extends Component {
 
@@ -161,23 +192,25 @@ class RelInstance extends Component {
 
 		return (
 			<>
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<BackNavButton></BackNavButton>
-				<Link color="inherit" to="/namespaces">
-					Namespaces
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace}>
-					{namespace}
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
-					{typename}
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
-					{ instance && instance["entity"] && instance["entity"]["_name"] }
-				</Link>
-				<Typography color="textPrimary">{ relname }</Typography>
-				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs> */}
+			<Layout.Breadcrumb>
+				<Breadcrumbs aria-label="breadcrumb">
+					<BackNavButton></BackNavButton>
+					<Link color="inherit" to="/namespaces">
+						Namespaces
+					</Link>
+					<Link color="inherit" to={"/namespaces/" + namespace}>
+						{namespace}
+					</Link>
+					<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
+						{typename}
+					</Link>
+					<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
+						{ instance && instance["entity"] && instance["entity"]["_name"] }
+					</Link>
+					<Typography color="textPrimary">{ relname }</Typography>
+					<ForwardNavButton></ForwardNavButton>
+				</Breadcrumbs>
+			</Layout.Breadcrumb>
 			<Layout.Main>
 			{ relname && reltype && relschema && relinstance && 
 				<InstanceView 

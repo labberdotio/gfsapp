@@ -600,25 +600,27 @@ const Root = class extends Component {
 
 		return (
 			<>
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<BackNavButton></BackNavButton>
-				<Link color="inherit" to="/namespaces">
-					Namespaces
-				</Link>
-				<Typography color="textPrimary">{namespace}</Typography>
-				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs> */}
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<BackNavButton></BackNavButton>
-				<Link color="inherit" to="/namespaces">
-					Namespaces
-				</Link>
-				<Link color="inherit" to={"/namespaces/" + namespace}>
-					{namespace}
-				</Link>
-				<Typography color="textPrimary">{typename}</Typography>
-				<ForwardNavButton></ForwardNavButton>
-			</Breadcrumbs> */}
+			<Layout.Breadcrumb>
+				{/* <Breadcrumbs aria-label="breadcrumb">
+					<BackNavButton></BackNavButton>
+					<Link color="inherit" to="/namespaces">
+						Namespaces
+					</Link>
+					<Typography color="textPrimary">{namespace}</Typography>
+					<ForwardNavButton></ForwardNavButton>
+				</Breadcrumbs> */}
+				<Breadcrumbs aria-label="breadcrumb">
+					<BackNavButton></BackNavButton>
+					<Link color="inherit" to="/namespaces">
+						Namespaces
+					</Link>
+					<Link color="inherit" to={"/namespaces/" + namespace}>
+						{namespace}
+					</Link>
+					<Typography color="textPrimary">{typename}</Typography>
+					<ForwardNavButton></ForwardNavButton>
+				</Breadcrumbs>
+			</Layout.Breadcrumb>
 			<Layout.Main>
 				<Graph 
 					graph={graph} 
