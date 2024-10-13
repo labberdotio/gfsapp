@@ -26,6 +26,8 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Snackbar from '@mui/joy/Snackbar';
 
+import Layout from './Layout';
+
 /*
  * Defaults
  */
@@ -268,8 +270,9 @@ class Login extends Component {
 		// }
 
 		return (
-			<main>
-			<CssBaseline />
+			<>
+			<Layout.Main>
+			{/* <CssBaseline />
 			<Sheet
 				sx={{
 					width: 300,
@@ -284,7 +287,7 @@ class Login extends Component {
 					boxShadow: 'md',
 				}}
 				variant="outlined"
-			>
+			> */}
 				<form onSubmit={(e) => this.submitUser(e)}>
 				<div>
 					<Typography level="h4" component="h1">
@@ -385,7 +388,7 @@ class Login extends Component {
 					Don&apos;t have an account?
 				</Typography> */}
 				</form>
-			</Sheet>
+			{/* </Sheet> */}
 			{/* <Snackbar
 				anchorOrigin={{
 					vertical: 'bottom',
@@ -419,7 +422,8 @@ class Login extends Component {
 			>
 				{this.state.snackbarMessage}
 			</Snackbar>
-			</main>
+			</Layout.Main>
+			</>
 		);
 
 	}
