@@ -29,6 +29,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import APIClient from '../clients/APIClient';
 
 import Layout from './Layout';
+import List from './List';
 import Graph from './Graph';
 // import ThreeDeeGraph from './ThreeDeeGraph';
 
@@ -603,6 +604,13 @@ const Root = class extends Component {
 
 		return (
 			<>
+			<Layout.List>
+				<List
+					namespace={namespace} 
+					graph={graph} 
+					selected={false}
+				/>
+			</Layout.List>
 			<Layout.Breadcrumb>
 				{/* <Breadcrumbs aria-label="breadcrumb">
 					<BackNavButton></BackNavButton>

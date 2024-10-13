@@ -39,6 +39,7 @@ import {
 } from '../stores/Entity'
 
 import Layout from './Layout';
+import List from './List';
 import Graph from './Graph';
 // import ThreeDeeGraph from './ThreeDeeGraph';
 
@@ -689,6 +690,13 @@ const RootInstances = class extends Component {
 
 		return (
 			<>
+			<Layout.List>
+				<List
+					namespace={namespace} 
+					graph={graph} 
+					selected={false}
+				/>
+			</Layout.List>
 			<Layout.Breadcrumb>
 				{/* <Breadcrumbs aria-label="breadcrumb">
 					<BackNavButton></BackNavButton>
