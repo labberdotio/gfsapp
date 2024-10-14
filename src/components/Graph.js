@@ -332,6 +332,7 @@ class Graph extends Component {
 
 		var _this = this;
 
+		this.divRef = React.createRef();
 		this.graphRef = React.createRef();
 
 		this.selectItem = this.selectItem.bind(this);
@@ -675,7 +676,7 @@ class Graph extends Component {
 		// }
 
 		if( !setheight ) {
-			setheight = 640;
+			setheight = "calc(100vh - 40px - 64px)"; // 640;
 		}
 
 		// if( !minheight ) {
@@ -741,21 +742,12 @@ class Graph extends Component {
 		var runLayout = this.props.runLayout;
 		var zoomFit = this.props.zoomFit;
 
-		// console.log("???? GRAPH ???? ");
-		// // console.log();
-		// console.log(selected);
-		// console.log(highlighted);
-		// console.log(exploded);
-		// console.log(pulsed);
-		// console.log(runLayout);
-		// console.log(zoomFit);
-
 		return (
 			<>
-			{/* <Container 
-				// className={classes.graphContainer} 
-				className="graphContainer" 
-				maxWidth="xl"> */}
+			<div 
+				ref={this.divRef} 
+				style={{width: "100%"}}
+			>
 			<CustomCytoscapeComponent
 				ref={this.graphRef}
 				className="graph"
@@ -783,7 +775,7 @@ class Graph extends Component {
 					// backgroundColor: "white"
 				}}
 			/>
-			{/* </Container> */}
+			</div>
 			</>
 		);
 	}

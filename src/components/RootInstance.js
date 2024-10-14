@@ -86,12 +86,14 @@ const RootInstance = class extends Component {
 			grfloaded: false, 
 			grffailed: false, 
 			graph: undefined, 
-			pgraph: undefined
+			pgraph: undefined, 
+			mainWidth: 0, 
+			mainHeight: 0
 		}
 
 		var _this = this;
 
-		this.gridRef = React.createRef();
+		this.mainRef = React.createRef();
 
 		this.selectItem = this.selectItem.bind(this);
 		this.contextCommand = this.contextCommand.bind(this);
@@ -105,7 +107,9 @@ const RootInstance = class extends Component {
 		grfloaded: false, 
 		grffailed: false, 
 		graph: undefined, 
-		pgraph: undefined
+		pgraph: undefined, 
+		mainWidth: 0, 
+		mainHeight: 0
 	};
 
 	// componentWillUpdate(nextProps, nextState) {
@@ -121,6 +125,15 @@ const RootInstance = class extends Component {
 			type, 
 			schema
 		} = this.props;
+
+		if( this.mainRef && this.mainRef.current ) {
+			if( this.state.mainWidth != this.mainRef.current.offsetWidth ) {
+				this.setState({
+					mainWidth: this.mainRef.current.offsetWidth, 
+					mainHeight: this.mainRef.current.offsetHeight
+				});
+			}
+		}
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -190,6 +203,15 @@ const RootInstance = class extends Component {
 			type, 
 			schema
 		} = this.props;	
+
+		if( this.mainRef && this.mainRef.current ) {
+			if( this.state.mainWidth != this.mainRef.current.offsetWidth ) {
+				this.setState({
+					mainWidth: this.mainRef.current.offsetWidth, 
+					mainHeight: this.mainRef.current.offsetHeight
+				});
+			}
+		}
 
 		if( (!this.props.type["loading"]) && 
 			(!this.props.type["loaded"]) && 
@@ -681,18 +703,12 @@ const RootInstance = class extends Component {
 		// var treestruc = this.getTreeData(api, namespace, graph);
 
 		var graphwidth = 640;
-		var graphheight = 640;
-		if( this.gridRef.current ) {
-			graphwidth = this.gridRef.current.offsetWidth;
-			graphheight = this.gridRef.current.offsetHeight;
+		var graphheight = "calc(100vh - 40px - 64px)"; // 640;
+		if( this.state.mainWidth > 0 ) {
+			graphwidth = this.state.mainWidth
 		}
-
-		if( graphwidth > 1280 ) {
-			graphwidth = 1280;
-		}
-
-		if( graphheight > 640 ) {
-			graphheight = 640;
+		if( this.state.mainHeight > 0 ) {
+			graphheight = this.state.mainHeight
 		}
 
 		return (
@@ -729,6 +745,13 @@ const RootInstance = class extends Component {
 				</Breadcrumbs>
 			</Layout.Breadcrumb>
 			<Layout.Main>
+				<div 
+					ref={this.mainRef} 
+					style={{
+						width: "100%", 
+						height: "100%"
+					}}
+				>
 				<Graph 
 					graph={graph} 
 					width={graphwidth} 
@@ -755,6 +778,7 @@ const RootInstance = class extends Component {
 					selectItem={this.selectItem} 
 					contextCommand={this.contextCommand}
 				/> */}
+				</div>
 			</Layout.Main>
 			<Layout.Side>
 				<Graph
