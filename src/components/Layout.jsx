@@ -22,11 +22,17 @@ function Root(props) {
 				{
 					display: 'grid', 
 					gridTemplateColumns: {
-						xs: '73px minmax(300px, 500px) minmax(500px, 1fr)', 
-						sm: '73px minmax(300px, 500px) minmax(500px, 1fr)', 
-						md: '240px minmax(300px, 500px) minmax(500px, 1fr)'
+						xs: '1fr', 
+						sm: '73px minmax(240px, 300px) minmax(300px, 1fr)', 
+						md: '73px minmax(240px, 300px) minmax(300px, 1fr)', 
+						lg: '240px minmax(240px, 300px) minmax(300px, 1fr) 300px'
 					}, 
-					gridTemplateRows: '64px 1fr', 
+					gridTemplateRows: {
+						xs: '64px 1fr', 
+						sm: '64px 1fr', 
+						md: '64px 1fr', 
+						lg: '64px 1fr', 
+					},
 					minHeight: '100vh'
 				},
 				...(Array.isArray(props.sx) ? props.sx : [props.sx])
@@ -53,18 +59,26 @@ function Header(props) {
 					gap: 2, 
 					bgcolor: 'background.level3', 
 					color: '#616161', 
-					// display: 'flex', 
 					display: {
 						xs: 'none', 
-						md: 'flex'
+						sm: 'none', 
+						md: 'none', 
+						lg: 'none'
 					},
 					flexDirection: 'row', 
 					justifyContent: 'space-between', 
-					alignItems: 'center', 
-					// gridColumn: '1', 
+					alignItems: 'center',  
 					gridColumn: {
 						xs: '0', 
-						md: '1'
+						md: '0', 
+						md: '0', 
+						lg: '0', 
+					},
+					gridRow: {
+						xs: '1', 
+						sm: '1', 
+						md: '1',  
+						lg: '1'
 					},
 					borderBottom: '1px solid', 
 					borderColor: 'divider', 
@@ -103,10 +117,17 @@ function Header(props) {
 					flexDirection: 'row',
 					justifyContent: 'space-between',
 					alignItems: 'center',
-					// gridColumn: '2 / span 2',
 					gridColumn: {
-						xs: '1 / span 3', 
-						md: '2 / span 2'
+						xs: '1 / span 4', 
+						sm: '1 / span 4', 
+						md: '1 / span 4', 
+						lg: '1 / span 4'
+					},
+					gridRow: {
+						xs: '1', 
+						sm: '1', 
+						md: '1',  
+						lg: '1'
 					},
 					borderBottom: '1px solid',
 					borderColor: 'divider',
@@ -192,9 +213,26 @@ function Sidebar(props) {
 			sx={{
 				// position: 'relative', 
 				// marginTop: '64px', 
-				display: 'flex', 
+				display: {
+					xs: 'none', 
+					sm: 'flex', 
+					md: 'flex',  
+					lg: 'flex'
+				},
 				flexDirection: 'column', 
 				height: 'calc(100dvh - 64px)', 
+				gridColumn: {
+					xs: '1', 
+					sm: '1', 
+					md: '1',  
+					lg: '1'
+				},
+				gridRow: {
+					xs: '2 / span 2', 
+					sm: '2 / span 2', 
+					md: '2 / span 2', 
+					lg: '2 / span 2'
+				}
 			}}
 		>
 			{props.children} 
@@ -207,37 +245,37 @@ function Sidebar(props) {
 function SideDrawer(props) {
 	const { onClose, ...other } = props;
 	return (
-		<Box
+	  <Box
 		{...other}
 		sx={[
-			{ position: 'fixed', zIndex: 1200, width: '100%', height: '100%' },
-			...(Array.isArray(other.sx) ? other.sx : [other.sx]),
+		  { position: 'fixed', zIndex: 1200, width: '100%', height: '100%' },
+		  ...(Array.isArray(other.sx) ? other.sx : [other.sx]),
 		]}
-		>
+	  >
 		<Box
-			role="button"
-			onClick={onClose}
-			sx={(theme) => ({
+		  role="button"
+		  onClick={onClose}
+		  sx={(theme) => ({
 			position: 'absolute',
 			inset: 0,
 			bgcolor: `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
-			})}
+		  })}
 		/>
 		<Sheet
-			sx={{
+		  sx={{
 			minWidth: 256,
 			width: 'max-content',
 			height: '100%',
 			p: 2,
 			boxShadow: 'lg',
 			bgcolor: 'background.surface',
-			}}
+		  }}
 		>
-			{props.children}
+		  {props.children}
 		</Sheet>
-		</Box>
+	  </Box>
 	);
-}
+  }
 
 // function Breadcrumb(props: BoxProps) {
 function Breadcrumb(props) {
@@ -248,7 +286,18 @@ function Breadcrumb(props) {
 			className="Breadcrumb" 
 			{...props}
 			sx={{
-				
+				gridColumn: {
+					xs: '3 / span 2', 
+					sm: '3 / span 2', 
+					md: '3 / span 2', 
+					lg: '3 / span 2', 
+				},
+				gridRow: {
+					xs: '2', 
+					sm: '2', 
+					md: '2', 
+					lg: '2'
+				}
 			}}
 		>
 			{props.children} 
@@ -266,7 +315,24 @@ function List(props) {
 			className="List" 
 			{...props}
 			sx={{
-				
+				display: {
+					xs: 'none', 
+					sm: 'flex', 
+					md: 'flex',  
+					lg: 'flex'
+				},
+				gridColumn: {
+					xs: '2', 
+					sm: '2', 
+					md: '2', 
+					lg: '2'
+				},
+				gridRow: {
+					xs: '2 / span 2', 
+					sm: '2 / span 2', 
+					md: '2 / span 2', 
+					lg: '2 / span 2'
+				}
 			}}
 		>
 			{props.children} 
@@ -283,10 +349,19 @@ function Main(props) {
 			component="main" 
 			className="Main" 
 			{...props}
-			// sx={[{ p: 2 }, ...(Array.isArray(props.sx) ? props.sx : [props.sx])]}
 			sx={{
-				// position: 'relative', 
-				// marginTop: '64px'
+				gridColumn: {
+					xs: '3', 
+					sm: '3', 
+					md: '3', 
+					lg: '3'
+				},
+				gridRow: {
+					xs: '3', 
+					sm: '3', 
+					md: '3', 
+					lg: '3'
+				}
 			}}
 		>
 			{props.children} 
@@ -301,11 +376,28 @@ function Side(props) {
 		<>
 		<Sheet 
 			sx={{
-				display: { xs: 'none', sm: 'initial' }, 
+				display: {
+					xs: 'none', 
+					sm: 'none', 
+					md: 'none', 
+					lg: 'initial'
+				}, 
 				borderLeft: '1px solid', 
 				borderColor: 'divider', 
-				// position: 'relative', 
-				// marginTop: '64px'
+				// position: 'relative',  
+				// marginTop: '64px',
+				gridColumn: {
+					xs: '4', 
+					sm: '4', 
+					md: '4', 
+					lg: '4'
+				},
+				gridRow: {
+					xs: '3', 
+					sm: '3', 
+					md: '3', 
+					lg: '3'
+				}
 			}}
 		>
 			{props.children} 
