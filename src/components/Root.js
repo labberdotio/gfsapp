@@ -555,18 +555,19 @@ const Root = class extends Component {
 					// });
 				}
 			}
-		} else {
-			var iid = undefined;
-			// if( this.state.instanceid ) {
-			var namespace = this.props.namespace;
-			this.props.navigate("/namespaces/" + namespace);
-			// this.setState({
-			// 	grfloading: false, 
-			// 	grfloaded: false, 
-			// 	grffailed: false, 
-			// });
-			// }
-		}
+		} 
+		// else {
+		// 	var iid = undefined;
+		// 	// if( this.state.instanceid ) {
+		// 	var namespace = this.props.namespace;
+		// 	this.props.navigate("/namespaces/" + namespace);
+		// 	// this.setState({
+		// 	// 	grfloading: false, 
+		// 	// 	grfloaded: false, 
+		// 	// 	grffailed: false, 
+		// 	// });
+		// 	// }
+		// }
 	}
 
 	render() {
