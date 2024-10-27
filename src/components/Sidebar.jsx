@@ -29,6 +29,7 @@ import Typography from '@mui/joy/Typography';
 
 import AppsIcon from '@mui/icons-material/Apps';
 import HomeIcon from '@mui/icons-material/Home';
+import ExtensionIcon from '@mui/icons-material/Extension';
 
 class Sidebar extends Component {
 
@@ -68,6 +69,9 @@ class Sidebar extends Component {
 			namespace, 
 			types
 		} = this.props;
+
+		console.log("????");
+		console.log(types);	
 
 		return (
 			<>
@@ -131,31 +135,67 @@ class Sidebar extends Component {
 							</ListItemButton>
 						</ListItem>
 						{ namespace && (
-						<ListItem>
-							<ListItemButton 
-								title="Home" 
-								variant="solid" 
-								component={Link} 
-								to={"/namespaces/" + namespace} 
-								selected 
-							>
-								<HomeIcon 
-									sx={{
-										height: '24px', 
-										minWidth: '56px'
-									}}
-								/>
-								<ListItemContent>
-									<Typography 
-										level="title-md" 
-										color="primary" 
-										variant="solid"
-									>
-										{namespace}
-									</Typography>
-								</ListItemContent>
-							</ListItemButton>
-						</ListItem>
+							<ListItem>
+								<ListItemButton 
+									title="Home" 
+									variant="solid" 
+									component={Link} 
+									to={"/namespaces/" + namespace} 
+									selected 
+								>
+									<HomeIcon 
+										sx={{
+											height: '24px', 
+											minWidth: '56px'
+										}}
+									/>
+									<ListItemContent>
+										<Typography 
+											level="title-md" 
+											color="primary" 
+											variant="solid"
+										>
+											{namespace}
+										</Typography>
+									</ListItemContent>
+								</ListItemButton>
+							</ListItem>
+						)}
+						{ types && types['entities'] && types['entities']['data'] && (
+							<>
+							{types['entities']['data'].map(function(type, idx) {
+								return (
+									<>
+									<ListItem>
+										<ListItemButton 
+											title={type.name} 
+											variant="solid" 
+											component={Link} 
+											// to={"/namespaces/" + namespace} 
+											to={"/namespaces/" + namespace + "/" + type["_label"] + "/" + type["_id"]} 
+											// selected 
+										>
+											<ExtensionIcon 
+												sx={{
+													height: '24px', 
+													minWidth: '56px'
+												}}
+											/>
+											<ListItemContent>
+												<Typography 
+													level="title-md" 
+													// color="primary" 
+													variant="solid"
+												>
+													{type.name}
+												</Typography>
+											</ListItemContent>
+										</ListItemButton>
+									</ListItem>
+									</>
+								)
+							})}
+							</>
 						)}
 					</List>
 				</Box>	

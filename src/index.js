@@ -81,10 +81,10 @@ import history from './history'
  * Defaults
  */
 // var dnamespace = process.env.REACT_APP_GFS_FS_NAME || 'gfs1';
-var dapiHostname = process.env.REACT_APP_GFS_API_HOST || 'gfsapi';
-var dapiPort = process.env.REACT_APP_GFS_API_PORT || 5000;
-var dwsHostname = process.env.REACT_APP_GFS_WS_HOST || 'gfsapi';
-var dwsPort = process.env.REACT_APP_GFS_WS_PORT || 5002;
+var dapiHostname = process.env.REACT_APP_GFS_API_HOST || 'gfs-api';
+var dapiPort = process.env.REACT_APP_GFS_API_PORT || 8080;
+var dwsHostname = process.env.REACT_APP_GFS_WS_HOST || 'gfs-api';
+var dwsPort = process.env.REACT_APP_GFS_WS_PORT || 8080;
 
 /*
  * Overrides
@@ -231,14 +231,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					>
-					<RootView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					/>
+					<App>
+					<RootView/>
 					</App>
 					</>
 				}/>
@@ -247,10 +241,8 @@ ReactDOM.render(
 				path="/dashboard" 
 				element={
 					<>
-					<App 
-					>
-					<DashboardView 
-					/>
+					<App>
+					<DashboardView/>
 					</App>
 					</>
 				} /> */}
@@ -259,14 +251,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/:typename" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					>
-					<RootInstancesView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					/>
+					<App>
+					<RootInstancesView/>
 					</App>
 					</>
 				}
@@ -276,14 +262,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/create/:typename" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					>
-					<CreateInstanceDialog 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					/>
+					<App>
+					<CreateInstanceDialog/>
 					</App>
 					</>
 				}
@@ -293,16 +273,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/:typename/:instanceid" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-					>
-					<RootInstanceView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-					/>
+					<App>
+					<RootInstanceView/>
 					</App>
 					</>
 				}
@@ -312,18 +284,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/:typename/:instanceid/:relname" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-						// relname={props.match.params.relname} 
-					>
-					<RelInstanceView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-						// relname={props.match.params.relname} 
-					/>
+					<App>
+					<RelInstanceView/>
 					</App>
 					</>
 				}

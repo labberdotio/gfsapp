@@ -27,6 +27,18 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+import Stack from '@mui/joy/Stack';
+import Sheet from '@mui/joy/Sheet';
+import Box from '@mui/joy/Box';
+import List from '@mui/joy/List';
+import ListItem from '@mui/joy/ListItem';
+import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
+import ListDivider from '@mui/joy/ListDivider';
+
+// 
+// 
+// import Typography from '@mui/joy/Typography';
+
 import { 
 	loadNamespacesIntoState 
 } from '../actions/Namespace'
@@ -156,6 +168,8 @@ class Namespaces extends Component {
 			backdropOpen = true;
 		}
 
+		var selected = undefined;
+
 		return (
 			<>
 			<Layout.Breadcrumb>
@@ -163,29 +177,70 @@ class Namespaces extends Component {
 					<Typography color="textPrimary">Namespaces</Typography>
 				</Breadcrumbs>
 			</Layout.Breadcrumb>
-			<Layout.Main>
 			{namespaces && namespaces.data &&
-				<>
-				{/* <List> */}
+			<Sheet
+				sx={{
+					borderRight: '1px solid',
+					borderColor: 'divider',
+					height: { sm: 'calc(100dvh - var(--Header-height))', md: '100dvh' },
+					overflowY: 'auto',
+				}}
+			>
+				<List
+					sx={{
+						py: 0,
+						'--ListItem-paddingY': '0.75rem',
+						'--ListItem-paddingX': '1rem',
+					}}
+				>
 					{namespaces.data.map(function(namespace, idx) {
 						return (
-							// <ListItem 
-							// 	button 
-							// 	selected={false} 
-							// 	component={Link} 
-							// 	to={"/namespaces/" + namespace} 
-							// 	// onClick={() => _this.selectNamespace(namespace)}
-							// 	>
-							// 	<ListItemIcon><ExtensionIcon/></ListItemIcon>
-							// 	<ListItemText>{namespace}</ListItemText>
-							// </ListItem>
-							<div>{namespace}</div>
-						)
+							<>
+							<ListItem>
+							<ListItemButton
+								// onClick={() => {
+								// }}
+								component={Link} 
+								to={"/namespaces/" + namespace} 
+								selected={selected} 
+								color="neutral" 
+								sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
+							>
+								<Stack direction="row" spacing={1.5}>
+								<Box sx={{ flex: 1 }}>
+									{/* <Typography level="title-sm">{namespace}</Typography> */}
+									{/* <Typography level="body-sm">{namespace}</Typography> */}
+								</Box>
+								{/* <Box sx={{ lineHeight: 1.5, textAlign: 'right' }}>
+									<Typography
+										level="body-xs"
+										noWrap
+										sx={{ display: { xs: 'none', md: 'block' } }}
+									>
+									</Typography>
+								</Box> */}
+								</Stack>
+								<Typography
+									level="body-sm"
+									sx={{
+										display: '-webkit-box',
+										WebkitLineClamp: '2',
+										WebkitBoxOrient: 'vertical',
+										overflow: 'hidden',
+										textOverflow: 'ellipsis',
+									}}
+								>
+									{namespace}
+								</Typography>
+							</ListItemButton>
+							</ListItem>
+							<ListDivider sx={{ margin: 0 }} />
+							</>
+						);
 					})}
-				{/* </List> */}
-				</>
+				</List>
+			</Sheet>
 			}
-			</Layout.Main>
 			</>
 		);
 	}

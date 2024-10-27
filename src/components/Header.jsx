@@ -9,15 +9,18 @@ import React, { useState, Fragment, Component } from 'react';
 
 import { useColorScheme } from '@mui/joy/styles';
 import Box from '@mui/joy/Box';
-import IconButton from '@mui/joy/IconButton';
 import Stack from '@mui/joy/Stack';
 import Button from '@mui/joy/Button';
-// import Link from '@mui/joy/Link';
-// import Select from '@mui/joy/Select';
-// import Option from '@mui/joy/Option';
 import Switch from '@mui/joy/Switch';
 
-import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/joy/Typography';
+// import InputBase from '@mui/material/InputBase';
+import MuiLink from '@mui/material/Link';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from '@mui/icons-material/Home';
+import ComputerIcon from '@mui/icons-material/Computer';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 class Header extends Component {
 
@@ -25,9 +28,9 @@ class Header extends Component {
 
 		var _this = this;
 
-		function toggleDrawerOpen() {
-			_this.props.toggleDrawerOpen();
-		}
+		// function toggleDrawerOpen() {
+		// 	_this.props.toggleDrawerOpen();
+		// }
 
 		function ModeToggle() {
 			const { mode, setMode } = useColorScheme();
@@ -75,6 +78,33 @@ class Header extends Component {
 			);
 		}
 
+		const namespace = this.props.namespace;
+
+		const apiHostname = this.props.api.api.host;
+		const apiPort = this.props.api.api.port;
+		const wsHostname = this.props.api.ws.host;
+		const wsPort = this.props.api.ws.port;
+
+		/*
+		* host:port
+		*/
+		const apiHostnamePort = String(apiHostname) + ":" + String(apiPort);
+		const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
+
+		// const snamespaces = useSelector(state => state.namespaces);
+		const snamespaces = [];
+
+		var namespaces = undefined;
+
+		if( snamespaces && snamespaces[apiHostname] && snamespaces[apiHostname]["namespaces"] ) {
+			namespaces = snamespaces[apiHostname]["namespaces"];
+		}	
+
+		var logouturl = "/logout";
+		if( namespace ) {
+			logouturl = "/logout?" + namespace;
+		}
+
 		return (
 			<Box 
 				// variant="highlight" 
@@ -95,46 +125,154 @@ class Header extends Component {
 						color: 'rgb(126, 68, 168)'
 					}}
 				>
-					<IconButton 
-						// color="inherit" 
-						// aria-label="open drawer" 
-						// onClick={toggleDrawerOpen} 
-						onClick={() => toggleDrawerOpen()} 
-						// edge="start" 
-						// variant="highlight" 
-						color="neutral" 
-						variant="plain" 
-						sx={[
-							{
-								marginRight: 5, 
-								color: 'rgb(97, 97, 97)'
-							},
-							// open && { display: 'none' }
-						]}
+					<>
+						{this.props.children} 
+					</>
+
+					{/* <div  */}
+					<Stack 
+						alignItems="center" 
+						direction="row" 
+						gap={1} 
+						style={{
+							width: "254px"
+						}}
+						// </Stack>className={classes.search} 
 					>
-						<MenuIcon 
-							// color="neutral" 
-							// variant="plain" 
-							sx={{
-								color: 'rgb(97, 97, 97)'
+						<ComputerIcon color="primary" variant="solid"/>
+						{/* <InputBase */}
+						<Typography
+							placeholder="API"
+							value={apiHostnamePort}
+							// classes={{
+							// 	root: classes.inputRoot,
+							// 	input: classes.inputInput,
+							// }}
+							inputProps={{ 'aria-label': 'search' }}
+							variant="h6"
+						>
+							{apiHostnamePort}
+						</Typography>
+					</Stack>
+
+					{/* <div  */}
+					<Stack 
+						alignItems="center" 
+						direction="row" 
+						gap={1} 
+						style={{
+							width: "254px"
+						}}
+						// className={classes.search} 
+					>
+						<NotificationsIcon color="primary" variant="solid"/>
+						{/* <InputBase */}
+						<Typography
+							placeholder="WS"
+							value={wsHostnamePort}
+							// classes={{
+							// 	root: classes.inputRoot,
+							// 	input: classes.inputInput,
+							// }}
+							inputProps={{ 'aria-label': 'search' }} 
+							variant="h6"
+						>
+							{wsHostnamePort}
+						</Typography>
+					</Stack>
+
+					{/* <div className={classes.search}>
+						<div className={classes.searchIcon}>
+							<CodeIcon/>
+						</div>
+						<InputBase
+							placeholder="Namespace"
+							value={namespace}
+							classes={{
+								root: classes.inputRoot,
+								input: classes.inputInput,
 							}}
+							inputProps={{ 'aria-label': 'search' }}
 						/>
-					</IconButton>
-					<Button 
-						component="a" 
-						href="/" 
-						size="sm" 
-						color="neutral" 
-						variant="plain" 
-						sx={{
-							alignSelf: 'center', 
-							fontSize: '1.25rem', 
-							color: 'rgb(97, 97, 97)'
+					</div> */}
+
+					{/* <div className={classes.search}>
+						{namespaces && namespaces.data &&
+							<>
+							<FormControl variant="filled" className={classes.formControl}>
+								<InputLabel htmlFor="filled-namespace-native-simple" className={classes.formControlLabel}>
+									Namespace
+								</InputLabel>
+								<Select
+									native
+									value={namespace}
+									// onClick={() => selectNamespace(namespace)}
+									onChange={(event) => selectNamespace(event.target.value)}
+									inputProps={{
+										
+									}} 
+									InputLabelProps={{
+										className: classes.floatingLabelFocusStyle,
+									}} 
+									className={classes.formSelect} >
+									<option aria-label="None" value=""/>
+									<>
+									{namespaces.data.map(function(namespace, idx) {
+										return (
+											<option value={namespace}>{namespace}</option>	
+										)
+									})}
+									</>
+								</Select>
+							</FormControl>
+							</>
+						}
+					</div> */}
+
+					<Stack 
+						alignItems="center" 
+						direction="row" 
+						gap={1} 
+						style={{
+							width: "180px"
 						}}
 					>
-						GFS
-					</Button>
+						<HomeIcon 
+							color="primary" 
+							variant="solid" 
+						/>
+						<MuiLink color="inherit" href={"/namespaces/" + namespace}>
+						<Typography
+							variant="h6"
+						>
+							{namespace}
+						</Typography>
+						</MuiLink>
+					</Stack>
+
+					<Stack 
+						alignItems="center" 
+						direction="row" 
+						gap={1} 
+						style={{
+							width: "180px"
+						}}
+					>
+						<LogoutIcon 
+							color="primary" 
+							variant="solid" 
+						/>
+						<MuiLink color="inherit" href={logouturl}>
+						<Typography
+							variant="h6"
+						>
+							Logout
+						</Typography>
+						</MuiLink>
+					</Stack>
+
 					<ModeToggle />
+
 				</Stack>
 			</Box>
 		);

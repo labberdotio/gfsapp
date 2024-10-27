@@ -151,9 +151,11 @@ class Logout extends Component {
 
 		return (
 			<>
+			<Layout.Breadcrumb>
 			{/* <Breadcrumbs aria-label="breadcrumb">
 				<Typography color="textPrimary">Logout</Typography>
 			</Breadcrumbs> */}
+			</Layout.Breadcrumb>
 			<Layout.Main>
 			STATUS: {status}
 			</Layout.Main>

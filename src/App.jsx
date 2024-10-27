@@ -14,11 +14,6 @@ import CssBaseline from '@mui/joy/CssBaseline';
 import Sheet from '@mui/joy/Sheet';
 import Snackbar from '@mui/joy/Snackbar';
 
-import Layout from './components/Layout';
-// import Navigation from './components/Navigation';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-
 import { extendTheme } from '@mui/joy/styles';
 
 import {
@@ -31,42 +26,6 @@ import {
 	useParams, 
 	useNavigate
 } from "react-router-dom";
-
-// import { loadEntitiesIntoState } from './actions/Entity'
-// import { getEntitiesFromState } from './stores/Entity'
-
-import {
-	loadNamespacesIntoState
-} from './actions/Namespace'
-
-import {
-	loadEntitiesIntoState, 
-	invalidateEntitiesInState
-} from './actions/Entity'
-
-import {
-	getNamespacesFromState
-} from './stores/Namespace'
-
-import {
-	getEntitiesFromState
-} from './stores/Entity'
-
-function getType(props, types) {
-	var typename = props["match"]["params"]["typename"];
-	// if( (types) && (types["data"]) ) {
-	if( (types) && ("data" in types) && (types["data"]) ) {
-		for( var typeid in types["data"] ) {
-			if( typeid ) {
-				var type = types["data"][typeid];
-				if( (type) && (type["_name"] == typename) ) {
-					return type;
-				}
-			}
-		}
-	}
-	return undefined;
-}
 
 class AppNotification extends Component {
 
@@ -198,26 +157,6 @@ class App extends Component {
 			namespace
 		} = this.props;
 
-		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
-			if( api ) {
-				this.props.loadNamespaces(api);
-			}
-		}
-
-		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			if( api && namespace ) {
-				this.props.loadTypes(api, namespace);
-			}
-		}
-
-		if( this.props.tsfailed ) {
-			if( (this.notificationRef) && (this.notificationRef.current) ) {
-				this.notificationRef.current.showInSnackbar(
-					"Failed to load data from API"
-				);
-			}
-		}
-
 	}
 
 	componentDidMount() {
@@ -227,26 +166,6 @@ class App extends Component {
 			namespace
 		} = this.props;
 
-		if( (!this.props.nsloading) && (!this.props.nsloaded) && (!this.props.nsfailed) ) {
-			if( api ) {
-				this.props.loadNamespaces(api);
-			}
-		}
-
-		if( (!this.props.tsloading) && (!this.props.tsloaded) && (!this.props.tsfailed) ) {
-			if( api && namespace ) {
-				this.props.loadTypes(api, namespace);
-			}
-		}
-
-		if( this.props.tsfailed ) {
-			if( (this.notificationRef) && (this.notificationRef.current) ) {
-				this.notificationRef.current.showInSnackbar(
-					"Failed to load data from API"
-				);
-			}
-		}
-
 	}
 
 	render() {
@@ -255,23 +174,22 @@ class App extends Component {
 
 		const {
 			api, 
-			namespace, 
-			types
+			namespace
 		} = this.props;
 
 		const drawerOpen = this.state.drawerOpen;
 
-		function setDrawerOpen(setting) {
-			_this.setState({
-				drawerOpen: setting
-			});
-		}
+		// function setDrawerOpen(setting) {
+		// 	_this.setState({
+		// 		drawerOpen: setting
+		// 	});
+		// }
 
-		function toggleDrawerOpen() {
-			_this.setState({
-				drawerOpen: !_this.state.drawerOpen
-			});
-		}
+		// function toggleDrawerOpen() {
+		// 	_this.setState({
+		// 		drawerOpen: !_this.state.drawerOpen
+		// 	});
+		// }
 
 		const theme = extendTheme({
 			colorSchemes: {
@@ -350,50 +268,12 @@ class App extends Component {
 			// <CssVarsProvider disableTransitionOnChange>
 			<CssVarsProvider theme={theme} disableTransitionOnChange>
 				<CssBaseline />
-				{drawerOpen && (
-					<Layout.SideDrawer onClose={() => setDrawerOpen(false)}>
-						<Sidebar 
-							namespace={namespace} 
-							types={types} 
-						/>
-					</Layout.SideDrawer>
-				)}
-				<Layout.Root
-					sx={[
-						// {
-						// 	gridTemplateColumns: {
-						// 	},
-						// },
-						drawerOpen && {
-							height: '100vh',
-							overflow: 'hidden',
-						},
-					]}
-				>
-					<Layout.Header>
-						<Header 
-							toggleDrawerOpen={toggleDrawerOpen}
-							namespace={namespace} 
-							types={types} 
-						/>
-					</Layout.Header>
-					<Layout.Sidebar>
-						<Sidebar 
-							namespace={namespace} 
-							types={types} 
-						/>
-					</Layout.Sidebar>
-					{/* <Layout.Main>
-						{this.props.children}
-					</Layout.Main>
-					<Layout.Side>
-					</Layout.Side> */}
-					{this.props.children}
-				</Layout.Root>
+				<>
+				{this.props.children}
+				</>
 				<Notification 
 					ref={this.notificationRef} 
 					namespace={namespace} 
-					types={types} 
 				/>
 			</CssVarsProvider>
 		);
@@ -408,14 +288,6 @@ class App extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return {
-
-		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
-
-		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
-		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
-
-		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
-
 	}
 }
 
@@ -431,36 +303,10 @@ function mapStateToProps(state, ownProps) {
 		namespace = ownProps.params.namespace;
 	}
 
-	const {
-		loading: nsloading, 
-		loaded: nsloaded, 
-		failed: nsfailed, 
-		timestamp: nstimestamp, 
-		namespaces: nsnamespaces
-	} = getNamespacesFromState(state, api);
-
-	const {
-		loading: tsloading, 
-		loaded: tsloaded, 
-		failed: tsfailed, 
-		timestamp: ttimestamp, 
-		entities: types
-	} = getEntitiesFromState(state, api, namespace, 'type');
-
 	return {
 		api, 
-		namespace: namespace, 
-		nsloading: nsloading, 
-		nsloaded: nsloaded, 
-		nsfailed: nsfailed, 
-		nstimestamp: nstimestamp, 	
-		namespaces: nsnamespaces, 
-		tsloading: tsloading, 
-		tsloaded: tsloaded, 
-		tsfailed: tsfailed, 
-		ttimestamp: ttimestamp, 
-		types: types, 
-	}
+		namespace: namespace
+	}	
 
 }
 

@@ -8,12 +8,19 @@ import * as React from 'react';
 import Box, { BoxProps } from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 // import GlobalStyles from '@mui/joy/GlobalStyles';
-// import IconButton from '@mui/joy/IconButton';
-// import MenuButton from '@mui/joy/MenuButton';
-// import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/joy/IconButton';
+import MenuButton from '@mui/joy/MenuButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 // function Root(props: BoxProps) {
 function Root(props) {
+	var drawerOpen = false;
+	if( props && props.drawerOpen ) {
+		drawerOpen = true;
+	}
 	return (
 		<>
 		<Box 
@@ -21,10 +28,27 @@ function Root(props) {
 			sx={[
 				{
 					display: 'grid', 
+					minHeight: '100vh'
+				},
+				!drawerOpen && {
 					gridTemplateColumns: {
-						xs: '1fr', 
+						xs: '1px 1px 1fr', 
 						sm: '73px minmax(240px, 300px) minmax(300px, 1fr)', 
 						md: '73px minmax(240px, 300px) minmax(300px, 1fr)', 
+						lg: '73px minmax(240px, 300px) minmax(300px, 1fr) 300px'
+					}, 
+					gridTemplateRows: {
+						xs: '64px 1fr', 
+						sm: '64px 1fr', 
+						md: '64px 1fr', 
+						lg: '64px 1fr', 
+					},
+				},
+				drawerOpen && {
+					gridTemplateColumns: {
+						xs: '240px 1px 1fr', 
+						sm: '240px minmax(240px, 300px) minmax(300px, 1fr)', 
+						md: '240px minmax(240px, 300px) minmax(300px, 1fr)', 
 						lg: '240px minmax(240px, 300px) minmax(300px, 1fr) 300px'
 					}, 
 					gridTemplateRows: {
@@ -33,8 +57,7 @@ function Root(props) {
 						md: '64px 1fr', 
 						lg: '64px 1fr', 
 					},
-					minHeight: '100vh'
-				},
+				}, 
 				...(Array.isArray(props.sx) ? props.sx : [props.sx])
 			]}
 		>
@@ -46,6 +69,10 @@ function Root(props) {
 
 // function Header(props: BoxProps) {
 function Header(props) {
+	var drawerOpen = false;
+	if( props && props.drawerOpen ) {
+		drawerOpen = true;
+	}
 	return (
 		<>
 		<Box 
@@ -59,27 +86,16 @@ function Header(props) {
 					gap: 2, 
 					bgcolor: 'background.level3', 
 					color: '#616161', 
-					display: {
-						xs: 'none', 
-						sm: 'none', 
-						md: 'none', 
-						lg: 'none'
-					},
+					// display: {
+					// 	xs: 'flex', 
+					// 	sm: 'flex', 
+					// 	md: 'flex', 
+					// 	lg: 'flex'
+					// },
 					flexDirection: 'row', 
-					justifyContent: 'space-between', 
+					// justifyContent: 'space-between', 
+					justifyContent: 'flex-end', 
 					alignItems: 'center',  
-					gridColumn: {
-						xs: '0', 
-						md: '0', 
-						md: '0', 
-						lg: '0', 
-					},
-					gridRow: {
-						xs: '1', 
-						sm: '1', 
-						md: '1',  
-						lg: '1'
-					},
 					borderBottom: '1px solid', 
 					borderColor: 'divider', 
 					position: 'sticky', 
@@ -90,17 +106,58 @@ function Header(props) {
 					transition: 'transform 0.4s, width 0.4s', 
 					zIndex: 1100
 				}, 
+				!drawerOpen && {
+					display: {
+						xs: 'none', 
+						sm: 'none', 
+						md: 'none', 
+						lg: 'none'
+					},
+					gridColumn: {
+						xs: '0', 
+						sm: '0', 
+						md: '0', 
+						lg: '0', 
+					},
+					gridRow: {
+						xs: '1', 
+						sm: '1', 
+						md: '1',  
+						lg: '1'
+					},
+				}, 
+				drawerOpen && {
+					display: {
+						xs: 'flex', 
+						sm: 'flex', 
+						md: 'flex', 
+						lg: 'flex'
+					},
+					gridColumn: {
+						xs: '0', 
+						sm: '0', 
+						md: '0', 
+						lg: '0', 
+					},
+					gridRow: {
+						xs: '1', 
+						sm: '1', 
+						md: '1',  
+						lg: '1'
+					},
+				}, 
 				...(Array.isArray(props.sx) ? props.sx : [props.sx])
 			]}
 		>
-			{/* <IconButton 
+			<IconButton 
+				onClick={() => props.toggleDrawerOpen()} 
 				variant="solid"
 				sx={{
 
 				}}
 			>
-				<MenuIcon />
-			</IconButton> */}
+				<ChevronLeftIcon />
+			</IconButton>
 		</Box>
 		<Box 
 			component="header" 
@@ -117,18 +174,6 @@ function Header(props) {
 					flexDirection: 'row',
 					justifyContent: 'space-between',
 					alignItems: 'center',
-					gridColumn: {
-						xs: '1 / span 4', 
-						sm: '1 / span 4', 
-						md: '1 / span 4', 
-						lg: '1 / span 4'
-					},
-					gridRow: {
-						xs: '1', 
-						sm: '1', 
-						md: '1',  
-						lg: '1'
-					},
 					borderBottom: '1px solid',
 					borderColor: 'divider',
 					position: 'sticky',
@@ -138,7 +183,35 @@ function Header(props) {
 					// },
 					transition: 'transform 0.4s, width 0.4s',
 					zIndex: 1100,
-				},
+				}, 
+				!drawerOpen && {
+					gridColumn: {
+						xs: '1 / span 3', 
+						sm: '1 / span 3', 
+						md: '1 / span 3', 
+						lg: '1 / span 4', 
+					},
+					gridRow: {
+						xs: '1', 
+						sm: '1', 
+						md: '1',  
+						lg: '1'
+					},
+				}, 
+				drawerOpen && {
+					gridColumn: {
+						xs: '2 / span 2', 
+						sm: '2 / span 2', 
+						md: '2 / span 2', 
+						lg: '2 / span 3', 
+					},
+					gridRow: {
+						xs: '1', 
+						sm: '1', 
+						md: '1',  
+						lg: '1'
+					},
+				}, 
 				...(Array.isArray(props.sx) ? props.sx : [props.sx]),
 			]}
 		>
@@ -214,7 +287,7 @@ function Sidebar(props) {
 				// position: 'relative', 
 				// marginTop: '64px', 
 				display: {
-					xs: 'none', 
+					xs: 'flex', // 'none', 
 					sm: 'flex', 
 					md: 'flex',  
 					lg: 'flex'
@@ -287,7 +360,7 @@ function Breadcrumb(props) {
 			{...props}
 			sx={{
 				gridColumn: {
-					xs: '3 / span 2', 
+					xs: '3 / span 2', // '1', 
 					sm: '3 / span 2', 
 					md: '3 / span 2', 
 					lg: '3 / span 2', 
@@ -322,7 +395,7 @@ function List(props) {
 					lg: 'flex'
 				},
 				gridColumn: {
-					xs: '2', 
+					xs: '-1', 
 					sm: '2', 
 					md: '2', 
 					lg: '2'
