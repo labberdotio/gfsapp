@@ -231,14 +231,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					>
-					<RootView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					/>
+					<App>
+					<RootView/>
 					</App>
 					</>
 				}/>
@@ -247,10 +241,8 @@ ReactDOM.render(
 				path="/dashboard" 
 				element={
 					<>
-					<App 
-					>
-					<DashboardView 
-					/>
+					<App>
+					<DashboardView/>
 					</App>
 					</>
 				} /> */}
@@ -259,14 +251,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/:typename" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					>
-					<RootInstancesView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					/>
+					<App>
+					<RootInstancesView/>
 					</App>
 					</>
 				}
@@ -276,14 +262,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/create/:typename" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					>
-					<CreateInstanceDialog 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-					/>
+					<App>
+					<CreateInstanceDialog/>
 					</App>
 					</>
 				}
@@ -293,16 +273,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/:typename/:instanceid" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-					>
-					<RootInstanceView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-					/>
+					<App>
+					<RootInstanceView/>
 					</App>
 					</>
 				}
@@ -312,18 +284,8 @@ ReactDOM.render(
 				path="/namespaces/:namespace/:typename/:instanceid/:relname" 
 				element={
 					<>
-					<App 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-						// relname={props.match.params.relname} 
-					>
-					<RelInstanceView 
-						// namespace={props.match.params.namespace} 
-						// typename={props.match.params.typename} 
-						// instanceid={props.match.params.instanceid} 
-						// relname={props.match.params.relname} 
-					/>
+					<App>
+					<RelInstanceView/>
 					</App>
 					</>
 				}
