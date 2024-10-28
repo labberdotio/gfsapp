@@ -23,6 +23,8 @@ import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
+import Badge from '@mui/joy/Badge';
+import Chip from '@mui/joy/Chip';
 
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
@@ -80,6 +82,7 @@ class ListView extends Component {
 				sx={{
 					borderRight: '1px solid',
 					borderColor: 'divider',
+					width: '100%', 
 					// height: { sm: 'calc(100dvh - var(--Header-height))', md: '100dvh' },
 					height: 'calc(100dvh - 64px)',
 					overflowY: 'auto',
@@ -107,7 +110,8 @@ class ListView extends Component {
 							<Stack direction="row" spacing={1.5}>
 							<Box sx={{ flex: 1 }}>
 								{/* <Typography level="title-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography> */}
-								<Typography level="body-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography>
+								{/* <Typography level="body-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography> */}
+								<Chip color="primary"><Typography level="body-sm">{ "" + vertices[key]["@value"]["_label"] }</Typography></Chip>
 							</Box>
 							<Box sx={{ lineHeight: 1.5, textAlign: 'right' }}>
 								<Typography
@@ -129,7 +133,8 @@ class ListView extends Component {
 									textOverflow: 'ellipsis',
 								}}
 							>
-								{ "" + vertices[key]["@value"]["_label"] }
+								{/* { "" + vertices[key]["@value"]["_label"] } */}
+								{ "" + vertices[key]["@value"]["properties"]["_name"] }
 							</Typography>
 						</ListItemButton>
 						</ListItem>
