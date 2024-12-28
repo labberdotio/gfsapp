@@ -18,17 +18,38 @@ import {
 	useNavigate
 } from "react-router-dom";
 
+import Sheet from '@mui/joy/Sheet';
 import Button from '@mui/joy/Button';
-
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import IconButton from '@mui/joy/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import APIClient from '../clients/APIClient';
 
+import {
+	loadNamespacesIntoState
+} from '../actions/Namespace'
+
+import {
+	loadEntitiesIntoState, 
+	invalidateEntitiesInState
+} from '../actions/Entity'
+
+import {
+	getNamespacesFromState
+} from '../stores/Namespace'
+
+import {
+	getEntitiesFromState
+} from '../stores/Entity'
+
 import Layout from './Layout';
+import Sidebar from './Sidebar';
+import Header from './Header';
 import List from './List';
 import Graph from './Graph';
 // import ThreeDeeGraph from './ThreeDeeGraph';
@@ -67,6 +88,7 @@ const Root = class extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			drawerOpen: false, 
 			// intendedcenter: undefined, 
 			// actualcenter: undefined, 
 			grfloading: false, 
@@ -88,6 +110,7 @@ const Root = class extends Component {
 	}
 
 	state = {
+		drawerOpen: false, 
 		// intendedcenter: undefined, 
 		// actualcenter: undefined, 
 		grfloading: false, 
@@ -106,10 +129,7 @@ const Root = class extends Component {
 
 		const {
 			api, 
-			namespace, 
-			typename, 
-			type, 
-			schema
+			namespace
 		} = this.props;
 
 		if( this.mainRef && this.mainRef.current ) {
@@ -120,6 +140,30 @@ const Root = class extends Component {
 				});
 			}
 		}
+
+		if( (!this.props.namespaces["loading"]) && 
+			(!this.props.namespaces["loaded"]) && 
+			(!this.props.namespaces["failed"]) ) {
+			if( api ) {
+				this.props.loadNamespaces(api);
+			}
+		}
+
+		if( (!this.props.types["loading"]) && 
+			(!this.props.types["loaded"]) && 
+			(!this.props.types["failed"]) ) {
+			if( api && namespace ) {
+				this.props.loadTypes(api, namespace);
+			}
+		}
+
+		// if( this.props.tsfailed ) {
+		// 	if( (this.notificationRef) && (this.notificationRef.current) ) {
+		// 		this.notificationRef.current.showInSnackbar(
+		// 			"Failed to load data from API"
+		// 		);
+		// 	}
+		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
@@ -161,6 +205,30 @@ const Root = class extends Component {
 				});
 			}
 		}
+
+		if( (!this.props.namespaces["loading"]) && 
+			(!this.props.namespaces["loaded"]) && 
+			(!this.props.namespaces["failed"]) ) {
+			if( api ) {
+				this.props.loadNamespaces(api);
+			}
+		}
+
+		if( (!this.props.types["loading"]) && 
+			(!this.props.types["loaded"]) && 
+			(!this.props.types["failed"]) ) {
+			if( api && namespace ) {
+				this.props.loadTypes(api, namespace);
+			}
+		}
+
+		// if( this.props.tsfailed ) {
+		// 	if( (this.notificationRef) && (this.notificationRef.current) ) {
+		// 		this.notificationRef.current.showInSnackbar(
+		// 			"Failed to load data from API"
+		// 		);
+		// 	}
+		// }
 
 		/*
 		 * Have to go back to commit cc6304f for this.
@@ -577,10 +645,26 @@ const Root = class extends Component {
 		const {
 			api, 
 			namespace, 
+			namespaces, 
+			types, 
 			typename, 
 			type, 
 			schema
 		} = this.props;
+
+		const drawerOpen = this.state.drawerOpen;
+
+		function setDrawerOpen(setting) {
+			_this.setState({
+				drawerOpen: setting
+			});
+		}
+
+		function toggleDrawerOpen() {
+			_this.setState({
+				drawerOpen: !_this.state.drawerOpen
+			});
+		}
 
 		var backdropOpen = false;
 
@@ -621,85 +705,167 @@ const Root = class extends Component {
 
 		return (
 			<>
-			<Layout.List>
-				<List
-					namespace={namespace} 
-					graph={graph} 
-					selected={false}
-				/>
-			</Layout.List>
-			<Layout.Breadcrumb>
-				{/* <Breadcrumbs aria-label="breadcrumb">
-					<BackNavButton></BackNavButton>
-					<Link color="inherit" to="/namespaces">
-						Namespaces
-					</Link>
-					<Typography color="textPrimary">{namespace}</Typography>
-					<ForwardNavButton></ForwardNavButton>
-				</Breadcrumbs> */}
-				<Breadcrumbs aria-label="breadcrumb">
-					<BackNavButton></BackNavButton>
-					<Link color="inherit" to="/namespaces">
-						Namespaces
-					</Link>
-					<Link color="inherit" to={"/namespaces/" + namespace}>
-						{namespace}
-					</Link>
-					<Typography color="textPrimary">{typename}</Typography>
-					<ForwardNavButton></ForwardNavButton>
-				</Breadcrumbs>
-			</Layout.Breadcrumb>
-			<Layout.Main>
-				<div 
-					ref={this.mainRef} 
-					style={{
-						width: "100%", 
-						height: "100%"
-					}}
+			<Layout.Root
+				drawerOpen={drawerOpen} 
+				sx={[
+					drawerOpen && {
+						height: '100vh',
+						overflow: 'hidden',
+					},
+				]}
 				>
-				<Graph 
-					graph={graph} 
-					width={graphwidth} 
-					height={graphheight} 
-					highlighted={highlighted} 
-					exploded={exploded} 
-					selected={selected} 
-					pulsed={pulsed} 
-					runLayout={runLayout} 
-					zoomFit={zoomFit} 
-					selectItem={this.selectItem} 
-					contextCommand={this.contextCommand}
-				/>
-				{/* <ThreeDeeGraph
-					graph={graph}
-					width={graphwidth} 
-					height={graphheight} 
-					highlighted={highlighted} 
-					exploded={exploded} 
-					selected={selected} 
-					pulsed={pulsed} 
-					runLayout={runLayout} 
-					zoomFit={zoomFit} 
-					selectItem={this.selectItem} 
-					contextCommand={this.contextCommand}
-				/> */}
-				</div>
-			</Layout.Main>
-			<Layout.Side>
-				<Graph
-					graph={graph}
-					width={300} 
-					height={300} 
-					highlighted={highlighted} 
-					exploded={exploded} 
-					selected={selected} 
-					pulsed={pulsed} 
-					runLayout={runLayout} 
-					zoomFit={zoomFit} 
-					selectItem={this.selectItem} 
-					contextCommand={this.contextCommand}
-				/>
-			</Layout.Side>
+				<Layout.Header
+					drawerOpen={drawerOpen} 
+					toggleDrawerOpen={toggleDrawerOpen} 
+				>
+					<Header 
+						drawerOpen={drawerOpen} 
+						toggleDrawerOpen={toggleDrawerOpen} 
+						api={api} 
+						namespace={namespace} 
+						types={types} 
+					>
+						<IconButton 
+							// color="inherit" 
+							// aria-label="open drawer" 
+							// onClick={toggleDrawerOpen} 
+							onClick={() => toggleDrawerOpen()} 
+							// edge="start" 
+							// variant="highlight" 
+							color="neutral" 
+							variant="plain" 
+							sx={[
+								{
+									marginRight: 5, 
+									color: 'rgb(97, 97, 97)'
+								},
+								// open && { display: 'none' }
+							]}
+						>
+							<MenuIcon 
+								// color="neutral" 
+								// variant="plain" 
+								sx={{
+									color: 'rgb(97, 97, 97)'
+								}}
+							/>
+						</IconButton>
+						<Button 
+							component="a" 
+							href="/" 
+							size="sm" 
+							color="neutral" 
+							variant="plain" 
+							sx={{
+								alignSelf: 'center', 
+								fontSize: '1.25rem', 
+								color: 'rgb(97, 97, 97)'
+							}}
+						>
+							{namespace}
+						</Button>
+					</Header>
+				</Layout.Header>
+				<Layout.Sidebar>
+					<Sidebar 
+						namespace={namespace} 
+						types={types} 
+					/>
+				</Layout.Sidebar>
+				<Layout.List>
+					<List
+						namespace={namespace} 
+						graph={graph} 
+						selected={false}
+					/>
+				</Layout.List>
+				<Layout.Breadcrumb>
+					<Breadcrumbs aria-label="breadcrumb">
+						<BackNavButton></BackNavButton>
+						<Link color="inherit" to="/namespaces">
+							Namespaces
+						</Link>
+						<Link color="inherit" to={"/namespaces/" + namespace}>
+							{namespace}
+						</Link>
+						<Typography color="textPrimary">{typename}</Typography>
+						<ForwardNavButton></ForwardNavButton>
+					</Breadcrumbs>
+				</Layout.Breadcrumb>
+				<Layout.Main>
+					<Sheet 
+						sx={{
+							display: {
+								xs: 'initial',
+								sm: 'none', 
+								md: 'none',
+								lg: 'none'
+							}							
+						}}
+					>
+					<List
+						namespace={namespace} 
+						graph={graph} 
+						selected={false}
+					/>
+					</Sheet>
+					<Sheet 
+						ref={this.mainRef} 
+						sx={{
+							display: {
+								xs: 'none',
+								sm: 'initial', 
+								md: 'initial',
+								lg: 'initial'
+							},
+							width: "100%", 
+							height: "100%"
+						}}
+					>
+					<Graph 
+						graph={graph} 
+						width={graphwidth} 
+						height={graphheight} 
+						highlighted={highlighted} 
+						exploded={exploded} 
+						selected={selected} 
+						pulsed={pulsed} 
+						runLayout={runLayout} 
+						zoomFit={zoomFit} 
+						selectItem={this.selectItem} 
+						contextCommand={this.contextCommand}
+					/>
+					{/* <ThreeDeeGraph
+						graph={graph}
+						width={graphwidth} 
+						height={graphheight} 
+						highlighted={highlighted} 
+						exploded={exploded} 
+						selected={selected} 
+						pulsed={pulsed} 
+						runLayout={runLayout} 
+						zoomFit={zoomFit} 
+						selectItem={this.selectItem} 
+						contextCommand={this.contextCommand}
+					/> */}
+					</Sheet>
+				</Layout.Main>
+				<Layout.Side>
+					<Graph
+						graph={graph}
+						width={300} 
+						height={300} 
+						highlighted={highlighted} 
+						exploded={exploded} 
+						selected={selected} 
+						pulsed={pulsed} 
+						runLayout={runLayout} 
+						zoomFit={zoomFit} 
+						selectItem={this.selectItem} 
+						contextCommand={this.contextCommand}
+					/>
+				</Layout.Side>
+			</Layout.Root>
 			</>
 		);
 	}
@@ -708,6 +874,14 @@ const Root = class extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return {
+
+		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
+
+		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+
+		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
+
 	}
 }
 
@@ -715,7 +889,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
-		// namespace,
+		// namespace
 	} = state;
 
 	var namespace = undefined;
@@ -723,9 +897,14 @@ function mapStateToProps(state, ownProps) {
 		namespace = ownProps.params.namespace;
 	}
 
+	const namespaces = getNamespacesFromState(state, api);
+	const types = getEntitiesFromState(state, api, namespace, 'type');
+
 	return {
 		api, 
-		namespace: namespace
+		namespace: namespace, 
+		namespaces: namespaces, 
+		types: types, 
 	}
 
 }
