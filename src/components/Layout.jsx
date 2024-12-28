@@ -423,6 +423,8 @@ function Main(props) {
 			className="Main" 
 			{...props}
 			sx={{
+				height: 'calc(100dvh - 64px)', 
+				overflow: 'scroll', 
 				gridColumn: {
 					xs: '3', 
 					sm: '3', 
