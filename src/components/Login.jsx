@@ -308,6 +308,20 @@ class Login extends Component {
 						labelText="Namespace" 
 						placeholder="Namespace" 
 						helperText={namespaceError} 
+						// These do not seem to do much
+						inputProps={{
+							autoCapitalize: 'none', 
+							autoComplete: 'off', 
+							autoCorrect: 'off', 
+						}} 
+						// These seem to work
+						slotProps={{
+							input: {
+								autoCapitalize: 'none', 
+								autoComplete: 'off', 
+								autoCorrect: 'off', 
+							}
+						}} 
 						error={namespaceError} 
 						color={namespaceColor} 
 						// variant=...
@@ -333,6 +347,20 @@ class Login extends Component {
 						labelText="Username" 
 						placeholder="Username" 
 						helperText={usernameError} 
+						// These do not seem to do much
+						inputProps={{
+							autoCapitalize: 'none', 
+							autoComplete: 'off', 
+							autoCorrect: 'off', 
+						}} 
+						// These seem to work
+						slotProps={{
+							input: {
+								autoCapitalize: 'none', 
+								autoComplete: 'off', 
+								autoCorrect: 'off', 
+							}
+						}} 
 						error={usernameError} 
 						color={usernameColor} 
 						// variant=...
@@ -358,6 +386,20 @@ class Login extends Component {
 						labelText="Password" 
 						placeholder="" 
 						helperText={passwordError} 
+						// These do not seem to do much
+						inputProps={{
+							autoCapitalize: 'none', 
+							autoComplete: 'off', 
+							autoCorrect: 'off', 
+						}} 
+						// These seem to work
+						slotProps={{
+							input: {
+								autoCapitalize: 'none', 
+								autoComplete: 'off', 
+								autoCorrect: 'off', 
+							}
+						}} 
 						error={passwordError} 
 						color={passwordColor} 
 						// variant=... 
