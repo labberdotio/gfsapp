@@ -33,8 +33,8 @@ function Root(props) {
 				!drawerOpen && {
 					gridTemplateColumns: {
 						xs: '1px 1px 1fr', 
-						sm: '73px minmax(240px, 300px) minmax(300px, 1fr)', 
-						md: '73px minmax(240px, 300px) minmax(300px, 1fr)', 
+						sm: '73px 1px minmax(300px, 1fr) 1px', 
+						md: '73px 1px minmax(300px, 1fr) 300px', 
 						lg: '73px minmax(240px, 300px) minmax(300px, 1fr) 300px'
 					}, 
 					gridTemplateRows: {
@@ -47,8 +47,8 @@ function Root(props) {
 				drawerOpen && {
 					gridTemplateColumns: {
 						xs: '240px 1px 1fr', 
-						sm: '240px minmax(240px, 300px) minmax(300px, 1fr)', 
-						md: '240px minmax(240px, 300px) minmax(300px, 1fr)', 
+						sm: '240px minmax(240px, 300px) minmax(300px, 1fr) 1px', 
+						md: '240px minmax(240px, 300px) minmax(300px, 1fr) 1px', 
 						lg: '240px minmax(240px, 300px) minmax(300px, 1fr) 300px'
 					}, 
 					gridTemplateRows: {
@@ -186,9 +186,9 @@ function Header(props) {
 				}, 
 				!drawerOpen && {
 					gridColumn: {
-						xs: '1 / span 3', 
-						sm: '1 / span 3', 
-						md: '1 / span 3', 
+						xs: '1 / span 4', 
+						sm: '1 / span 4', 
+						md: '1 / span 4', 
 						lg: '1 / span 4', 
 					},
 					gridRow: {
@@ -200,9 +200,9 @@ function Header(props) {
 				}, 
 				drawerOpen && {
 					gridColumn: {
-						xs: '2 / span 2', 
-						sm: '2 / span 2', 
-						md: '2 / span 2', 
+						xs: '2 / span 3', 
+						sm: '2 / span 3', 
+						md: '2 / span 3', 
 						lg: '2 / span 3', 
 					},
 					gridRow: {
@@ -454,7 +454,7 @@ function Side(props) {
 				display: {
 					xs: 'none', 
 					sm: 'none', 
-					md: 'none', 
+					md: 'initial', 
 					lg: 'initial'
 				}, 
 				borderLeft: '1px solid', 
