@@ -130,56 +130,44 @@ class Header extends Component {
 					</>
 
 					{/* <div  */}
-					<Stack 
+					{/* <Stack 
 						alignItems="center" 
 						direction="row" 
 						gap={1} 
 						style={{
 							width: "254px"
-						}}
-						// </Stack>className={classes.search} 
+						}}			
 					>
 						<ComputerIcon color="primary" variant="solid"/>
-						{/* <InputBase */}
 						<Typography
 							placeholder="API"
 							value={apiHostnamePort}
-							// classes={{
-							// 	root: classes.inputRoot,
-							// 	input: classes.inputInput,
-							// }}
 							inputProps={{ 'aria-label': 'search' }}
 							variant="h6"
 						>
 							{apiHostnamePort}
 						</Typography>
-					</Stack>
+					</Stack> */}
 
 					{/* <div  */}
-					<Stack 
+					{/* <Stack 
 						alignItems="center" 
 						direction="row" 
 						gap={1} 
 						style={{
 							width: "254px"
 						}}
-						// className={classes.search} 
 					>
 						<NotificationsIcon color="primary" variant="solid"/>
-						{/* <InputBase */}
 						<Typography
 							placeholder="WS"
 							value={wsHostnamePort}
-							// classes={{
-							// 	root: classes.inputRoot,
-							// 	input: classes.inputInput,
-							// }}
 							inputProps={{ 'aria-label': 'search' }} 
 							variant="h6"
 						>
 							{wsHostnamePort}
 						</Typography>
-					</Stack>
+					</Stack> */}
 
 					{/* <div className={classes.search}>
 						<div className={classes.searchIcon}>
@@ -228,7 +216,7 @@ class Header extends Component {
 						}
 					</div> */}
 
-					<Stack 
+					{/* <Stack 
 						alignItems="center" 
 						direction="row" 
 						gap={1} 
@@ -247,9 +235,9 @@ class Header extends Component {
 							{namespace}
 						</Typography>
 						</MuiLink>
-					</Stack>
+					</Stack> */}
 
-					<Stack 
+					{/* <Stack 
 						alignItems="center" 
 						direction="row" 
 						gap={1} 
@@ -268,7 +256,7 @@ class Header extends Component {
 							Logout
 						</Typography>
 						</MuiLink>
-					</Stack>
+					</Stack> */}
 
 					<ModeToggle />
 

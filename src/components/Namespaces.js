@@ -255,6 +255,7 @@ class Namespaces extends Component {
 				</Layout.Header>
 				<Layout.Sidebar>
 					<Sidebar 
+						api={api} 
 						namespace={namespace} 
 					/>
 				</Layout.Sidebar>
