@@ -806,6 +806,21 @@ const RootInstances = class extends Component {
 						namespace={namespace} 
 						types={types} 
 					>
+						<IconButton 
+							onClick={() => toggleDrawerOpen()} 
+							color="neutral" 
+							variant="plain" 
+							sx={{
+								marginRight: '10px !important', 
+								color: 'rgb(97, 97, 97)'
+							}}
+						>
+							<MenuIcon 
+								sx={{
+									color: 'rgb(97, 97, 97)'
+								}}
+							/>
+						</IconButton>
 						<BackNavButton></BackNavButton>
 						<Button 
 							component="a" 

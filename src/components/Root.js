@@ -726,25 +726,15 @@ const Root = class extends Component {
 						types={types} 
 					>
 						<IconButton 
-							// color="inherit" 
-							// aria-label="open drawer" 
-							// onClick={toggleDrawerOpen} 
 							onClick={() => toggleDrawerOpen()} 
-							// edge="start" 
-							// variant="highlight" 
 							color="neutral" 
 							variant="plain" 
-							sx={[
-								{
-									marginRight: 5, 
-									color: 'rgb(97, 97, 97)'
-								},
-								// open && { display: 'none' }
-							]}
+							sx={{
+								marginRight: '10px !important', 
+								color: 'rgb(97, 97, 97)'
+							}}
 						>
 							<MenuIcon 
-								// color="neutral" 
-								// variant="plain" 
 								sx={{
 									color: 'rgb(97, 97, 97)'
 								}}
