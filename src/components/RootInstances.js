@@ -825,6 +825,7 @@ const RootInstances = class extends Component {
 				</Layout.Header>
 				<Layout.Sidebar>
 					<Sidebar 
+						api={api} 
 						namespace={namespace} 
 						types={types} 
 					/>
