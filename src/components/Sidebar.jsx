@@ -30,6 +30,11 @@ import Typography from '@mui/joy/Typography';
 import AppsIcon from '@mui/icons-material/Apps';
 import HomeIcon from '@mui/icons-material/Home';
 import ExtensionIcon from '@mui/icons-material/Extension';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+// import HomeIcon from '@mui/icons-material/Home';
+import ComputerIcon from '@mui/icons-material/Computer';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 class Sidebar extends Component {
 
@@ -69,6 +74,38 @@ class Sidebar extends Component {
 			namespace, 
 			types
 		} = this.props;
+
+		// const namespace = this.props.namespace;
+
+		const apiHostname = api.api.host; // this.props.api.api.host;
+		const apiPort = api.api.port; // this.props.api.api.port;
+		const wsHostname = api.ws.host; // this.props.api.ws.host;
+		const wsPort = api.ws.port; // this.props.api.ws.port;
+
+		/*
+		* host:port
+		*/
+		const apiHostnamePort = String(apiHostname) + ":" + String(apiPort);
+		const wsHostnamePort = String(wsHostname) + ":" + String(wsPort);
+
+		// const snamespaces = useSelector(state => state.namespaces);
+		const snamespaces = [];
+
+		var namespaces = undefined;
+
+		if( snamespaces && snamespaces[apiHostname] && snamespaces[apiHostname]["namespaces"] ) {
+			namespaces = snamespaces[apiHostname]["namespaces"];
+		}
+
+		var loginurl = "/login";
+		if( namespace ) {
+			loginurl = "/login?" + namespace;
+		}
+
+		var logouturl = "/logout";
+		if( namespace ) {
+			logouturl = "/logout?" + namespace;
+		}
 
 		return (
 			<>
@@ -194,6 +231,128 @@ class Sidebar extends Component {
 							})}
 							</>
 						)}
+
+						<ListItem>
+							<ListItemButton 
+								title="API" 
+								variant="solid" 
+								component={Link} 
+								to={apiHostnamePort} 
+							>
+								<ComputerIcon 
+									sx={{
+										height: '24px', 
+										minWidth: '56px'
+									}}
+								/>
+								<ListItemContent>
+									<Typography 
+										level="title-md" 
+										// color="primary" 
+										variant="solid"
+									>
+										{apiHostnamePort}
+									</Typography>
+								</ListItemContent>
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton 
+								title="WS API" 
+								variant="solid" 
+								component={Link} 
+								to={wsHostnamePort} 
+							>
+								<NotificationsIcon 
+									sx={{
+										height: '24px', 
+										minWidth: '56px'
+									}}
+								/>
+								<ListItemContent>
+									<Typography 
+										level="title-md" 
+										// color="primary" 
+										variant="solid"
+									>
+										{wsHostnamePort}
+									</Typography>
+								</ListItemContent>
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton 
+								title="Home" 
+								variant="solid" 
+								component={Link} 
+								to={"/namespaces/" + namespace} 
+							>
+								<HomeIcon 
+									sx={{
+										height: '24px', 
+										minWidth: '56px'
+									}}
+								/>
+								<ListItemContent>
+									<Typography 
+										level="title-md" 
+										// color="primary" 
+										variant="solid"
+									>
+										{namespace}
+									</Typography>
+								</ListItemContent>
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton 
+								title="Login" 
+								variant="solid" 
+								component={Link} 
+								to={loginurl} 
+							>
+								<LoginIcon 
+									sx={{
+										height: '24px', 
+										minWidth: '56px'
+									}}
+								/>
+								<ListItemContent>
+									<Typography 
+										level="title-md" 
+										// color="primary" 
+										variant="solid"
+									>
+										Login
+									</Typography>
+								</ListItemContent>
+							</ListItemButton>
+						</ListItem>
+						<ListItem>
+							<ListItemButton 
+								title="Logout" 
+								variant="solid" 
+								component={Link} 
+								to={logouturl} 
+							>
+								<LogoutIcon 
+									sx={{
+										height: '24px', 
+										minWidth: '56px'
+									}}
+								/>
+								<ListItemContent>
+									<Typography 
+										level="title-md" 
+										// color="primary" 
+										variant="solid"
+									>
+										Logout
+									</Typography>
+								</ListItemContent>
+							</ListItemButton>
+						</ListItem>
+
 					</List>
 				</Box>	
 			</>
