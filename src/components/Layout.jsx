@@ -33,7 +33,7 @@ function Root(props) {
 				!drawerOpen && {
 					gridTemplateColumns: {
 						xs: '1px 1px 1fr', 
-						sm: '73px minmax(240px, 1fr) minmax(300px, 2fr) 1px', 
+						sm: '73px 1px 1fr 1px', 
 						md: '73px minmax(240px, 1fr) minmax(300px, 2fr) 1px', 
 						lg: '73px minmax(240px, 1fr) minmax(300px, 2fr) 300px'
 					}, 
