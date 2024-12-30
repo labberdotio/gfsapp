@@ -787,7 +787,7 @@ const Root = class extends Component {
 					<Sheet 
 						sx={{
 							display: {
-								xs: 'initial',
+								xs: 'none',
 								sm: 'none', 
 								md: 'none',
 								lg: 'none'
@@ -804,7 +804,7 @@ const Root = class extends Component {
 						ref={this.mainRef} 
 						sx={{
 							display: {
-								xs: 'none',
+								xs: 'initial',
 								sm: 'initial', 
 								md: 'initial',
 								lg: 'initial'

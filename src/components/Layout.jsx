@@ -33,9 +33,9 @@ function Root(props) {
 				!drawerOpen && {
 					gridTemplateColumns: {
 						xs: '1px 1px 1fr', 
-						sm: '73px 1px minmax(300px, 1fr) 1px', 
-						md: '73px 1px minmax(300px, 1fr) 300px', 
-						lg: '73px minmax(240px, 300px) minmax(300px, 1fr) 300px'
+						sm: '73px minmax(240px, 1fr) minmax(300px, 2fr) 1px', 
+						md: '73px minmax(240px, 1fr) minmax(300px, 2fr) 1px', 
+						lg: '73px minmax(240px, 1fr) minmax(300px, 2fr) 300px'
 					}, 
 					gridTemplateRows: {
 						xs: '64px 1fr', 
@@ -46,10 +46,10 @@ function Root(props) {
 				},
 				drawerOpen && {
 					gridTemplateColumns: {
-						xs: '240px 1px 1fr', 
-						sm: '240px minmax(240px, 300px) minmax(300px, 1fr) 1px', 
-						md: '240px minmax(240px, 300px) minmax(300px, 1fr) 1px', 
-						lg: '240px minmax(240px, 300px) minmax(300px, 1fr) 300px'
+						xs: '240px 1fr 1px', 
+						sm: '240px minmax(240px, 1fr) minmax(300px, 2fr) 1px', 
+						md: '240px minmax(240px, 1fr) minmax(300px, 2fr) 1px', 
+						lg: '240px minmax(240px, 1fr) minmax(300px, 2fr) 300px'
 					}, 
 					gridTemplateRows: {
 						xs: '64px 1fr', 
@@ -389,13 +389,13 @@ function List(props) {
 			{...props}
 			sx={{
 				display: {
-					xs: 'none', 
+					xs: 'flex', 
 					sm: 'flex', 
 					md: 'flex',  
 					lg: 'flex'
 				},
 				gridColumn: {
-					xs: '-1', 
+					xs: '2', 
 					sm: '2', 
 					md: '2', 
 					lg: '2'
