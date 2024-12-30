@@ -20,8 +20,8 @@ import {
 
 import Sheet from '@mui/joy/Sheet';
 import Button from '@mui/joy/Button';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
+// import Typography from '@mui/material/Typography';
+// import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -770,7 +770,7 @@ const Root = class extends Component {
 						selected={false}
 					/>
 				</Layout.List>
-				<Layout.Breadcrumb>
+				{/* <Layout.Breadcrumb>
 					<Breadcrumbs aria-label="breadcrumb">
 						<BackNavButton></BackNavButton>
 						<Link color="inherit" to="/namespaces">
@@ -782,7 +782,7 @@ const Root = class extends Component {
 						<Typography color="textPrimary">{typename}</Typography>
 						<ForwardNavButton></ForwardNavButton>
 					</Breadcrumbs>
-				</Layout.Breadcrumb>
+				</Layout.Breadcrumb> */}
 				<Layout.Main>
 					<Sheet 
 						sx={{
