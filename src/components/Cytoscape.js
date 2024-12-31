@@ -115,31 +115,35 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 		cy.on('tap', this.onTap = e => {
 			if( e.target === cy ) {
 				this.onSelectItem(undefined, 0);
+			} else if( e.target && e.target.id() ) {
+				this.onSelectItem(e.target.id(), 0);
 			}
 		});
 
-		cy.on('click', 'node', this.onTap = e => {
-
-			var selected = e.target.id();
-			const node = e.target;
-			this.onSelectItem(e.target.id(), 0);
-
-			// var node = e.target;
-			// var a = node.animation({
-			// 	css: {
-			// 		height: 100,
-			// 		width: 320
-			// 	},
-			// 	duration: 400,
-			// 	queue: true
-			// });
-			// // increase node size
-			// a.play().promise("complete").then(function() {
-			// 	// revert size increase
-			// 	a.reverse().play();
-			// });
-
-		});
+		/*
+		 * This one has issues on ios
+		 */
+		// cy.on('click', 'node', this.onTap = e => {
+		// 	var selected = e.target.id();
+		// 	const node = e.target;
+		// 	this.onSelectItem(e.target.id(), 0);
+		// 
+		// 	// var node = e.target;
+		// 	// var a = node.animation({
+		// 	// 	css: {
+		// 	// 		height: 100,
+		// 	// 		width: 320
+		// 	// 	},
+		// 	// 	duration: 400,
+		// 	// 	queue: true
+		// 	// });
+		// 	// // increase node size
+		// 	// a.play().promise("complete").then(function() {
+		// 	// 	// revert size increase
+		// 	// 	a.reverse().play();
+		// 	// });
+		// 
+		// });
 
 		cy.on('layoutstart', function (e) {
 			// 
