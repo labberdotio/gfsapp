@@ -22,6 +22,7 @@ import Sheet from '@mui/joy/Sheet';
 import Button from '@mui/joy/Button';
 // import Typography from '@mui/material/Typography';
 // import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Snackbar from '@mui/joy/Snackbar';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -103,7 +104,9 @@ const RootInstance = class extends Component {
 			pgraph: undefined, 
 			mainWidth: 0, 
 			mainHeight: 0,
-			resize: false
+			resize: false,
+			snackbarMessage: undefined,
+			snackbarOpen: false
 		}
 
 		var _this = this;
@@ -128,7 +131,9 @@ const RootInstance = class extends Component {
 		pgraph: undefined, 
 		mainWidth: 0, 
 		mainHeight: 0,
-		resize: false
+		resize: false,
+		snackbarMessage: undefined,
+		snackbarOpen: false
 	};
 
 	updateDimensions() {
@@ -931,6 +936,19 @@ const RootInstance = class extends Component {
 						contextCommand={this.contextCommand}
 					/> */}
 					</Sheet>
+					<Snackbar 
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						open={this.state.snackbarOpen}
+						autoHideDuration={3000}
+						message={this.state.snackbarMessage}
+						variant="solid"
+						onClose={() => this.onCloseSnackbar()}
+					>
+						{this.state.snackbarMessage}
+					</Snackbar>
 				</Layout.Main>
 				<Layout.Side>
 					<Graph
