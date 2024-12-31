@@ -4,7 +4,9 @@
 // All rights reserved.
 // 
 
-import React, {Component} from 'react';
+// import * as React from 'react';
+// import React, {Component} from 'react';
+import React, { useState, Fragment, Component } from 'react';
 import PropNamespaces from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -14,13 +16,32 @@ import {
 	useNavigate
 } from "react-router-dom";
 
+import Sheet from '@mui/joy/Sheet';
+import CssBaseline from '@mui/joy/CssBaseline';
+import Typography from '@mui/joy/Typography';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import FormHelperText from '@mui/joy/FormHelperText';
+import Input from '@mui/joy/Input';
+import Button from '@mui/joy/Button';
+import Snackbar from '@mui/joy/Snackbar';
+
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import IconButton from '@mui/joy/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
 import Layout from './Layout';
+import Sidebar from './Sidebar';
+import Header from './Header';
+import List from './List';
 
 class Logout extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
+			drawerOpen: false, 
 			namespace: undefined, 
 			active: false, 
 			status: undefined, 
@@ -33,6 +54,7 @@ class Logout extends Component {
 	}
 
 	state = {
+		drawerOpen: false, 
 		namespace: undefined, 
 		active: false, 
 		status: undefined, 
@@ -128,8 +150,22 @@ class Logout extends Component {
 		var _this = this;
 
 		const {
-			
+			api
 		} = this.props;
+
+		const drawerOpen = this.state.drawerOpen;
+
+		function setDrawerOpen(setting) {
+			_this.setState({
+				drawerOpen: setting
+			});
+		}
+
+		function toggleDrawerOpen() {
+			_this.setState({
+				drawerOpen: !_this.state.drawerOpen
+			});
+		}
 
 		var backdropOpen = false;
 
@@ -151,12 +187,75 @@ class Logout extends Component {
 
 		return (
 			<>
-			{/* <Breadcrumbs aria-label="breadcrumb">
-				<Typography color="textPrimary">Logout</Typography>
-			</Breadcrumbs> */}
-			<Layout.Main>
-			STATUS: {status}
-			</Layout.Main>
+			<Layout.Root
+				drawerOpen={drawerOpen} 
+				sx={[
+					drawerOpen && {
+						height: '100vh',
+						overflow: 'hidden',
+					},
+				]}
+				>
+				<Layout.Header
+					drawerOpen={drawerOpen} 
+					toggleDrawerOpen={toggleDrawerOpen} 
+				>
+					<Header 
+						drawerOpen={drawerOpen} 
+						toggleDrawerOpen={toggleDrawerOpen} 
+						api={api} 
+						namespace={namespace} 
+					>
+						<IconButton 
+							onClick={() => toggleDrawerOpen()} 
+							color="neutral" 
+							variant="plain" 
+							sx={{
+								marginRight: '10px !important', 
+								color: 'rgb(97, 97, 97)'
+							}}
+						>
+							<MenuIcon 
+								sx={{
+									color: 'rgb(97, 97, 97)'
+								}}
+							/>
+						</IconButton>
+						<Button 
+							component="a" 
+							href="/" 
+							size="sm" 
+							color="neutral" 
+							variant="plain" 
+							sx={{
+								alignSelf: 'center', 
+								fontSize: '1.25rem', 
+								color: 'rgb(97, 97, 97)'
+							}}
+						>
+							{namespace}
+						</Button>
+					</Header>
+				</Layout.Header>
+				<Layout.Sidebar>
+					<Sidebar 
+						api={api} 
+						namespace={namespace} 				
+					/>
+				</Layout.Sidebar>
+				<Layout.List>
+					<List
+						namespace={namespace} 
+						selected={false}
+					/>
+				</Layout.List>
+				<Layout.Main>
+				STATUS: {status}
+				</Layout.Main>
+				<Layout.Side>
+					
+				</Layout.Side>
+			</Layout.Root>
 			</>
 		);
 	}
