@@ -102,7 +102,8 @@ const RootInstance = class extends Component {
 			graph: undefined, 
 			pgraph: undefined, 
 			mainWidth: 0, 
-			mainHeight: 0
+			mainHeight: 0,
+			resize: false
 		}
 
 		var _this = this;
@@ -111,6 +112,8 @@ const RootInstance = class extends Component {
 
 		this.selectItem = this.selectItem.bind(this);
 		this.contextCommand = this.contextCommand.bind(this);
+
+		this.updateDimensions = this.updateDimensions.bind(this);
 
 	}
 
@@ -124,8 +127,16 @@ const RootInstance = class extends Component {
 		graph: undefined, 
 		pgraph: undefined, 
 		mainWidth: 0, 
-		mainHeight: 0
+		mainHeight: 0,
+		resize: false
 	};
+
+	updateDimensions() {
+		var resize = this.state.resize;
+		this.setState({
+			resize: !resize // this.state.resize
+		});
+	}
 
 	// componentWillUpdate(nextProps, nextState) {
 	// }
@@ -329,6 +340,16 @@ const RootInstance = class extends Component {
 				)
 			}
 		// }
+
+		// 
+		window.addEventListener("resize", this.updateDimensions);
+
+	}
+
+	componentWillUnmount() {
+
+		// 
+		window.removeEventListener("resize", this.updateDimensions);
 
 	}
 

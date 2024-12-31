@@ -99,7 +99,8 @@ const RootInstances = class extends Component {
 			graph: undefined, 
 			pgraph: undefined, 
 			mainWidth: 0, 
-			mainHeight: 0
+			mainHeight: 0,
+			resize: false
 		}
 
 		var _this = this;
@@ -121,8 +122,16 @@ const RootInstances = class extends Component {
 		graph: undefined, 
 		pgraph: undefined, 
 		mainWidth: 0, 
-		mainHeight: 0
+		mainHeight: 0,
+		resize: false
 	};
+
+	updateDimensions() {
+		var resize = this.state.resize;
+		this.setState({
+			resize: !resize // this.state.resize
+		});
+	}
 
 	// componentWillUpdate(nextProps, nextState) {
 	// }
@@ -324,6 +333,16 @@ const RootInstances = class extends Component {
 				)
 			}
 		// }
+
+		// 
+		window.addEventListener("resize", this.updateDimensions);
+
+	}
+
+	componentWillUnmount() {
+
+		// 
+		window.removeEventListener("resize", this.updateDimensions);
 
 	}
 
