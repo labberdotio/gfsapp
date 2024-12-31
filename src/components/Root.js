@@ -111,6 +111,7 @@ const Root = class extends Component {
 		this.selectItem = this.selectItem.bind(this);
 		this.contextCommand = this.contextCommand.bind(this);
 
+		this.resizeTimeout = null;
 		this.updateDimensions = this.updateDimensions.bind(this);
 
 	}
@@ -143,6 +144,8 @@ const Root = class extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
+		var _this = this;
+
 		const {
 			api, 
 			namespace
@@ -150,10 +153,17 @@ const Root = class extends Component {
 
 		if( this.mainRef && this.mainRef.current ) {
 			if( this.state.mainWidth != this.mainRef.current.offsetWidth ) {
-				this.setState({
-					mainWidth: this.mainRef.current.offsetWidth, 
-					mainHeight: this.mainRef.current.offsetHeight
-				});
+				if( _this.resizeTimeout ) {
+					clearTimeout(_this.resizeTimeout);
+				}
+				_this.resizeTimeout = setTimeout(function() {
+					_this.showInSnackbar("Readjusting size");
+					_this.setState({
+						mainWidth: _this.mainRef.current.offsetWidth, 
+						mainHeight: _this.mainRef.current.offsetHeight
+					});
+					_this.resizeTimeout = null;
+				}.bind(this), 1000)
 			}
 		}
 
@@ -205,6 +215,8 @@ const Root = class extends Component {
 
 	componentDidMount() {
 
+		var _this = this;
+
 		const {
 			api, 
 			namespace, 
@@ -215,10 +227,17 @@ const Root = class extends Component {
 
 		if( this.mainRef && this.mainRef.current ) {
 			if( this.state.mainWidth != this.mainRef.current.offsetWidth ) {
-				this.setState({
-					mainWidth: this.mainRef.current.offsetWidth, 
-					mainHeight: this.mainRef.current.offsetHeight
-				});
+				if( _this.resizeTimeout ) {
+					clearTimeout(_this.resizeTimeout);
+				}
+				_this.resizeTimeout = setTimeout(function() {
+					_this.showInSnackbar("Readjusting size");
+					_this.setState({
+						mainWidth: _this.mainRef.current.offsetWidth, 
+						mainHeight: _this.mainRef.current.offsetHeight
+					});
+					_this.resizeTimeout = null;
+				}.bind(this), 1000)
 			}
 		}
 
@@ -662,6 +681,24 @@ const Root = class extends Component {
 		// 	// });
 		// 	// }
 		// }
+	}
+
+	showInSnackbar(message) {
+		var _this = this;
+		if( !_this.state.snackbarOpen ) {
+			_this.setState({
+				snackbarMessage: message,
+				snackbarOpen: true
+			});
+		} else {
+		}
+	}
+
+	onCloseSnackbar() {
+		this.setState({
+			snackbarMessage: undefined,
+			snackbarOpen: false
+		});
 	}
 
 	render() {
