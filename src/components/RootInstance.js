@@ -866,50 +866,21 @@ const RootInstance = class extends Component {
 						selected={false}
 					/>
 				</Layout.List>
-				{/* <Layout.Breadcrumb>
-					<Breadcrumbs aria-label="breadcrumb">
-						<BackNavButton></BackNavButton>
-						<Link color="inherit" to="/namespaces">
-							Namespaces
-						</Link>
-						<Link color="inherit" to={"/namespaces/" + namespace}>
-							{namespace}
-						</Link>
-						<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
-							{typename}
-						</Link>
-						<Typography color="textPrimary">{ instance && ( instance["_label"] + " (" + instance["_id"] + ")") }</Typography>
-						<ForwardNavButton></ForwardNavButton>
-					</Breadcrumbs>
-				</Layout.Breadcrumb> */}
-				<Layout.Main>
-					{/* <Sheet 
-						sx={{
-							display: {
-								xs: 'initial',
-								sm: 'none', 
-								md: 'none',
-								lg: 'none'
-							}							
-						}}
-					>
-					<List
-						namespace={namespace} 
-						graph={graph} 
-						selected={false}
-					/>
-					</Sheet> */}
+				<Layout.Main>	
 					<Sheet 
 						ref={this.mainRef} 
 						sx={{
 							// display: {
-							// 	xs: 'none',
-							// 	sm: 'initial', 
-							// 	md: 'initial',
-							// 	lg: 'initial'
-							// }, 
+							// 	xs: 'inline-block',
+							// 	sm: 'inline-block', 
+							// 	md: 'inline-block',
+							// 	lg: 'inline-block'
+							// },
 							width: "100%", 
-							height: "100%"
+							height: "100%", 
+							position: "relative", 
+							top: "0", 
+							left: "0"
 						}}
 					>
 					<Graph 

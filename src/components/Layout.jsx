@@ -79,7 +79,7 @@ function Header(props) {
 			component="header" 
 			className="Header" 
 			// variant="solid" 
-			// {...props} 
+			{...props} 
 			sx={[
 				{
 					p: 2, 
@@ -425,18 +425,18 @@ function Main(props) {
 			sx={{
 				height: 'calc(100dvh - 64px)', 
 				overflow: 'scroll', 
-				gridColumn: {
-					xs: '3', 
-					sm: '3', 
-					md: '3', 
-					lg: '3'
-				},
-				gridRow: {
-					xs: '3', 
-					sm: '3', 
-					md: '3', 
-					lg: '3'
-				}
+				// gridColumn: {
+				// 	xs: '3', 
+				// 	sm: '3', 
+				// 	md: '3', 
+				// 	lg: '3'
+				// },
+				// gridRow: {
+				// 	xs: '3', 
+				// 	sm: '3', 
+				// 	md: '3', 
+				// 	lg: '3'
+				// }, 
 			}}
 		>
 			{props.children} 
@@ -461,18 +461,18 @@ function Side(props) {
 				borderColor: 'divider', 
 				// position: 'relative',  
 				// marginTop: '64px',
-				gridColumn: {
-					xs: '4', 
-					sm: '4', 
-					md: '4', 
-					lg: '4'
-				},
-				gridRow: {
-					xs: '3', 
-					sm: '3', 
-					md: '3', 
-					lg: '3'
-				}
+				// gridColumn: {
+				// 	xs: '4', 
+				// 	sm: '4', 
+				// 	md: '4', 
+				// 	lg: '4'
+				// },
+				// gridRow: {
+				// 	xs: '3', 
+				//	sm: '3', 
+				// 	md: '3', 
+				// 	lg: '3'
+				// }
 			}}
 		>
 			{props.children} 
