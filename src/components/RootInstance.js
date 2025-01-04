@@ -116,6 +116,8 @@ const RootInstance = class extends Component {
 		this.selectItem = this.selectItem.bind(this);
 		this.contextCommand = this.contextCommand.bind(this);
 
+		this.updateDimensions = this.updateDimensions.bind(this);
+
 	}
 
 	state = {
@@ -133,6 +135,13 @@ const RootInstance = class extends Component {
 		snackbarMessage: undefined,
 		snackbarOpen: false
 	};
+
+	updateDimensions() {
+		var resize = this.state.resize;
+		this.setState({
+			resize: !resize // this.state.resize
+		});
+	}
 
 	// componentWillUpdate(nextProps, nextState) {
 	// }
@@ -336,6 +345,16 @@ const RootInstance = class extends Component {
 				)
 			}
 		// }
+
+		// 
+		window.addEventListener("resize", this.updateDimensions);
+
+	}
+
+	componentWillUnmount() {
+
+		// 
+		window.removeEventListener("resize", this.updateDimensions);
 
 	}
 
