@@ -151,17 +151,19 @@ const Root = class extends Component {
 			namespace
 		} = this.props;
 
-		if( this.mainRef && this.mainRef.current ) {
-			if( this.state.mainWidth != this.mainRef.current.offsetWidth ) {
+		if( _this.mainRef && _this.mainRef.current ) {
+			if( _this.state.mainWidth != _this.mainRef.current.offsetWidth ) {
 				if( _this.resizeTimeout ) {
 					clearTimeout(_this.resizeTimeout);
 				}
 				_this.resizeTimeout = setTimeout(function() {
-					_this.showInSnackbar("Readjusting size");
-					_this.setState({
-						mainWidth: _this.mainRef.current.offsetWidth, 
-						mainHeight: _this.mainRef.current.offsetHeight
-					});
+					if( _this.mainRef && _this.mainRef.current ) {
+						_this.showInSnackbar("Readjusting size");
+						_this.setState({
+							mainWidth: _this.mainRef.current.offsetWidth, 
+							mainHeight: _this.mainRef.current.offsetHeight
+						});
+					}
 					_this.resizeTimeout = null;
 				}.bind(this), 1000)
 			}
@@ -225,17 +227,19 @@ const Root = class extends Component {
 			schema
 		} = this.props;
 
-		if( this.mainRef && this.mainRef.current ) {
-			if( this.state.mainWidth != this.mainRef.current.offsetWidth ) {
+		if( _this.mainRef && _this.mainRef.current ) {
+			if( _this.state.mainWidth != _this.mainRef.current.offsetWidth ) {
 				if( _this.resizeTimeout ) {
 					clearTimeout(_this.resizeTimeout);
 				}
 				_this.resizeTimeout = setTimeout(function() {
-					_this.showInSnackbar("Readjusting size");
-					_this.setState({
-						mainWidth: _this.mainRef.current.offsetWidth, 
-						mainHeight: _this.mainRef.current.offsetHeight
-					});
+					if( _this.mainRef && _this.mainRef.current ) {
+						_this.showInSnackbar("Readjusting size");
+						_this.setState({
+							mainWidth: _this.mainRef.current.offsetWidth, 
+							mainHeight: _this.mainRef.current.offsetHeight
+						});
+					}
 					_this.resizeTimeout = null;
 				}.bind(this), 1000)
 			}
