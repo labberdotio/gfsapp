@@ -26,7 +26,15 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Snackbar from '@mui/joy/Snackbar';
 
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import IconButton from '@mui/joy/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+
 import Layout from './Layout';
+import Sidebar from './Sidebar';
+import Header from './Header';
+import List from './List';
 
 /*
  * Defaults
@@ -51,6 +59,7 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			drawerOpen: false, 
 			namespace: undefined, 
 			namespaceError: undefined, 
 			username: undefined, 
@@ -68,6 +77,7 @@ class Login extends Component {
 	}
 
 	state = {
+		drawerOpen: false, 
 		namespace: undefined, 
 		namespaceError: undefined, 
 		username: undefined, 
@@ -235,8 +245,22 @@ class Login extends Component {
 		var _this = this;
 
 		const {
-			
+			api
 		} = this.props;
+
+		const drawerOpen = this.state.drawerOpen;
+
+		function setDrawerOpen(setting) {
+			_this.setState({
+				drawerOpen: setting
+			});
+		}
+
+		function toggleDrawerOpen() {
+			_this.setState({
+				drawerOpen: !_this.state.drawerOpen
+			});
+		}
 
 		var backdropOpen = false;
 
@@ -271,200 +295,266 @@ class Login extends Component {
 
 		return (
 			<>
-			<Layout.Main>
-			{/* <CssBaseline />
-			<Sheet
-				sx={{
-					width: 300,
-					mx: 'auto', // margin left & right
-					my: 4, // margin top & bottom
-					py: 3, // padding top & bottom
-					px: 2, // padding left & right
-					display: 'flex',
-					flexDirection: 'column',
-					gap: 2,
-					borderRadius: 'sm',
-					boxShadow: 'md',
-				}}
-				variant="outlined"
-			> */}
-				<form onSubmit={(e) => this.submitUser(e)}>
-				<div>
-					<Typography level="h4" component="h1">
-						<b>Welcome!</b>
-					</Typography>
-					<Typography level="body-sm">Sign in to continue.</Typography>
-				</div>
-				<FormControl>
-					<FormLabel>Namespace</FormLabel>
-					<Input
-						// name="email"
-						// type="email"
-						// placeholder="johndoe@email.com"
-						id="namespace" 
-						type="text" 
-						value={cnamespace} 
-						label="Namespace" 
-						labelText="Namespace" 
-						placeholder="Namespace" 
-						helperText={namespaceError} 
-						// These do not seem to do much
-						inputProps={{
-							autoCapitalize: 'none', 
-							autoComplete: 'off', 
-							autoCorrect: 'off', 
-						}} 
-						// These seem to work
-						slotProps={{
-							input: {
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}
-						}} 
-						error={namespaceError} 
-						color={namespaceColor} 
-						// variant=...
-						// fullWidth 
-						// formControlProps={{
-						// 	fullWidth: true
-						// }} 
-						onChange={(e) => this.setNamespace(e.target.value)} 
-						handleChange={(e) => this.setNamespace(e.target.value)} 
+			<Layout.Root
+				drawerOpen={drawerOpen} 
+				sx={[
+					drawerOpen && {
+						height: '100vh',
+						overflow: 'hidden',
+					},
+				]}
+				>
+				<Layout.Header
+					drawerOpen={drawerOpen} 
+					toggleDrawerOpen={toggleDrawerOpen} 
+				>
+					<Header 
+						drawerOpen={drawerOpen} 
+						toggleDrawerOpen={toggleDrawerOpen} 
+						api={api} 
+						namespace={namespace} 
+					>
+						<IconButton 
+							onClick={() => toggleDrawerOpen()} 
+							color="neutral" 
+							variant="plain" 
+							sx={{
+								marginRight: '10px !important', 
+								color: 'rgb(97, 97, 97)'
+							}}
+						>
+							<MenuIcon 
+								sx={{
+									color: 'rgb(97, 97, 97)'
+								}}
+							/>
+						</IconButton>
+						<Button 
+							component="a" 
+							href="/" 
+							size="sm" 
+							color="neutral" 
+							variant="plain" 
+							sx={{
+								alignSelf: 'center', 
+								fontSize: '1.25rem', 
+								color: 'rgb(97, 97, 97)'
+							}}
+						>
+							{namespace}
+						</Button>
+					</Header>
+				</Layout.Header>
+				<Layout.Sidebar>
+					<Sidebar 
+						api={api} 
+						namespace={namespace} 				
 					/>
-					<FormHelperText>{namespaceError}</FormHelperText>
-				</FormControl>
-				<FormControl>
-					<FormLabel>Email</FormLabel>
-					<Input
-						// name="email"
-						// type="email"
-						// placeholder="johndoe@email.com"
-						id="username" 
-						type="text" 
-						value={username} 
-						label="Username" 
-						labelText="Username" 
-						placeholder="Username" 
-						helperText={usernameError} 
-						// These do not seem to do much
-						inputProps={{
-							autoCapitalize: 'none', 
-							autoComplete: 'off', 
-							autoCorrect: 'off', 
-						}} 
-						// These seem to work
-						slotProps={{
-							input: {
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}
-						}} 
-						error={usernameError} 
-						color={usernameColor} 
-						// variant=...
-						// fullWidth 
-						// formControlProps={{
-						// 	fullWidth: true
-						// }}
-						onChange={(e) => this.setUsername(e.target.value)} 
-						handleChange={(e) => this.setUsername(e.target.value)} 
+				</Layout.Sidebar>
+				<Layout.List>
+					<List
+						namespace={namespace} 
+						selected={false}
 					/>
-					<FormHelperText>{usernameError}</FormHelperText>
-				</FormControl>
-				<FormControl>
-					<FormLabel>Password</FormLabel>
-					<Input
-						// name="password"
-						// type="password"
-						// placeholder="password"
-						id="password" 
-						value={password} 
-						type="password" 
-						label="Password" 
-						labelText="Password" 
-						placeholder="" 
-						helperText={passwordError} 
-						// These do not seem to do much
-						inputProps={{
-							autoCapitalize: 'none', 
-							autoComplete: 'off', 
-							autoCorrect: 'off', 
-						}} 
-						// These seem to work
-						slotProps={{
-							input: {
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}
-						}} 
-						error={passwordError} 
-						color={passwordColor} 
-						// variant=... 
-						// fullWidth 
-						// formControlProps={{
-						// 	fullWidth: true
-						// }}
-						onChange={(e) => this.setPassword(e.target.value)}
-						handleChange={this.handleChange}    
-					/>
-					<FormHelperText>{passwordError}</FormHelperText>
-				</FormControl>
-				<Button 
-					type="submit" 
-					// color="primary" 
-					// variant="contained" 
-					// className="form__custom-button"
+				</Layout.List>
+				<Layout.Main>
+				{/* <CssBaseline />
+				<Sheet
 					sx={{
-						mt: 1 /* margin top */
+						width: 300,
+						mx: 'auto', // margin left & right
+						my: 4, // margin top & bottom
+						py: 3, // padding top & bottom
+						px: 2, // padding left & right
+						display: 'flex',
+						flexDirection: 'column',
+						gap: 2,
+						borderRadius: 'sm',
+						boxShadow: 'md',
 					}}
-				>
-					Log in
-				</Button>
-				{/* <Typography
-					endDecorator={<Link href="/sign-up">Sign up</Link>}
-					sx={{ fontSize: 'sm', alignSelf: 'center' }}
-				>
-					Don&apos;t have an account?
-				</Typography> */}
-				</form>
-			{/* </Sheet> */}
-			{/* <Snackbar
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'center',
-				}}
-				open={this.state.snackbarOpen}
-				autoHideDuration={6000}
-				onClose={() => this.onCloseSnackbar()}
-				message={this.state.snackbarMessage}
-				action={
-					<React.Fragment>
-					<Button color="secondary" size="small" onClick={() => this.onCloseSnackbar()}>
-						Close
+					variant="outlined"
+				> */}
+					<form onSubmit={(e) => this.submitUser(e)}>
+					<div>
+						<Typography level="h4" component="h1">
+							<b>Welcome!</b>
+						</Typography>
+						<Typography level="body-sm">Sign in to continue.</Typography>
+					</div>
+					<FormControl>
+						<FormLabel>Namespace</FormLabel>
+						<Input
+							// name="email"
+							// type="email"
+							// placeholder="johndoe@email.com"
+							id="namespace" 
+							type="text" 
+							value={cnamespace} 
+							label="Namespace" 
+							labelText="Namespace" 
+							placeholder="Namespace" 
+							helperText={namespaceError} 
+							// These do not seem to do much
+							inputProps={{
+								autoCapitalize: 'none', 
+								autoComplete: 'off', 
+								autoCorrect: 'off', 
+							}} 
+							// These seem to work
+							slotProps={{
+								input: {
+									autoCapitalize: 'none', 
+									autoComplete: 'off', 
+									autoCorrect: 'off', 
+								}
+							}} 
+							error={namespaceError} 
+							color={namespaceColor} 
+							// variant=...
+							// fullWidth 
+							// formControlProps={{
+							// 	fullWidth: true
+							// }} 
+							onChange={(e) => this.setNamespace(e.target.value)} 
+							handleChange={(e) => this.setNamespace(e.target.value)} 
+						/>
+						<FormHelperText>{namespaceError}</FormHelperText>
+					</FormControl>
+					<FormControl>
+						<FormLabel>Email</FormLabel>
+						<Input
+							// name="email"
+							// type="email"
+							// placeholder="johndoe@email.com"
+							id="username" 
+							type="text" 
+							value={username} 
+							label="Username" 
+							labelText="Username" 
+							placeholder="Username" 
+							helperText={usernameError} 
+							// These do not seem to do much
+							inputProps={{
+								autoCapitalize: 'none', 
+								autoComplete: 'off', 
+								autoCorrect: 'off', 
+							}} 
+							// These seem to work
+							slotProps={{
+								input: {
+									autoCapitalize: 'none', 
+									autoComplete: 'off', 
+									autoCorrect: 'off', 
+								}
+							}} 
+							error={usernameError} 
+							color={usernameColor} 
+							// variant=...
+							// fullWidth 
+							// formControlProps={{
+							// 	fullWidth: true
+							// }}
+							onChange={(e) => this.setUsername(e.target.value)} 
+							handleChange={(e) => this.setUsername(e.target.value)} 
+						/>
+						<FormHelperText>{usernameError}</FormHelperText>
+					</FormControl>
+					<FormControl>
+						<FormLabel>Password</FormLabel>
+						<Input
+							// name="password"
+							// type="password"
+							// placeholder="password"
+							id="password" 
+							value={password} 
+							type="password" 
+							label="Password" 
+							labelText="Password" 
+							placeholder="" 
+							helperText={passwordError} 
+							// These do not seem to do much
+							inputProps={{
+								autoCapitalize: 'none', 
+								autoComplete: 'off', 
+								autoCorrect: 'off', 
+							}} 
+							// These seem to work
+							slotProps={{
+								input: {
+									autoCapitalize: 'none', 
+									autoComplete: 'off', 
+									autoCorrect: 'off', 
+								}
+							}} 
+							error={passwordError} 
+							color={passwordColor} 
+							// variant=... 
+							// fullWidth 
+							// formControlProps={{
+							// 	fullWidth: true
+							// }}
+							onChange={(e) => this.setPassword(e.target.value)}
+							handleChange={this.handleChange}    
+						/>
+						<FormHelperText>{passwordError}</FormHelperText>
+					</FormControl>
+					<Button 
+						type="submit" 
+						// color="primary" 
+						// variant="contained" 
+						// className="form__custom-button"
+						sx={{
+							mt: 1 /* margin top */
+						}}
+					>
+						Log in
 					</Button>
-					<IconButton size="small" aria-label="close" color="inherit" onClick={() => this.onCloseSnackbar()}>
-						<CloseIcon fontSize="small" />
-					</IconButton>
-					</React.Fragment>
-				}/>
-			</> */}
-			<Snackbar 
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'center',
-				}}
-				open={this.state.snackbarOpen}
-				autoHideDuration={3000}
-				message={this.state.snackbarMessage}
-				variant="solid"
-				onClose={() => this.onCloseSnackbar()}
-			>
-				{this.state.snackbarMessage}
-			</Snackbar>
-			</Layout.Main>
+					{/* <Typography
+						endDecorator={<Link href="/sign-up">Sign up</Link>}
+						sx={{ fontSize: 'sm', alignSelf: 'center' }}
+					>
+						Don&apos;t have an account?
+					</Typography> */}
+					</form>
+				{/* </Sheet> */}
+				{/* <Snackbar
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					open={this.state.snackbarOpen}
+					autoHideDuration={6000}
+					onClose={() => this.onCloseSnackbar()}
+					message={this.state.snackbarMessage}
+					action={
+						<React.Fragment>
+						<Button color="secondary" size="small" onClick={() => this.onCloseSnackbar()}>
+							Close
+						</Button>
+						<IconButton size="small" aria-label="close" color="inherit" onClick={() => this.onCloseSnackbar()}>
+							<CloseIcon fontSize="small" />
+						</IconButton>
+						</React.Fragment>
+					}/>
+				</> */}
+				<Snackbar 
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center',
+					}}
+					open={this.state.snackbarOpen}
+					autoHideDuration={3000}
+					message={this.state.snackbarMessage}
+					variant="solid"
+					onClose={() => this.onCloseSnackbar()}
+				>
+					{this.state.snackbarMessage}
+				</Snackbar>
+				</Layout.Main>
+				<Layout.Side>
+					
+				</Layout.Side>
+			</Layout.Root>
 			</>
 		);
 
