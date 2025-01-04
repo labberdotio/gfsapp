@@ -154,6 +154,14 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 		cy.cxtmenu({
 			selector: 'node',
 			commands: [{
+				content: 'Select',
+				select: function(ele) {
+					if( ele && ele.id() ) {
+						_this.onSelectItem(ele.id(), 0);
+					}
+				},
+				enabled: true
+			}, {
 				content: 'Clone',
 				select: function(ele) {
 					// 
@@ -200,6 +208,12 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 		cy.cxtmenu({
 			selector: 'core',
 			commands: [{
+				content: 'Unslect all',
+				select: function() {
+					_this.onSelectItem(undefined, 0);
+				},
+				enabled: true
+			}, {
 				content: 'Create new',
 				select: function() {
 					// 
