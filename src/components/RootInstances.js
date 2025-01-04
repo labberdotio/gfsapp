@@ -131,6 +131,13 @@ const RootInstances = class extends Component {
 		snackbarOpen: false
 	};
 
+	updateDimensions() {
+		var resize = this.state.resize;
+		this.setState({
+			resize: !resize // this.state.resize
+		});
+	}
+
 	// componentWillUpdate(nextProps, nextState) {
 	// }
 
@@ -331,6 +338,16 @@ const RootInstances = class extends Component {
 				)
 			}
 		// }
+
+		// 
+		window.addEventListener("resize", this.updateDimensions);
+
+	}
+
+	componentWillUnmount() {
+
+		// 
+		window.removeEventListener("resize", this.updateDimensions);
 
 	}
 
