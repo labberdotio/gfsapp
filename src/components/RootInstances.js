@@ -852,47 +852,21 @@ const RootInstances = class extends Component {
 						selected={false}
 					/>
 				</Layout.List>
-				{/* <Layout.Breadcrumb>
-					<Breadcrumbs aria-label="breadcrumb">
-						<BackNavButton></BackNavButton>
-						<Link color="inherit" to="/namespaces">
-							Namespaces
-						</Link>
-						<Link color="inherit" to={"/namespaces/" + namespace}>
-							{namespace}
-						</Link>
-						<Typography color="textPrimary">{typename}</Typography>
-						<ForwardNavButton></ForwardNavButton>
-					</Breadcrumbs>
-				</Layout.Breadcrumb> */}
 				<Layout.Main>
-					<Sheet 
-						sx={{
-							display: {
-								xs: 'none',
-								sm: 'none', 
-								md: 'none',
-								lg: 'none'
-							}							
-						}}
-					>
-					<List
-						namespace={namespace} 
-						graph={graph} 
-						selected={false}
-					/>
-					</Sheet>
 					<Sheet 
 						ref={this.mainRef} 
 						sx={{
 							display: {
-								xs: 'initial',
-								sm: 'initial', 
-								md: 'initial',
-								lg: 'initial'
+								xs: 'inline-block',
+								sm: 'inline-block', 
+								md: 'inline-block',
+								lg: 'inline-block'
 							}, 
 							width: "100%", 
-							height: "100%"
+							height: "100%", 
+							position: "relative", 
+							top: "0", 
+							left: "0"
 						}}
 					>
 					<Graph 
