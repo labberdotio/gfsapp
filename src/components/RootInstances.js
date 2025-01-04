@@ -113,6 +113,8 @@ const RootInstances = class extends Component {
 		this.selectItem = this.selectItem.bind(this);
 		this.contextCommand = this.contextCommand.bind(this);
 
+		this.updateDimensions = this.updateDimensions.bind(this);
+
 	}
 
 	state = {
