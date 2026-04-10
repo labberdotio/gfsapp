@@ -84,8 +84,8 @@ function Header(props) {
 				{
 					p: 2, 
 					gap: 2, 
-					bgcolor: 'background.level3', 
-					color: '#616161', 
+					// bgcolor: 'background.level3', 
+					// color: '#616161', 
 					// display: {
 					// 	xs: 'flex', 
 					// 	sm: 'flex', 
@@ -97,7 +97,7 @@ function Header(props) {
 					justifyContent: 'flex-end', 
 					alignItems: 'center',  
 					borderBottom: '1px solid', 
-					borderColor: 'divider', 
+					// borderColor: 'divider', 
 					position: 'sticky', 
 					// transform: {
 					// 	xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))', 
@@ -168,8 +168,8 @@ function Header(props) {
 				{
 					p: 2,
 					gap: 2,
-					bgcolor: 'background.level1',
-					color: '#616161',
+					// bgcolor: 'background.level1',
+					// color: '#616161',
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-between',
@@ -331,7 +331,7 @@ function SideDrawer(props) {
 		  sx={(theme) => ({
 			position: 'absolute',
 			inset: 0,
-			bgcolor: `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
+			// bgcolor: `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
 		  })}
 		/>
 		<Sheet
@@ -341,7 +341,7 @@ function SideDrawer(props) {
 			height: '100%',
 			p: 2,
 			boxShadow: 'lg',
-			bgcolor: 'background.surface',
+			// bgcolor: 'background.surface',
 		  }}
 		>
 		  {props.children}

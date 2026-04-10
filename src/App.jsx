@@ -198,32 +198,32 @@ class App extends Component {
 						neutral: {
 							// plainColor: ..., 
 							// plainActiveBg: ..., 
-							solidColor: 'rgb(125, 125, 125)', 
-							solidBg: '#333333', 
-							solidActiveColor: 'white', 
-							solidActiveBg: '#333333', 
+							// solidColor: 'rgb(125, 125, 125)', 
+							// solidBg: '#333333', 
+							// solidActiveColor: 'white', 
+							// solidActiveBg: '#333333', 
 							// solidHoverColor: ..., 
-							solidHoverBg: '#333333'
+							// solidHoverBg: '#333333'
 						},
 						primary: {
 							// plainColor: ..., 
 							// plainActiveBg: ..., 
-							solidColor: 'white', 
-							solidBg: '#333333', 
-							solidActiveColor: 'white', 
-							solidActiveBg: '#333333', 
+							// solidColor: 'white', 
+							// solidBg: '#333333', 
+							// solidActiveColor: 'white', 
+							// solidActiveBg: '#333333', 
 							// solidHoverColor: ..., 
-							solidHoverBg: '#333333'
+							//solidHoverBg: '#333333'
 						},
 						background: {
-							body: '#ffffff', 
-							level1: '#f3f3f3', 
-							level3: '#333333', 
+							// body: '#f3f3f3',
+							// level1: '#f3f3f3', 
+							// level3: '#333333', 
 							// active: ...
 						},
 						text: {
-							primary: '#ffffff', 
-							icon: '#ffffff'
+							// primary: '#ffffff', 
+							// icon: '#ffffff'
 						}
 					},
 				},
@@ -232,32 +232,32 @@ class App extends Component {
 						neutral: {
 							// plainColor: ..., 
 							// plainActiveBg: ..., 
-							solidColor: 'rgb(125, 125, 125)', 
-							solidBg: '#333333', 
-							solidActiveColor: 'white', 
-							solidActiveBg: '#333333', 
+							// solidColor: 'rgb(125, 125, 125)', 
+							// solidBg: '#333333', 
+							// solidActiveColor: 'white', 
+							// solidActiveBg: '#333333', 
 							// solidHoverColor: ..., 
-							solidHoverBg: '#333333'
+							// solidHoverBg: '#333333'
 						},
 						primary: {
 							// plainColor: ..., 
 							// plainActiveBg: ..., 
-							solidColor: 'white', 
-							solidBg: '#333333', 
-							solidActiveColor: 'white', 
-							solidActiveBg: '#333333', 
+							// solidColor: 'white', 
+							// solidBg: '#333333', 
+							// solidActiveColor: 'white', 
+							// solidActiveBg: '#333333', 
 							// solidHoverColor: ..., 
-							solidHoverBg: '#333333'
+							// solidHoverBg: '#333333'
 						},
 						background: {
-							body: '#ffffff', 
-							level1: '#f3f3f3', 
-							level3: '#333333', 
+							// body: '#ffffff', 
+							// level1: '#f3f3f3', 
+							// level3: '#333333', 
 							// active: ...
 						},
 						text: {
-							primary: '#ffffff', 
-							icon: '#ffffff'
+							// primary: '#ffffff', 
+							// icon: '#ffffff'
 						}
 					},
 				},

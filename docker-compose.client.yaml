@@ -20,6 +20,10 @@ services:
       REACT_APP_GFS_WS_PORT: "5002"
       REACT_APP_GFS_WS_USERNAME: ""
       REACT_APP_GFS_WS_PASSWORD: ""
+      REACT_APP_GFS_AUTH_HOST: "gfs.testing.localdomain"
+      REACT_APP_GFS_AUTH_PORT: "5003"
+      REACT_APP_GFS_AUTH_CLIENT: "org.name.client1"
+      REACT_APP_GFS_AUTH_SECRET: "secret"
     restart: on-failure
     hostname: "builder"
     networks:

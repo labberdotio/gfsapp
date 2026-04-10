@@ -59,7 +59,8 @@ import RootInstancesView from './components/RootInstances'
 // import SubInstanceView from './components/SubInstance'
 import RelInstanceView from './components/RelInstance'
 
-import Login from './components/Login'
+// import Login from './components/Login'
+import Login from './components/Login2'
 import Logout from './components/Logout'
 
 import Namespaces from './components/Namespaces'

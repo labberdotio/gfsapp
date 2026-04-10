@@ -106,7 +106,7 @@ class ListView extends Component {
 							component={Link} 
 							to={"/namespaces/" + namespace + "/" + vertices[key]["@value"]["_label"] + "/" + vertices[key]["@value"]["_id"]} 
 							selected={selected} 
-							color="neutral" 
+							// color="neutral" 
 							sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
 						>
 							<Stack direction="row" spacing={1.5}>

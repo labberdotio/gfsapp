@@ -219,8 +219,8 @@ class Namespaces extends Component {
 							onClick={() => toggleDrawerOpen()} 
 							// edge="start" 
 							// variant="highlight" 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={[
 								{
 									marginRight: 5, 
@@ -241,8 +241,8 @@ class Namespaces extends Component {
 							component="a" 
 							href="/" 
 							size="sm" 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={{
 								alignSelf: 'center', 
 								fontSize: '1.25rem', 
@@ -286,7 +286,7 @@ class Namespaces extends Component {
 										component={Link} 
 										to={"/namespaces/" + namespace} 
 										selected={selected} 
-										color="neutral" 
+										// color="neutral" 
 										sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
 									>
 										<Stack direction="row" spacing={1.5}>
