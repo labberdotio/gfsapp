@@ -13,14 +13,15 @@
 # FROM node:16.14.2-alpine
 # FROM node:16.20.2-alpine
 # FROM node:18.20.3-alpine
-FROM node:20.16.0-alpine
+# FROM node:20.16.0-alpine
+FROM node:22.22.1-trixie
 
 ENV REACT_APP_GFS_FS_NAME="gfs1"
-ENV REACT_APP_GFS_API_HOST="server"
+ENV REACT_APP_GFS_API_HOST="gfs.testing.localdomain"
 ENV REACT_APP_GFS_API_PORT="5000"
 ENV REACT_APP_GFS_API_USERNAME=""
 ENV REACT_APP_GFS_API_PASSWORD=""
-ENV REACT_APP_GFS_WS_HOST="server"
+ENV REACT_APP_GFS_WS_HOST="gfs.testing.localdomain"
 ENV REACT_APP_GFS_WS_PORT="5002"
 ENV REACT_APP_GFS_WS_USERNAME=""
 ENV REACT_APP_GFS_WS_PASSWORD=""
@@ -46,7 +47,9 @@ COPY ./env.sh .
 COPY ./.env .
 
 # Add bash
-RUN apk add --no-cache bash
+# RUN apk add --no-cache bash
+RUN apt-get update
+RUN apt-get install -y bash
 
 # build
 # RUN npm run build

@@ -11,7 +11,7 @@ GIT_SHA=$(git rev-parse HEAD | cut -c 1-8)
 IMAGE="${LOCAL_REGISTRY}/gfs-app:${GIT_BRNCH}-${GIT_SHA}"
 LATEST_IMAGE="${LOCAL_REGISTRY}/gfs-app:latest"
 
-docker build -t $IMAGE -f Dockerfile.app.production .
-docker push $IMAGE
-docker tag $IMAGE $LATEST_IMAGE
-docker push $LATEST_IMAGE
+podman build -t $IMAGE -f Dockerfile.app.production .
+podman push --tls-verify=false $IMAGE
+podman tag $IMAGE $LATEST_IMAGE
+podman push --tls-verify=false $LATEST_IMAGE
