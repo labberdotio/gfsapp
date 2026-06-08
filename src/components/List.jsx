@@ -63,6 +63,7 @@ class ListView extends Component {
 		var _this = this;
 
 		const {
+			account, 
 			namespace, 
 			selected, 
 			graph
@@ -186,17 +187,20 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account, 
 		// namespace, 
 		// selected, 
 		// graph
 	} = state;
 
+	var account = undefined;
 	var namespace = undefined;
 	var selected = undefined;
 	var graph = undefined;
 
 	// if( ownProps && ownProps.params ) {
 	if( ownProps ) {
+		account = ownProps.account;
 		namespace = ownProps.namespace;
 		selected = ownProps.selected;
 		graph = ownProps.graph;
@@ -204,6 +208,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		api, 
+		account, 
 		namespace, 
 		selected, 
 		graph

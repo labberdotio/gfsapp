@@ -350,6 +350,7 @@ class Graph extends Component {
 
 		const {
 			// api, 
+			// account, 
 			// namespace, 
 			// graph, 
 			// width, 
@@ -385,6 +386,7 @@ class Graph extends Component {
 
 		const {
 			// api, 
+			// account, 
 			// namespace, 
 			// graph, 
 			// width, 
@@ -416,6 +418,7 @@ class Graph extends Component {
 
 		const {
 			// api, 
+			// account, 
 			// namespace, 
 			// graph, 
 			// width, 
@@ -654,6 +657,7 @@ class Graph extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			graph, 
 			width, 
@@ -790,6 +794,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 
 	const {
+		account, 
 		namespace, 
 		// graph, 
 		// selected
@@ -797,11 +802,13 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account, 
 		// namespace, 
 	} = state;
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace, 
 		// graph: graph, 
 		// selected: selected
