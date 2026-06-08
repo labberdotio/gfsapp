@@ -146,6 +146,7 @@ var defaultEndpoint = {
 	name: name,
 	title: title,
 	description: description,
+	// account: account,
 	// namespace: namespace,
 	api: {
 		host: dapiHostname,
