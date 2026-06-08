@@ -148,6 +148,7 @@ const Root = class extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace
 		} = this.props;
 
@@ -172,16 +173,16 @@ const Root = class extends Component {
 		if( (!this.props.namespaces["loading"]) && 
 			(!this.props.namespaces["loaded"]) && 
 			(!this.props.namespaces["failed"]) ) {
-			if( api ) {
-				this.props.loadNamespaces(api);
+			if( api && account ) {
+				this.props.loadNamespaces(api, account);
 			}
 		}
 
 		if( (!this.props.types["loading"]) && 
 			(!this.props.types["loaded"]) && 
 			(!this.props.types["failed"]) ) {
-			if( api && namespace ) {
-				this.props.loadTypes(api, namespace);
+			if( api && account && namespace ) {
+				this.props.loadTypes(api, account, namespace);
 			}
 		}
 
@@ -206,6 +207,7 @@ const Root = class extends Component {
 				(!this.state.grffailed) ) {
 				this.loadInstance(
 					api, 
+					account, 
 					namespace, 
 					"graph", 
 					undefined
@@ -221,6 +223,7 @@ const Root = class extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			type, 
@@ -248,16 +251,16 @@ const Root = class extends Component {
 		if( (!this.props.namespaces["loading"]) && 
 			(!this.props.namespaces["loaded"]) && 
 			(!this.props.namespaces["failed"]) ) {
-			if( api ) {
-				this.props.loadNamespaces(api);
+			if( api && account ) {
+				this.props.loadNamespaces(api, account);
 			}
 		}
 
 		if( (!this.props.types["loading"]) && 
 			(!this.props.types["loaded"]) && 
 			(!this.props.types["failed"]) ) {
-			if( api && namespace ) {
-				this.props.loadTypes(api, namespace);
+			if( api && account && namespace ) {
+				this.props.loadTypes(api, account, namespace);
 			}
 		}
 
@@ -282,6 +285,7 @@ const Root = class extends Component {
 				(!this.state.grffailed) ) {
 				this.loadInstance(
 					api, 
+					account, 
 					namespace, 
 					"graph", 
 					undefined
@@ -411,7 +415,7 @@ const Root = class extends Component {
 		return fullgraph;
 	}
 
-	getTreeData(api, namespace, graph) {
+	getTreeData(api, account, namespace, graph) {
 
 		/*
 		 * I am converting the redux store to a dict, 
@@ -582,7 +586,7 @@ const Root = class extends Component {
 		return treestruc;
 	}
 
-	getDataURL(api, namespace, typename, type, schema) {
+	getDataURL(api, account, namespace, typename, type, schema) {
 		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename;
 		return dataurl;
 	}
@@ -592,7 +596,7 @@ const Root = class extends Component {
 	 * Sun Jul 26 20:54:32 2020 -0700
 	 * Sun Mar 29 16:20:36 2020 -0500
 	 */
-	loadInstance(api, namespace, typename, instanceid) {
+	loadInstance(api, account, namespace, typename, instanceid) {
 		// if( this.state.instanceid != instanceid ) {
 		// this.setState({
 		// 	grfloading: false, 
@@ -618,6 +622,7 @@ const Root = class extends Component {
 				api.api.port
 			);
 			this.apiClient.getInstance(
+				account, 
 				namespace, 
 				typename, 
 				instanceid, 
@@ -711,6 +716,7 @@ const Root = class extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			namespaces, 
 			types, 
@@ -759,7 +765,7 @@ const Root = class extends Component {
 		];
 
 		// var graph = {}
-		// var treestruc = this.getTreeData(api, namespace, graph);
+		// var treestruc = this.getTreeData(api, account, namespace, graph);
 
 		var graphwidth = 640;
 		var graphheight = "calc(100vh - 40px - 64px)"; // 640;
@@ -826,12 +832,14 @@ const Root = class extends Component {
 				<Layout.Sidebar>
 					<Sidebar 
 						api={api} 
+						account={account} 
 						namespace={namespace} 
 						types={types} 
 					/>
 				</Layout.Sidebar>
 				<Layout.List>
 					<List
+						account={account} 
 						namespace={namespace} 
 						graph={graph} 
 						selected={false}
@@ -920,10 +928,10 @@ const Root = class extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
+		loadNamespaces: (api, account) => dispatch(loadNamespacesIntoState(api, account)),
 
-		// loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
-		loadTypes: (api, namespace) => dispatch(loadEntitiesIntoState(api, namespace, 'type')),
+		// loadTypes: (api, account, namespace) => dispatch(loadEntitiesIntoState(api, account, namespace, 'type')),
+		loadTypes: (api, account, namespace) => dispatch(loadEntitiesIntoState(api, account, namespace, 'type')),
 
 		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
 
@@ -934,6 +942,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account, 
 		// namespace
 	} = state;
 
@@ -942,11 +951,12 @@ function mapStateToProps(state, ownProps) {
 		namespace = ownProps.params.namespace;
 	}
 
-	const namespaces = getNamespacesFromState(state, api);
-	const types = getEntitiesFromState(state, api, namespace, 'type');
+	const namespaces = getNamespacesFromState(state, api, account);
+	const types = getEntitiesFromState(state, api, account, namespace, 'type');
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace, 
 		namespaces: namespaces, 
 		types: types, 

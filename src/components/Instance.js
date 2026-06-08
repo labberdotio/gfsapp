@@ -46,12 +46,12 @@ class Instance extends Component {
 
 	}
 
-	getDataURL(api, namespace, typename, type, schema, instance, instancefield) {
+	getDataURL(api, account, namespace, typename, type, schema, instance, instancefield) {
 		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
 		return dataurl;
 	}
 
-	getProperties(namespace, typename, type, schema, instance) {
+	getProperties(account, namespace, typename, type, schema, instance) {
 
 		var properties = [];
 
@@ -75,7 +75,7 @@ class Instance extends Component {
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
-				"value": <Link to={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</Link>
+				"value": <Link to={this.makeInstanceLink(account, namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</Link>
 			});
 		}
 
@@ -125,7 +125,7 @@ class Instance extends Component {
 		return properties;
 	}
 
-	getDependencies(namespace, typename, type, schema, instance) {
+	getDependencies(account, namespace, typename, type, schema, instance) {
 
 		var dependencies = [];
 
@@ -171,17 +171,18 @@ class Instance extends Component {
 		return dependencies;
 	}
 
-	makeInstanceLink(namespace, type, id) {
+	makeInstanceLink(account, namespace, type, id) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(namespace, type, id, relname) {
+	makeRelInstanceLink(account, namespace, type, id, relname) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
 	makeInstancesView(
 		title, 
 		description, 
+		account, 
 		namespace, 
 		typename, 
 		type, 
@@ -205,6 +206,7 @@ class Instance extends Component {
 			title={title} 
 			description={description} 
 			api={api} 
+			account={account} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -219,6 +221,7 @@ class Instance extends Component {
 	makeInstanceView(
 		title, 
 		description, 
+		account, 
 		namespace, 
 		typename, 
 		type, 
@@ -236,6 +239,7 @@ class Instance extends Component {
 			title={title} 
 			description={description} 
 			api={api} 
+			account={account} 
 			namespace={namespace} 
 			typename={typename} 
 			type={type} 
@@ -251,6 +255,7 @@ class Instance extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			title, 
             description, 
@@ -262,6 +267,7 @@ class Instance extends Component {
 		} = this.props;
 
 		var properties = this.getProperties(
+			account, 
 			namespace, 
 			typename, 
 			type, 
@@ -270,6 +276,7 @@ class Instance extends Component {
 		);
 
 		var dependencies = this.getDependencies(
+			account, 
 			namespace, 
 			typename, 
 			type, 
@@ -283,6 +290,7 @@ class Instance extends Component {
 					title={title} 
 					description={description} 
 					properties={this.getProperties(
+						account, 
 						namespace, 
 						typename, 
 						type, 
@@ -298,12 +306,14 @@ class Instance extends Component {
 						return _this.makeInstancesView(
 							item && item["_name"], 
 							item && item.type + " " + "(" + item.cardinality + ")",  
+							account, 
 							namespace, 
 							deptypename, 
 							deptype, 
 							depschema, 
 							_this.getDataURL(
 								api, 
+								account, 
 								namespace, 
 								typename, // deptypename, 
 								type, // deptype, 
@@ -321,6 +331,7 @@ class Instance extends Component {
 						return _this.makeInstanceView(
 							item && item["_name"], 
 							item && item.type + " " + "(" + item.cardinality + ")", 
+							account, 
 							namespace, 
 							deptypename, 
 							deptype, 
