@@ -4,28 +4,30 @@
 // All rights reserved.
 // 
 
-function loadEntityIntoState(endpoint, namespace, resource, entity_id, accept = 'application/json') {
+function loadEntityIntoState(endpoint, account, namespace, resource, entity_id, accept = 'application/json') {
 	return {
 		type: 'GET_ENTITY',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace,
 		entity_id: entity_id,
 		accept: accept
 	}
 }
 
-function loadEntitiesIntoState(endpoint, namespace, resource, accept = 'application/json') {
+function loadEntitiesIntoState(endpoint, account, namespace, resource, accept = 'application/json') {
 	return {
 		type: 'GET_ENTITIES',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace,
 		accept: accept
 	}
 }
 
-function getEntityFromState(state, endpoint, namespace, resource, entity_id) {
+function getEntityFromState(state, endpoint, account, namespace, resource, entity_id) {
 
 	const {
 		entity
@@ -65,7 +67,7 @@ function getEntityFromState(state, endpoint, namespace, resource, entity_id) {
 
 }
 
-function getEntitiesFromState(state, endpoint, namespace, resource) {
+function getEntitiesFromState(state, endpoint, account, namespace, resource) {
 
 	const {
 		entities

@@ -15,23 +15,23 @@ function NamespaceService({ getState }) {
 		switch (action.type) {
 			case 'GET_NAMESPACES':
 				var api = new ApiGenerator(action, next);
-				api.getNamespaces(action.type);
+				api.getNamespaces(action.type, action.account);
 				break
 			case 'GET_NAMESPACE':
 				var api = new ApiGenerator(action, next);
-				api.getNamespace(action.type, action.namespace);
+				api.getNamespace(action.type, action.account, action.namespace);
 				break
 			case 'CREATE_NAMESPACE':
 				var api = new ApiGenerator(action, next);
-				api.createNamespace(action.type, action.namespace);
+				api.createNamespace(action.type, action.account, action.namespace);
 				break
 			case 'UPDATE_NAMESPACE':
 				var api = new ApiGenerator(action, next);
-				api.updateNamespace(action.type, action.namespace, action.namespace);
+				api.updateNamespace(action.type, action.account, action.namespace, action.namespace);
 				break
 			case 'DELETE_NAMESPACE':
 				var api = new ApiGenerator(action, next);
-				api.deleteNamespace(action.type, action.namespace);
+				api.deleteNamespace(action.type, action.account, action.namespace);
 				break
 			default:
 				break
