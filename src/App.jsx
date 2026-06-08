@@ -299,6 +299,11 @@ function mapStateToProps(state, ownProps) {
 		// namespace,
 	} = state;
 
+	var account = undefined;
+	if( ownProps && ownProps.params ) {
+		account = ownProps.params.account;
+	}
+
 	var namespace = undefined;
 	if( ownProps && ownProps.params ) {
 		namespace = ownProps.params.namespace;
