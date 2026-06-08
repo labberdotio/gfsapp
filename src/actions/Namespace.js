@@ -90,6 +90,7 @@ function loadNamespacesIntoState(endpoint, account, accept = 'application/json')
 	return {
 		type: 'GET_NAMESPACES',
 		endpoint: endpoint,
+		account: account,
 		accept: accept
 	}
 }
@@ -99,7 +100,8 @@ function getNamespaces(endpoint, account) {
 	// console.log(endpoint);
 	return {
 		type: GET_NAMESPACES, 
-		endpoint
+		endpoint: endpoint, 
+		account: account
 	};
 }
 
@@ -168,7 +170,7 @@ function getNamespacesIfNeeded(endpoint, account) {
 // 	return {
 // 		type: 'INVALIDATE_NAMESPACE',
 // 		endpoint: endpoint,
-//  	account: account,
+// 		account: account,
 // 		namespace: namespace
 // 	}
 // }
