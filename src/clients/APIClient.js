@@ -18,6 +18,7 @@ class APIClient {
 
 		// this.url = 'http://' + hostname + ':' + port + '/api/v1.0';
 		this.url = 'http://' + hostname + ':' + port + '/api/' + version;
+		// this.url = "http://" + hostname + ":" + port + "/api/api/" + version;
 
 		this.jsontype = 'application/json';
 		this.yamltype = 'application/yaml';
@@ -27,16 +28,16 @@ class APIClient {
 
 	}
 
-	// namespaceURL(namespace) {
-	namespaceURL(namespace = null) {
+	// namespaceURL(account, namespace) {
+	namespaceURL(account = null, namespace = null) {
 		if( namespace ) {
-			return this.url + '/' + "namespace" + '/' + namespace;
+			return this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace;
 		}
-		return this.url + '/' + "namespace";
+		return this.url + "/" + "account" + "/" + account + "/" + "namespace";
 	}
 
-	// resourceURL(namespace, resource) {
-	resourceURL(resource, namespace, path = null) {
+	// resourceURL(account, namespace, resource) {
+	resourceURL(resource, account, namespace, path = null) {
 		if( !resource ) {
 			return undefined;
 		}
@@ -44,9 +45,9 @@ class APIClient {
 			return undefined;
 		}
 		if( path ) {
-			return this.url + '/' + namespace + '/' + resource + '/' + path;
+			return this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + resource + "/" + path;
 		}
-		return this.url + '/' + namespace + '/' + resource;
+		return this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + resource;
 	}
 
 	/*
@@ -54,10 +55,10 @@ class APIClient {
 	 * Sun Jul 26 20:54:32 2020 -0700
 	 * Sun Mar 29 16:20:36 2020 -0500
 	 */
-	getInstance(namespace, typename, instanceid, callback) {
-		var url = this.url + '/' + namespace + '/' + typename;
+	getInstance(account, namespace, typename, instanceid, callback) {
+		var url = this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + typename;
 		if( instanceid ) {
-			url = this.url + '/' + namespace + '/' + typename +  '/' + instanceid;
+			url = this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + typename +  "/" + instanceid;
 		}
 		fetch(url, {
 			method: 'GET',
@@ -72,8 +73,8 @@ class APIClient {
 		});
 	}
 
-	getInstanceField(namespace, typename, instanceid, field, callback) {
-		var url = this.url + '/' + namespace + '/' + typename +  '/' + instanceid + '/' + field + '?offset=0&limit=1000';
+	getInstanceField(account, namespace, typename, instanceid, field, callback) {
+		var url = this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + typename +  "/" + instanceid + "/" + field + "?offset=0&limit=1000";
 		fetch(url, {
 			method: 'GET',
 			headers: {
