@@ -295,6 +295,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account, 
 		// namespace,
 	} = state;
 
@@ -305,6 +306,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace
 	}	
 
