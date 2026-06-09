@@ -220,8 +220,8 @@ const RootInstances = class extends Component {
 
 		var center = undefined;
 		if( !center ) {
-			if( type && type["entity"] && type["entity"]["_id"] ) {
-				center = type["entity"]["_id"];
+			if( type && type["entity"] && type["entity"]["id"] ) {
+				center = type["entity"]["id"];
 			}
 		}
 
@@ -332,8 +332,8 @@ const RootInstances = class extends Component {
 
 		var center = undefined;
 		if( !center ) {
-			if( type && type["entity"] && type["entity"]["_id"] ) {
-				center = type["entity"]["_id"];
+			if( type && type["entity"] && type["entity"]["id"] ) {
+				center = type["entity"]["id"];
 			}
 		}
 
@@ -387,8 +387,8 @@ const RootInstances = class extends Component {
 			if( vertexes ) {
 				for( var i=0; i<vertexes.length; i++ ) {
 					var vertex = vertexes[i]["@value"];
-					if( (vertex) && (vertex["_id"]) ) {
-						allvertexes[vertex["_id"]] = {
+					if( (vertex) && (vertex["id"]) ) {
+						allvertexes[vertex["id"]] = {
 							"@type": "g:Vertex", 
 							"@value": vertex
 						};
@@ -399,8 +399,8 @@ const RootInstances = class extends Component {
 			if( edges ) {
 				for( var i=0; i<edges.length; i++ ) {
 					var edge = edges[i]["@value"];
-					if( (edge) && (edge["_id"]) ) {
-						alledges[edge["_id"]] = {
+					if( (edge) && (edge["id"]) ) {
+						alledges[edge["id"]] = {
 							"@type": "g:Edge", 
 							"@value": edge
 						};
@@ -413,8 +413,8 @@ const RootInstances = class extends Component {
 			if( vertexes ) {
 				for( var i=0; i<vertexes.length; i++ ) {
 					var vertex = vertexes[i]["@value"];
-					if( (vertex) && (vertex["_id"]) ) {
-						allvertexes[vertex["_id"]] = {
+					if( (vertex) && (vertex["id"]) ) {
+						allvertexes[vertex["id"]] = {
 							"@type": "g:Vertex", 
 							"@value": vertex
 						};
@@ -425,8 +425,8 @@ const RootInstances = class extends Component {
 			if( edges ) {
 				for( var i=0; i<edges.length; i++ ) {
 					var edge = edges[i]["@value"];
-					if( (edge) && (edge["_id"]) ) {
-						alledges[edge["_id"]] = {
+					if( (edge) && (edge["id"]) ) {
+						alledges[edge["id"]] = {
 							"@type": "g:Edge", 
 							"@value": edge
 						};
@@ -451,8 +451,8 @@ const RootInstances = class extends Component {
 			if( vertexes ) {
 				for( var i=0; i<vertexes.length; i++ ) {
 					var vertex = vertexes[i]["@value"];
-					if( (vertex) && (vertex["_id"]) ) {
-						if( vertex["_id"] == id ) {
+					if( (vertex) && (vertex["id"]) ) {
+						if( vertex["id"] == id ) {
 							return vertex;
 						}
 					}
@@ -474,14 +474,14 @@ const RootInstances = class extends Component {
 		}
 		if( subgraph && subgraph["@value"] ) {
 			if( subgraph["@value"]["vertices"] ) {
-				var fullgraphvertices = {}; // Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
-				var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var fullgraphvertices = {}; // Object.assign({}, ...fullgraph["@value"]["vertices"].map((x) => ({[x["@value"]["id"]]: x})));
+				var subgraphvertices = Object.assign({}, ...subgraph["@value"]["vertices"].map((x) => ({[x["@value"]["id"]]: x})));
 				var newgraphvertices = Object.assign({}, fullgraphvertices, subgraphvertices);
 				fullgraph["@value"]["vertices"] = Object.values(newgraphvertices);
 			}
 			if( subgraph["@value"]["edges"] ) {
-				var fullgraphvedges = {}; // Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
-				var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["_id"]]: x})));
+				var fullgraphvedges = {}; // Object.assign({}, ...fullgraph["@value"]["edges"].map((x) => ({[x["@value"]["id"]]: x})));
+				var subgraphvedges = Object.assign({}, ...subgraph["@value"]["edges"].map((x) => ({[x["@value"]["id"]]: x})));
 				var newgraphedges = Object.assign({}, fullgraphvedges, subgraphvedges);
 				fullgraph["@value"]["edges"] = Object.values(newgraphedges);
 			}
@@ -575,9 +575,9 @@ const RootInstances = class extends Component {
 		if( vertexes ) {
 			for( var i=0; i<vertexes.length; i++ ) {
 				var vertex = vertexes[i]["@value"];
-				if( (vertex) && (vertex["_id"]) ) {
-					vs[String(vertex["_id"])] = vertex; // true;
-					var sval = vertex["_label"] + " " + vertex["properties"]["_name"];
+				if( (vertex) && (vertex["id"]) ) {
+					vs[String(vertex["id"])] = vertex; // true;
+					var sval = vertex["label"] + " " + vertex["properties"]["name"];
 					var included = false;
 					var excluded = false;
 					if( (sval) && (this.state.search) ) {
@@ -587,22 +587,22 @@ const RootInstances = class extends Component {
 							excluded = true;
 						}
 					}
-					if( !(vertex["_label"] in treestruc) ) {
-						treestruc[vertex["_label"]] = {
-							id: vertex["_label"], 
-							name: vertex["_label"], 
-							label: vertex["_label"], 
+					if( !(vertex["label"] in treestruc) ) {
+						treestruc[vertex["label"]] = {
+							id: vertex["label"], 
+							name: vertex["label"], 
+							label: vertex["label"], 
 							link: undefined, 
 							tree: {
 							}
 						};
 					}
-					// treestruc[vertex["_label"]]["tree"][vertex["properties"]["_name"]] = {
-					treestruc[vertex["_label"]]["tree"][vertex["_id"]] = {
-						id: vertex["_id"], 
-						name: vertex["properties"]["_name"], 
-						label: vertex["properties"]["_name"], // + "." + vertex["_label"], 
-						link: "/namespaces/" + namespace + "/" + vertex["_label"] + "/" + vertex["_id"], 
+					// treestruc[vertex["label"]]["tree"][vertex["properties"]["name"]] = {
+					treestruc[vertex["label"]]["tree"][vertex["id"]] = {
+						id: vertex["id"], 
+						name: vertex["properties"]["name"], 
+						label: vertex["properties"]["name"], // + "." + vertex["label"], 
+						link: "/namespaces/" + namespace + "/" + vertex["label"] + "/" + vertex["id"], 
 						vertex: vertex, 
 						tree: {
 						}
@@ -614,8 +614,8 @@ const RootInstances = class extends Component {
 		if( edges ) {
 			for( var i=0; i<edges.length; i++ ) {
 				var edge = edges[i]["@value"];
-				if( (edge) && (edge["_id"]) ) {
-					var sval = edge["_label"];
+				if( (edge) && (edge["id"]) ) {
+					var sval = edge["label"];
 					var included = false;
 					var excluded = false;
 					if( (sval) && (this.state.search) ) {
@@ -625,27 +625,27 @@ const RootInstances = class extends Component {
 							excluded = true;
 						}
 					}
-					var _outV = String(edge["_outV"]);
-					var _inV = String(edge["_inV"]);
-					if( (_outV) && (_inV) ) {
-						if( (vs[_outV]) && (vs[_inV]) ) {
-							var source = vs[_outV];
-							var target = vs[_inV];
-							if( !(edge["_label"] in treestruc[source["_label"]]["tree"][source["_id"]]["tree"]) ) {
-								treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_label"]] = {
-									id: edge["_id"], 
-									name: edge["_label"], 
-									label: edge["_label"], 
+					var outV = String(edge["outV"]);
+					var inV = String(edge["inV"]);
+					if( (outV) && (inV) ) {
+						if( (vs[outV]) && (vs[inV]) ) {
+							var source = vs[outV];
+							var target = vs[inV];
+							if( !(edge["label"] in treestruc[source["label"]]["tree"][source["id"]]["tree"]) ) {
+								treestruc[source["label"]]["tree"][source["id"]]["tree"][edge["label"]] = {
+									id: edge["id"], 
+									name: edge["label"], 
+									label: edge["label"], 
 									link: undefined, 
 									tree: {
 									}
 								};
 							}
-							treestruc[source["_label"]]["tree"][source["_id"]]["tree"][edge["_label"]]["tree"][target["_id"]] = {
-								id: target["_id"], 
-								name: target["properties"]["_name"], 
-								label: target["properties"]["_name"], // + "." + target["_label"], 
-								link: "/namespaces/" + namespace + "/" + target["_label"] + "/" + target["_id"], 
+							treestruc[source["label"]]["tree"][source["id"]]["tree"][edge["label"]]["tree"][target["id"]] = {
+								id: target["id"], 
+								name: target["properties"]["name"], 
+								label: target["properties"]["name"], // + "." + target["label"], 
+								link: "/namespaces/" + namespace + "/" + target["label"] + "/" + target["id"], 
 								vertex: target, 
 								edge: edge, 
 								tree: {
@@ -742,7 +742,7 @@ const RootInstances = class extends Component {
 				var node = this.getGraphNode(id);
 				if( node ) {
 					var namespace = this.props.namespace;
-					var typename = node["_label"];
+					var typename = node["label"];
 					this.props.navigate("/namespaces/" + namespace + "/" + typename + "/" + id);
 					// this.setState({
 					// 	grfloading: false, 
