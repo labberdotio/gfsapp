@@ -207,7 +207,7 @@ class Sidebar extends Component {
 											variant="solid" 
 											component={Link} 
 											// to={"/account/" + account + "/namespaces/" + namespace} 
-											to={"/account/" + account + "/namespaces/" + namespace + "/" + type["_label"] + "/" + type["_id"]} 
+											to={"/account/" + account + "/namespaces/" + namespace + "/" + type["label"] + "/" + type["id"]} 
 											// selected 
 										>
 											<ExtensionIcon 

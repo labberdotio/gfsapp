@@ -105,16 +105,16 @@ class ListView extends Component {
 							// onClick={() => {
 							// }}
 							component={Link} 
-							to={"/account/" + account + "/namespaces/" + namespace + "/" + vertices[key]["@value"]["_label"] + "/" + vertices[key]["@value"]["_id"]} 
+							to={"/account/" + account + "/namespaces/" + namespace + "/" + vertices[key]["@value"]["label"] + "/" + vertices[key]["@value"]["id"]} 
 							selected={selected} 
 							// color="neutral" 
 							sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
 						>
 							<Stack direction="row" spacing={1.5}>
 							<Box sx={{ flex: 1 }}>
-								{/* <Typography level="title-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography> */}
-								{/* <Typography level="body-sm">{ "" + vertices[key]["@value"]["properties"]["_name"] }</Typography> */}
-								<Chip color="primary"><Typography level="body-sm">{ "" + vertices[key]["@value"]["_label"] }</Typography></Chip>
+								{/* <Typography level="title-sm">{ "" + vertices[key]["@value"]["properties"]["name"] }</Typography> */}
+								{/* <Typography level="body-sm">{ "" + vertices[key]["@value"]["properties"]["name"] }</Typography> */}
+								<Chip color="primary"><Typography level="body-sm">{ "" + vertices[key]["@value"]["label"] }</Typography></Chip>
 							</Box>
 							<Box sx={{ lineHeight: 1.5, textAlign: 'right' }}>
 								<Typography
@@ -122,7 +122,7 @@ class ListView extends Component {
 									noWrap
 									sx={{ display: { xs: 'none', md: 'block' } }}
 								>
-									{/* { "" + vertices[key]["@value"]["_id"] } */}
+									{/* { "" + vertices[key]["@value"]["id"] } */}
 									{/* { "" + vertices[key]["@value"]["properties"]["_modified"] } */}
 									<span title={
 										moment(
@@ -158,8 +158,8 @@ class ListView extends Component {
 									textOverflow: 'ellipsis',
 								}}
 							>
-								{/* { "" + vertices[key]["@value"]["_label"] } */}
-								{ "" + vertices[key]["@value"]["properties"]["_name"] }
+								{/* { "" + vertices[key]["@value"]["label"] } */}
+								{ "" + vertices[key]["@value"]["properties"]["name"] }
 							</Typography>
 						</ListItemButton>
 						</ListItem>
