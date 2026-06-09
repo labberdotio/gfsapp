@@ -161,12 +161,12 @@ class RelInstance extends Component {
 
 	}
 
-	makeInstanceLink(namespace, type, id) {
-		return "/namespaces/" + namespace + "/" + type + "/" + id;
+	makeInstanceLink(account, namespace, type, id) {
+		return "/account/" + account + "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(namespace, type, id, relname) {
-		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
+	makeRelInstanceLink(account, namespace, type, id, relname) {
+		return "/account/" + account + "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
 	makeInstance(instance) {
@@ -207,16 +207,16 @@ class RelInstance extends Component {
 			<Layout.Breadcrumb>
 				<Breadcrumbs aria-label="breadcrumb">
 					<BackNavButton></BackNavButton>
-					<Link color="inherit" to="/namespaces">
+					<Link color="inherit" to={"/account/" + account + "/namespaces"}>
 						Namespaces
 					</Link>
-					<Link color="inherit" to={"/namespaces/" + namespace}>
+					<Link color="inherit" to={"/account/" + account + "/namespaces/" + namespace}>
 						{namespace}
 					</Link>
-					<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename}>
+					<Link color="inherit" to={"/account/" + account + "/namespaces/" + namespace + "/" + typename}>
 						{typename}
 					</Link>
-					<Link color="inherit" to={"/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
+					<Link color="inherit" to={"/account/" + account + "/namespaces/" + namespace + "/" + typename + "/" + instanceid}>
 						{ instance && instance["entity"] && instance["entity"]["_name"] }
 					</Link>
 					<Typography color="textPrimary">{ relname }</Typography>

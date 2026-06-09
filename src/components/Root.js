@@ -528,7 +528,7 @@ const Root = class extends Component {
 						id: vertex["id"], 
 						name: vertex["properties"]["name"], 
 						label: vertex["properties"]["name"], // + "." + vertex["label"], 
-						link: "/namespaces/" + namespace + "/" + vertex["label"] + "/" + vertex["id"], 
+						link: "/account/" + account + "/namespaces/" + namespace + "/" + vertex["label"] + "/" + vertex["id"], 
 						vertex: vertex, 
 						tree: {
 						}
@@ -571,7 +571,7 @@ const Root = class extends Component {
 								id: target["id"], 
 								name: target["properties"]["name"], 
 								label: target["properties"]["name"], // + "." + target["label"], 
-								link: "/namespaces/" + namespace + "/" + target["label"] + "/" + target["id"], 
+								link: "/account/" + account + "/namespaces/" + namespace + "/" + target["label"] + "/" + target["id"], 
 								vertex: target, 
 								edge: edge, 
 								tree: {
@@ -667,9 +667,10 @@ const Root = class extends Component {
 				// var graph = this.getGraph();
 				var node = this.getGraphNode(id);
 				if( node ) {
+					var account = this.props.account;
 					var namespace = this.props.namespace;
 					var typename = node["label"];
-					this.props.navigate("/namespaces/" + namespace + "/" + typename + "/" + id);
+					this.props.navigate("/account/" + account + "/namespaces/" + namespace + "/" + typename + "/" + id);
 					// this.setState({
 					// 	grfloading: false, 
 					// 	grfloaded: false, 
@@ -681,8 +682,9 @@ const Root = class extends Component {
 		// else {
 		// 	var iid = undefined;
 		// 	// if( this.state.instanceid ) {
+		//  var account = this.props.account;
 		// 	var namespace = this.props.namespace;
-		// 	this.props.navigate("/namespaces/" + namespace);
+		// 	this.props.navigate("/account/" + account + "/namespaces/" + namespace);
 		// 	// this.setState({
 		// 	// 	grfloading: false, 
 		// 	// 	grfloaded: false, 

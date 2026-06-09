@@ -287,7 +287,7 @@ class Namespaces extends Component {
 										// onClick={() => {
 										// }}
 										component={Link} 
-										to={"/namespaces/" + namespace} 
+										to={"/account/" + account + "/namespaces/" + namespace.name} 
 										selected={selected} 
 										// color="neutral" 
 										sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
@@ -316,7 +316,7 @@ class Namespaces extends Component {
 												textOverflow: 'ellipsis',
 											}}
 										>
-											{namespace}
+											{namespace.name}
 										</Typography>
 									</ListItemButton>
 									</ListItem>
