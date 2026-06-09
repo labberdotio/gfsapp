@@ -216,25 +216,15 @@ class Namespaces extends Component {
 						namespace={namespace} 
 					>
 						<IconButton 
-							// color="inherit" 
-							// aria-label="open drawer" 
-							// onClick={toggleDrawerOpen} 
 							onClick={() => toggleDrawerOpen()} 
-							// edge="start" 
-							// variant="highlight" 
 							// color="neutral" 
 							// variant="plain" 
-							sx={[
-								{
-									marginRight: 5, 
+							sx={{
+								marginRight: '10px !important', 
 									color: 'rgb(97, 97, 97)'
-								},
-								// open && { display: 'none' }
-							]}
+							}}
 						>
 							<MenuIcon 
-								// color="neutral" 
-								// variant="plain" 
 								sx={{
 									color: 'rgb(97, 97, 97)'
 								}}
