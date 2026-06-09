@@ -228,7 +228,7 @@ class Header extends Component {
 							color="primary" 
 							variant="solid" 
 						/>
-						<MuiLink color="inherit" href={"/namespaces/" + namespace}>
+						<MuiLink color="inherit" href={"/account/" + account + "/namespaces/" + namespace}>
 						<Typography
 							variant="h6"
 						>
