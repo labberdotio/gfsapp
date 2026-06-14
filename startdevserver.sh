@@ -9,13 +9,14 @@
 # 10.88.88.174 gfsui.gfsdev gfsui.gfsdev.localdomain
 
 export LISTEN_ADDR="0.0.0.0"
-export LISTEN_PORT="3001"
+export LISTEN_PORT="3011"
 
 # export GREMLIN_API_HOST="10.88.88.112"
-export GREMLIN_API_HOST="192.168.1.112"
+# export GREMLIN_API_HOST="192.168.1.112"
+export GREMLIN_API_HOST="10.88.88.180"
 export GREMLIN_API_PORT="5000"
 export GREMLIN_API_WS_PORT="5002"
-export GREMLIN_API_AUTH_PORT="8081"
+export GREMLIN_API_AUTH_PORT="5003"
 
 export GREMLIN_API_NAMESPACE=""
 
