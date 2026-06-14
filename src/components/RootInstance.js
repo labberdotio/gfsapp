@@ -18,15 +18,15 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Sheet from '@mui/joy/Sheet';
-import Button from '@mui/joy/Button';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 // import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Snackbar from '@mui/joy/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import IconButton from '@mui/joy/IconButton';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import APIClient from '../clients/APIClient';
@@ -904,7 +904,7 @@ const RootInstance = class extends Component {
 							/>
 						</IconButton>
 						<BackNavButton></BackNavButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
@@ -924,7 +924,16 @@ const RootInstance = class extends Component {
 								<>
 								</>	
 							)}
-						</Button>
+						</Button> */}
+						{ instance && instance["properties"] ? (
+							<>
+							{namespace} - {instance["properties"]["name"]} ({instance["label"]})
+							</>
+						) : (
+							<>
+							{namespace}
+							</>	
+						)}
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
@@ -944,7 +953,7 @@ const RootInstance = class extends Component {
 					/>
 				</Layout.List>
 				<Layout.Main>	
-					<Sheet 
+					<Paper 
 						ref={this.mainRef} 
 						sx={{
 							// display: {
@@ -986,8 +995,8 @@ const RootInstance = class extends Component {
 						selectItem={this.selectItem} 
 						contextCommand={this.contextCommand}
 					/> */}
-					</Sheet>
-					<Snackbar 
+					</Paper>
+					{/* <Snackbar 
 						anchorOrigin={{
 							vertical: 'bottom',
 							horizontal: 'center',
@@ -999,7 +1008,13 @@ const RootInstance = class extends Component {
 						onClose={() => this.onCloseSnackbar()}
 					>
 						{this.state.snackbarMessage}
-					</Snackbar>
+					</Snackbar> */}
+					<Snackbar 
+						open={this.state.snackbarOpen} 
+						autoHideDuration={3000} 
+						onClose={() => this.onCloseSnackbar()} 
+						message={this.state.snackbarMessage} 
+					/>
 				</Layout.Main>
 				<Layout.Side>
 					<Graph

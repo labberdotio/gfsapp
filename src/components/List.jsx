@@ -19,17 +19,18 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Sheet from '@mui/joy/Sheet';
-import Stack from '@mui/joy/Stack';
-import Box from '@mui/joy/Box';
-import Typography from '@mui/joy/Typography';
-import Badge from '@mui/joy/Badge';
-import Chip from '@mui/joy/Chip';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Badge from '@mui/material/Badge';
+import Chip from '@mui/material/Chip';
 
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
-import ListDivider from '@mui/joy/ListDivider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton';
+// import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 
 import moment from 'moment';
 
@@ -81,7 +82,7 @@ class ListView extends Component {
 
 		return (
 			<>
-			<Sheet
+			<Paper
 				sx={{
 					borderRight: '1px solid',
 					borderColor: 'divider',
@@ -114,7 +115,11 @@ class ListView extends Component {
 							<Box sx={{ flex: 1 }}>
 								{/* <Typography level="title-sm">{ "" + vertices[key]["@value"]["properties"]["name"] }</Typography> */}
 								{/* <Typography level="body-sm">{ "" + vertices[key]["@value"]["properties"]["name"] }</Typography> */}
-								<Chip color="primary"><Typography level="body-sm">{ "" + vertices[key]["@value"]["label"] }</Typography></Chip>
+								<Chip label={ "" + vertices[key]["@value"]["label"] } color="primary">
+									<Typography level="body-sm">
+										{ "" + vertices[key]["@value"]["label"] }
+									</Typography>
+								</Chip>
 							</Box>
 							<Box sx={{ lineHeight: 1.5, textAlign: 'right' }}>
 								<Typography
@@ -163,11 +168,11 @@ class ListView extends Component {
 							</Typography>
 						</ListItemButton>
 						</ListItem>
-						<ListDivider sx={{ margin: 0 }} />
+						<Divider sx={{ margin: 0 }} />
 						</>
 					))}
 				</List>
-			</Sheet>	
+			</Paper>
 			</>
 		);
 	}

@@ -7,13 +7,13 @@
 // import * as React from 'react';
 import React, { useState, Fragment, Component } from 'react';
 
-import { useColorScheme } from '@mui/joy/styles';
-import Box from '@mui/joy/Box';
-import Stack from '@mui/joy/Stack';
-import Button from '@mui/joy/Button';
-import Switch from '@mui/joy/Switch';
+import { useColorScheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
 
-import Typography from '@mui/joy/Typography';
+import Typography from '@mui/material/Typography';
 // import InputBase from '@mui/material/InputBase';
 import MuiLink from '@mui/material/Link';
 import LoginIcon from '@mui/icons-material/Login';
