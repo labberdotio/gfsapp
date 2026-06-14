@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+
 import {
 	Routes, 
 	BrowserRouter as Router,
@@ -74,6 +75,7 @@ import Login from './components/Login'
 import Logout from './components/Logout'
 
 import Namespaces from './components/Namespaces'
+import DashboardView from './components/Dashboard'
 
 import CreateInstanceDialog from './components/Create'
 
@@ -263,7 +265,7 @@ ReactDOM.render(
 					</App>
 					</>
 				}/>
-			{/* <Route 
+			<Route 
 				// exact 
 				path="/account/:account/namespaces/:namespace/dashboard" 
 				element={
@@ -272,8 +274,8 @@ ReactDOM.render(
 					<DashboardView/>
 					</App>
 					</>
-				} /> */}
-			<Route 
+				} />
+			{/* <Route 
 				// exact 
 				path="/account/:account/namespaces/:namespace/:typename" 
 				element={
@@ -283,7 +285,7 @@ ReactDOM.render(
 					</App>
 					</>
 				}
-			/>
+			/> */}
 			<Route 
 				// exact 
 				path="/account/:account/namespaces/:namespace/create/:typename" 
