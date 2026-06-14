@@ -212,7 +212,7 @@ a:hover {
 
 #root > div > nav {
     position: relative;
-    top: 64px;
+    /* top: 64px; */
     background-color: rgb(51, 51, 51) !important;
     min-height: calc( 100vh - 62px );
     height: calc( 100vh - 62px );
@@ -259,6 +259,12 @@ a:hover {
 
 .MuiDrawer-root .Mui-selected .MuiListItemIcon-root {
     color: rgb(97, 97, 97) !important;
+}
+
+.Sidebar .MuiList-root .MuiListItem-root.MuiListItem-gutters {
+}
+
+.Sidebar .MuiList-root .MuiListItem-root.MuiListItem-gutters a {
 }
 
 /* */
