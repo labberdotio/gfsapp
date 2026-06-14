@@ -13,7 +13,8 @@
 # FROM node:16.14.2-alpine
 # FROM node:16.20.2-alpine
 # FROM node:18.20.3-alpine
-FROM node:20.16.0-alpine
+# FROM node:20.16.0-alpine
+FROM node:22.22.1-trixie
 
 ENV REACT_APP_GFS_FS_NAME="gfs1"
 ENV REACT_APP_GFS_API_HOST="server"
@@ -50,7 +51,9 @@ COPY ./env.sh .
 COPY ./.env .
 
 # Add bash
-RUN apk add --no-cache bash
+# RUN apk add --no-cache bash
+RUN apt-get update
+RUN apt-get install -y bash
 
 # build
 # RUN npm run build
