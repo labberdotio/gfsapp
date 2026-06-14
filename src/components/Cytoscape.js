@@ -281,17 +281,20 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 
 			if( exploded ) {
 				var id = exploded;
-				exploded = this._cy.$("#" + String(id));
+				// exploded = this._cy.$("#" + String(id));
+				exploded = this._cy.$(String(id));
 			}
 
 			if( highlighted ) {
 				var id = highlighted;
-				highlighted = this._cy.$("#" + String(id));
+				// highlighted = this._cy.$("#" + String(id));
+				highlighted = this._cy.$(String(id));
 			}
 
 			if( selected ) {
 				var id = selected;
-				selected = this._cy.$("#" + String(id));
+				// selected = this._cy.$("#" + String(id));
+				selected = this._cy.$(String(id));
 			}
 
 			if( exploded ) {
@@ -704,7 +707,8 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 				// this._cy.clearQueue();
 
 				var id = pulsed;
-				pulsed = this._cy.$("#" + String(id));
+				// pulsed = this._cy.$("#" + String(id));
+				pulsed = this._cy.$(String(id));
 
 				var node = pulsed; // e.target;
 				var a = node.animation({
