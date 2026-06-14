@@ -115,10 +115,10 @@ function Header(props) {
 						lg: 'none'
 					},
 					gridColumn: {
-						xs: '0', 
-						sm: '0', 
-						md: '0', 
-						lg: '0', 
+						xs: '1', 
+						sm: '1', 
+						md: '1', 
+						lg: '1', 
 					},
 					gridRow: {
 						xs: '1', 
@@ -135,10 +135,10 @@ function Header(props) {
 						lg: 'flex'
 					},
 					gridColumn: {
-						xs: '0', 
-						sm: '0', 
-						md: '0', 
-						lg: '0', 
+						xs: '1', 
+						sm: '1', 
+						md: '1', 
+						lg: '1', 
 					},
 					gridRow: {
 						xs: '1', 
@@ -294,7 +294,7 @@ function Sidebar(props) {
 					lg: 'flex'
 				},
 				flexDirection: 'column', 
-				height: 'calc(100dvh - 64px)', 
+				height: 'calc(100dvh - 2000px)', 
 				gridColumn: {
 					xs: '1', 
 					sm: '1', 
@@ -309,7 +309,7 @@ function Sidebar(props) {
 				}
 			}}
 		>
-			{props.children} 
+			{props.children}
 		</Box>
 		</>
 	);
@@ -440,6 +440,7 @@ function Main(props) {
 				// }, 
 			}}
 		>
+
 			{props.children} 
 		</Box>
 		</>
@@ -482,6 +483,43 @@ function Side(props) {
 	);
 }
 
+// function Full(props: BoxProps) {
+function Full(props) {
+	return (
+		<>
+		<Box 
+			component="full" 
+			className="Full" 
+			{...props}
+			sx={{
+				height: 'calc(100dvh - 64px)', 
+				overflow: 'scroll', 
+				display: {
+					xs: 'flex', 
+					sm: 'flex', 
+					md: 'flex',  
+					lg: 'flex'
+				},
+				gridColumn: {
+					xs: '2 / span 4', 
+					sm: '2 / span 4', 
+					md: '2 / span 4', 
+					lg: '2 / span 4'
+				},
+				gridRow: {
+					xs: '2 / span 4', 
+					sm: '2 / span 4', 
+					md: '2 / span 4', 
+					lg: '2 / span 4'
+				}
+			}}
+		>
+			{props.children} 
+		</Box>
+		</>
+	);
+}
+
 export default {
 	Root, 
 	Header, 
@@ -490,5 +528,6 @@ export default {
 	Breadcrumb, 
 	List, 
 	Main, 
-	Side
+	Side, 
+	Full
 };
