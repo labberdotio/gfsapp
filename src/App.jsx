@@ -9,12 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { CssVarsProvider } from '@mui/joy/styles';
-import CssBaseline from '@mui/joy/CssBaseline';
-import Sheet from '@mui/joy/Sheet';
-import Snackbar from '@mui/joy/Snackbar';
-
-import { extendTheme } from '@mui/joy/styles';
+import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
 
 import {
 	Routes, 
@@ -89,7 +85,7 @@ class AppNotification extends Component {
 					</React.Fragment>
 				}
 			/> */}
-			<Snackbar 
+			{/* <Snackbar 
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'center',
@@ -101,7 +97,13 @@ class AppNotification extends Component {
 				onClose={() => this.onCloseSnackbar()}
 			>
 				{this.state.snackbarMessage}
-			</Snackbar>
+			</Snackbar> */}
+			<Snackbar 
+				open={this.state.snackbarOpen} 
+				autoHideDuration={3000} 
+				onClose={() => this.onCloseSnackbar()} 
+				message={this.state.snackbarMessage} 
+			/>
 			</>
 		);
 	}
@@ -191,91 +193,89 @@ class App extends Component {
 		// 	});
 		// }
 
-		const theme = extendTheme({
-			colorSchemes: {
-				light: {
-					palette: {
-						neutral: {
-							// plainColor: ..., 
-							// plainActiveBg: ..., 
-							// solidColor: 'rgb(125, 125, 125)', 
-							// solidBg: '#333333', 
-							// solidActiveColor: 'white', 
-							// solidActiveBg: '#333333', 
-							// solidHoverColor: ..., 
-							// solidHoverBg: '#333333'
-						},
-						primary: {
-							// plainColor: ..., 
-							// plainActiveBg: ..., 
-							// solidColor: 'white', 
-							// solidBg: '#333333', 
-							// solidActiveColor: 'white', 
-							// solidActiveBg: '#333333', 
-							// solidHoverColor: ..., 
-							//solidHoverBg: '#333333'
-						},
-						background: {
-							// body: '#f3f3f3',
-							// level1: '#f3f3f3', 
-							// level3: '#333333', 
-							// active: ...
-						},
-						text: {
-							// primary: '#ffffff', 
-							// icon: '#ffffff'
-						}
-					},
-				},
-				dark: {
-					palette: {
-						neutral: {
-							// plainColor: ..., 
-							// plainActiveBg: ..., 
-							// solidColor: 'rgb(125, 125, 125)', 
-							// solidBg: '#333333', 
-							// solidActiveColor: 'white', 
-							// solidActiveBg: '#333333', 
-							// solidHoverColor: ..., 
-							// solidHoverBg: '#333333'
-						},
-						primary: {
-							// plainColor: ..., 
-							// plainActiveBg: ..., 
-							// solidColor: 'white', 
-							// solidBg: '#333333', 
-							// solidActiveColor: 'white', 
-							// solidActiveBg: '#333333', 
-							// solidHoverColor: ..., 
-							// solidHoverBg: '#333333'
-						},
-						background: {
-							// body: '#ffffff', 
-							// level1: '#f3f3f3', 
-							// level3: '#333333', 
-							// active: ...
-						},
-						text: {
-							// primary: '#ffffff', 
-							// icon: '#ffffff'
-						}
-					},
-				},
-			},
-		});
+		// const theme = extendTheme({
+		// 	colorSchemes: {
+		// 		light: {
+		// 			palette: {
+		// 				neutral: {
+		// 					// plainColor: ..., 
+		// 					// plainActiveBg: ..., 
+		// 					// solidColor: 'rgb(125, 125, 125)', 
+		// 					// solidBg: '#333333', 
+		// 					// solidActiveColor: 'white', 
+		// 					// solidActiveBg: '#333333', 
+		// 					// solidHoverColor: ..., 
+		// 					// solidHoverBg: '#333333'
+		// 				},
+		// 				primary: {
+		// 					// plainColor: ..., 
+		// 					// plainActiveBg: ..., 
+		// 					// solidColor: 'white', 
+		// 					// solidBg: '#333333', 
+		// 					// solidActiveColor: 'white', 
+		// 					// solidActiveBg: '#333333', 
+		// 					// solidHoverColor: ..., 
+		// 					//solidHoverBg: '#333333'
+		// 				},
+		// 				background: {
+		// 					// body: '#f3f3f3',
+		// 					// level1: '#f3f3f3', 
+		// 					// level3: '#333333', 
+		// 					// active: ...
+		// 				},
+		// 				text: {
+		// 					// primary: '#ffffff', 
+		// 					// icon: '#ffffff'
+		// 				}
+		// 			},
+		// 		},
+		// 		dark: {
+		// 			palette: {
+		// 				neutral: {
+		// 					// plainColor: ..., 
+		// 					// plainActiveBg: ..., 
+		// 					// solidColor: 'rgb(125, 125, 125)', 
+		// 					// solidBg: '#333333', 
+		// 					// solidActiveColor: 'white', 
+		// 					// solidActiveBg: '#333333', 
+		// 					// solidHoverColor: ..., 
+		// 					// solidHoverBg: '#333333'
+		// 				},
+		// 				primary: {
+		// 					// plainColor: ..., 
+		// 					// plainActiveBg: ..., 
+		// 					// solidColor: 'white', 
+		// 					// solidBg: '#333333', 
+		// 					// solidActiveColor: 'white', 
+		// 					// solidActiveBg: '#333333', 
+		// 					// solidHoverColor: ..., 
+		// 					// solidHoverBg: '#333333'
+		// 				},
+		// 				background: {
+		// 					// body: '#ffffff', 
+		// 					// level1: '#f3f3f3', 
+		// 					// level3: '#333333', 
+		// 					// active: ...
+		// 				},
+		// 				text: {
+		// 					// primary: '#ffffff', 
+		// 					// icon: '#ffffff'
+		// 				}
+		// 			},
+		// 		},
+		// 	},
+		// });
 
 		return (
-			// <CssVarsProvider disableTransitionOnChange>
-			<CssVarsProvider theme={theme} disableTransitionOnChange>
-				<CssBaseline />
-				<>
-				{this.props.children}
-				</>
-				<Notification 
-					ref={this.notificationRef} 
-					namespace={namespace} 
-				/>
-			</CssVarsProvider>
+			<>
+			{/* <ThemeProvider theme={theme}> */}
+			{this.props.children}
+			<Notification 
+				ref={this.notificationRef} 
+				namespace={namespace} 
+			/>
+			{/* </ThemeProvider> */}
+			</>
 		);
 
 	}
