@@ -222,7 +222,7 @@ class Sidebar extends Component {
 													// color="primary" 
 													variant="solid"
 												>
-													{type.name}
+													{type["properties"]["name"]}
 												</Typography>
 											{/* </ListItemContent> */}
 										</ListItemButton>

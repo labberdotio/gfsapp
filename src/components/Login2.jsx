@@ -321,7 +321,10 @@ class Login extends Component {
 							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
 							}}
 						>
 							<MenuIcon 
@@ -330,7 +333,7 @@ class Login extends Component {
 								}}
 							/>
 						</IconButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
@@ -343,6 +346,13 @@ class Login extends Component {
 							}}
 						>
 							{namespace}
+						</Button> */}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
+						>
+							{/* {namespace} */}
 						</Button>
 					</Header>
 				</Layout.Header>
@@ -360,7 +370,7 @@ class Login extends Component {
 				</Layout.List>
 				<Layout.Main>
 				{/* <CssBaseline />
-				<Sheet
+				<Paper
 					sx={{
 						width: 300,
 						mx: 'auto', // margin left & right
@@ -375,7 +385,7 @@ class Login extends Component {
 					}}
 					variant="outlined"
 				> */}
-				<Sheet sx={{
+				<Paper sx={{
 					width: 300, 
 					mx: 'auto', 
 					my: 4, 
@@ -404,8 +414,8 @@ class Login extends Component {
 					<Button sx={{ mt: 2 }}>Sign In</Button>
 					{/* <Link level="body-sm" href="#replace-with-a-link">Forgot password?</Link> */}
 					</form>
-				</Sheet>
-				{/* </Sheet> */}
+				</Paper>
+				{/* </Paper> */}
 				{/* <Snackbar
 					anchorOrigin={{
 						vertical: 'bottom',
@@ -426,7 +436,7 @@ class Login extends Component {
 						</React.Fragment>
 					}/>
 				</> */}
-				{/* <Snackbar 
+				<Snackbar 
 					anchorOrigin={{
 						vertical: 'bottom',
 						horizontal: 'center',
@@ -438,13 +448,7 @@ class Login extends Component {
 					onClose={() => this.onCloseSnackbar()}
 				>
 					{this.state.snackbarMessage}
-				</Snackbar> */}
-				<Snackbar 
-					open={this.state.snackbarOpen} 
-					autoHideDuration={3000} 
-					onClose={() => this.onCloseSnackbar()} 
-					message={this.state.snackbarMessage} 
-				/>
+				</Snackbar>
 				</Layout.Main>
 				<Layout.Side>
 					

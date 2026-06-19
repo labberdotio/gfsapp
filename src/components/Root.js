@@ -60,6 +60,9 @@ export const BackNavButton = () => {
     return (
         <>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => navigate(-1)}
 			>
@@ -74,6 +77,9 @@ export const ForwardNavButton = () => {
     return (
 		<>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => navigate(+1)}
 			>
@@ -806,7 +812,10 @@ const Root = class extends Component {
 							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
 							}}
 						>
 							<MenuIcon 
@@ -829,7 +838,13 @@ const Root = class extends Component {
 						>
 							{namespace}
 						</Button> */}
-						{namespace}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
+						>
+							{namespace}
+						</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
