@@ -49,8 +49,8 @@ class ApiGenerator {
 		var version = "v2.0"
 
 		// this.url = 'http://' + hostname + ':' + port + '/api/v1.0';
-		this.url = 'http://' + hostname + ':' + port + '/api/' + version;
-		// this.url = "http://" + hostname + ":" + port + "/api/api/" + version;
+		// this.url = 'http://' + hostname + ':' + port + '/api/' + version;
+		this.url = "http://" + hostname + ":" + port + "/api/api/" + version;
 
 		this.jsontype = 'application/json';
 		this.yamltype = 'application/yaml';
