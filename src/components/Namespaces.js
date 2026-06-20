@@ -111,14 +111,15 @@ class Namespaces extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace
 		} = this.props;
 
 		if( (!this.props.namespaces["loading"]) && 
 			(!this.props.namespaces["loaded"]) && 
 			(!this.props.namespaces["failed"]) ) {
-			if( api ) {
-				this.props.loadNamespaces(api);
+			if( api && account ) {
+				this.props.loadNamespaces(api, account);
 			}
 		}
 
@@ -128,14 +129,15 @@ class Namespaces extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace
 		} = this.props;
 
 		if( (!this.props.namespaces["loading"]) && 
 			(!this.props.namespaces["loaded"]) && 
 			(!this.props.namespaces["failed"]) ) {
-			if( api ) {
-				this.props.loadNamespaces(api);
+			if( api && account ) {
+				this.props.loadNamespaces(api, account);
 			}
 		}
 
@@ -145,7 +147,7 @@ class Namespaces extends Component {
 
 	};
 
-	getTreeData(api, namespace, graph) {
+	getTreeData(api, account, namespace, graph) {
 
 		var treestruc = {
 			
@@ -163,6 +165,7 @@ class Namespaces extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			namespaces
 		} = this.props;
@@ -350,7 +353,7 @@ Namespaces.propNamespaces = {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadNamespaces: (api) => dispatch(loadNamespacesIntoState(api)),
+		loadNamespaces: (api, account) => dispatch(loadNamespacesIntoState(api, account)),
 
 		invalidateEntities: (api, resource) => dispatch(invalidateEntitiesInState(api, resource)),
 
@@ -361,6 +364,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account, 
 		// namespace
 	} = state;
 
@@ -369,10 +373,11 @@ function mapStateToProps(state, ownProps) {
 		namespace = ownProps.params.namespace;
 	}
 
-	const namespaces = getNamespacesFromState(state, api);
+	const namespaces = getNamespacesFromState(state, api, account);
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace, 
 		namespaces: namespaces
 	}

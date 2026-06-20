@@ -91,6 +91,7 @@ class RelInstance extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			instanceid, 
@@ -107,7 +108,7 @@ class RelInstance extends Component {
 			(!this.props.instance["loaded"]) && 
 			(!this.props.instance["failed"]) ) {
 			if( api && namespace && typename ) {
-				this.props.loadInstance(api, namespace, typename, instanceid);
+				this.props.loadInstance(api, account, namespace, typename, instanceid);
 			}
 		}
 
@@ -116,7 +117,7 @@ class RelInstance extends Component {
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
 			if( api && namespace && typename ) {
-				this.props.loadSchema(api, namespace, typename);
+				this.props.loadSchema(api, account, namespace, typename);
 			}
 			// }
 		}
@@ -127,6 +128,7 @@ class RelInstance extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			instanceid, 
@@ -143,7 +145,7 @@ class RelInstance extends Component {
 			(!this.props.instance["loaded"]) && 
 			(!this.props.instance["failed"]) ) {
 			if( api && namespace && typename ) {
-				this.props.loadInstance(api, namespace, typename, instanceid);
+				this.props.loadInstance(api, account, namespace, typename, instanceid);
 			}
 		}
 
@@ -152,7 +154,7 @@ class RelInstance extends Component {
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
 			if( api && namespace && typename ) {
-				this.props.loadSchema(api, namespace, typename);
+				this.props.loadSchema(api, account, namespace, typename);
 			}
 			// }
 		}
@@ -177,6 +179,7 @@ class RelInstance extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			instanceid, 
@@ -195,6 +198,7 @@ class RelInstance extends Component {
 			<>
 			{/* <Layout.List>
 				<List
+					account={account} 
 					namespace={namespace} 
 					graph={graph} 
 					selected={false}
@@ -224,6 +228,7 @@ class RelInstance extends Component {
 				<InstanceView 
 					title={ relname } 
 					description={reltype} 
+					account={account} 
 					namespace={namespace} 
 					typename={reltype} 
 					type={relschema} 
@@ -236,6 +241,7 @@ class RelInstance extends Component {
 				<InstancesView 
 					title={relname} 
 					description={reltype} 
+					account={account} 
 					namespace={namespace} 
 					typename={reltype} 
 					type={relschema} 
@@ -252,9 +258,9 @@ class RelInstance extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadInstance: (api, namespace, typename, instanceid) => dispatch(loadEntityIntoState(api, namespace, typename, instanceid)), 
+		loadInstance: (api, account, namespace, typename, instanceid) => dispatch(loadEntityIntoState(api, account, namespace, typename, instanceid)), 
 
-		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename))
+		loadSchema: (api, account, namespace, typename) => dispatch(loadEntityIntoState(api, account, namespace, "schema", typename))
 
 	}
 }
@@ -263,6 +269,7 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account
 		// namespace
 	} = state;
 
@@ -286,9 +293,9 @@ function mapStateToProps(state, ownProps) {
 		relname = ownProps.params.relname;
 	}
 
-	const instance = getEntityFromState(state, api, namespace, typename, instanceid);
+	const instance = getEntityFromState(state, api, account, namespace, typename, instanceid);
 
-	const schema = getEntityFromState(state, api, namespace, "schema", typename);
+	const schema = getEntityFromState(state, api, account, namespace, "schema", typename);
 
 	var reltype = undefined;
 	var relschema = undefined;
@@ -297,6 +304,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace, 
 		typename: typename, 
 		instanceid: instanceid, 
