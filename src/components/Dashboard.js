@@ -380,24 +380,26 @@ const handleOrderMenuClick = (event) => {
 						namespace={namespace} 
 						types={types} 
 					>
-						<IconButton 
-							onClick={() => toggleDrawerOpen()} 
-							// color="neutral" 
-							// variant="plain" 
-							sx={{
-								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)',
-								'&:focus': {
-									outline: 'none !important',
-								}
-							}}
-						>
-							<MenuIcon 
+						{!drawerOpen &&
+							<IconButton 
+								onClick={() => toggleDrawerOpen()} 
+								// color="neutral" 
+								// variant="plain" 
 								sx={{
-									color: 'rgb(97, 97, 97)'
+									marginRight: '10px !important', 
+									color: 'rgb(97, 97, 97)',
+									'&:focus': {
+										outline: 'none !important',
+									}
 								}}
-							/>
-						</IconButton>
+							>
+								<MenuIcon 
+									sx={{
+										color: 'rgb(97, 97, 97)'
+									}}
+								/>
+							</IconButton>
+						}
 						{/* <Button 
 							component="a" 
 							href="/" 
