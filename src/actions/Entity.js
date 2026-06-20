@@ -45,59 +45,63 @@ const REFRESH_ENTITY = 'REFRESH_ENTITY';
  * 
  */
 
-function loadEntitiesIntoState(endpoint, namespace, resource, accept = 'application/json') {
+function loadEntitiesIntoState(endpoint, account, namespace, resource, accept = 'application/json') {
 	return {
 		type: 'GET_ENTITIES',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace,
 		accept: accept
 	}
 }
 
-function getEntities(endpoint, namespace, resource) {
+function getEntities(endpoint, account, namespace, resource) {
 	// console.log(" >> INVOKING ACTION: GET_ENTITIES ");
 	// console.log(endpoint);
 	return {
 		type: GET_ENTITIES, 
 		resource: resource, 
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace
 	};
 }
 
-function invalidateEntitiesInState(endpoint, namespace, resource) {
+function invalidateEntitiesInState(endpoint, account, namespace, resource) {
 	// console.log(" >> INVOKING ACTION: INVALIDATE_ENTITIES ");
 	// console.log(endpoint);
 	return {
 		type: 'INVALIDATE_ENTITIES',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace
 	}
 }
 
-function refreshEntitiesInState(endpoint, namespace, resource) {
+function refreshEntitiesInState(endpoint, account, namespace, resource) {
 	// console.log(" >> INVOKING ACTION: REFRESH_ENTITIES ");
 	// console.log(endpoint);
 	return {
 		type: 'REFRESH_ENTITIES',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace
 	}
 }
 
-function shouldGetEntities(state, endpoint, namespace, resource) {
+function shouldGetEntities(state, endpoint, account, namespace, resource) {
 	return true;
 }
 
-function getEntitiesIfNeeded(endpoint, namespace, resource) {
+function getEntitiesIfNeeded(endpoint, account, namespace, resource) {
 	// console.log(" >> getEntitiesIfNeeded ");
 	// console.log(endpoint);
 	return (dispatch, getState) => {
-		if (shouldGetEntities(getState(), endpoint, namespace, resource)) {
-			return dispatch(getEntities(endpoint, namespace, resource));
+		if (shouldGetEntities(getState(), endpoint, account, namespace, resource)) {
+			return dispatch(getEntities(endpoint, account, namespace, resource));
 		}
 	};
 }
@@ -106,20 +110,21 @@ function getEntitiesIfNeeded(endpoint, namespace, resource) {
  * 
  */
 
-function loadEntityIntoState(endpoint, namespace, resource, entity_id, accept = 'application/json') {
+function loadEntityIntoState(endpoint, account, namespace, resource, entity_id, accept = 'application/json') {
 	// console.log(" >> INVOKING ACTION: GET_ENTITY ");
 	// console.log(endpoint);
 	return {
 		type: 'GET_ENTITY',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace,
 		entity_id: entity_id,
 		accept: accept
 	}
 }
 
-function getEntity(endpoint, namespace, resource, entity_id) {
+function getEntity(endpoint, account, namespace, resource, entity_id) {
 	// console.log(" >> INVOKING ACTION: GET_ENTITY ");
 	// console.log(endpoint);
 	return {
@@ -127,45 +132,48 @@ function getEntity(endpoint, namespace, resource, entity_id) {
 		resource: resource, 
 		entity_id: entity_id, 
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace
 	};
 }
 
-function invalidateEntityInState(endpoint, namespace, resource, entity_id) {
+function invalidateEntityInState(endpoint, account, namespace, resource, entity_id) {
 	// console.log(" >> INVOKING ACTION: INVALIDATE_ENTITY ");
 	// console.log(endpoint);
 	return {
 		type: 'INVALIDATE_ENTITY',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace,
 		entity_id: entity_id
 	}
 }
 
-function refreshEntityInState(endpoint, namespace, resource, entity_id, entity_data) {
+function refreshEntityInState(endpoint, account, namespace, resource, entity_id, entity_data) {
 	// console.log(" >> INVOKING ACTION: REFRESH_ENTITY ");
 	// console.log(endpoint);
 	return {
 		type: 'REFRESH_ENTITY',
 		resource: resource,
 		endpoint: endpoint,
+		account: account,
 		namespace: namespace,
 		entity_id: entity_id,
 		entity_data: entity_data
 	}
 }
 
-function shouldGetEntity(state, endpoint, namespace, resource, entity_id) {
+function shouldGetEntity(state, endpoint, account, namespace, resource, entity_id) {
 	return true;
 }
 
-function getEntityIfNeeded(endpoint, namespace, resource, entity_id) {
+function getEntityIfNeeded(endpoint, account, namespace, resource, entity_id) {
 	// console.log(" >> getEntityIfNeeded ");
 	// console.log(endpoint);
 	return (dispatch, getState) => {
-		if (shouldGetEntity(getState(), endpoint, namespace, resource, entity_id)) {
-			return dispatch(getEntity(endpoint, namespace, resource, entity_id));
+		if (shouldGetEntity(getState(), endpoint, account, namespace, resource, entity_id)) {
+			return dispatch(getEntity(endpoint, account, namespace, resource, entity_id));
 		}
 	};
 }
