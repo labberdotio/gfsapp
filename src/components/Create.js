@@ -71,6 +71,7 @@ class CreateInstanceDialog extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			type, 
@@ -82,7 +83,7 @@ class CreateInstanceDialog extends Component {
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
 			if( api && namespace && typename ) {
-				this.props.loadSchema(api, namespace, typename);
+				this.props.loadSchema(api, account, namespace, typename);
 			}
 			// }
 		}
@@ -93,6 +94,7 @@ class CreateInstanceDialog extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			type, 
@@ -104,7 +106,7 @@ class CreateInstanceDialog extends Component {
 			(!this.props.schema["failed"]) ) {
 			// if( typename ) {
 			if( api && namespace && typename ) {
-				this.props.loadSchema(api, namespace, typename);
+				this.props.loadSchema(api, account, namespace, typename);
 			}
 			// }
 		}
@@ -139,6 +141,7 @@ class CreateInstanceDialog extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			typename, 
 			type, 
@@ -213,9 +216,9 @@ class CreateInstanceDialog extends Component {
 function mapDispatchToProps(dispatch) {
 	return {
 
-		loadSchema: (api, namespace, typename) => dispatch(loadEntityIntoState(api, namespace, "schema", typename)), 
+		loadSchema: (api, account, namespace, typename) => dispatch(loadEntityIntoState(api, account, namespace, "schema", typename)), 
 
-		loadInstances: (api, namespace, typename) => dispatch(loadEntitiesIntoState(api, namespace, typename)), 
+		loadInstances: (api, account, namespace, typename) => dispatch(loadEntitiesIntoState(api, account, namespace, typename)), 
 
 	}
 }
@@ -223,6 +226,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, ownProps) {
 
 	const {
+		account, 
 		namespace, 
 		typename
 	} = ownProps;
@@ -231,10 +235,11 @@ function mapStateToProps(state, ownProps) {
 		api
 	} = state;
 
-	const schema = getEntityFromState(state, api, namespace, "schema", typename);
+	const schema = getEntityFromState(state, api, account, namespace, "schema", typename);
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace, 
 		typename: typename, 
 		schema: schema

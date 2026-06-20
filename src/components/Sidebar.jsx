@@ -71,6 +71,7 @@ class Sidebar extends Component {
 
 		const {
 			api, 
+			account, 
 			namespace, 
 			types
 		} = this.props;
