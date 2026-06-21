@@ -47,7 +47,7 @@ class Instance extends Component {
 	}
 
 	getDataURL(api, account, namespace, typename, type, schema, instance, instancefield) {
-		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename + "/" + instance["_id"] + "/" + instancefield;
+		var dataurl = "http://" + api.api.host + ":" + api.api.port + "/api/v2.0/" + namespace + "/" + typename + "/" + instance["id"] + "/" + instancefield;
 		return dataurl;
 	}
 
@@ -55,11 +55,11 @@ class Instance extends Component {
 
 		var properties = [];
 
-		var propertyname = "_id";
+		var propertyname = "id";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
-				"value": <Link to={this.makeInstanceLink(namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_id"]}</Link>
+				"value": <Link to={this.makeInstanceLink(namespace, instance["label"], instance["id"])} style={{width: 50, borderRadius: '50%'}}>{instance["id"]}</Link>
 			});
 		}
 
@@ -71,11 +71,11 @@ class Instance extends Component {
 			});
 		}
 
-		propertyname = "_name";
+		propertyname = "name";
 		if( instance && instance[propertyname] ) {
 			properties.push({
 				"name": propertyname, 
-				"value": <Link to={this.makeInstanceLink(account, namespace, instance["_label"], instance["_id"])} style={{width: 50, borderRadius: '50%'}}>{instance["_name"]}</Link>
+				"value": <Link to={this.makeInstanceLink(account, namespace, instance["label"], instance["id"])} style={{width: 50, borderRadius: '50%'}}>{instance["name"]}</Link>
 			});
 		}
 
@@ -98,7 +98,7 @@ class Instance extends Component {
 		if( schema && schema["properties"] ) {
 			for( var propertyname in schema["properties"] ) {
 				var property = schema["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+				if( !["id", "_uuid", "name", "_created", "_modified"].includes(propertyname) ) {
 					if( property ) {
 						if( property["$ref"] ) {
 						} else if( (property["type"]) && 
@@ -132,7 +132,7 @@ class Instance extends Component {
 		if( schema && schema["properties"] ) {
 			for( var propertyname in schema["properties"] ) {
 				var property = schema["properties"][propertyname];
-				if( !["_id", "_uuid", "_name", "_created", "_modified"].includes(propertyname) ) {
+				if( !["id", "_uuid", "name", "_created", "_modified"].includes(propertyname) ) {
 					if( property ) {
 						if( property["$ref"] ) {
 							var dep = {
@@ -304,7 +304,7 @@ class Instance extends Component {
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
 						return _this.makeInstancesView(
-							item && item["_name"], 
+							item && item["name"], 
 							item && item.type + " " + "(" + item.cardinality + ")",  
 							account, 
 							namespace, 
@@ -319,7 +319,7 @@ class Instance extends Component {
 								type, // deptype, 
 								schema, // depschema, 
 								instance, // item && item.value, 
-								item && item["_name"]
+								item && item["name"]
 							), 
 							false
 						);
@@ -329,14 +329,14 @@ class Instance extends Component {
 						var depschema = schema["definitions"][deptypename];
 						depschema["definitions"] = schema["definitions"];
 						return _this.makeInstanceView(
-							item && item["_name"], 
+							item && item["name"], 
 							item && item.type + " " + "(" + item.cardinality + ")", 
 							account, 
 							namespace, 
 							deptypename, 
 							deptype, 
 							depschema, 
-							item && item.value && item.value["_id"], 
+							item && item.value && item.value["id"], 
 							item && item.value, 
 							false
 						);

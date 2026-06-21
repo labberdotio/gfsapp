@@ -66,12 +66,12 @@ class Instances extends Component {
 	// 			// {
 	// 			// 	icon: 'save',
 	// 			// 	tooltip: 'Save', // + ' ' + typename,
-	// 			// 	onClick: (event, rowData) => window.alert("You saved " + rowData["_name"])
+	// 			// 	onClick: (event, rowData) => window.alert("You saved " + rowData["name"])
 	// 			// }, 
 	// 			{
 	// 				icon: 'delete',
 	// 				tooltip: 'Delete', // + ' ' + typename,
-	// 				onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["_name"] + "?")
+	// 				onClick: (event, rowData) => window.confirm("Are you sure you want to delete" + " " + typename + " " + rowData["name"] + "?")
 	// 			}, 
 	// 			// {
 	// 			// 	icon: 'add',
@@ -161,7 +161,7 @@ class Instances extends Component {
 					// 	schema
 					// )}
 					editable={editable}
-					detailLink={(rowData) => this.makeInstanceLink(account, namespace, rowData["_label"], rowData["_id"])} />
+					detailLink={(rowData) => this.makeInstanceLink(account, namespace, rowData["label"], rowData["id"])} />
 			</>
 		);
 	}
