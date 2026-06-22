@@ -24,6 +24,7 @@ import FormLabel from '@mui/joy/FormLabel';
 import FormHelperText from '@mui/joy/FormHelperText';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
+import Link from '@mui/joy/Link';
 import Snackbar from '@mui/joy/Snackbar';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -374,139 +375,36 @@ class Login extends Component {
 					}}
 					variant="outlined"
 				> */}
+				<Sheet sx={{
+					width: 300, 
+					mx: 'auto', 
+					my: 4, 
+					p: 3, 
+					borderRadius: 'sm', 
+					boxShadow: 'md'
+				}}>
 					<form onSubmit={(e) => this.submitUser(e)}>
-					<div>
-						<Typography level="h4" component="h1">
-							<b>Welcome!</b>
-						</Typography>
-						<Typography level="body-sm">Sign in to continue.</Typography>
-					</div>
+					<Typography level="h4" component="h1">
+						<b>Welcome!</b>
+					</Typography>
+					<Typography level="body-sm">Sign in to continue.</Typography>
+					{/* <Typography level="h4" component="h1"><b>Sign in</b></Typography> */}
 					<FormControl>
 						<FormLabel>Namespace</FormLabel>
-						<Input	
-							id="namespace" 
-							type="text" 
-							value={cnamespace} 
-							label="Namespace" 
-							labelText="Namespace" 
-							placeholder="Namespace" 
-							helperText={namespaceError} 
-							// These do not seem to do much
-							inputProps={{
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}} 
-							// These seem to work
-							slotProps={{
-								input: {
-									autoCapitalize: 'none', 
-									autoComplete: 'off', 
-									autoCorrect: 'off', 
-								}
-							}} 
-							error={namespaceError} 
-							color={namespaceColor} 
-							// variant=...
-							// fullWidth 
-							// formControlProps={{
-							// 	fullWidth: true
-							// }} 
-							onChange={(e) => this.setNamespace(e.target.value)} 
-							handleChange={(e) => this.setNamespace(e.target.value)} 
-						/>
-						<FormHelperText>{namespaceError}</FormHelperText>
+						<Input name="namespace" type="text" placeholder="namespace" />
 					</FormControl>
 					<FormControl>
-						<FormLabel>Username</FormLabel>
-						<Input
-							id="username" 
-							type="text" 
-							value={username} 
-							label="Username" 
-							labelText="Username" 
-							placeholder="Username" 
-							helperText={usernameError} 
-							// These do not seem to do much
-							inputProps={{
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}} 
-							// These seem to work
-							slotProps={{
-								input: {
-									autoCapitalize: 'none', 
-									autoComplete: 'off', 
-									autoCorrect: 'off', 
-								}
-							}} 
-							error={usernameError} 
-							color={usernameColor} 
-							// variant=...
-							// fullWidth 
-							// formControlProps={{
-							// 	fullWidth: true
-							// }}
-							onChange={(e) => this.setUsername(e.target.value)} 
-							handleChange={(e) => this.setUsername(e.target.value)} 
-						/>
-						<FormHelperText>{usernameError}</FormHelperText>
+						<FormLabel>Email</FormLabel>
+						<Input name="email" type="email" placeholder="johndoe@email.com" />
 					</FormControl>
 					<FormControl>
 						<FormLabel>Password</FormLabel>
-						<Input	
-							id="password" 
-							value={password} 
-							type="password" 
-							label="Password" 
-							labelText="Password" 
-							placeholder="" 
-							helperText={passwordError} 
-							// These do not seem to do much
-							inputProps={{
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}} 
-							// These seem to work
-							slotProps={{
-								input: {
-									autoCapitalize: 'none', 
-									autoComplete: 'off', 
-									autoCorrect: 'off', 
-								}
-							}} 
-							error={passwordError} 
-							color={passwordColor} 
-							// variant=... 
-							// fullWidth 
-							// formControlProps={{
-							// 	fullWidth: true
-							// }}
-							onChange={(e) => this.setPassword(e.target.value)}
-							handleChange={this.handleChange}    
-						/>
-						<FormHelperText>{passwordError}</FormHelperText>
+						<Input name="password" type="password" placeholder="password" />
 					</FormControl>
-					<Button 
-						type="submit" 
-						// color="primary" 
-						// variant="contained" 
-						// className="form__custom-button"
-						sx={{
-							mt: 1 /* margin top */
-						}}
-					>
-						Log in
-					</Button>
-					{/* <Typography
-						endDecorator={<Link href="/sign-up">Sign up</Link>}
-						sx={{ fontSize: 'sm', alignSelf: 'center' }}
-					>
-						Don&apos;t have an account?
-					</Typography> */}
+					<Button sx={{ mt: 2 }}>Sign In</Button>
+					{/* <Link level="body-sm" href="#replace-with-a-link">Forgot password?</Link> */}
 					</form>
+				</Sheet>
 				{/* </Sheet> */}
 				{/* <Snackbar
 					anchorOrigin={{
