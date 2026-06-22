@@ -24,6 +24,7 @@ import FormLabel from '@mui/joy/FormLabel';
 import FormHelperText from '@mui/joy/FormHelperText';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
+import Link from '@mui/joy/Link';
 import Snackbar from '@mui/joy/Snackbar';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -60,8 +61,9 @@ class Login extends Component {
 		super(props);
 		this.state = {
 			drawerOpen: false, 
-			namespace: undefined, 
-			namespaceError: undefined, 
+			// account: undefined, 
+			// namespace: undefined, 
+			// namespaceError: undefined, 
 			username: undefined, 
 			usernameError: undefined, 
 			password: undefined, 
@@ -78,8 +80,9 @@ class Login extends Component {
 
 	state = {
 		drawerOpen: false, 
-		namespace: undefined, 
-		namespaceError: undefined, 
+		// account: undefined, 
+		// namespace: undefined, 
+		// namespaceError: undefined, 
 		username: undefined, 
 		usernameError: undefined, 
 		password: undefined, 
@@ -107,15 +110,15 @@ class Login extends Component {
 			api
 		} = this.props;
 
-		var scnamespace = this.props.searchParams[0].get("namespace");
-		if( scnamespace ) {
-			this.setNamespace(scnamespace);
-		}
+		// var scnamespace = this.props.searchParams[0].get("namespace");
+		// if( scnamespace ) {
+		// 	this.setNamespace(scnamespace);
+		// }
 
-		var cnamespace = localStorage.getItem("jwt-namespace");
-		if( cnamespace ) {
-			this.setNamespace(cnamespace);
-		}
+		// var cnamespace = localStorage.getItem("jwt-namespace");
+		// if( cnamespace ) {
+		// 	this.setNamespace(cnamespace);
+		// }
 
 	}
 
@@ -123,14 +126,15 @@ class Login extends Component {
 		var _this = this;
 		_this.setActive(true);
 		event.preventDefault();
-		var namespace = _this.state.namespace;
+		// var namespace = _this.state.namespace;
 		var username = _this.state.username;
 		var password = _this.state.password;
 		const data = new FormData();
-		var email = username + "@" + namespace; 
-		data.append("namespace", namespace);
+		// var email = username + "@" + namespace; 
+		// data.append("namespace", namespace);
 		// data.append("username", username);
-		data.append("username", email);
+		// data.append("username", email);
+		data.append("username", username);
 		data.append("password", password);
 		data.append("grant_type", "password");
 		data.append("scope", "read write");
@@ -149,10 +153,10 @@ class Login extends Component {
 				console.log("Login successfull");
 				console.log("JWT token: ");
 				console.log(data.access_token);
-				localStorage.setItem("jwt-namespace", namespace);
+				// localStorage.setItem("jwt-namespace", namespace);
 				localStorage.setItem("jwt-token", data.access_token);
 				localStorage.setItem("jwt-user", username);
-				localStorage.setItem("jwt-email", email);
+				// localStorage.setItem("jwt-email", email);
 				// _this.setUsername("");
 				// _this.setPassword("");
 				_this.setStatus("Logged in");
@@ -160,7 +164,8 @@ class Login extends Component {
 				_this.setActive(false);
 				// Redirect here
 				// router.push(...)
-				window.location.href = "/namespaces/" + namespace;
+				// window.location.href = "/namespaces/" + namespace;
+				window.location.href = "/account/" + "whoopsjohnnie" + "/namespaces";
 			} else {
 				console.log("Login failed: " + data.error + " " + data.error_description);	
 				_this.setStatus("Login failed: " + data.error_description);
@@ -188,18 +193,18 @@ class Login extends Component {
 		});
 	}
 
-	setNamespace(namespace) {
-		// console.log(" setNamespace " + namespace);
-		var _this = this;
-		var error = undefined;
-		if( !namespace ) {
-			error = "Please give a valid namespace.";
-		}
-		_this.setState({
-			namespace: namespace, 
-			namespaceError: error
-		});
-	}
+	// setNamespace(namespace) {
+	// 	// console.log(" setNamespace " + namespace);
+	// 	var _this = this;
+	// 	var error = undefined;
+	// 	if( !namespace ) {
+	// 		error = "Please give a valid namespace.";
+	// 	}
+	// 	_this.setState({
+	// 		namespace: namespace, 
+	// 		namespaceError: error
+	// 	});
+	// }
 
 	setUsername(username) {
 		// console.log(" setUsername " + username);
@@ -265,12 +270,12 @@ class Login extends Component {
 		var backdropOpen = false;
 
 		// var scnamespace = this.props.searchParams[0].get("namespace");
-		var namespace = _this.state.namespace;
-		var namespaceError = _this.state.namespaceError;
-		var namespaceColor = "primary";
-		if( namespaceError ) {
-			namespaceColor = "danger";
-		}
+		// var namespace = _this.state.namespace;
+		// var namespaceError = _this.state.namespaceError;
+		// var namespaceColor = "primary";
+		// if( namespaceError ) {
+		// 	namespaceColor = "danger";
+		// }
 		var username = _this.state.username;
 		var usernameError = _this.state.usernameError;
 		var usernameColor = "primary";
@@ -286,7 +291,7 @@ class Login extends Component {
 		var active = _this.state.active;
 		var status = _this.state.status;
 
-		var cnamespace = namespace;
+		// var cnamespace = namespace;
 		// if( !namespace ) {
 		// 	if( scnamespace ) {
 		// 		cnamespace = scnamespace;
@@ -312,7 +317,7 @@ class Login extends Component {
 						drawerOpen={drawerOpen} 
 						toggleDrawerOpen={toggleDrawerOpen} 
 						api={api} 
-						namespace={namespace} 
+						// namespace={namespace} 
 					>
 						<IconButton 
 							onClick={() => toggleDrawerOpen()} 
@@ -341,19 +346,19 @@ class Login extends Component {
 								color: 'rgb(97, 97, 97)'
 							}}
 						>
-							{namespace}
+							{/* {namespace} */}
 						</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
 					<Sidebar 
 						api={api} 
-						namespace={namespace} 				
+						// namespace={namespace} 				
 					/>
 				</Layout.Sidebar>
 				<Layout.List>
 					<List
-						namespace={namespace} 
+						// namespace={namespace} 
 						selected={false}
 					/>
 				</Layout.List>
@@ -374,52 +379,30 @@ class Login extends Component {
 					}}
 					variant="outlined"
 				> */}
+				<Sheet sx={{
+					width: 300, 
+					mx: 'auto', 
+					my: 4, 
+					p: 3, 
+					borderRadius: 'sm', 
+					boxShadow: 'md'
+				}}>
 					<form onSubmit={(e) => this.submitUser(e)}>
-					<div>
-						<Typography level="h4" component="h1">
-							<b>Welcome!</b>
-						</Typography>
-						<Typography level="body-sm">Sign in to continue.</Typography>
-					</div>
-					<FormControl>
+					<Typography level="h4" component="h1">
+						<b>Welcome!</b>
+					</Typography>
+					<Typography level="body-sm">Sign in to continue.</Typography>
+					{/* <Typography level="h4" component="h1"><b>Sign in</b></Typography> */}
+					{/* <FormControl>
 						<FormLabel>Namespace</FormLabel>
-						<Input	
-							id="namespace" 
-							type="text" 
-							value={cnamespace} 
-							label="Namespace" 
-							labelText="Namespace" 
-							placeholder="Namespace" 
-							helperText={namespaceError} 
-							// These do not seem to do much
-							inputProps={{
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}} 
-							// These seem to work
-							slotProps={{
-								input: {
-									autoCapitalize: 'none', 
-									autoComplete: 'off', 
-									autoCorrect: 'off', 
-								}
-							}} 
-							error={namespaceError} 
-							color={namespaceColor} 
-							// variant=...
-							// fullWidth 
-							// formControlProps={{
-							// 	fullWidth: true
-							// }} 
-							onChange={(e) => this.setNamespace(e.target.value)} 
-							handleChange={(e) => this.setNamespace(e.target.value)} 
-						/>
-						<FormHelperText>{namespaceError}</FormHelperText>
-					</FormControl>
+						<Input name="namespace" type="text" placeholder="namespace" />
+					</FormControl> */}
 					<FormControl>
-						<FormLabel>Username</FormLabel>
-						<Input
+						<FormLabel>Email</FormLabel>
+						<Input 
+							// name="email"
+							// type="email"
+							// placeholder="johndoe@email.com"
 							id="username" 
 							type="text" 
 							value={username} 
@@ -427,20 +410,6 @@ class Login extends Component {
 							labelText="Username" 
 							placeholder="Username" 
 							helperText={usernameError} 
-							// These do not seem to do much
-							inputProps={{
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}} 
-							// These seem to work
-							slotProps={{
-								input: {
-									autoCapitalize: 'none', 
-									autoComplete: 'off', 
-									autoCorrect: 'off', 
-								}
-							}} 
 							error={usernameError} 
 							color={usernameColor} 
 							// variant=...
@@ -451,11 +420,13 @@ class Login extends Component {
 							onChange={(e) => this.setUsername(e.target.value)} 
 							handleChange={(e) => this.setUsername(e.target.value)} 
 						/>
-						<FormHelperText>{usernameError}</FormHelperText>
 					</FormControl>
 					<FormControl>
 						<FormLabel>Password</FormLabel>
-						<Input	
+						<Input 
+							// name="password"
+							// type="password"
+							// placeholder="password"
 							id="password" 
 							value={password} 
 							type="password" 
@@ -463,20 +434,6 @@ class Login extends Component {
 							labelText="Password" 
 							placeholder="" 
 							helperText={passwordError} 
-							// These do not seem to do much
-							inputProps={{
-								autoCapitalize: 'none', 
-								autoComplete: 'off', 
-								autoCorrect: 'off', 
-							}} 
-							// These seem to work
-							slotProps={{
-								input: {
-									autoCapitalize: 'none', 
-									autoComplete: 'off', 
-									autoCorrect: 'off', 
-								}
-							}} 
 							error={passwordError} 
 							color={passwordColor} 
 							// variant=... 
@@ -485,28 +442,18 @@ class Login extends Component {
 							// 	fullWidth: true
 							// }}
 							onChange={(e) => this.setPassword(e.target.value)}
-							handleChange={this.handleChange}    
+							handleChange={this.handleChange}
 						/>
-						<FormHelperText>{passwordError}</FormHelperText>
 					</FormControl>
 					<Button 
 						type="submit" 
-						// color="primary" 
-						// variant="contained" 
-						// className="form__custom-button"
-						sx={{
-							mt: 1 /* margin top */
-						}}
+						sx={{ mt: 2 }}
 					>
-						Log in
+						Sign In
 					</Button>
-					{/* <Typography
-						endDecorator={<Link href="/sign-up">Sign up</Link>}
-						sx={{ fontSize: 'sm', alignSelf: 'center' }}
-					>
-						Don&apos;t have an account?
-					</Typography> */}
+					{/* <Link level="body-sm" href="#replace-with-a-link">Forgot password?</Link> */}
 					</form>
+				</Sheet>
 				{/* </Sheet> */}
 				{/* <Snackbar
 					anchorOrigin={{
