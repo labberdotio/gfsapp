@@ -35,6 +35,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 // import HomeIcon from '@mui/icons-material/Home';
 import ComputerIcon from '@mui/icons-material/Computer';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 class Sidebar extends Component {
 
@@ -170,6 +172,7 @@ class Sidebar extends Component {
 							</ListItemButton>
 						</ListItem>
 						{ namespace && (
+							<>
 							<ListItem>
 								<ListItemButton 
 									title="Home" 
@@ -195,6 +198,57 @@ class Sidebar extends Component {
 									{/* </ListItemContent> */}
 								</ListItemButton>
 							</ListItem>
+							<ListItem>
+								<ListItemButton 
+									title="Dashboard" 
+									variant="solid" 
+									component={Link} 
+									to={"/account/" + account + "/namespaces/" + namespace + "/dashboard"} 
+									selected 
+								>
+									<DashboardIcon 
+										sx={{
+											height: '24px', 
+											minWidth: '56px'
+										}}
+									/>
+									{/* <ListItemContent> */}
+										<Typography 
+											level="title-md" 
+											color="primary" 
+											variant="solid"
+										>
+											Dashboard
+										</Typography>
+									{/* </ListItemContent> */}
+								</ListItemButton>
+							</ListItem>
+							<ListItem>
+								<ListItemButton 
+									title="Chat" 
+									variant="solid" 
+									component={Link} 
+									to={"/account/" + account + "/namespaces/" + namespace + "/chat"} 
+									selected 
+								>
+									<SmartToyIcon 
+										sx={{
+											height: '24px', 
+											minWidth: '56px'
+										}}
+									/>
+									{/* <ListItemContent> */}
+										<Typography 
+											level="title-md" 
+											color="primary" 
+											variant="solid"
+										>
+											Chat
+										</Typography>
+									{/* </ListItemContent> */}
+								</ListItemButton>
+							</ListItem>
+							</>
 						)}
 						{ types && types['entities'] && types['entities']['data'] && (
 							<>
