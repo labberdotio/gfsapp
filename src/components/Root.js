@@ -802,8 +802,8 @@ const Root = class extends Component {
 					>
 						<IconButton 
 							onClick={() => toggleDrawerOpen()} 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
 								color: 'rgb(97, 97, 97)'
@@ -819,8 +819,8 @@ const Root = class extends Component {
 							component="a" 
 							href="/" 
 							size="sm" 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={{
 								alignSelf: 'center', 
 								fontSize: '1.25rem', 
