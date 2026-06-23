@@ -18,49 +18,6 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Button from '@mui/material/Button';
-
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-import Chatbot from './Chatbot';
-import { ChatBox } from '@mui/x-chat';
-import { ChatAdapter, ChatMessageChunk, ChatStreamEnvelope } from '@mui/x-chat/headless';
-import { EventSourceParserStream } from 'eventsource-parser/stream';
-
-import APIClient from '../clients/APIClient';
-
-import {
-	loadNamespacesIntoState
-} from '../actions/Namespace'
-
-import {
-	loadEntitiesIntoState, 
-	invalidateEntitiesInState
-} from '../actions/Entity'
-
-import {
-	getNamespacesFromState
-} from '../stores/Namespace'
-
-import {
-	getEntitiesFromState
-} from '../stores/Entity'
-
-import Layout from './Layout';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import { ChartsItemTooltipContent } from '@mui/x-charts';
-// import { isProxy } from 'node:util/types';
-// import List from './List';
-
-
 const BASE_URL = "http://10.88.88.180:8000";
 
 // 
@@ -216,13 +173,13 @@ const Chat = class extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
-		
+		// 
 
 	}
 
 	componentDidMount() {
 
-		
+		// 
 
 	}
 
@@ -232,10 +189,6 @@ const Chat = class extends Component {
 
 	}
 
-	
-
-	
-
 	render() {
 
 		var _this = this;
@@ -244,18 +197,14 @@ const Chat = class extends Component {
 			
 		} = this.props;
 
-		
 		return (
 			<>
-
-
-<ChatBox
-      adapter={adapter}
-      initialConversations={[{ id: 'main', title: 'Assistant' }]}
-      initialActiveConversationId="main"
-      sx={{ height: 500 }}
-    />
-
+			<ChatBox
+				adapter={adapter}
+				initialConversations={[{ id: 'main', title: 'Assistant' }]}
+				initialActiveConversationId="main"
+				sx={{ height: 500 }}
+			/>
 			</>
 		);
 	}
