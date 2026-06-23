@@ -18,6 +18,8 @@ import {
 	useNavigate
 } from "react-router-dom";
 
+import { ChatBox } from '@mui/x-chat';
+
 const BASE_URL = "http://10.88.88.180:8000";
 
 // 
