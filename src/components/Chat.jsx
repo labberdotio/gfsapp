@@ -205,7 +205,7 @@ const Chat = class extends Component {
 				adapter={adapter}
 				initialConversations={[{ id: 'main', title: 'Assistant' }]}
 				initialActiveConversationId="main"
-				sx={{ height: 500 }}
+				sx={{  }}
 			/>
 			</>
 		);
