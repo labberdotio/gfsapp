@@ -19,7 +19,7 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Button from '@mui/joy/Button';
+import Button from '@mui/material/Button';
 
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -27,21 +27,21 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import Stack from '@mui/joy/Stack';
-import Sheet from '@mui/joy/Sheet';
-import Box from '@mui/joy/Box';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
-import ListDivider from '@mui/joy/ListDivider';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton';
+// import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 
-
-import IconButton from '@mui/joy/IconButton';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 // 
 // 
-// import Typography from '@mui/joy/Typography';
+// import Typography from '@mui/material/Typography';
 
 import { 
 	loadNamespacesIntoState 
@@ -254,7 +254,7 @@ class Namespaces extends Component {
 				</Layout.Sidebar>
 				<Layout.List>
 					{ namespaces && namespaces['namespaces'] && namespaces['namespaces']['data'] &&
-					<Sheet
+					<Paper
 						sx={{
 							borderRight: '1px solid',
 							borderColor: 'divider',
@@ -310,12 +310,12 @@ class Namespaces extends Component {
 										</Typography>
 									</ListItemButton>
 									</ListItem>
-									<ListDivider sx={{ margin: 0 }} />
+									<Divider sx={{ margin: 0 }} />
 									</>
 								);
 							})}
 						</List>
-					</Sheet>
+					</Paper>
 					}
 				</Layout.List>
 				<Layout.Breadcrumb>

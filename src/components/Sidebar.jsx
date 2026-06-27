@@ -18,14 +18,14 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Box from '@mui/joy/Box';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
-import ListItemContent from '@mui/joy/ListItemContent';
-// import ListItemIcon from '@mui/joy/ListItemIcon';
-// import ListItemText from '@mui/joy/ListItemText';
-import Typography from '@mui/joy/Typography';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton, { listItemButtonClasses } from '@mui/material/ListItemButton';
+// import ListItemContent from '@mui/material/ListItemContent';
+// import ListItemIcon from '@mui/material/ListItemIcon';
+// import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
 import AppsIcon from '@mui/icons-material/Apps';
 import HomeIcon from '@mui/icons-material/Home';
@@ -141,8 +141,8 @@ class Sidebar extends Component {
 						variant="solid"
 						sx={{
 							gap: 1,
-							'--List-nestedInsetStart': '30px',
-							'--ListItem-radius': (theme) => theme.vars.radius.sm,
+							// '--List-nestedInsetStart': '30px',
+							// '--ListItem-radius': (theme) => theme.vars.radius.sm,
 						}}
 					>
 						<ListItem>
@@ -158,7 +158,7 @@ class Sidebar extends Component {
 										minWidth: '56px'
 									}}
 								/>
-								<ListItemContent>
+								{/* <ListItemContent> */}
 									<Typography 
 										level="title-md" 
 										// color="primary" 
@@ -166,7 +166,7 @@ class Sidebar extends Component {
 									>
 										Namespaces
 									</Typography>
-								</ListItemContent>
+								{/* </ListItemContent> */}
 							</ListItemButton>
 						</ListItem>
 						{ namespace && (
@@ -184,7 +184,7 @@ class Sidebar extends Component {
 											minWidth: '56px'
 										}}
 									/>
-									<ListItemContent>
+									{/* <ListItemContent> */}
 										<Typography 
 											level="title-md" 
 											color="primary" 
@@ -192,7 +192,7 @@ class Sidebar extends Component {
 										>
 											{namespace}
 										</Typography>
-									</ListItemContent>
+									{/* </ListItemContent> */}
 								</ListItemButton>
 							</ListItem>
 						)}
@@ -216,7 +216,7 @@ class Sidebar extends Component {
 													minWidth: '56px'
 												}}
 											/>
-											<ListItemContent>
+											{/* <ListItemContent> */}
 												<Typography 
 													level="title-md" 
 													// color="primary" 
@@ -224,7 +224,7 @@ class Sidebar extends Component {
 												>
 													{type.name}
 												</Typography>
-											</ListItemContent>
+											{/* </ListItemContent> */}
 										</ListItemButton>
 									</ListItem>
 									</>
@@ -246,7 +246,7 @@ class Sidebar extends Component {
 										minWidth: '56px'
 									}}
 								/>
-								<ListItemContent>
+								{/* <ListItemContent> */}
 									<Typography 
 										level="title-md" 
 										// color="primary" 
@@ -254,7 +254,7 @@ class Sidebar extends Component {
 									>
 										{apiHostnamePort}
 									</Typography>
-								</ListItemContent>
+								{/* </ListItemContent> */}
 							</ListItemButton>
 						</ListItem>
 						<ListItem>
@@ -270,7 +270,7 @@ class Sidebar extends Component {
 										minWidth: '56px'
 									}}
 								/>
-								<ListItemContent>
+								{/* <ListItemContent> */}
 									<Typography 
 										level="title-md" 
 										// color="primary" 
@@ -278,7 +278,7 @@ class Sidebar extends Component {
 									>
 										{wsHostnamePort}
 									</Typography>
-								</ListItemContent>
+								{/* </ListItemContent> */}
 							</ListItemButton>
 						</ListItem>
 						<ListItem>
@@ -294,7 +294,7 @@ class Sidebar extends Component {
 										minWidth: '56px'
 									}}
 								/>
-								<ListItemContent>
+								{/* <ListItemContent> */}
 									<Typography 
 										level="title-md" 
 										// color="primary" 
@@ -302,7 +302,7 @@ class Sidebar extends Component {
 									>
 										{namespace}
 									</Typography>
-								</ListItemContent>
+								{/* </ListItemContent> */}
 							</ListItemButton>
 						</ListItem>
 						<ListItem>
@@ -318,7 +318,7 @@ class Sidebar extends Component {
 										minWidth: '56px'
 									}}
 								/>
-								<ListItemContent>
+								{/* <ListItemContent> */}
 									<Typography 
 										level="title-md" 
 										// color="primary" 
@@ -326,7 +326,7 @@ class Sidebar extends Component {
 									>
 										Login
 									</Typography>
-								</ListItemContent>
+								{/* </ListItemContent> */}
 							</ListItemButton>
 						</ListItem>
 						<ListItem>
@@ -342,7 +342,7 @@ class Sidebar extends Component {
 										minWidth: '56px'
 									}}
 								/>
-								<ListItemContent>
+								{/* <ListItemContent> */}
 									<Typography 
 										level="title-md" 
 										// color="primary" 
@@ -350,7 +350,7 @@ class Sidebar extends Component {
 									>
 										Logout
 									</Typography>
-								</ListItemContent>
+								{/* </ListItemContent> */}
 							</ListItemButton>
 						</ListItem>
 
