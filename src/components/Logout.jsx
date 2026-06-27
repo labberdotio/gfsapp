@@ -212,7 +212,10 @@ class Logout extends Component {
 							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
 							}}
 						>
 							<MenuIcon 
@@ -221,7 +224,7 @@ class Logout extends Component {
 								}}
 							/>
 						</IconButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
@@ -234,6 +237,13 @@ class Logout extends Component {
 							}}
 						>
 							{namespace}
+						</Button> */}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
+						>
+							{/* {namespace} */}
 						</Button>
 					</Header>
 				</Layout.Header>

@@ -325,7 +325,10 @@ class Login extends Component {
 							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
 							}}
 						>
 							<MenuIcon 
@@ -334,7 +337,7 @@ class Login extends Component {
 								}}
 							/>
 						</IconButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
@@ -345,6 +348,13 @@ class Login extends Component {
 								fontSize: '1.25rem', 
 								color: 'rgb(97, 97, 97)'
 							}}
+						>
+							{namespace}
+						</Button> */}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
 						>
 							{/* {namespace} */}
 						</Button>
