@@ -76,6 +76,7 @@ import Logout from './components/Logout'
 
 import Namespaces from './components/Namespaces'
 import DashboardView from './components/Dashboard'
+import ChatView from './components/Chat'
 
 import CreateInstanceDialog from './components/Create'
 
@@ -272,6 +273,16 @@ ReactDOM.render(
 					<>
 					<App>
 					<DashboardView/>
+					</App>
+					</>
+				} />
+			<Route 
+				// exact 
+				path="/account/:account/namespaces/:namespace/chat" 
+				element={
+					<>
+					<App>
+					<ChatView/>
 					</App>
 					</>
 				} />
