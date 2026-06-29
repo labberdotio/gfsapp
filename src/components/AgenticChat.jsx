@@ -1,6 +1,9 @@
 'use client';
 import * as React from 'react';
 import { ChatBox } from '@mui/x-chat';
+// import { createEchoAdapter } from '../utils/demoUtils';
+
+// const adapter = createEchoAdapter();
 
 export default function AgenticChat() {
 	const setThreadsRef = React.useRef(null);
@@ -76,6 +79,9 @@ export default function AgenticChat() {
 	return (
 		<ChatBox
 			adapter={adapter}
+			initialActiveConversationId={minimalConversation.id}
+			initialConversations={[minimalConversation]}
+			initialMessages={minimalMessages}
 			activeConversationId={activeId}
 			conversations={conversations}
 			messages={messages}
@@ -91,7 +97,7 @@ export default function AgenticChat() {
 				);
 			}}
 			sx={{
-				// height: 620,
+				// height: 500,
 				border: '1px solid',
 				borderColor: 'divider',
 				borderRadius: 1,
