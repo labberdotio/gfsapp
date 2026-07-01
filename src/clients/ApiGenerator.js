@@ -181,15 +181,15 @@ class ApiGenerator {
 				timestamp: Date.now()
 			});
 			// if( (res.status == 400) || (res.status == 401) ) {
-				// if( window.location.href != "/login" ) {
-				// if( !window.location.href.endsWith("/login") ) {
-				if( !window.location.href.includes("/login") ) {
-					if( this.namespace ) {
-						window.location.href = "/login?" + this.namespace;
-					} else {
-						window.location.href = "/login";
-					}
-				}
+			// 	// if( window.location.href != "/login" ) {
+			// 	// if( !window.location.href.endsWith("/login") ) {
+			// 	if( !window.location.href.includes("/login") ) {
+			// 		if( this.namespace ) {
+			// 			window.location.href = "/login?" + this.namespace;
+			// 		} else {
+			// 			window.location.href = "/login";
+			// 		}
+			// 	}
 			// }
 		});
 		// } catch {
@@ -298,15 +298,15 @@ class ApiGenerator {
 				timestamp: Date.now()
 			});
 			// if( (res.status == 400) || (res.status == 401) ) {
-				// if( window.location.href != "/login" ) {
-				// if( !window.location.href.endsWith("/login") ) {
-				if( !window.location.href.includes("/login") ) {
-					if( this.namespace ) {
-						window.location.href = "/login?" + this.namespace;
-					} else {
-						window.location.href = "/login";
-					}
-				}
+			// 	// if( window.location.href != "/login" ) {
+			// 	// if( !window.location.href.endsWith("/login") ) {
+			// 	if( !window.location.href.includes("/login") ) {
+			// 		if( this.namespace ) {
+			// 			window.location.href = "/login?" + this.namespace;
+			// 		} else {
+			// 			window.location.href = "/login";
+			// 		}
+			// 	}
 			// }
 		});
 		// } catch {

@@ -23,6 +23,7 @@ import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 // import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Snackbar from '@mui/material/Snackbar';
+import Drawer from '@mui/material/Drawer';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -54,6 +55,9 @@ import Header from './Header';
 import List from './List';
 import Graph from './Graph';
 // import ThreeDeeGraph from './ThreeDeeGraph';
+
+// import Chat from './Chat';
+import Chat from './Chat2';
 
 export const BackNavButton = () => {
     let navigate = useNavigate();
@@ -96,6 +100,7 @@ const Root = class extends Component {
 		super(props);
 		this.state = {
 			drawerOpen: false, 
+			sideDrawerOpen: false, 
 			// intendedcenter: undefined, 
 			// actualcenter: undefined, 
 			grfloading: false, 
@@ -124,6 +129,7 @@ const Root = class extends Component {
 
 	state = {
 		drawerOpen: false, 
+		sideDrawerOpen: false, 
 		// intendedcenter: undefined, 
 		// actualcenter: undefined, 
 		grfloading: false, 
@@ -734,6 +740,7 @@ const Root = class extends Component {
 		} = this.props;
 
 		const drawerOpen = this.state.drawerOpen;
+		const sideDrawerOpen = this.state.sideDrawerOpen;
 
 		function setDrawerOpen(setting) {
 			_this.setState({
@@ -744,6 +751,18 @@ const Root = class extends Component {
 		function toggleDrawerOpen() {
 			_this.setState({
 				drawerOpen: !_this.state.drawerOpen
+			});
+		}
+
+		function setSideDrawerOpen(setting) {
+			_this.setState({
+				sideDrawerOpen: setting
+			});
+		}
+
+		function toggleSideDrawerOpen() {
+			_this.setState({
+				sideDrawerOpen: !_this.state.sideDrawerOpen
 			});
 		}
 
@@ -847,6 +866,7 @@ const Root = class extends Component {
 						>
 							{namespace}
 						</Button>
+						<Button onClick={toggleSideDrawerOpen}>Chat</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
@@ -945,6 +965,19 @@ const Root = class extends Component {
 					/>
 				</Layout.Side>
 			</Layout.Root>
+			<Drawer 
+				anchor={"right"} 
+				open={sideDrawerOpen} 
+				onClose={toggleSideDrawerOpen} 
+				sx={{
+					// display: { xs: 'none', sm: 'block' }, 
+					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '1100px' }, 
+					// width: '500px'
+				}}
+			>
+				<Chat
+				/>
+			</Drawer>
 			</>
 		);
 	}

@@ -419,6 +419,8 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 
 	highlight(node, run, fit) {
 
+		console.log(" >> highlight ");
+
 		const cy = this._cy;
 
 		if( (this.highlighted) && (node) && 
@@ -489,6 +491,8 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 
 	unhighlight(run, fit) {
 
+		console.log(" >> unhighlight ");
+
 		var _this = this;
 
 		const cy = this._cy;
@@ -543,17 +547,23 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 
 	explode(node, run, fit) {
 
+		console.log(" >> explode ");
+
 		const cy = this._cy;
 
 		if( (this.exploded) && (node) && 
 			(this.exploded.id() == node.id() ) ) {
+				console.log(" >> explode 1 ");
 			return Promise.resolve();
 		}
 
 		if( this.layoutInProgress ) {
+			console.log(" >> explode 2 ");
 			return Promise.resolve();
 		}
 
+
+console.log(" >> explode 3 ");
 		this.layoutInProgress = true;
 		this.exploded = node;
 
@@ -627,6 +637,7 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 
 	unexplode(run, fit) {
 
+		console.log(" >>> unexplode ");
 		const cy = this._cy;
 
 		// if( !this.isExploded() ) { return Promise.resolve(); }
@@ -690,6 +701,8 @@ class CustomCytoscapeComponent extends CytoscapeComponent {
 	}
 
 	pulse(pulsed, run, fit) {
+
+		console.log(" >>> pulse ");
 
 		var _this = this;
 

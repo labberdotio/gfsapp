@@ -312,7 +312,7 @@ class Namespaces extends Component {
 						>
 							{namespace}
 						</Button>
-						<Button onClick={toggleSideDrawerOpen}>SIDE</Button>
+						<Button onClick={toggleSideDrawerOpen}>Chat</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
@@ -424,9 +424,9 @@ class Namespaces extends Component {
 				open={sideDrawerOpen} 
 				onClose={toggleSideDrawerOpen} 
 				sx={{
-					display: { xs: 'none', sm: 'block' }, 
+					// display: { xs: 'none', sm: 'block' }, 
 					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '500px' }, 
-					width: '500px'
+					// width: '500px'
 				}}
 			>
 				<Chat

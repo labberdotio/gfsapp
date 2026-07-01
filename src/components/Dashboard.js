@@ -133,6 +133,7 @@ const Dashboard = class extends Component {
 		super(props);
 		this.state = {
 			drawerOpen: false, 
+			sideDrawerOpen: false, 
 			// intendedcenter: undefined, 
 			// actualcenter: undefined, 
 			grfloading: false, 
@@ -155,6 +156,7 @@ const Dashboard = class extends Component {
 
 	state = {
 		drawerOpen: false, 
+		sideDrawerOpen: false, 
 		// intendedcenter: undefined, 
 		// actualcenter: undefined, 
 		grfloading: false, 
@@ -327,6 +329,7 @@ const Dashboard = class extends Component {
 		} = this.props;
 
 		const drawerOpen = this.state.drawerOpen;
+		const sideDrawerOpen = this.state.sideDrawerOpen;
 
 		function setDrawerOpen(setting) {
 			_this.setState({
@@ -337,6 +340,18 @@ const Dashboard = class extends Component {
 		function toggleDrawerOpen() {
 			_this.setState({
 				drawerOpen: !_this.state.drawerOpen
+			});
+		}
+
+		function setSideDrawerOpen(setting) {
+			_this.setState({
+				sideDrawerOpen: setting
+			});
+		}
+
+		function toggleSideDrawerOpen() {
+			_this.setState({
+				sideDrawerOpen: !_this.state.sideDrawerOpen
 			});
 		}
 

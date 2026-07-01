@@ -34,14 +34,14 @@ const adapter = {
         var uniqid = Date.now();
         var messageId = "msg-" + uniqid;
         var textId = "msg-" + uniqid + "-text-1";
-        controller.enqueue({
-          type: 'start', 
-          messageId
-        });
-        controller.enqueue({
-          type: 'text-start', 
-          id: textId
-        });
+        // controller.enqueue({
+        //   type: 'start', 
+        //   messageId
+        // });
+        // controller.enqueue({
+        //   type: 'text-start', 
+        //   id: textId
+        // });
 
         while (true) {
           const { done, value } = await reader.read();
@@ -60,22 +60,22 @@ const adapter = {
                 //   content: parsed.delta,
                 // });
                 controller.enqueue({
-                  type: 'text-delta', 
+                  type: parsed.type, // 'text-delta', 
                   id: textId, 
-                  delta: parsed.content
+                  delta: parsed.delta // parsed.content
                 });
               }
             }
           }
         }
-        controller.enqueue({
-          type: 'text-end', 
-          id: textId
-        });
-        controller.enqueue({
-          type: 'finish', 
-          messageId
-        });
+        // controller.enqueue({
+        //   type: 'text-end', 
+        //   id: textId
+        // });
+        // controller.enqueue({
+        //   type: 'finish', 
+        //   messageId
+        // });
         controller.close();
       },
     });

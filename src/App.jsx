@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 
 import Paper from '@mui/material/Paper';
 import Snackbar from '@mui/material/Snackbar';
+import Drawer from '@mui/material/Drawer';
 
 import {
 	Routes, 
@@ -179,20 +180,6 @@ class App extends Component {
 			namespace
 		} = this.props;
 
-		const drawerOpen = this.state.drawerOpen;
-
-		// function setDrawerOpen(setting) {
-		// 	_this.setState({
-		// 		drawerOpen: setting
-		// 	});
-		// }
-
-		// function toggleDrawerOpen() {
-		// 	_this.setState({
-		// 		drawerOpen: !_this.state.drawerOpen
-		// 	});
-		// }
-
 		// const theme = extendTheme({
 		// 	colorSchemes: {
 		// 		light: {
@@ -270,6 +257,13 @@ class App extends Component {
 			<>
 			{/* <ThemeProvider theme={theme}> */}
 			{this.props.children}
+			{/* <Drawer 
+				anchor={"right"} 
+				open={true} 
+				// onClose={toggleDrawer(anchor, false)}
+			> */}
+
+			{/* </Drawer> */}
 			<Notification 
 				ref={this.notificationRef} 
 				namespace={namespace} 
