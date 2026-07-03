@@ -23,40 +23,6 @@ export const users = {
     role: 'user',
     isOnline: true,
   },
-  mira: {
-    id: 'mira',
-    displayName: 'Mira Patel',
-    role: 'user',
-    isOnline: true,
-  },
-  sam: {
-    id: 'sam',
-    displayName: 'Sam Rivera',
-    role: 'user',
-    isOnline: true,
-  },
-  nora: {
-    id: 'nora',
-    displayName: 'Nora Okafor',
-    role: 'user',
-  },
-  diego: {
-    id: 'diego',
-    displayName: 'Diego Morales',
-    role: 'user',
-  },
-  maya: {
-    id: 'maya',
-    displayName: 'Maya Brooks',
-    role: 'user',
-    isOnline: true,
-  },
-  customerLena: {
-    id: 'customer-lena',
-    displayName: 'Lena Ortiz',
-    role: 'user',
-    isOnline: true,
-  },
   supportBot: {
     id: 'support-bot',
     displayName: 'Helpdesk AI',
@@ -78,10 +44,6 @@ export const users = {
     avatarUrl: 'https://mui.com/static/logo.png',
   },
 };
-
-// export DemoUser = [keyof typeof users]; // (typeof users)[keyof typeof users];
-
-export const demoMembers = Object.values(users);
 
 export const conversations = [
   {
@@ -302,19 +264,3 @@ export const sampleSuggestions = [
   'Render code blocks with syntax highlighting',
   'Wire up RAG sources',
 ];
-
-export const sampleCode = `// Theme x-chat with MUI's components.MuiChat... slots.
-import { createTheme } from '@mui/material/styles';
-
-export const theme = createTheme({
-  components: {
-    MuiChatComposer: {
-      styleOverrides: {
-        root: ({ theme }) => ({
-          borderRadius: 16,
-          boxShadow: theme.shadows[1],
-        }),
-      },
-    },
-  },
-});`;
