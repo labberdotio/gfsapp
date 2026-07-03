@@ -77,7 +77,8 @@ import Logout from './components/Logout'
 
 import Namespaces from './components/Namespaces'
 // import DashboardView from './components/Dashboard'
-import DashboardView from './components/Dashboard2'
+// import DashboardView from './components/Dashboard2'
+import DashboardView from './components/Dashboard3'
 import ChatView from './components/Chat'
 
 import CreateInstanceDialog from './components/Create'

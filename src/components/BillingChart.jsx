@@ -16,7 +16,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 // Sample data
 
 // Billing
-const billingLabels = [
+const labels = [
   '26-03-18', 
 '26-02-18', 
 '26-01-16', 
@@ -44,23 +44,7 @@ const billingLabels = [
 '24-02-12'
 ];
 
-// Average
-const averageLabels = [
-  'Jan', 
-  'Feb', 
-  'Mar', 
-  'Apr', 
-  'May', 
-  'Jun', 
-  'Jul', 
-  'Aug', 
-  'Sep', 
-  'Oct', 
-  'Nov', 
-  'Dec'
-];
-
-const billingData1 = [
+const data1 = [
 987000, 
 1148000, 
 1036000, 
@@ -87,35 +71,8 @@ const billingData1 = [
 1092000, 
 1169000
 ];
-const averageData1 = [
-  35250, 
-34787, 
-33419, 
-35437, 
-34066, 
-36633, 
-39323, 
-38888, 
-37153, 
-35500, 
-34500, 
-35424, 
-35259, 
-34322, 
-36968, 
-36000, 
-37000, 
-38137, 
-38181, 
-35933, 
-35218, 
-34758, 
-35241, 
-35225, 
-37709
-];
 
-const billingData2 = [
+const data2 = [
 350000, 
 378000, 
 385000, 
@@ -142,35 +99,8 @@ const billingData2 = [
 399000, 
 364000
 ];
-const averageData2 = [
-  12500, 
-11454, 
-12419, 
-11375, 
-12600, 
-13300, 
-13176, 
-13222, 
-12923, 
-12000, 
-11750, 
-11878, 
-11666, 
-12193, 
-12031, 
-12200, 
-12750, 
-13517, 
-12939, 
-12833, 
-11812, 
-12068, 
-12310, 
-12870, 
-11741
-];
 
-const billingData3 = [
+const data3 = [
 224000, 
 259000, 
 259000, 
@@ -197,35 +127,8 @@ const billingData3 = [
 266000, 
 245000
 ];
-const averageData3 = [
-  8000, 
-7848, 
-8354, 
-7875, 
-8400, 
-9100, 
-8852, 
-9074, 
-8830, 
-8000, 
-7750, 
-7848, 
-8037, 
-8354, 
-7875, 
-8400, 
-8500, 
-9413, 
-8696, 
-8866, 
-7875, 
-8206, 
-8206, 
-8580, 
-7903
-];
 
-const billingData4 = [
+const data4 = [
   1561000, 
 1785000, 
 1680000, 
@@ -252,33 +155,6 @@ const billingData4 = [
 1757000, 
 1778000
 ];
-const averageData4 = [
-  55750, 
-54090, 
-54193, 
-54687, 
-55066, 
-59033, 
-61352, 
-61185, 
-58907, 
-55500, 
-54000, 
-55151, 
-54962, 
-54870, 
-56875, 
-56600, 
-58250, 
-61068, 
-59818, 
-57633, 
-54906, 
-55034, 
-55758, 
-56677, 
-57354
-];
 
 function Legend({ items, onToggle }) {
   return (
@@ -302,7 +178,7 @@ function Legend({ items, onToggle }) {
 
 // ==============================|| INCOME AREA CHART ||============================== //
 
-export default function IncomeAreaChart({ view }) {
+export default function BillingChart({ view }) {
   const theme = useTheme();
 
   const [visibility, setVisibility] = useState({
@@ -312,11 +188,11 @@ export default function IncomeAreaChart({ view }) {
     'Total': true
   });
 
-  const labels = view === 'billing' ? billingLabels : averageLabels;
-  const data1 = view === 'billing' ? billingData1 : averageData1;
-  const data2 = view === 'billing' ? billingData2 : averageData2;
- const data3 = view === 'billing' ? billingData3 : averageData3;
-  const data4 = view === 'billing' ? billingData4 : averageData4;
+//   const labels = view === 'billing' ? billingLabels : averageLabels;
+//   const data1 = view === 'billing' ? billingData1 : averageData1;
+//   const data2 = view === 'billing' ? billingData2 : averageData2;
+//  const data3 = view === 'billing' ? billingData3 : averageData3;
+//   const data4 = view === 'billing' ? billingData4 : averageData4;
 
   const line = theme.vars.palette.divider;
 
@@ -421,4 +297,4 @@ export default function IncomeAreaChart({ view }) {
 
 Legend.propTypes = { items: PropTypes.array, onToggle: PropTypes.func };
 
-IncomeAreaChart.propTypes = { view: PropTypes.oneOf(['billing', 'average']) };
+BillingChart.propTypes = { view: PropTypes.oneOf(['billing', 'average']) };

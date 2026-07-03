@@ -11,43 +11,51 @@ import Box from '@mui/material/Box';
 
 // project imports
 import MainCard from './MainCard';
-import IncomeAreaChart from './IncomeAreaChart';
+
+import BillingChart from './BillingChart';
+import AverageChart from './AverageChart';
 
 // ==============================|| DEFAULT - UNIQUE VISITOR ||============================== //
 
 export default function UniqueVisitorCard() {
-  const [view, setView] = useState('monthly'); // 'monthly' or 'weekly'
+  const [view, setView] = useState('billing'); // 'billing' or 'average'
 
   return (
     <>
       <Grid container sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
         <Grid>
-          <Typography variant="h5">Unique Visitor</Typography>
+          <Typography variant="h5">Usage</Typography>
         </Grid>
         <Grid>
           <Stack direction="row" sx={{ alignItems: 'center' }}>
             <Button
               size="small"
-              onClick={() => setView('monthly')}
-              color={view === 'monthly' ? 'primary' : 'secondary'}
-              variant={view === 'monthly' ? 'outlined' : 'text'}
+              onClick={() => setView('billing')}
+              color={view === 'billing' ? 'primary' : 'secondary'}
+              variant={view === 'billing' ? 'outlined' : 'text'}
             >
-              Month
+              Billing
             </Button>
             <Button
               size="small"
-              onClick={() => setView('weekly')}
-              color={view === 'weekly' ? 'primary' : 'secondary'}
-              variant={view === 'weekly' ? 'outlined' : 'text'}
+              onClick={() => setView('average')}
+              color={view === 'average' ? 'primary' : 'secondary'}
+              variant={view === 'average' ? 'outlined' : 'text'}
             >
-              Week
+              Average
             </Button>
           </Stack>
         </Grid>
       </Grid>
       <MainCard content={false} sx={{ mt: 1.5 }}>
         <Box sx={{ pt: 1, pr: 2 }}>
-          <IncomeAreaChart view={view} />
+          {/* <IncomeAreaChart view={view} /> */}
+          {view === "billing" && 
+            <BillingChart view={view} />
+          }
+          {view === "average" && 
+            <AverageChart view={view} />
+          }
         </Box>
       </MainCard>
     </>
