@@ -1,6 +1,29 @@
+import * as React from 'react';
 import { ChatBox } from '@mui/x-chat';
 // import type { ChatAdapter } from '@mui/x-chat/headless';
 // import { ChatAdapter } from '@mui/x-chat/headless';
+
+import {
+  conversations,
+  initialThreads,
+  makeAdapter,
+  sampleSuggestions,
+  users,
+} from './data';
+
+const DEFAULTS = {
+  variant: 'default',
+  density: 'standard',
+  layoutMode: 'standard',
+  conversationList: true,
+  conversationHeader: true,
+  attachments: true,
+  suggestions: true,
+  scrollToBottom: true,
+  helperText: true,
+  autoScroll: true,
+  suggestionsAutoSubmit: false,
+};
 
 // const adapter: ChatAdapter = {
 const adapter = {
@@ -34,14 +57,14 @@ const adapter = {
         var uniqid = Date.now();
         var messageId = "msg-" + uniqid;
         var textId = "msg-" + uniqid + "-text-1";
-        controller.enqueue({
-          type: 'start', 
-          messageId
-        });
-        controller.enqueue({
-          type: 'text-start', 
-          id: textId
-        });
+        // controller.enqueue({
+        //   type: 'start', 
+        //   messageId
+        // });
+        // controller.enqueue({
+        //   type: 'text-start', 
+        //   id: textId
+        // });
 
         while (true) {
           const { done, value } = await reader.read();
@@ -60,31 +83,77 @@ const adapter = {
                 //   content: parsed.delta,
                 // });
                 controller.enqueue({
-                  type: 'text-delta', 
+                  type: parsed.type, // 'text-delta', 
                   id: textId, 
-                  delta: parsed.content
+                  delta: parsed.delta // parsed.content
                 });
               }
             }
           }
         }
-        controller.enqueue({
-          type: 'text-end', 
-          id: textId
-        });
-        controller.enqueue({
-          type: 'finish', 
-          messageId
-        });
+        // controller.enqueue({
+        //   type: 'text-end', 
+        //   id: textId
+        // });
+        // controller.enqueue({
+        //   type: 'finish', 
+        //   messageId
+        // });
         controller.close();
       },
     });
   },
 };
 
-export default function App() {
-  return <ChatBox 
-    adapter={adapter} 
-    sx={{ /* height: 500 */ }} 
-  />;
+// export default function App() {
+export default function App(props = {}) {
+
+  const { hideHeader, defaults: defaultsOverride, defaultControlsCollapsed } = props;
+  const defaults = React.useMemo(
+    () => ({ ...DEFAULTS, ...defaultsOverride }),
+    [defaultsOverride],
+  );
+  const [conversationList, setConversationList] = React.useState(
+    defaults.conversationList,
+  );
+  const [conversationHeader, setConversationHeader] = React.useState(
+    defaults.conversationHeader,
+  );
+  const [attachments, setAttachments] = React.useState(defaults.attachments);
+  const [suggestions, setSuggestions] = React.useState(defaults.suggestions);
+  const [scrollToBottom, setScrollToBottom] = React.useState(
+    defaults.scrollToBottom,
+  );
+  const [helperText, setHelperText] = React.useState(defaults.helperText);
+  const [autoScroll, setAutoScroll] = React.useState(defaults.autoScroll);
+//   const [suggestionsAutoSubmit, setSuggestionsAutoSubmit] = React.useState(
+//     defaults.suggestionsAutoSubmit,
+//   );
+  const [activeConversationId, setActiveConversationId] = React.useState(
+    conversations[0].id,
+  );
+  const threadMapRef = React.useRef(initialThreads);
+  const adapter = React.useMemo(() => makeAdapter(threadMapRef.current), []);
+
+  return (    
+        <ChatBox
+          adapter={adapter}
+          currentUser={users.me}
+          members={[users.me, users.assistant, users.alice]}
+          initialConversations={conversations}
+          activeConversationId={activeConversationId}
+          onActiveConversationChange={setActiveConversationId}
+          suggestions={sampleSuggestions}
+        //   suggestionsAutoSubmit={suggestionsAutoSubmit}
+          features={{
+            conversationList: conversationList,
+            conversationHeader: conversationHeader,
+            scrollToBottom,
+            attachments,
+            helperText,
+            autoScroll,
+            suggestions,
+          }}
+        />
+  );
 }
