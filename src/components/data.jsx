@@ -234,29 +234,29 @@ function createStream(messageId, text) {
   });
 }
 
-export function makeAdapter(threadMap) {
-  return {
-    async listMessages({ conversationId }) {
-      return {
-        messages: threadMap[conversationId] ?? [],
-        hasMore: false,
-      };
-    },
-    async sendMessage({ message }) {
-      const input = message.parts
-        .map((part) => (part.type === 'text' ? part.text : ''))
-        .join(' ')
-        .trim();
+// export function makeAdapter(threadMap) {
+//   return {
+//     async listMessages({ conversationId }) {
+//       return {
+//         messages: threadMap[conversationId] ?? [],
+//         hasMore: false,
+//       };
+//     },
+//     async sendMessage({ message }) {
+//       const input = message.parts
+//         .map((part) => (part.type === 'text' ? part.text : ''))
+//         .join(' ')
+//         .trim();
 
-      return createStream(
-        randomId('reply'),
-        input.length === 0
-          ? 'Try typing something — this demo just echoes your prompt back.'
-          : `You said: "${input}". The defaults adjust automatically when you flip the theme controls above.`,
-      );
-    },
-  };
-}
+//       return createStream(
+//         randomId('reply'),
+//         input.length === 0
+//           ? 'Try typing something — this demo just echoes your prompt back.'
+//           : `You said: "${input}". The defaults adjust automatically when you flip the theme controls above.`,
+//       );
+//     },
+//   };
+// }
 
 export const sampleSuggestions = [
   'Show me the default ChatComposer',
