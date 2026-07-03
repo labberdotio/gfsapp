@@ -56,8 +56,7 @@ import List from './List';
 import Graph from './Graph';
 // import ThreeDeeGraph from './ThreeDeeGraph';
 
-// import Chat from './Chat';
-import Chat from './Chat2';
+import Chat from './Chat';
 
 export const BackNavButton = () => {
     let navigate = useNavigate();
