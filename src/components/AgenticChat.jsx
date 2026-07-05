@@ -4,6 +4,28 @@ import { ChatBox } from '@mui/x-chat';
 // import type { ChatAdapter } from '@mui/x-chat/headless';
 // import { ChatAdapter } from '@mui/x-chat/headless';
 
+import {
+	conversations,
+	initialThreads,
+	makeAdapter,
+	sampleSuggestions,
+	users,
+} from './data';
+
+const DEFAULTS = {
+	variant: 'default',
+	density: 'standard',
+	layoutMode: 'standard',
+	conversationList: true,
+	conversationHeader: true,
+	attachments: true,
+	suggestions: true,
+	scrollToBottom: true,
+	helperText: true,
+	autoScroll: true,
+	suggestionsAutoSubmit: false,
+};
+
 // const adapter: ChatAdapter = {
 const adapter = {
 	async sendMessage({ message, signal }) {
@@ -36,14 +58,14 @@ const adapter = {
 				var uniqid = Date.now();
 				var messageId = "msg-" + uniqid;
 				var textId = "msg-" + uniqid + "-text-1";
-				controller.enqueue({
-					type: 'start', 
-					messageId
-				});
-				controller.enqueue({
-					type: 'text-start', 
-					id: textId
-				});
+				// controller.enqueue({
+				//	 type: 'start', 
+				//	 messageId
+				// });
+				// controller.enqueue({
+				//	 type: 'text-start', 
+				//	 id: textId
+				// });
 
 				while (true) {
 					const { done, value } = await reader.read();
@@ -62,124 +84,76 @@ const adapter = {
 								//	 content: parsed.delta,
 								// });
 								controller.enqueue({
-									type: 'text-delta', 
+									type: parsed.type, // 'text-delta', 
 									id: textId, 
-									delta: parsed.content
+									delta: parsed.delta // parsed.content
 								});
 							}
 						}
 					}
 				}
-				controller.enqueue({
-					type: 'text-end', 
-					id: textId
-				});
-				controller.enqueue({
-					type: 'finish', 
-					messageId
-				});
+				// controller.enqueue({
+				//	 type: 'text-end', 
+				//	 id: textId
+				// });
+				// controller.enqueue({
+				//	 type: 'finish', 
+				//	 messageId
+				// });
 				controller.close();
 			},
 		});
 	},
 };
 
-export default function AgenticChat() {
-	const setThreadsRef = React.useRef(null);
+// export default function AgenticChat() {
+export default function AgenticChat(props = {}) {
 
-	// The adapter is created once (stable reference) and reads state via ref.
-	const adapter = React.useMemo(
-		() => ({
-			async sendMessage() {
-				return createChunkStream(createAgenticChunks(randomId()), { delayMs: 120 });
-			},
-			async addToolApprovalResponse({ id, approved }) {
-				setThreadsRef.current?.((prev) => {
-					const next = {};
-					for (const convId of Object.keys(prev)) {
-						next[convId] = prev[convId].map((msg) => ({
-							...msg,
-							parts: msg.parts.map((part) => {
-								if (
-									part.type === 'dynamic-tool' &&
-									part.toolInvocation.toolCallId === id
-								) {
-									return {
-										...part,
-										toolInvocation: approved
-											? {
-													...part.toolInvocation,
-													state: 'output-available',
-													output: {
-														done: true,
-														message: 'Artifacts deleted successfully.',
-													},
-													approval: { approved: true },
-												}
-											: {
-													...part.toolInvocation,
-													state: 'output-denied',
-													approval: {
-														approved: false,
-														reason: 'User denied the operation.',
-													},
-												},
-									};
-								}
-								return part;
-							}),
-						}));
-					}
-					return next;
-				});
-			},
-		}),
-		[],
+	const { hideHeader, defaults: defaultsOverride, defaultControlsCollapsed } = props;
+	const defaults = React.useMemo(
+		() => ({ ...DEFAULTS, ...defaultsOverride }),
+		[defaultsOverride],
 	);
-
-	const [activeId, setActiveId] = React.useState(() => initialConversations[0].id);
-	const [conversations, setConversations] = React.useState(() =>
-		initialConversations.map((c) => ({ ...c })),
+	const [conversationList, setConversationList] = React.useState(
+		defaults.conversationList,
 	);
-	const [threads, setThreads] = React.useState(() =>
-		Object.fromEntries(
-			Object.entries(initialThreads).map(([id, msgs]) => [
-				id,
-				msgs.map((m) => ({ ...m })),
-			]),
-		),
+	const [conversationHeader, setConversationHeader] = React.useState(
+		defaults.conversationHeader,
 	);
+	const [attachments, setAttachments] = React.useState(defaults.attachments);
+	const [suggestions, setSuggestions] = React.useState(defaults.suggestions);
+	const [scrollToBottom, setScrollToBottom] = React.useState(
+		defaults.scrollToBottom,
+	);
+	const [helperText, setHelperText] = React.useState(defaults.helperText);
+	const [autoScroll, setAutoScroll] = React.useState(defaults.autoScroll);
+	// const [suggestionsAutoSubmit, setSuggestionsAutoSubmit] = React.useState(
+	//	defaults.suggestionsAutoSubmit,
+	// );
+	const [activeConversationId, setActiveConversationId] = React.useState(
+		conversations[0].id,
+	);
+	const threadMapRef = React.useRef(initialThreads);
+	const adapter = React.useMemo(() => makeAdapter(threadMapRef.current), []);
 
-	// Keep the ref pointing to the latest setter on every render.
-	setThreadsRef.current = setThreads;
-
-	const messages = threads[activeId] ?? [];
-
-	return (
+	return (		
 		<ChatBox
 			adapter={adapter}
-			initialActiveConversationId={minimalConversation.id}
-			initialConversations={[minimalConversation]}
-			initialMessages={minimalMessages}
-			activeConversationId={activeId}
-			conversations={conversations}
-			messages={messages}
-			onActiveConversationChange={(nextId) => {
-				if (nextId) {
-					setActiveId(nextId);
-				}
-			}}
-			onMessagesChange={(nextMessages) => {
-				setThreads((prev) => ({ ...prev, [activeId]: nextMessages }));
-				setConversations((prev) =>
-					syncConversationPreview(prev, activeId, nextMessages),
-				);
-			}}
-			sx={{
-				// height: 500,
-				border: '1px solid',
-				borderColor: 'divider',
-				borderRadius: 1,
+			currentUser={users.me}
+			members={[users.me, users.assistant, users.alice]}
+			initialConversations={conversations}
+			activeConversationId={activeConversationId}
+			onActiveConversationChange={setActiveConversationId}
+			suggestions={sampleSuggestions}
+			// suggestionsAutoSubmit={suggestionsAutoSubmit}
+			features={{
+				conversationList: conversationList,
+				conversationHeader: conversationHeader,
+				scrollToBottom,
+				attachments,
+				helperText,
+				autoScroll,
+				suggestions,
 			}}
 		/>
 	);
