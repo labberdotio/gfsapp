@@ -7,7 +7,7 @@ import { ChatBox } from '@mui/x-chat';
 import {
 	conversations,
 	initialThreads,
-	makeAdapter,
+	// makeAdapter,
 	sampleSuggestions,
 	users,
 } from './data';
@@ -27,7 +27,15 @@ const DEFAULTS = {
 };
 
 // const adapter: ChatAdapter = {
-const adapter = {
+// const adapter = {
+function makeAdapter(threadMap) {
+	return {
+	async listMessages({ conversationId }) {
+			return {
+				messages: threadMap[conversationId] ?? [],
+				hasMore: false,
+			};
+		},
 	async sendMessage({ message, signal }) {
 		const textContent = message.parts
 			.filter((part) => part.type === 'text')
@@ -105,6 +113,7 @@ const adapter = {
 		});
 	},
 };
+}
 
 // export default function AgenticChat() {
 export default function AgenticChat(props = {}) {
