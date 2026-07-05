@@ -1,11 +1,12 @@
-import * as React from 'react';
+// import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChatBox } from '@mui/x-chat';
 // import type { ChatAdapter } from '@mui/x-chat/headless';
 // import { ChatAdapter } from '@mui/x-chat/headless';
 
 import {
   conversations,
-  // initialThreads,
+  initialThreads,
   // makeAdapter,
   sampleSuggestions,
   users,
@@ -27,35 +28,14 @@ const DEFAULTS = {
 
 // const adapter: ChatAdapter = {
 // const adapter = {
-// function makeAdapter(threadMap) {
-function makeAdapter() {
+function makeAdapter(threadMap) {
   return {
-  // async listMessages({ conversationId }) {
-  //     return {
-  //       messages: threadMap[conversationId] ?? [],
-  //       hasMore: false,
-  //     };
-  //   },
-  async listMessages({ conversationId, cursor }) {
-    const params = new URLSearchParams({ cursor: cursor ?? '' });
-    // const res = await fetch(
-    //   `/api/conversations/${conversationId}/messages?${params}`,
-    // );
-    const response = await fetch('http://10.88.88.180:5011/llm/api/chats/' + conversationId + '/messages?' + params, {
-      // method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', 
-        'Authorization': "Bearer " + localStorage.getItem("jwt-token")
-      },
-      // body: JSON.stringify({
-      //   "message": textContent, 
-      //   "prompt": textContent
-      // }),
-      // signal,
-    });
-    const { messages, nextCursor, hasMore } = await response.json();
-    return { messages, cursor: nextCursor, hasMore };
-  },
+  async listMessages({ conversationId }) {
+      return {
+        messages: threadMap[conversationId] ?? [],
+        hasMore: false,
+      };
+    },
   async sendMessage({ message, signal }) {
     const textContent = message.parts
       .filter((part) => part.type === 'text')
@@ -149,6 +129,11 @@ export default function App(props = {}) {
   const [conversationHeader, setConversationHeader] = React.useState(
     defaults.conversationHeader,
   );
+  // Initialize state from localStorage, or use a default empty array
+  const [conversations, setConversations] = useState(() => {
+    const saved = localStorage.getItem('mui-chat-conversations');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [attachments, setAttachments] = React.useState(defaults.attachments);
   const [suggestions, setSuggestions] = React.useState(defaults.suggestions);
   const [scrollToBottom, setScrollToBottom] = React.useState(
@@ -159,20 +144,16 @@ export default function App(props = {}) {
 //   const [suggestionsAutoSubmit, setSuggestionsAutoSubmit] = React.useState(
 //     defaults.suggestionsAutoSubmit,
 //   );
-  // const [activeConversationId, setActiveConversationId] = React.useState(
-  //   conversations[0].id,
-  // );
-  // const threadMapRef = React.useRef(initialThreads);
-  // const adapter = React.useMemo(() => makeAdapter(threadMapRef.current), []);
-  const adapter = React.useMemo(() => makeAdapter(), []);
+  const [activeConversationId, setActiveConversationId] = React.useState(
+    // conversations[0].id,
+  );
+  const threadMapRef = React.useRef(initialThreads);
+  const adapter = React.useMemo(() => makeAdapter(threadMapRef.current), []);
 
-  function onActiveConversationChange() {
-    console.log("onActiveConversationChange");
-  };
-
-  function onConversationsChange() {
-    console.log("onConversationsChange");
-  };
+// Listen for changes and update localStorage
+  useEffect(() => {
+    localStorage.setItem('mui-chat-conversations', JSON.stringify(conversations));
+  }, [conversations]);
 
   return (    
         <ChatBox
@@ -180,9 +161,9 @@ export default function App(props = {}) {
           currentUser={users.me}
           members={[users.me, users.assistant, users.alice]}
           initialConversations={conversations}
-          // activeConversationId={activeConversationId}
-          onActiveConversationChange={onActiveConversationChange}
-          onConversationsChange={onConversationsChange}
+          activeConversationId={activeConversationId}
+          onActiveConversationChange={setActiveConversationId}
+          onConversationsChange={setConversations}
           suggestions={sampleSuggestions}
         //   suggestionsAutoSubmit={suggestionsAutoSubmit}
           features={{

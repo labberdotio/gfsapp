@@ -59,6 +59,9 @@ import MenuItem from '@mui/material/MenuItem';
 // import Typography from '@mui/material/Typography';
 // import Box from '@mui/material/Box';
 
+import Drawer from '@mui/material/Drawer';
+import Chat from './Chat';
+
 // project imports
 import MainCard from './MainCard';
 import AnalyticEcommerce from './AnalyticEcommerce';
@@ -440,6 +443,7 @@ const handleOrderMenuClick = (event) => {
 						>
 							{namespace}
 						</Button>
+						<Button onClick={toggleSideDrawerOpen}>Chat</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
@@ -528,6 +532,19 @@ const handleOrderMenuClick = (event) => {
 				</Layout.Full>
 				
 			</Layout.Root>
+			<Drawer 
+				anchor={"right"} 
+				open={sideDrawerOpen} 
+				onClose={toggleSideDrawerOpen} 
+				sx={{
+					// display: { xs: 'none', sm: 'block' }, 
+					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '1100px' }, 
+					// width: '500px'
+				}}
+			>
+				<Chat
+				/>
+			</Drawer>
 			</>
 		);
 	}
