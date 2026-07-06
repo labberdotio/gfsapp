@@ -56,21 +56,38 @@ function makeAdapter() {
     const { messages, nextCursor, hasMore } = await response.json();
     return { messages, cursor: nextCursor, hasMore };
   },
-  async sendMessage({ message, signal }) {
+  // async sendMessage({ message, signal }) {
+  async sendMessage({ message, attachments, signal }) {
+
     const textContent = message.parts
       .filter((part) => part.type === 'text')
       .map((part) => part.text)
       .join('');
-    const response = await fetch('http://10.88.88.180:5011/llm/api/chat/stream', {
+
+    const formData = new FormData();
+
+    // Append the text message payload
+    formData.append("message", JSON.stringify(textContent));
+    formData.append("prompt", JSON.stringify(textContent));
+
+    // Append any attached files
+    attachments?.forEach((attachment) => {
+      formData.append("files", attachment.file);
+    });
+
+    // const response = await fetch('http://10.88.88.180:5011/llm/api/chat/stream', {
+    const response = await fetch('http://localhost:8080/llm/api/chat/stream', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', 
+        // 'Content-Type': 'application/json', 
+        'Content-Type': 'application/x-www-form-urlencoded', 
         'Authorization': "Bearer " + localStorage.getItem("jwt-token")
       },
-      body: JSON.stringify({
-        "message": textContent, 
-        "prompt": textContent
-      }),
+      // body: JSON.stringify({
+      //   "message": textContent, 
+      //   "prompt": textContent
+      // }),
+      body: formData,
       signal,
     });
 
