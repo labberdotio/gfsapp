@@ -6,7 +6,7 @@ import { ChatBox } from '@mui/x-chat';
 
 import {
 	conversations,
-	initialThreads,
+	// initialThreads,
 	// makeAdapter,
 	sampleSuggestions,
 	users,
@@ -28,14 +28,35 @@ const DEFAULTS = {
 
 // const adapter: ChatAdapter = {
 // const adapter = {
-function makeAdapter(threadMap) {
+// function makeAdapter(threadMap) {
+function makeAdapter() {
 	return {
-	async listMessages({ conversationId }) {
-			return {
-				messages: threadMap[conversationId] ?? [],
-				hasMore: false,
-			};
-		},
+	// async listMessages({ conversationId }) {
+	//		 return {
+	//			 messages: threadMap[conversationId] ?? [],
+	//			 hasMore: false,
+	//		 };
+	//	 },
+	async listMessages({ conversationId, cursor }) {
+		const params = new URLSearchParams({ cursor: cursor ?? '' });
+		// const res = await fetch(
+		//	 `/api/conversations/${conversationId}/messages?${params}`,
+		// );
+		const response = await fetch('http://10.88.88.180:5011/llm/api/chats/' + conversationId + '/messages?' + params, {
+			// method: 'POST',
+			headers: {
+				'Content-Type': 'application/json', 
+				'Authorization': "Bearer " + localStorage.getItem("jwt-token")
+			},
+			// body: JSON.stringify({
+			//	 "message": textContent, 
+			//	 "prompt": textContent
+			// }),
+			// signal,
+		});
+		const { messages, nextCursor, hasMore } = await response.json();
+		return { messages, cursor: nextCursor, hasMore };
+	},
 	async sendMessage({ message, signal }) {
 		const textContent = message.parts
 			.filter((part) => part.type === 'text')
@@ -139,11 +160,20 @@ export default function AgenticChat(props = {}) {
 	// const [suggestionsAutoSubmit, setSuggestionsAutoSubmit] = React.useState(
 	//	defaults.suggestionsAutoSubmit,
 	// );
-	const [activeConversationId, setActiveConversationId] = React.useState(
-		conversations[0].id,
-	);
-	const threadMapRef = React.useRef(initialThreads);
-	const adapter = React.useMemo(() => makeAdapter(threadMapRef.current), []);
+	// const [activeConversationId, setActiveConversationId] = React.useState(
+	//	 conversations[0].id,
+	// );
+	// const threadMapRef = React.useRef(initialThreads);
+	// const adapter = React.useMemo(() => makeAdapter(threadMapRef.current), []);
+	const adapter = React.useMemo(() => makeAdapter(), []);
+
+	function onActiveConversationChange() {
+		console.log("onActiveConversationChange");
+	};
+
+	function onConversationsChange() {
+		console.log("onConversationsChange");
+	};
 
 	return (		
 		<ChatBox
@@ -151,8 +181,9 @@ export default function AgenticChat(props = {}) {
 			currentUser={users.me}
 			members={[users.me, users.assistant, users.alice]}
 			initialConversations={conversations}
-			activeConversationId={activeConversationId}
-			onActiveConversationChange={setActiveConversationId}
+			// activeConversationId={activeConversationId}
+			onActiveConversationChange={onActiveConversationChange}
+			onConversationsChange={onConversationsChange}
 			suggestions={sampleSuggestions}
 			// suggestionsAutoSubmit={suggestionsAutoSubmit}
 			features={{
