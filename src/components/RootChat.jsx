@@ -1,6 +1,6 @@
 
 // 
-// Copyright (c) 2020, 2021, 2022, 2023, 2024, John Grundback
+// Copyright (c) 2020, 2021, 2022, 2023, 2024, 2026, John Grundback
 // All rights reserved.
 // 
 
@@ -90,8 +90,8 @@ export const ForwardNavButton = () => {
     );
 };
 
-// class Root extends Component {
-const Root = class extends Component {
+// class RootChat extends Component {
+const RootChat = class extends Component {
 
 	constructor(props) {
 		super(props);
@@ -531,5 +531,5 @@ function withParams(Component) {
 	return props => <Component {...props} params={useParams()} />;
 }
 
-// export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Root))));
-export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(Root)));
+// export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RootChat))));
+export default withNavigation(withParams(connect(mapStateToProps, mapDispatchToProps)(RootChat)));
