@@ -42,7 +42,8 @@ function makeAdapter() {
 		// const res = await fetch(
 		//	 `/api/conversations/${conversationId}/messages?${params}`,
 		// );
-		const response = await fetch('http://10.88.88.180:5011/llm/api/chats/' + conversationId + '/messages?' + params, {
+		// const response = await fetch('http://10.88.88.180:5011/llm/api/chats/' + conversationId + '/messages?' + params, {
+		const response = await fetch('http://localhost:8080/llm/api/chats/' + conversationId + '/messages?' + params, {
 			// method: 'POST',
 			headers: {
 				'Content-Type': 'application/json', 
@@ -62,7 +63,8 @@ function makeAdapter() {
 			.filter((part) => part.type === 'text')
 			.map((part) => part.text)
 			.join('');
-		const response = await fetch('http://10.88.88.180:5011/llm/api/chat/stream', {
+		// const response = await fetch('http://10.88.88.180:5011/llm/api/chat/stream', {
+		const response = await fetch('http://localhost:8080/llm/api/chat/stream', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json', 
