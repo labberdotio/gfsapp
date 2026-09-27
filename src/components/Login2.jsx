@@ -61,9 +61,8 @@ class Login extends Component {
 		super(props);
 		this.state = {
 			drawerOpen: false, 
-			// account: undefined, 
-			// namespace: undefined, 
-			// namespaceError: undefined, 
+			namespace: undefined, 
+			namespaceError: undefined, 
 			username: undefined, 
 			usernameError: undefined, 
 			password: undefined, 
@@ -80,9 +79,8 @@ class Login extends Component {
 
 	state = {
 		drawerOpen: false, 
-		// account: undefined, 
-		// namespace: undefined, 
-		// namespaceError: undefined, 
+		namespace: undefined, 
+		namespaceError: undefined, 
 		username: undefined, 
 		usernameError: undefined, 
 		password: undefined, 
@@ -110,15 +108,15 @@ class Login extends Component {
 			api
 		} = this.props;
 
-		// var scnamespace = this.props.searchParams[0].get("namespace");
-		// if( scnamespace ) {
-		// 	this.setNamespace(scnamespace);
-		// }
+		var scnamespace = this.props.searchParams[0].get("namespace");
+		if( scnamespace ) {
+			this.setNamespace(scnamespace);
+		}
 
-		// var cnamespace = localStorage.getItem("jwt-namespace");
-		// if( cnamespace ) {
-		// 	this.setNamespace(cnamespace);
-		// }
+		var cnamespace = localStorage.getItem("jwt-namespace");
+		if( cnamespace ) {
+			this.setNamespace(cnamespace);
+		}
 
 	}
 
@@ -126,15 +124,14 @@ class Login extends Component {
 		var _this = this;
 		_this.setActive(true);
 		event.preventDefault();
-		// var namespace = _this.state.namespace;
+		var namespace = _this.state.namespace;
 		var username = _this.state.username;
 		var password = _this.state.password;
 		const data = new FormData();
-		// var email = username + "@" + namespace; 
-		// data.append("namespace", namespace);
+		var email = username + "@" + namespace; 
+		data.append("namespace", namespace);
 		// data.append("username", username);
-		// data.append("username", email);
-		data.append("username", username);
+		data.append("username", email);
 		data.append("password", password);
 		data.append("grant_type", "password");
 		data.append("scope", "read write");
@@ -153,10 +150,10 @@ class Login extends Component {
 				console.log("Login successfull");
 				console.log("JWT token: ");
 				console.log(data.access_token);
-				// localStorage.setItem("jwt-namespace", namespace);
+				localStorage.setItem("jwt-namespace", namespace);
 				localStorage.setItem("jwt-token", data.access_token);
 				localStorage.setItem("jwt-user", username);
-				// localStorage.setItem("jwt-email", email);
+				localStorage.setItem("jwt-email", email);
 				// _this.setUsername("");
 				// _this.setPassword("");
 				_this.setStatus("Logged in");
@@ -164,8 +161,7 @@ class Login extends Component {
 				_this.setActive(false);
 				// Redirect here
 				// router.push(...)
-				// window.location.href = "/namespaces/" + namespace;
-				window.location.href = "/account/" + "whoopsjohnnie" + "/namespaces";
+				window.location.href = "/namespaces/" + namespace;
 			} else {
 				console.log("Login failed: " + data.error + " " + data.error_description);	
 				_this.setStatus("Login failed: " + data.error_description);
@@ -193,18 +189,18 @@ class Login extends Component {
 		});
 	}
 
-	// setNamespace(namespace) {
-	// 	// console.log(" setNamespace " + namespace);
-	// 	var _this = this;
-	// 	var error = undefined;
-	// 	if( !namespace ) {
-	// 		error = "Please give a valid namespace.";
-	// 	}
-	// 	_this.setState({
-	// 		namespace: namespace, 
-	// 		namespaceError: error
-	// 	});
-	// }
+	setNamespace(namespace) {
+		// console.log(" setNamespace " + namespace);
+		var _this = this;
+		var error = undefined;
+		if( !namespace ) {
+			error = "Please give a valid namespace.";
+		}
+		_this.setState({
+			namespace: namespace, 
+			namespaceError: error
+		});
+	}
 
 	setUsername(username) {
 		// console.log(" setUsername " + username);
@@ -270,12 +266,12 @@ class Login extends Component {
 		var backdropOpen = false;
 
 		// var scnamespace = this.props.searchParams[0].get("namespace");
-		// var namespace = _this.state.namespace;
-		// var namespaceError = _this.state.namespaceError;
-		// var namespaceColor = "primary";
-		// if( namespaceError ) {
-		// 	namespaceColor = "danger";
-		// }
+		var namespace = _this.state.namespace;
+		var namespaceError = _this.state.namespaceError;
+		var namespaceColor = "primary";
+		if( namespaceError ) {
+			namespaceColor = "danger";
+		}
 		var username = _this.state.username;
 		var usernameError = _this.state.usernameError;
 		var usernameColor = "primary";
@@ -291,7 +287,7 @@ class Login extends Component {
 		var active = _this.state.active;
 		var status = _this.state.status;
 
-		// var cnamespace = namespace;
+		var cnamespace = namespace;
 		// if( !namespace ) {
 		// 	if( scnamespace ) {
 		// 		cnamespace = scnamespace;
@@ -317,7 +313,7 @@ class Login extends Component {
 						drawerOpen={drawerOpen} 
 						toggleDrawerOpen={toggleDrawerOpen} 
 						api={api} 
-						// namespace={namespace} 
+						namespace={namespace} 
 					>
 						<IconButton 
 							onClick={() => toggleDrawerOpen()} 
@@ -346,19 +342,19 @@ class Login extends Component {
 								color: 'rgb(97, 97, 97)'
 							}}
 						>
-							{/* {namespace} */}
+							{namespace}
 						</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
 					<Sidebar 
 						api={api} 
-						// namespace={namespace} 				
+						namespace={namespace} 				
 					/>
 				</Layout.Sidebar>
 				<Layout.List>
 					<List
-						// namespace={namespace} 
+						namespace={namespace} 
 						selected={false}
 					/>
 				</Layout.List>
@@ -393,64 +389,19 @@ class Login extends Component {
 					</Typography>
 					<Typography level="body-sm">Sign in to continue.</Typography>
 					{/* <Typography level="h4" component="h1"><b>Sign in</b></Typography> */}
-					{/* <FormControl>
+					<FormControl>
 						<FormLabel>Namespace</FormLabel>
 						<Input name="namespace" type="text" placeholder="namespace" />
-					</FormControl> */}
+					</FormControl>
 					<FormControl>
 						<FormLabel>Email</FormLabel>
-						<Input 
-							// name="email"
-							// type="email"
-							// placeholder="johndoe@email.com"
-							id="username" 
-							type="text" 
-							value={username} 
-							label="Username" 
-							labelText="Username" 
-							placeholder="Username" 
-							helperText={usernameError} 
-							error={usernameError} 
-							color={usernameColor} 
-							// variant=...
-							// fullWidth 
-							// formControlProps={{
-							// 	fullWidth: true
-							// }}
-							onChange={(e) => this.setUsername(e.target.value)} 
-							handleChange={(e) => this.setUsername(e.target.value)} 
-						/>
+						<Input name="email" type="email" placeholder="johndoe@email.com" />
 					</FormControl>
 					<FormControl>
 						<FormLabel>Password</FormLabel>
-						<Input 
-							// name="password"
-							// type="password"
-							// placeholder="password"
-							id="password" 
-							value={password} 
-							type="password" 
-							label="Password" 
-							labelText="Password" 
-							placeholder="" 
-							helperText={passwordError} 
-							error={passwordError} 
-							color={passwordColor} 
-							// variant=... 
-							// fullWidth 
-							// formControlProps={{
-							// 	fullWidth: true
-							// }}
-							onChange={(e) => this.setPassword(e.target.value)}
-							handleChange={this.handleChange}
-						/>
+						<Input name="password" type="password" placeholder="password" />
 					</FormControl>
-					<Button 
-						type="submit" 
-						sx={{ mt: 2 }}
-					>
-						Sign In
-					</Button>
+					<Button sx={{ mt: 2 }}>Sign In</Button>
 					{/* <Link level="body-sm" href="#replace-with-a-link">Forgot password?</Link> */}
 					</form>
 				</Sheet>
