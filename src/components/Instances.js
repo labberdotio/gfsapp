@@ -50,12 +50,12 @@ class Instances extends Component {
 
 	}
 
-	// getListCols(namespace, typename, type, schema) {
+	// getListCols(account, namespace, typename, type, schema) {
 	// 	var cols = [];
 	// 	return cols;
 	// }
 
-	// getActions(namespace, typename, type, schema) {
+	// getActions(account, namespace, typename, type, schema) {
 	// 
 	// 	const {
 	// 		editable
@@ -86,7 +86,7 @@ class Instances extends Component {
 	// 
 	// }
 
-	// getEditable(namespace, typename, type, schema) {
+	// getEditable(account, namespace, typename, type, schema) {
 	// 
 	// 	const {
 	// 		editable
@@ -103,11 +103,11 @@ class Instances extends Component {
 	// 
 	// }
 
-	makeInstanceLink(namespace, type, id) {
+	makeInstanceLink(account, namespace, type, id) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id;
 	}
 
-	makeRelInstanceLink(namespace, type, id, relname) {
+	makeRelInstanceLink(account, namespace, type, id, relname) {
 		return "/namespaces/" + namespace + "/" + type + "/" + id + "/" + relname;
 	}
 
@@ -117,6 +117,7 @@ class Instances extends Component {
 	render() {
 
 		const {
+			account, 
 			namespace, 
 			title, 
             description, 
@@ -137,6 +138,7 @@ class Instances extends Component {
 					tableRef={this.tableRef}
 					dataurl={dataurl}
 					// cols={this.getListCols(
+					//  account, 
 					// 	namespace, 
 					// 	typename, 
 					// 	type, 
@@ -144,6 +146,7 @@ class Instances extends Component {
 					// )}
 					cols={columns}
 					// actions={this.getActions(
+					//  account, 
 					// 	namespace, 
 					// 	typename, 
 					// 	type, 
@@ -151,13 +154,14 @@ class Instances extends Component {
 					// )}
 					actions={actions}
 					// editable={this.getEditable(
+					//  account, 
 					// 	namespace, 
 					// 	typename, 
 					// 	type, 
 					// 	schema
 					// )}
 					editable={editable}
-					detailLink={(rowData) => this.makeInstanceLink(namespace, rowData["_label"], rowData["_id"])} />
+					detailLink={(rowData) => this.makeInstanceLink(account, namespace, rowData["_label"], rowData["_id"])} />
 			</>
 		);
 	}

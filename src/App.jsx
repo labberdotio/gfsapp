@@ -295,8 +295,14 @@ function mapStateToProps(state, ownProps) {
 
 	const {
 		api, 
+		// account, 
 		// namespace,
 	} = state;
+
+	var account = undefined;
+	if( ownProps && ownProps.params ) {
+		account = ownProps.params.account;
+	}
 
 	var namespace = undefined;
 	if( ownProps && ownProps.params ) {
@@ -305,6 +311,7 @@ function mapStateToProps(state, ownProps) {
 
 	return {
 		api, 
+		account: account, 
 		namespace: namespace
 	}	
 

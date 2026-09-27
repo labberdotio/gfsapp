@@ -46,7 +46,7 @@ const FAIL_DELETE_NAMESPACE = 'FAIL_DELETE_NAMESPACE';
  * 
  */
 
-// function addNamespace(namespace) {
+// function addNamespace(account, namespace) {
 // 	// console.log(" >> INVOKING ACTION: ADD_NAMESPACE ");
 // 	// console.log(namespace);
 // 	return {
@@ -55,7 +55,7 @@ const FAIL_DELETE_NAMESPACE = 'FAIL_DELETE_NAMESPACE';
 // 	};
 // }
 
-// function selectNamespace(namespace) {
+// function selectNamespace(account, namespace) {
 // 	// console.log(" >> INVOKING ACTION: SELECT_NAMESPACE ");
 // 	// console.log(namespace);
 // 	return {
@@ -64,14 +64,14 @@ const FAIL_DELETE_NAMESPACE = 'FAIL_DELETE_NAMESPACE';
 // 	};
 // }
 
-// function currentNamespace() {
+// function currentNamespace(account) {
 // 	// console.log(" >> INVOKING ACTION: CURRENT_NAMESPACE ");
 // 	return {
 // 		type: CURRENT_NAMESPACE
 // 	};
 // }
 
-// function invalidateNamespace(namespace) {
+// function invalidateNamespace(account, namespace) {
 // 	// console.log(" >> INVOKING ACTION: INVALIDATE_NAMESPACE ");
 // 	// console.log(namespace);
 // 	return {
@@ -84,26 +84,28 @@ const FAIL_DELETE_NAMESPACE = 'FAIL_DELETE_NAMESPACE';
  * 
  */
 
-function loadNamespacesIntoState(endpoint, accept = 'application/json') {
+function loadNamespacesIntoState(endpoint, account, accept = 'application/json') {
 	// console.log(" >> loadNamespacesIntoState ");
 	// console.log(endpoint);
 	return {
 		type: 'GET_NAMESPACES',
 		endpoint: endpoint,
+		account: account,
 		accept: accept
 	}
 }
 
-function getNamespaces(endpoint) {
+function getNamespaces(endpoint, account) {
 	// console.log(" >> INVOKING ACTION: GET_NAMESPACES ");
 	// console.log(endpoint);
 	return {
 		type: GET_NAMESPACES, 
-		endpoint
+		endpoint: endpoint, 
+		account: account
 	};
 }
 
-// function invalidateNamespacesInState(endpoint) {
+// function invalidateNamespacesInState(endpoint, account) {
 // 	// console.log(" >> INVOKING ACTION: INVALIDATE_NAMESPACES ");
 // 	// console.log(endpoint);
 // 	return {
@@ -112,7 +114,7 @@ function getNamespaces(endpoint) {
 // 	}
 // }
 
-// function refreshNamespacesInState(endpoint) {
+// function refreshNamespacesInState(endpoint, account) {
 // 	// console.log(" >> INVOKING ACTION: REFRESH_NAMESPACES ");
 // 	// console.log(endpoint);
 // 	return {
@@ -121,11 +123,11 @@ function getNamespaces(endpoint) {
 // 	}
 // }
 
-function shouldGetNamespaces(state, endpoint) {
+function shouldGetNamespaces(state, endpoint, account) {
 	return true;
 }
 
-function getNamespacesIfNeeded(endpoint) {
+function getNamespacesIfNeeded(endpoint, account) {
 	// console.log(" >> getNamespacesIfNeeded ");
 	// console.log(endpoint);
 	return (dispatch, getState) => {
@@ -139,58 +141,62 @@ function getNamespacesIfNeeded(endpoint) {
  * 
  */
 
-// function loadNamespaceIntoState(endpoint, namespace, accept = 'application/json') {
+// function loadNamespaceIntoState(endpoint, account, namespace, accept = 'application/json') {
 // 	// console.log(" >> INVOKING ACTION: GET_NAMESPACE ");
 // 	// console.log(endpoint);
 // 	return {
 // 		type: 'GET_NAMESPACE',
 // 		endpoint: endpoint,
+//  	account: account,
 // 		namespace: namespace,
 // 		accept: accept
 // 	}
 // }
 
-// function getNamespace(endpoint, namespace) {
+// function getNamespace(endpoint, account, namespace) {
 // 	// console.log(" >> INVOKING ACTION: GET_NAMESPACE ");
 // 	// console.log(endpoint);
 // 	return {
 // 		type: GET_NAMESPACE, 
+//  	account: account, 
 // 		namespace: namespace, 
 // 		endpoint
 // 	};
 // }
 
-// function invalidateNamespaceInState(endpoint, namespace) {
+// function invalidateNamespaceInState(endpoint, account, namespace) {
 // 	// console.log(" >> INVOKING ACTION: INVALIDATE_NAMESPACE ");
 // 	// console.log(endpoint);
 // 	return {
 // 		type: 'INVALIDATE_NAMESPACE',
 // 		endpoint: endpoint,
+// 		account: account,
 // 		namespace: namespace
 // 	}
 // }
 
-// function refreshNamespaceInState(endpoint, namespace, entity_data) {
+// function refreshNamespaceInState(endpoint, account, namespace, entity_data) {
 // 	// console.log(" >> INVOKING ACTION: REFRESH_NAMESPACE ");
 // 	// console.log(endpoint);
 // 	return {
 // 		type: 'REFRESH_NAMESPACE',
 // 		endpoint: endpoint,
+//  	account: account,
 // 		namespace: namespace,
 // 		entity_data: entity_data
 // 	}
 // }
 
-// function shouldGetNamespace(state, endpoint, namespace) {
+// function shouldGetNamespace(state, endpoint, account, namespace) {
 // 	return true;
 // }
 
-// function getNamespaceIfNeeded(endpoint, namespace) {
+// function getNamespaceIfNeeded(endpoint, account, namespace) {
 // 	// console.log(" >> getNamespaceIfNeeded ");
 // 	// console.log(endpoint);
 // 	return (dispatch, getState) => {
-// 		if (shouldGetNamespace(getState(), endpoint, namespace)) {
-// 			return dispatch(getNamespace(endpoint, namespace));
+// 		if (shouldGetNamespace(getState(), endpoint, account, namespace)) {
+// 			return dispatch(getNamespace(endpoint, account, namespace));
 // 		}
 // 	};
 // }

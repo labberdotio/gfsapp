@@ -20,15 +20,22 @@ class ApiGenerator {
 		var hostname = endpoint.api.host;
 		var port = endpoint.api.port;
 
+		var account = action.account;
 		var namespace = action.namespace;
 
 		// console.log(' >> ApiGenerator: hostname: ' + hostname + ', port: ' + port);
 		// console.log(' >> ApiGenerator: resource: ' + resource);
+		// console.log(' >> ApiGenerator: account: ' + account);
 		// console.log(' >> ApiGenerator: namespace: ' + namespace);
 
 		this.resource = resource;
 		this.endpoint = endpoint;
 		this.next = next;
+
+		this.account = undefined;
+		if( account ) {
+			this.account = account;
+		}
 
 		this.namespace = undefined;
 		if( namespace ) {
@@ -43,6 +50,7 @@ class ApiGenerator {
 
 		// this.url = 'http://' + hostname + ':' + port + '/api/v1.0';
 		this.url = 'http://' + hostname + ':' + port + '/api/' + version;
+		// this.url = "http://" + hostname + ":" + port + "/api/api/" + version;
 
 		this.jsontype = 'application/json';
 		this.yamltype = 'application/yaml';
@@ -60,16 +68,16 @@ class ApiGenerator {
 
 	}
 
-	// namespaceURL(namespace) {
-	namespaceURL(namespace = null) {
+	// namespaceURL(account, namespace) {
+	namespaceURL(account = null, namespace = null) {
 		if( namespace ) {
-			return this.url + '/' + "namespace" + '/' + namespace;
+			return this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace;
 		}
-		return this.url + '/' + "namespace";
+		return this.url + "/" + "account" + "/" + account + "/" + "namespace";
 	}
 
-	// resourceURL(namespace, resource) {
-	resourceURL(resource, namespace, path = null) {
+	// resourceURL(account, namespace, resource) {
+	resourceURL(resource, account, namespace, path = null) {
 		if( !resource ) {
 			return undefined;
 		}
@@ -77,9 +85,9 @@ class ApiGenerator {
 			return undefined;
 		}
 		if( path ) {
-			return this.url + '/' + namespace + '/' + resource + '/' + path;
+			return this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + resource + "/" + path;
 		}
-		return this.url + '/' + namespace + '/' + resource;
+		return this.url + "/" + "account" + "/" + account + "/" + "namespace" + "/" + namespace + "/" + resource;
 	}
 
 	/*
@@ -90,6 +98,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_GET_NAMESPACES`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept
 		});
@@ -98,11 +107,12 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		const url = apiClient.namespaceURL();
+		const url = apiClient.namespaceURL(this.account);
 		if( !url ) {
 			this.next({
 				type: `FAIL_GET_NAMESPACES`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				timestamp: Date.now()
@@ -130,17 +140,20 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_GET_NAMESPACES`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					timestamp: Date.now()
 				});
-				// if( window.location.href != "/login" ) {
-				// if( !window.location.href.endsWith("/login") ) {
-				if( !window.location.href.includes("/login") ) {
-					if( this.namespace ) {
-						window.location.href = "/login?" + this.namespace;
-					} else {
-						window.location.href = "/login";
+				if( (res.status == 400) || (res.status == 401) ) {
+					// if( window.location.href != "/login" ) {
+					// if( !window.location.href.endsWith("/login") ) {
+					if( !window.location.href.includes("/login") ) {
+						if( this.namespace ) {
+							window.location.href = "/login?" + this.namespace;
+						} else {
+							window.location.href = "/login";
+						}
 					}
 				}
 			}
@@ -148,6 +161,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_GET_NAMESPACES`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				namespaces: data,
@@ -161,24 +175,28 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_GET_NAMESPACES`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				timestamp: Date.now()
 			});
-			// if( window.location.href != "/login" ) {
-			// if( !window.location.href.endsWith("/login") ) {
-			if( !window.location.href.includes("/login") ) {
-				if( this.namespace ) {
-					window.location.href = "/login?" + this.namespace;
-				} else {
-					window.location.href = "/login";
+			// if( (res.status == 400) || (res.status == 401) ) {
+				// if( window.location.href != "/login" ) {
+				// if( !window.location.href.endsWith("/login") ) {
+				if( !window.location.href.includes("/login") ) {
+					if( this.namespace ) {
+						window.location.href = "/login?" + this.namespace;
+					} else {
+						window.location.href = "/login";
+					}
 				}
-			}
+			// }
 		});
 		// } catch {
 		// 	this.next({
 		// 		type: `FAIL_GET_NAMESPACES`,
 		// 		endpoint: this.endpoint,
+		//  	account: this.account,
 		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		timestamp: Date.now()
@@ -190,6 +208,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_GET_NAMESPACE`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept,
 			namespace: namespace
@@ -199,11 +218,12 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		const url = apiClient.namespaceURL(namespace);
+		const url = apiClient.namespaceURL(this.account, namespace);
 		if( !url ) {
 			this.next({
 				type: `FAIL_GET_NAMESPACE`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				namespace: namespace,
@@ -233,18 +253,21 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_GET_NAMESPACE`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					namespace: namespace,
 					timestamp: Date.now()
 				});
-				// if( window.location.href != "/login" ) {
-				// if( !window.location.href.endsWith("/login") ) {
-				if( !window.location.href.includes("/login") ) {
-					if( this.namespace ) {
-						window.location.href = "/login?" + this.namespace;
-					} else {
-						window.location.href = "/login";
+				if( (res.status == 400) || (res.status == 401) ) {
+					// if( window.location.href != "/login" ) {
+					// if( !window.location.href.endsWith("/login") ) {
+					if( !window.location.href.includes("/login") ) {
+						if( this.namespace ) {
+							window.location.href = "/login?" + this.namespace;
+						} else {
+							window.location.href = "/login";
+						}
 					}
 				}
 			}
@@ -253,6 +276,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_GET_NAMESPACE`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				namespace: namespace,
@@ -267,25 +291,29 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_GET_NAMESPACE`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				namespace: namespace,
 				timestamp: Date.now()
 			});
-			// if( window.location.href != "/login" ) {
-			// if( !window.location.href.endsWith("/login") ) {
-			if( !window.location.href.includes("/login") ) {
-				if( this.namespace ) {
-					window.location.href = "/login?" + this.namespace;
-				} else {
-					window.location.href = "/login";
+			// if( (res.status == 400) || (res.status == 401) ) {
+				// if( window.location.href != "/login" ) {
+				// if( !window.location.href.endsWith("/login") ) {
+				if( !window.location.href.includes("/login") ) {
+					if( this.namespace ) {
+						window.location.href = "/login?" + this.namespace;
+					} else {
+						window.location.href = "/login";
+					}
 				}
-			}
+			// }
 		});
 		// } catch {
 		// 	this.next({
 		// 		type: `FAIL_GET_NAMESPACE`,
 		// 		endpoint: this.endpoint,
+		//  	account: this.account,
 		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		namespace: namespace,
@@ -302,6 +330,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource
@@ -311,11 +340,12 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		const url = apiClient.resourceURL(this.resource, this.namespace);
+		const url = apiClient.resourceURL(this.resource, this.account, this.namespace);
 		if( !url ) {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -344,6 +374,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
@@ -354,6 +385,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -368,6 +400,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -378,6 +411,7 @@ class ApiGenerator {
 		// 	this.next({
 		// 		type: `FAIL_${name}`,
 		// 		endpoint: this.endpoint,
+		//  	account: this.account,
 		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		resource: this.resource,
@@ -390,6 +424,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
@@ -400,11 +435,12 @@ class ApiGenerator {
 			this.endpoint.api.port 
 		);
 		// try {
-		const url = apiClient.resourceURL(this.resource, this.namespace, entity_id);
+		const url = apiClient.resourceURL(this.resource, this.account, this.namespace, entity_id);
 		if( !url ) {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -435,6 +471,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
@@ -447,6 +484,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -462,6 +500,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -473,6 +512,7 @@ class ApiGenerator {
 		// 	this.next({
 		// 		type: `FAIL_${name}`,
 		// 		endpoint: this.endpoint,
+		//  	account: this.account,
 		//		namespace: this.namespace,
 		// 		accept: this.accept,
 		// 		resource: this.resource,
@@ -490,6 +530,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
@@ -504,6 +545,7 @@ class ApiGenerator {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -542,6 +584,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
@@ -553,6 +596,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -562,6 +606,7 @@ class ApiGenerator {
 			this.next({
 				type: 'INVALIDATE_ENTITIES',
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource
@@ -577,6 +622,7 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
@@ -587,11 +633,12 @@ class ApiGenerator {
 			this.endpoint.api.host, 
 			this.endpoint.api.port 
 		);
-		const url = this.resourceURL(this.resource, this.namespace, entity_id);
+		const url = this.resourceURL(this.resource, this.account, this.namespace, entity_id);
 		if( !url ) {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -631,6 +678,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
@@ -643,6 +691,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -653,6 +702,7 @@ class ApiGenerator {
 			this.next({
 				type: 'INVALIDATE_ENTITIES',
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				resource: this.resource
 			});
@@ -667,16 +717,18 @@ class ApiGenerator {
 		this.next({
 			type: `DO_${name}`,
 			endpoint: this.endpoint,
+			account: this.account,
 			namespace: this.namespace,
 			accept: this.accept,
 			resource: this.resource,
 			entity_id: entity_id
 		});
-		const url = this.resourceURL(this.resource, this.namespace, entity_id);
+		const url = this.resourceURL(this.resource, this.account, this.namespace, entity_id);
 		if( !url ) {
 			this.next({
 				type: `FAIL_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -710,6 +762,7 @@ class ApiGenerator {
 				this.next({
 					type: `FAIL_${name}`,
 					endpoint: this.endpoint,
+					account: this.account,
 					namespace: this.namespace,
 					accept: this.accept,
 					resource: this.resource,
@@ -722,6 +775,7 @@ class ApiGenerator {
 			this.next({
 				type: `ON_${name}`,
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				accept: this.accept,
 				resource: this.resource,
@@ -731,6 +785,7 @@ class ApiGenerator {
 			this.next({
 				type: 'INVALIDATE_ENTITIES',
 				endpoint: this.endpoint,
+				account: this.account,
 				namespace: this.namespace,
 				resource: this.resource
 			});
