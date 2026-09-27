@@ -218,7 +218,7 @@ ReactDOM.render(
 				} />
 			<Route 
 				// exact 
-				path="/namespaces" 
+			path="/account/:account/namespaces" 
 				element={
 					<>
 					<App >
@@ -229,7 +229,7 @@ ReactDOM.render(
 				} />
 			<Route 
 				// exact 
-				path="/namespaces/:namespace" 
+				path="/account/:account/namespaces/:namespace" 
 				element={
 					<>
 					<App>
@@ -239,7 +239,7 @@ ReactDOM.render(
 				}/>
 			{/* <Route 
 				// exact 
-				path="/dashboard" 
+				path="/account/:account/namespaces/:namespace/dashboard" 
 				element={
 					<>
 					<App>
@@ -249,7 +249,7 @@ ReactDOM.render(
 				} /> */}
 			<Route 
 				// exact 
-				path="/namespaces/:namespace/:typename" 
+				path="/account/:account/namespaces/:namespace/:typename" 
 				element={
 					<>
 					<App>
@@ -260,7 +260,7 @@ ReactDOM.render(
 			/>
 			<Route 
 				// exact 
-				path="/namespaces/:namespace/create/:typename" 
+				path="/account/:account/namespaces/:namespace/create/:typename" 
 				element={
 					<>
 					<App>
@@ -271,7 +271,7 @@ ReactDOM.render(
 			/>
 			<Route 
 				// exact 
-				path="/namespaces/:namespace/:typename/:instanceid" 
+				path="/account/:account/namespaces/:namespace/:typename/:instanceid" 
 				element={
 					<>
 					<App>
@@ -282,7 +282,7 @@ ReactDOM.render(
 			/>
 			<Route 
 				// exact 
-				path="/namespaces/:namespace/:typename/:instanceid/:relname" 
+				path="/account/:account/namespaces/:namespace/:typename/:instanceid/:relname" 
 				element={
 					<>
 					<App>
