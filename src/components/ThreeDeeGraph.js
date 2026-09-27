@@ -292,10 +292,10 @@ class ThreeDeeGraph extends Component {
 		if( vertexes ) {
 			for( var i=0; i<vertexes.length; i++ ) {
 				var vertex = vertexes[i]["@value"];
-				if( (vertex) && (vertex["_id"]) ) {
-				// if( (vertex) && (vertex["_id"]) && 
-				// 	( (vertex["_label"] != "Compose") && (vertex["_label"] != "type") && (vertex["_label"] != "interface") && (vertex["_label"] != "enum") ) ) {
-					var sval = vertex["_label"] + " " + vertex["properties"]["_name"];
+				if( (vertex) && (vertex["id"]) ) {
+				// if( (vertex) && (vertex["id"]) && 
+				// 	( (vertex["label"] != "Compose") && (vertex["label"] != "type") && (vertex["label"] != "interface") && (vertex["label"] != "enum") ) ) {
+					var sval = vertex["label"] + " " + vertex["properties"]["name"];
 					var included = false;
 					var excluded = false;
 					// if( (sval) && (this.state.search) ) {
@@ -321,28 +321,28 @@ class ThreeDeeGraph extends Component {
 					// 	modifiedflag = true;
 					// }
 
-					vs[String(vertex["_id"])] = true;
+					vs[String(vertex["id"])] = true;
 					// var element = {
 					// 	data: {
-					// 		id: vidpfx + String(vertex["_id"]), 
-					// 		name: vertex["properties"]["_name"], // + "\n" + "[" + vertex["_label"] + "]",
-					// 		label: vertex["properties"]["_name"] + "\n" + "[" + vertex["_label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
+					// 		id: vidpfx + String(vertex["id"]), 
+					// 		name: vertex["properties"]["name"], // + "\n" + "[" + vertex["label"] + "]",
+					// 		label: vertex["properties"]["name"] + "\n" + "[" + vertex["label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
 					// 		selected: false,
 					// 		cytoscape_alias_list: [
-					// 			vertex["properties"]["_name"]
+					// 			vertex["properties"]["name"]
 					// 		],
-					// 		canonicalName: vertex["properties"]["_name"],
-					// 		NodeType: vertex["_label"],
-					// 		shared_name: vertex["properties"]["_name"],
+					// 		canonicalName: vertex["properties"]["name"],
+					// 		NodeType: vertex["label"],
+					// 		sharedname: vertex["properties"]["name"],
 					// 	}, 
 					// 	selected: false, 
-					// 	classes: vertex["_label"] + ' ' + (included ? 'included' : '') + ' ' + (excluded ? 'excluded' : '') + ' ' + (createdflag ? 'created' : '') + ' ' + (modifiedflag ? 'modified' : '')
+					// 	classes: vertex["label"] + ' ' + (included ? 'included' : '') + ' ' + (excluded ? 'excluded' : '') + ' ' + (createdflag ? 'created' : '') + ' ' + (modifiedflag ? 'modified' : '')
 					// };
 					var element = {
-						id: vidpfx + String(vertex["_id"]), 
-						label: vertex["_label"], 
-						name: vertex["properties"]["_name"], // + "\n" + "[" + vertex["_label"] + "]",
-						description: vertex["properties"]["_name"] + "\n" + "[" + vertex["_label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
+						id: vidpfx + String(vertex["id"]), 
+						label: vertex["label"], 
+						name: vertex["properties"]["name"], // + "\n" + "[" + vertex["label"] + "]",
+						description: vertex["properties"]["name"] + "\n" + "[" + vertex["label"] + "]" + (createdflag ? ' [NEW]' : '') + (modifiedflag ? ' [FRESH]' : ''),
 					};
 					// elements.push(element);
 					nodes.push(element);
@@ -353,8 +353,8 @@ class ThreeDeeGraph extends Component {
 		if( edges ) {
 			for( var i=0; i<edges.length; i++ ) {
 				var edge = edges[i]["@value"];
-				if( (edge) && (edge["_id"]) ) {
-					var sval = edge["_label"];
+				if( (edge) && (edge["id"]) ) {
+					var sval = edge["label"];
 					var included = false;
 					var excluded = false;
 					// if( (sval) && (this.state.search) ) {
@@ -367,33 +367,33 @@ class ThreeDeeGraph extends Component {
 					/*
 					 * We can exclude/filter edges with something like this
 					 */
-					// if( edge["_label"] == ... ) {
+					// if( edge["label"] == ... ) {
 					// 	continue;
 					// }
-					var _outV = String(edge["_outV"]);
-					var _inV = String(edge["_inV"]);
-					if( (_outV) && (_inV) ) {
-						if( (vs[_outV]) && (vs[_inV]) ) {
-							var source = vidpfx + String(edge["_outV"]);
-							var target = vidpfx + String(edge["_inV"]);
-							var label = edge["_label"]; // + " (" + edge["_outV"] + " to " + edge["_inV"] + ")";
-							// if( edge["_label"] === 'in' ) {
-							// 	source = vidpfx + String(edge["_inV"]);
-							// 	target = vidpfx + String(edge["_outV"]);
+					var outV = String(edge["outV"]);
+					var inV = String(edge["inV"]);
+					if( (outV) && (inV) ) {
+						if( (vs[outV]) && (vs[inV]) ) {
+							var source = vidpfx + String(edge["outV"]);
+							var target = vidpfx + String(edge["inV"]);
+							var label = edge["label"]; // + " (" + edge["outV"] + " to " + edge["inV"] + ")";
+							// if( edge["label"] === 'in' ) {
+							// 	source = vidpfx + String(edge["inV"]);
+							// 	target = vidpfx + String(edge["outV"]);
 							// 	label = "";
 							// }
 							// elements.push({
 							// links.push({
 							// 	data: {
-							// 		id: eidpfx + String(edge["_id"]), 
+							// 		id: eidpfx + String(edge["id"]), 
 							// 		source: source,
 							// 		target: target,
 							// 		label: label
 							// 	},
-							// 	classes: 'autorotate' + ' ' + edge["_label"] + ' ' + (included ? 'included' : '') + ' ' + (excluded ? 'excluded' : '')
+							// 	classes: 'autorotate' + ' ' + edge["label"] + ' ' + (included ? 'included' : '') + ' ' + (excluded ? 'excluded' : '')
 							// });
 							links.push({
-								id: eidpfx + String(edge["_id"]), 
+								id: eidpfx + String(edge["id"]), 
 								source: source,
 								target: target,
 								label: label
