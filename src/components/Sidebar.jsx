@@ -150,7 +150,7 @@ class Sidebar extends Component {
 								title="Namespaces" 
 								variant="solid" 
 								component={Link} 
-								to="/namespaces"
+								to={"/account/" + account + "/namespaces"}
 							>
 								<AppsIcon 
 									sx={{
@@ -175,7 +175,7 @@ class Sidebar extends Component {
 									title="Home" 
 									variant="solid" 
 									component={Link} 
-									to={"/namespaces/" + namespace} 
+									to={"/account/" + account + "/namespaces/" + namespace} 
 									selected 
 								>
 									<HomeIcon 
@@ -206,8 +206,8 @@ class Sidebar extends Component {
 											title={type.name} 
 											variant="solid" 
 											component={Link} 
-											// to={"/namespaces/" + namespace} 
-											to={"/namespaces/" + namespace + "/" + type["_label"] + "/" + type["_id"]} 
+											// to={"/account/" + account + "/namespaces/" + namespace} 
+											to={"/account/" + account + "/namespaces/" + namespace + "/" + type["_label"] + "/" + type["_id"]} 
 											// selected 
 										>
 											<ExtensionIcon 
@@ -286,7 +286,7 @@ class Sidebar extends Component {
 								title="Home" 
 								variant="solid" 
 								component={Link} 
-								to={"/namespaces/" + namespace} 
+								to={"/account/" + account + "/namespaces/" + namespace} 
 							>
 								<HomeIcon 
 									sx={{
