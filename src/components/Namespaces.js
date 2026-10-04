@@ -26,11 +26,6 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Snackbar from '@mui/material/Snackbar';
 import Drawer from '@mui/material/Drawer';
 
-// import Chatbot from './Chatbot';
-// import { ChatBox } from '@mui/x-chat';
-// import { ChatAdapter, ChatMessageChunk, ChatStreamEnvelope } from '@mui/x-chat/headless';
-// import { EventSourceParserStream } from 'eventsource-parser/stream';
-
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -312,7 +307,7 @@ class Namespaces extends Component {
 						>
 							{namespace}
 						</Button>
-						<Button onClick={toggleSideDrawerOpen}>SIDE</Button>
+						<Button onClick={toggleSideDrawerOpen}>Chat</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
@@ -424,9 +419,9 @@ class Namespaces extends Component {
 				open={sideDrawerOpen} 
 				onClose={toggleSideDrawerOpen} 
 				sx={{
-					display: { xs: 'none', sm: 'block' }, 
-					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '500px' }, 
-					width: '500px'
+					// display: { xs: 'none', sm: 'block' }, 
+					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '1100px' }, 
+					// width: '500px'
 				}}
 			>
 				<Chat
