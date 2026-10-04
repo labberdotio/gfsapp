@@ -7,7 +7,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-
 import {
 	Routes, 
 	BrowserRouter as Router,
@@ -18,6 +17,8 @@ import {
 	useParams, 
 	useNavigate
 } from "react-router-dom";
+
+// import { createBrowserHistory } from 'history';
 
 // import { createStore, applyMiddleware } from 'redux'
 // import { combineReducers } from 'redux'
@@ -76,7 +77,6 @@ import Logout from './components/Logout'
 
 import Namespaces from './components/Namespaces'
 import DashboardView from './components/Dashboard'
-// import ChatView from './components/Chat'
 import ChatView from './components/RootChat'
 
 import CreateInstanceDialog from './components/Create'
@@ -91,6 +91,8 @@ require('./style.light.css');
 // require('./style.dark.css');
 
 require('./index.css');
+
+// const history = createBrowserHistory();
 
 /*
  * Defaults
@@ -116,10 +118,10 @@ const name = dapiHostname;
 const description = 'GFS App';
 const title = 'GFS App';
 
-// console.log(' >> INIT STATE: apiHostname: ' + apiHostname);
-// console.log(' >> INIT STATE: apiPort: ' + apiPort);
-// console.log(' >> INIT STATE: wsHostname: ' + wsHostname);
-// console.log(' >> INIT STATE: wsPort: ' + wsPort);
+// console.log(' >> INIT STATE: apiHostname: ' + dapiHostname);
+// console.log(' >> INIT STATE: apiPort: ' + dapiPort);
+// console.log(' >> INIT STATE: wsHostname: ' + dwsHostname);
+// console.log(' >> INIT STATE: wsPort: ' + dwsPort);
 
 const initialState = {
 	api: {
