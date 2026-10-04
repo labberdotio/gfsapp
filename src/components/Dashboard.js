@@ -21,6 +21,9 @@ import {
 // import Typography from '@mui/material/Typography';
 // import Breadcrumbs from '@mui/material/Breadcrumbs';
 
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -54,6 +57,9 @@ export const BackNavButton = () => {
     return (
         <>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => navigate(-1)}
 			>
@@ -68,6 +74,9 @@ export const ForwardNavButton = () => {
     return (
 		<>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => navigate(+1)}
 			>
@@ -380,7 +389,13 @@ const handleOrderMenuClick = (event) => {
 						>
 							{namespace}
 						</Button> */}
-						{namespace}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
+						>
+							{namespace}
+						</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
