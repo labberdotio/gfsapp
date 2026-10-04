@@ -23,6 +23,13 @@ import Button from '@mui/material/Button';
 
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Snackbar from '@mui/material/Snackbar';
+import Drawer from '@mui/material/Drawer';
+
+// import Chatbot from './Chatbot';
+// import { ChatBox } from '@mui/x-chat';
+// import { ChatAdapter, ChatMessageChunk, ChatStreamEnvelope } from '@mui/x-chat/headless';
+// import { EventSourceParserStream } from 'eventsource-parser/stream';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -59,6 +66,8 @@ import Layout from './Layout';
 import Sidebar from './Sidebar';
 import Header from './Header';
 // import List from './List';
+
+import Chat from './Chat';
 
 export const BackNavButton = () => {
     let navigate = useNavigate();
@@ -115,6 +124,8 @@ class Namespaces extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 
+		var _this = this;
+
 		const {
 			api, 
 			account, 
@@ -129,9 +140,15 @@ class Namespaces extends Component {
 			}
 		}
 
+		if( (this.props.namespaces["failed"]) ) {
+			_this.showInSnackbar("Failed to load namespaces");
+		}
+
 	}
 
 	componentDidMount() {
+
+		var _this = this;
 
 		const {
 			api, 
@@ -145,6 +162,10 @@ class Namespaces extends Component {
 			if( api && account ) {
 				this.props.loadNamespaces(api, account);
 			}
+		}
+
+		if( (this.props.namespaces["failed"]) ) {
+			_this.showInSnackbar("Failed to load namespaces");
 		}
 
 	}
@@ -165,6 +186,24 @@ class Namespaces extends Component {
 	updateSearch(event) {
 	}
 
+	showInSnackbar(message) {
+		var _this = this;
+		if( !_this.state.snackbarOpen ) {
+			_this.setState({
+				snackbarMessage: message,
+				snackbarOpen: true
+			});
+		} else {
+		}
+	}
+
+	onCloseSnackbar() {
+		this.setState({
+			snackbarMessage: undefined,
+			snackbarOpen: false
+		});
+	}
+
 	render() {
 
 		var _this = this;
@@ -177,6 +216,7 @@ class Namespaces extends Component {
 		} = this.props;
 
 		const drawerOpen = this.state.drawerOpen;
+		const sideDrawerOpen = this.state.sideDrawerOpen;
 
 		function setDrawerOpen(setting) {
 			_this.setState({
@@ -190,12 +230,22 @@ class Namespaces extends Component {
 			});
 		}
 
+		function setSideDrawerOpen(setting) {
+			_this.setState({
+				sideDrawerOpen: setting
+			});
+		}
+
+		function toggleSideDrawerOpen() {
+			_this.setState({
+				sideDrawerOpen: !_this.state.sideDrawerOpen
+			});
+		}
+
 		var backdropOpen = false;
 
 		var selected = undefined;
-
-		console.log("?????");
-		console.log(namespaces);
+	
 		if(namespaces && namespaces['namespaces'] ) {
 			console.log(namespaces['namespaces']['data']);
 		} 
@@ -262,6 +312,7 @@ class Namespaces extends Component {
 						>
 							{namespace}
 						</Button>
+						<Button onClick={toggleSideDrawerOpen}>SIDE</Button>
 					</Header>
 				</Layout.Header>
 				<Layout.Sidebar>
@@ -343,11 +394,44 @@ class Namespaces extends Component {
 				</Layout.Breadcrumb>
 				<Layout.Main>
 					
+					{/* <Snackbar 
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'center',
+						}}
+						open={this.state.snackbarOpen}
+						autoHideDuration={3000}
+						message={this.state.snackbarMessage}
+						variant="solid"
+						onClose={() => this.onCloseSnackbar()}
+					>
+						{this.state.snackbarMessage}
+					</Snackbar> */}
+					<Snackbar 
+						open={this.state.snackbarOpen} 
+						autoHideDuration={3000} 
+						onClose={() => this.onCloseSnackbar()} 
+						message={this.state.snackbarMessage} 
+					/>
+
 				</Layout.Main>
 				<Layout.Side>
 					
 				</Layout.Side>
 			</Layout.Root>
+			<Drawer 
+				anchor={"right"} 
+				open={sideDrawerOpen} 
+				onClose={toggleSideDrawerOpen} 
+				sx={{
+					display: { xs: 'none', sm: 'block' }, 
+					'& .MuiDrawer-paper': { boxSizing: 'border-box', width: '500px' }, 
+					width: '500px'
+				}}
+			>
+				<Chat
+				/>
+			</Drawer>
 			</>
 		);
 	}
