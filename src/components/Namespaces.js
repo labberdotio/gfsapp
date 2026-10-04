@@ -19,7 +19,7 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Button from '@mui/joy/Button';
+import Button from '@mui/material/Button';
 
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -27,21 +27,21 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-import Stack from '@mui/joy/Stack';
-import Sheet from '@mui/joy/Sheet';
-import Box from '@mui/joy/Box';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
-import ListDivider from '@mui/joy/ListDivider';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton, { ListItemButtonProps } from '@mui/material/ListItemButton';
+// import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 
-
-import IconButton from '@mui/joy/IconButton';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 // 
 // 
-// import Typography from '@mui/joy/Typography';
+// import Typography from '@mui/material/Typography';
 
 import { 
 	loadNamespacesIntoState 
@@ -65,6 +65,9 @@ export const BackNavButton = () => {
     return (
         <>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => navigate(-1)}
 			>
@@ -79,6 +82,9 @@ export const ForwardNavButton = () => {
     return (
 		<>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => navigate(+1)}
 			>
@@ -216,41 +222,41 @@ class Namespaces extends Component {
 						namespace={namespace} 
 					>
 						<IconButton 
-							// color="inherit" 
-							// aria-label="open drawer" 
-							// onClick={toggleDrawerOpen} 
 							onClick={() => toggleDrawerOpen()} 
-							// edge="start" 
-							// variant="highlight" 
-							color="neutral" 
-							variant="plain" 
-							sx={[
-								{
-									marginRight: 5, 
-									color: 'rgb(97, 97, 97)'
-								},
-								// open && { display: 'none' }
-							]}
+							// color="neutral" 
+							// variant="plain" 
+							sx={{
+								marginRight: '10px !important', 
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
+							}}
 						>
 							<MenuIcon 
-								// color="neutral" 
-								// variant="plain" 
 								sx={{
 									color: 'rgb(97, 97, 97)'
 								}}
 							/>
 						</IconButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={{
 								alignSelf: 'center', 
 								fontSize: '1.25rem', 
 								color: 'rgb(97, 97, 97)'
 							}}
+						>
+							{namespace}
+						</Button> */}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
 						>
 							{namespace}
 						</Button>
@@ -264,7 +270,7 @@ class Namespaces extends Component {
 				</Layout.Sidebar>
 				<Layout.List>
 					{ namespaces && namespaces['namespaces'] && namespaces['namespaces']['data'] &&
-					<Sheet
+					<Paper
 						sx={{
 							borderRight: '1px solid',
 							borderColor: 'divider',
@@ -289,7 +295,7 @@ class Namespaces extends Component {
 										component={Link} 
 										to={"/account/" + account + "/namespaces/" + namespace.name} 
 										selected={selected} 
-										color="neutral" 
+										// color="neutral" 
 										sx={{ flexDirection: 'column', alignItems: 'initial', gap: 1 }}
 									>
 										<Stack direction="row" spacing={1.5}>
@@ -320,12 +326,12 @@ class Namespaces extends Component {
 										</Typography>
 									</ListItemButton>
 									</ListItem>
-									<ListDivider sx={{ margin: 0 }} />
+									<Divider sx={{ margin: 0 }} />
 									</>
 								);
 							})}
 						</List>
-					</Sheet>
+					</Paper>
 					}
 				</Layout.List>
 				<Layout.Breadcrumb>

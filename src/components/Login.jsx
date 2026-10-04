@@ -16,20 +16,20 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Sheet from '@mui/joy/Sheet';
-import CssBaseline from '@mui/joy/CssBaseline';
-import Typography from '@mui/joy/Typography';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import FormHelperText from '@mui/joy/FormHelperText';
-import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Link from '@mui/joy/Link';
-import Snackbar from '@mui/joy/Snackbar';
+import Paper from '@mui/material/Paper';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Input from '@mui/material/Input';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import IconButton from '@mui/joy/IconButton';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import Layout from './Layout';
@@ -325,7 +325,10 @@ class Login extends Component {
 							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
 							}}
 						>
 							<MenuIcon 
@@ -334,7 +337,7 @@ class Login extends Component {
 								}}
 							/>
 						</IconButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
@@ -345,6 +348,13 @@ class Login extends Component {
 								fontSize: '1.25rem', 
 								color: 'rgb(97, 97, 97)'
 							}}
+						>
+							{namespace}
+						</Button> */}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
 						>
 							{/* {namespace} */}
 						</Button>
@@ -364,7 +374,7 @@ class Login extends Component {
 				</Layout.List>
 				<Layout.Main>
 				{/* <CssBaseline />
-				<Sheet
+				<Paper
 					sx={{
 						width: 300,
 						mx: 'auto', // margin left & right
@@ -379,7 +389,7 @@ class Login extends Component {
 					}}
 					variant="outlined"
 				> */}
-				<Sheet sx={{
+				<Paper sx={{
 					width: 300, 
 					mx: 'auto', 
 					my: 4, 
@@ -453,8 +463,8 @@ class Login extends Component {
 					</Button>
 					{/* <Link level="body-sm" href="#replace-with-a-link">Forgot password?</Link> */}
 					</form>
-				</Sheet>
-				{/* </Sheet> */}
+				</Paper>
+				{/* </Paper> */}
 				{/* <Snackbar
 					anchorOrigin={{
 						vertical: 'bottom',
@@ -475,7 +485,7 @@ class Login extends Component {
 						</React.Fragment>
 					}/>
 				</> */}
-				<Snackbar 
+				{/* <Snackbar 
 					anchorOrigin={{
 						vertical: 'bottom',
 						horizontal: 'center',
@@ -487,7 +497,13 @@ class Login extends Component {
 					onClose={() => this.onCloseSnackbar()}
 				>
 					{this.state.snackbarMessage}
-				</Snackbar>
+				</Snackbar> */}
+				<Snackbar 
+					open={this.state.snackbarOpen} 
+					autoHideDuration={6000} 
+					onClose={() => this.onCloseSnackbar()} 
+					message={this.state.snackbarMessage} 
+				/>
 				</Layout.Main>
 				<Layout.Side>
 					

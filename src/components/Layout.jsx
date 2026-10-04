@@ -5,12 +5,13 @@
 // 
 
 import * as React from 'react';
-import Box, { BoxProps } from '@mui/joy/Box';
-import Sheet from '@mui/joy/Sheet';
-// import GlobalStyles from '@mui/joy/GlobalStyles';
-import IconButton from '@mui/joy/IconButton';
-import MenuButton from '@mui/joy/MenuButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import Box, { BoxProps } from '@mui/material/Box';
+// import Paper from '@mui/material/Paper';
+import Paper from '@mui/material/Paper';
+// import GlobalStyles from '@mui/material/GlobalStyles';
+import IconButton from '@mui/material/IconButton';
+// import MenuButton from '@mui/material/MenuButton';
+// import MenuIcon from '@mui/icons-material/Menu';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -84,8 +85,8 @@ function Header(props) {
 				{
 					p: 2, 
 					gap: 2, 
-					bgcolor: 'background.level3', 
-					color: '#616161', 
+					// bgcolor: 'background.level3', 
+					// color: '#616161', 
 					// display: {
 					// 	xs: 'flex', 
 					// 	sm: 'flex', 
@@ -97,7 +98,7 @@ function Header(props) {
 					justifyContent: 'flex-end', 
 					alignItems: 'center',  
 					borderBottom: '1px solid', 
-					borderColor: 'divider', 
+					// borderColor: 'divider', 
 					position: 'sticky', 
 					// transform: {
 					// 	xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))', 
@@ -168,8 +169,8 @@ function Header(props) {
 				{
 					p: 2,
 					gap: 2,
-					bgcolor: 'background.level1',
-					color: '#616161',
+					// bgcolor: 'background.level1',
+					// color: '#616161',
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'space-between',
@@ -224,7 +225,7 @@ function Header(props) {
 // function Sidebar(props: BoxProps) {
 // 	return (
 // 		<>
-// 		<Sheet 
+// 		<Paper 
 // 			// component="nav" 
 // 			className="Sidebar" 
 // 			// {...props} 
@@ -269,7 +270,7 @@ function Header(props) {
 // 				})}
 // 			/>
 // 			{props.children}
-// 		</Sheet>
+// 		</Paper>
 // 		</>
 // 	);
 // }
@@ -331,21 +332,21 @@ function SideDrawer(props) {
 		  sx={(theme) => ({
 			position: 'absolute',
 			inset: 0,
-			bgcolor: `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
+			// bgcolor: `rgba(${theme.vars.palette.neutral.darkChannel} / 0.8)`,
 		  })}
 		/>
-		<Sheet
+		<Paper
 		  sx={{
 			minWidth: 256,
 			width: 'max-content',
 			height: '100%',
 			p: 2,
 			boxShadow: 'lg',
-			bgcolor: 'background.surface',
+			// bgcolor: 'background.surface',
 		  }}
 		>
 		  {props.children}
-		</Sheet>
+		</Paper>
 	  </Box>
 	);
   }
@@ -449,7 +450,7 @@ function Main(props) {
 function Side(props) {
 	return (
 		<>
-		<Sheet 
+		<Paper 
 			sx={{
 				display: {
 					xs: 'none', 
@@ -476,7 +477,7 @@ function Side(props) {
 			}}
 		>
 			{props.children} 
-		</Sheet>
+		</Paper>
 		</>
 	);
 }

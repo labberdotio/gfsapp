@@ -18,7 +18,7 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Button from '@mui/joy/Button';
+import Button from '@mui/material/Button';
 
 import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -46,6 +46,9 @@ export const BackNavButton = () => {
     return (
         <>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => navigate(-1)}
 			>
@@ -60,6 +63,9 @@ export const ForwardNavButton = () => {
     return (
 		<>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => navigate(+1)}
 			>

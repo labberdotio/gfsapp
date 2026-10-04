@@ -32,11 +32,35 @@ a:hover {
 }
 
 .treeGrid .Mui-selected a {
-    color: rgb(255, 255, 255)
+    color: rgb(97, 97, 97)
 }
 
 .treeGrid .Mui-selected a:hover {
-    color: rgb(255, 255, 255) !important;
+    color: rgb(97, 97, 97) !important;
+}
+
+.Sidebar a:hover { 
+    color: rgb(97, 97, 97) !important;
+}
+
+.Sidebar .Mui-selected a {
+    color: rgb(97, 97, 97)
+}
+
+.Sidebar .Mui-selected a:hover {
+    color: rgb(97, 97, 97) !important;
+}
+
+.Sidebar a:hover .MuiSvgIcon-root {
+    color: rgb(97, 97, 97) !important;
+}
+
+.Sidebar .Mui-selected a .MuiSvgIcon-root {
+    color: rgb(97, 97, 97)
+}
+
+.Sidebar .Mui-selected a:hover .MuiSvgIcon-root {
+    color: rgb(97, 97, 97) !important;
 }
 
 /* */
@@ -88,8 +112,8 @@ a:hover {
 }
 
 .MuiButton-root {
-    color: rgb(204, 204, 204) !important;
-    background-color: rgb(126, 68, 168) !important;
+    /* color: rgb(204, 204, 204) !important; */
+    /* background-color: rgb(126, 68, 168) !important; */
 }
 
 .MuiSvgIcon-root {
@@ -168,7 +192,7 @@ a:hover {
 
 #root > div > nav {
     position: relative;
-    top: 64px;
+    /* top: 64px; */
     background-color: rgb(51, 51, 51) !important;
     min-height: calc( 100vh - 62px );
     height: calc( 100vh - 62px );
@@ -215,6 +239,12 @@ a:hover {
 
 .MuiDrawer-root .Mui-selected .MuiListItemIcon-root {
     color: rgb(204, 204, 204) !important;
+}
+
+.Sidebar .MuiList-root .MuiListItem-root.MuiListItem-gutters {
+}
+
+.Sidebar .MuiList-root .MuiListItem-root.MuiListItem-gutters a {
 }
 
 /* */

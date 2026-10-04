@@ -32,6 +32,16 @@ import {thunk} from 'redux-thunk';
 import { createLogger } from 'redux-logger'
 import { Provider } from 'react-redux';
 
+import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+// import { extendTheme } from '@mui/material/styles';
+
+// import { orange } from '@mui/material/colors';
+import { purple } from '@mui/material/colors';
+
+import CssBaseline from '@mui/material/CssBaseline';
+// import { CssVarsProvider } from '@mui/material/styles';
+// import CssBaseline from '@mui/material/CssBaseline';
+
 import WSClient from './clients/WSClient'
 import { api, apis } from './reducers/Api';
 import { namespace, namespaces } from './reducers/Namespace';
@@ -72,11 +82,11 @@ import history from './history'
 /*
  * Legacy Mui 4, pre Joy UI styling
  */
-// require('./style.css');
-// require('./style.light.css');
-// // require('./style.dark.css');
-// 
-// require('./index.css');
+require('./style.css');
+require('./style.light.css');
+// require('./style.dark.css');
+
+require('./index.css');
 
 /*
  * Defaults
@@ -179,9 +189,24 @@ store.dispatch(selectApi(defaultEndpoint));
 // 	return undefined;
 // }
 
+// Initialize the default MUI theme tokens
+const defaultTheme = createTheme();
+
+// Build your custom theme using tokens from the default theme
+const theme = createTheme({
+	cssVariables: true, // Enables theme.vars
+	palette: {
+		// Overriding the default primary color
+		primary: {
+			main: purple[500],
+		},
+	},
+});
+
 const rootElement = document.getElementById("root");
 ReactDOM.render(
 	<Provider store={store}>
+	<ThemeProvider theme={theme}>
 	<Router history={history}>
 		<Routes>
 			<Route 
@@ -294,6 +319,7 @@ ReactDOM.render(
 			/>
 		</Routes>
 	</Router>
+	</ThemeProvider>
 	</Provider>, 
 	rootElement
 );

@@ -18,15 +18,15 @@ import {
 	useNavigate
 } from "react-router-dom";
 
-import Sheet from '@mui/joy/Sheet';
-import Button from '@mui/joy/Button';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 // import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Snackbar from '@mui/joy/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import IconButton from '@mui/joy/IconButton';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import APIClient from '../clients/APIClient';
@@ -60,6 +60,9 @@ export const BackNavButton = () => {
     return (
         <>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				startIcon={<ArrowBackIcon />} 
 				onClick={() => navigate(-1)}
 			>
@@ -74,6 +77,9 @@ export const ForwardNavButton = () => {
     return (
 		<>
 			<Button
+				size="small" 
+				variant="text" 
+				color="secondary" 
 				endIcon={<ArrowForwardIcon />} 
 				onClick={() => navigate(+1)}
 			>
@@ -802,11 +808,14 @@ const Root = class extends Component {
 					>
 						<IconButton 
 							onClick={() => toggleDrawerOpen()} 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={{
 								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
+								color: 'rgb(97, 97, 97)',
+								'&:focus': {
+									outline: 'none !important',
+								}
 							}}
 						>
 							<MenuIcon 
@@ -815,17 +824,24 @@ const Root = class extends Component {
 								}}
 							/>
 						</IconButton>
-						<Button 
+						{/* <Button 
 							component="a" 
 							href="/" 
 							size="sm" 
-							color="neutral" 
-							variant="plain" 
+							// color="neutral" 
+							// variant="plain" 
 							sx={{
 								alignSelf: 'center', 
 								fontSize: '1.25rem', 
 								color: 'rgb(97, 97, 97)'
 							}}
+						>
+							{namespace}
+						</Button> */}
+						<Button
+							size="small" 
+							variant="text" 
+							color="secondary" 
 						>
 							{namespace}
 						</Button>
@@ -848,7 +864,7 @@ const Root = class extends Component {
 					/>
 				</Layout.List>
 				<Layout.Main>
-					<Sheet 
+					<Paper 
 						ref={this.mainRef} 
 						sx={{
 							// display: {
@@ -890,8 +906,8 @@ const Root = class extends Component {
 						selectItem={this.selectItem} 
 						contextCommand={this.contextCommand}
 					/> */}
-					</Sheet>
-					<Snackbar 
+					</Paper>
+					{/* <Snackbar 
 						anchorOrigin={{
 							vertical: 'bottom',
 							horizontal: 'center',
@@ -903,7 +919,13 @@ const Root = class extends Component {
 						onClose={() => this.onCloseSnackbar()}
 					>
 						{this.state.snackbarMessage}
-					</Snackbar>
+					</Snackbar> */}
+					<Snackbar 
+						open={this.state.snackbarOpen} 
+						autoHideDuration={3000} 
+						onClose={() => this.onCloseSnackbar()} 
+						message={this.state.snackbarMessage} 
+					/>
 				</Layout.Main>
 				<Layout.Side>
 					<Graph
