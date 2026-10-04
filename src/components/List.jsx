@@ -128,24 +128,24 @@ class ListView extends Component {
 									sx={{ display: { xs: 'none', md: 'block' } }}
 								>
 									{/* { "" + vertices[key]["@value"]["id"] } */}
-									{/* { "" + vertices[key]["@value"]["properties"]["_modified"] } */}
+									{/* { "" + vertices[key]["@value"]["metadata"]["_modified"] } */}
 									<span title={
 										moment(
 											Date(
-												Number(vertices[key]["@value"]["properties"]["_modified"])
+												Number(vertices[key]["@value"]["metadata"]["_modified"])
 											)
 										).format() // .format('MMMM Do YYYY, h:mm:ss a')
 									}>
 										{/* {
 											moment(
 												Date(
-													Number(vertices[key]["@value"]["properties"]["_modified"])
+													Number(vertices[key]["@value"]["metadata"]["_modified"])
 												)
 											).calendar() // 'MMMM Do YYYY, h:mm:ss a')
 										} ( */}
 										{
 											moment(
-												Number(vertices[key]["@value"]["properties"]["_modified"])
+												Number(vertices[key]["@value"]["metadata"]["_modified"])
 											).fromNow()
 										}
 										{/* ) */}
