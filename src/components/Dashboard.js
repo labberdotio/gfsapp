@@ -84,6 +84,7 @@ const Dashboard = class extends Component {
 		super(props);
 		this.state = {
 			drawerOpen: false, 
+			sideDrawerOpen: false, 
 			// intendedcenter: undefined, 
 			// actualcenter: undefined, 
 			grfloading: false, 
@@ -106,6 +107,7 @@ const Dashboard = class extends Component {
 
 	state = {
 		drawerOpen: false, 
+		sideDrawerOpen: false, 
 		// intendedcenter: undefined, 
 		// actualcenter: undefined, 
 		grfloading: false, 
@@ -278,6 +280,7 @@ const Dashboard = class extends Component {
 		} = this.props;
 
 		const drawerOpen = this.state.drawerOpen;
+		const sideDrawerOpen = this.state.sideDrawerOpen;
 
 		function setDrawerOpen(setting) {
 			_this.setState({
@@ -288,6 +291,18 @@ const Dashboard = class extends Component {
 		function toggleDrawerOpen() {
 			_this.setState({
 				drawerOpen: !_this.state.drawerOpen
+			});
+		}
+
+		function setSideDrawerOpen(setting) {
+			_this.setState({
+				sideDrawerOpen: setting
+			});
+		}
+
+		function toggleSideDrawerOpen() {
+			_this.setState({
+				sideDrawerOpen: !_this.state.sideDrawerOpen
 			});
 		}
 
@@ -331,21 +346,26 @@ const handleOrderMenuClick = (event) => {
 						namespace={namespace} 
 						types={types} 
 					>
-						<IconButton 
-							onClick={() => toggleDrawerOpen()} 
-							// color="neutral" 
-							// variant="plain" 
-							sx={{
-								marginRight: '10px !important', 
-								color: 'rgb(97, 97, 97)'
-							}}
-						>
-							<MenuIcon 
+						{!drawerOpen &&
+							<IconButton 
+								onClick={() => toggleDrawerOpen()} 
+								// color="neutral" 
+								// variant="plain" 
 								sx={{
-									color: 'rgb(97, 97, 97)'
+									marginRight: '10px !important', 
+									color: 'rgb(97, 97, 97)',
+									'&:focus': {
+										outline: 'none !important',
+									}
 								}}
-							/>
-						</IconButton>
+							>
+								<MenuIcon 
+									sx={{
+										color: 'rgb(97, 97, 97)'
+									}}
+								/>
+							</IconButton>
+						}
 						{/* <Button 
 							component="a" 
 							href="/" 
